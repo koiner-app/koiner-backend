@@ -1,0 +1,85 @@
+version: "3.9"
+
+services:
+
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy:alpine
+    restart: on-failure
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - webproxy
+
+  api:
+    build:
+      context: api
+    command: npm run start:dev
+    depends_on:
+      - postgres
+    volumes:
+      - ./api:/app
+    networks:
+      - webproxy
+      - default
+    dns:
+      - 8.8.8.8
+    ports:
+      - 3010:5000
+    environment:
+      - PORT=5000
+      - VIRTUAL_PORT=5000
+      - VIRTUAL_HOST=api.docker
+      - DB_TYPE=${DB_TYPE}
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_PORT=${DB_PORT}
+      - POSTGRES_SYNC=false
+      - JWT_SECRET=${JWT_SECRET}
+      - APP_EXPIRES=${APP_EXPIRES}
+      - APP_PORT=${APP_PORT}
+
+  postgres:
+    image: postgres
+    restart: always
+    networks:
+      - default
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    container_name: postgres-db
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    container_name: nest-pgadmin4
+    ports:
+      - 8080:80
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      - PGADMIN_LISTEN_PORT=${PGADMIN_LISTEN_PORT}
+      - VIRTUAL_PORT=8080
+      - VIRTUAL_HOST=pgadmin.docker
+    volumes:
+      - ./pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - webproxy
+      - default
+
+networks:
+  default:
+  webproxy:
+
+volumes:
+  letsencrypt-certs:
+  pgdata:
+  pgadmin-data:

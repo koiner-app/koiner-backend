@@ -1,0 +1,47 @@
+
+# Compiled files
+dist/
+
+# Dependencies
+node_modules/
+
+# Data
+/data/
+
+ # Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+desktop.ini
+
+# IDEs and editors
+/.idea
+*.swp
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Generated schemas
+/client/schema.graphql
+/api/schema.gql
+/web/schema.gql
+/web/schema.graphql
+
+.env
