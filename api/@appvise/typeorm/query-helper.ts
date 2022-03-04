@@ -1,6 +1,7 @@
 import { FilterType } from '@appvise/search';
 import { Brackets, SelectQueryBuilder } from 'typeorm';
 import { ObjectLiteral } from 'typeorm/common/ObjectLiteral';
+import { camelToSnakeCase } from '@appvise/typeorm/utils';
 
 export class QueryHelper {
   static addFilters<TEntitySchema>(
@@ -40,14 +41,19 @@ export class QueryHelper {
             // (filter instanceof NumericFilter) ||
             // (filter instanceof BooleanFilter)
           ) {
+            // Convert filter keys because field names are in snake case
+            const snakeKey = camelToSnakeCase(key);
+
             // Parameter must be unique
-            const paramName = `${key}_${Math.round(Math.random() * 100000000)}`;
+            const paramName = `${snakeKey}_${Math.round(
+              Math.random() * 100000000,
+            )}`;
 
             if (filter['equals']) {
-              where = `${builder.alias}.${key} = :${paramName}`;
+              where = `${builder.alias}.${snakeKey} = :${paramName}`;
               parameters = { [paramName]: filter['equals'] };
             } else if (filter['contains']) {
-              where = `${builder.alias}.${key} LIKE :${paramName}`;
+              where = `${builder.alias}.${snakeKey} LIKE :${paramName}`;
               parameters = { [paramName]: `%${filter['contains']}%` };
             } else {
               throw new Error('Non-equals filter not implemented yet');

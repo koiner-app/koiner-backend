@@ -14,6 +14,7 @@ import {
 } from '@appvise/search';
 import { EntityBaseSchema } from '.';
 import Paginator from '@appvise/typeorm/paginator';
+import { camelToSnakeCase } from '@appvise/typeorm/utils';
 
 export class TypeormReadRepository<
   TEntity extends AggregateRoot<unknown>,
@@ -58,8 +59,8 @@ export class TypeormReadRepository<
 
     queryBuilder.where(expressions);
 
-    const paginationKeys: any[] = request.sort.map(
-      (sortField) => sortField.field,
+    const paginationKeys: any[] = request.sort.map((sortField) =>
+      camelToSnakeCase(sortField.field),
     );
 
     // Fetch total count
