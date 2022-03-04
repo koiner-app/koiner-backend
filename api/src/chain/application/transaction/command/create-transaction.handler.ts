@@ -31,7 +31,7 @@ export class CreateTransactionHandler
           signature: command.signature,
           transactionIndex: command.transactionIndex,
         },
-        command.id ? new KoinosId(command.id) : undefined,
+        new KoinosId(command.id),
       ),
     );
 
