@@ -26,7 +26,7 @@ export class CreateBlockHandler implements ICommandHandler<CreateBlockCommand> {
           transactionCount: command.transactionCount,
           signature: command.signature,
         },
-        command.id ? new KoinosId(command.id) : undefined,
+        new KoinosId(command.id),
       ),
     );
 
