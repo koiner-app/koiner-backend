@@ -11,8 +11,8 @@ export abstract class EntityBaseSchema {
   readonly id: string;
 
   @CreateDateColumn({ type: 'timestamp', update: false })
-  readonly createdAt: Date;
+  readonly created_at: Date;
 
   @UpdateDateColumn({ type: 'timestamp' })
-  readonly updatedAt: Date;
+  readonly updated_at: Date;
 }

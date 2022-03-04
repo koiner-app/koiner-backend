@@ -43,13 +43,16 @@ export class Guard {
         'Cannot check length of a value. Provided value is empty',
       );
     }
+
     const valueLength =
       typeof value === 'number'
         ? Number(value).toString().length
         : value.length;
+
     if (valueLength >= min && valueLength <= max) {
       return true;
     }
+
     return false;
   }
 

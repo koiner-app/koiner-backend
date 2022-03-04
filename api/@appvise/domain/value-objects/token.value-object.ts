@@ -1,4 +1,4 @@
-import { DateVO, DomainPrimitive } from '@appvise/domain/index';
+import { DateVO, DomainPrimitive } from '@appvise/domain';
 import { v4 as uuidV4 } from 'uuid';
 // Must use full import to prevent TypeError: Class extends value undefined is not a constructor or null
 import { ValueObject } from '@appvise/domain/base-classes/value-object.base';

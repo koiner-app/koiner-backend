@@ -5,14 +5,14 @@ import {
   ReadRepository,
   SelectionSet,
 } from '@appvise/domain';
-import { EntitySchemaFactory, QueryHelper } from '@appvise/typeorm/index';
+import { EntitySchemaFactory, QueryHelper } from '@appvise/typeorm';
 import {
   SearchRequest,
   SearchResponse,
   SearchResult,
   SortDirection,
 } from '@appvise/search';
-import { EntityBaseSchema } from './index';
+import { EntityBaseSchema } from '.';
 import Paginator from '@appvise/typeorm/paginator';
 
 export class TypeormReadRepository<

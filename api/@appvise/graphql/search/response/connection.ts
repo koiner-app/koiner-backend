@@ -1,6 +1,6 @@
 import { Field, ObjectType, Int } from '@nestjs/graphql';
 import { Type } from '@nestjs/common';
-import { Edge, IEdgeType, PageInfo } from '@appvise/graphql/index';
+import { Edge, IEdgeType, PageInfo } from '@appvise/graphql';
 
 export interface IConnectionType<TNode, TEdge extends IEdgeType<TNode>> {
   edges: TEdge[];

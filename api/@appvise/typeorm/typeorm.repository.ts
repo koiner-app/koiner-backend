@@ -12,7 +12,7 @@ import {
   EntitySchemaFactory,
   TypeormReadRepository,
   TypeormWriteRepository,
-} from './index';
+} from '.';
 
 export class TypeormRepository<
   TEntity extends AggregateRoot<unknown>,

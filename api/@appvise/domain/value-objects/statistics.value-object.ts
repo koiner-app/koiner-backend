@@ -2,7 +2,7 @@ import { ValueObject } from '../base-classes/value-object.base';
 import {
   ArgumentInvalidException,
   ArgumentOutOfRangeException,
-} from '@appvise/domain/index';
+} from '@appvise/domain';
 
 export interface StatisticsProps {
   [index: symbol]: number;
@@ -18,11 +18,16 @@ export class Statistics<
 > extends ValueObject<TStatisticsProps> {
   public update(props: TUpdateStatisticsProps): void {
     Object.entries(props).forEach(([key, value]) => {
-      if (value < 1) {
-        throw new ArgumentOutOfRangeException('Amount must be positive');
-      }
+      // Only update defined values
+      if (value !== undefined) {
+        if (value < 1) {
+          throw new ArgumentOutOfRangeException(
+            'Amount to add must be positive',
+          );
+        }
 
-      this.props[key] += value;
+        this.props[key] += value;
+      }
     });
   }
 

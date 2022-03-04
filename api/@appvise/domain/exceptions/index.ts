@@ -5,4 +5,5 @@ export { ConflictException } from './conflict.exception';
 export { ExceptionBase } from './exception.base';
 export { ExceptionCodes } from './exception.codes';
 export { NotFoundException } from './not-found.exception';
+export { ReferenceNotFoundException } from './reference-not-found.exception';
 export { TokenExpiredException } from './token-expired.exception';

@@ -11,6 +11,8 @@ export enum ExceptionCodes {
   argumentOutOfRange = 'GENERIC.ARGUMENT_OUT_OF_RANGE',
   argumentNotProvided = 'GENERIC.ARGUMENT_NOT_PROVIDED',
   notFound = 'GENERIC.NOT_FOUND',
+  notUnique = 'GENERIC.NOT_UNIQUE',
+  referenceNotFound = 'GENERIC.REFERENCE_NOT_FOUND',
   conflict = 'GENERIC.CONFLICT',
   tokenExpired = 'TOKEN.EXPIRED',
 }

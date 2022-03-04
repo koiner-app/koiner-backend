@@ -4,7 +4,7 @@ import {
   //   GeoFilter,
   //   NumericFilter,
   StringFilter,
-} from './index';
+} from '.';
 
 export type FilterType = {
   AND?: FilterType[];

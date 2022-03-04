@@ -6,7 +6,7 @@ import {
   WhereExpressionBuilder,
 } from 'typeorm';
 import { SearchRequest, SearchResponse, SortDirection } from '@appvise/search';
-import { EntityBaseSchema } from '@appvise/typeorm/index';
+import { EntityBaseSchema } from '@appvise/typeorm';
 import { atob, btoa, decodeByType, encodeByType } from './utils';
 
 interface CursorParam {

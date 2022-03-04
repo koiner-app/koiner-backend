@@ -1,7 +1,7 @@
 import { SearchResponse, SearchResult } from '@appvise/search';
 import { IConnectionType } from '@appvise/graphql/search/response/connection';
 import { SelectionSet } from '@appvise/domain';
-import { IEdgeType } from './index';
+import { IEdgeType } from '.';
 
 export class ConnectionFactory {
   static fromSearchResponse<

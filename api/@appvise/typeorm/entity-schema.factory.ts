@@ -4,7 +4,7 @@ import { EntityBaseSchema } from './entity-base.schema';
 
 export type EntitySchemaProps<TEntitySchema> = Omit<
   TEntitySchema,
-  'id' | 'createdAt' | 'updatedAt'
+  'id' | 'created_at' | 'updated_at'
 >;
 
 export interface EntityProps<TEntityProps> {
@@ -38,8 +38,8 @@ export abstract class EntitySchemaFactory<
     return new this.entityConstructor({
       id,
       props,
-      createdAt: new DateVO(entitySchemaBase.createdAt),
-      updatedAt: new DateVO(entitySchemaBase.updatedAt),
+      createdAt: new DateVO(entitySchemaBase.created_at),
+      updatedAt: new DateVO(entitySchemaBase.updated_at),
     });
   }
 
@@ -48,8 +48,8 @@ export abstract class EntitySchemaFactory<
     return new this.entitySchemaConstructor({
       ...props,
       id: entity.id.value,
-      createdAt: entity.createdAt.value,
-      updatedAt: entity.updatedAt.value,
+      created_at: entity.createdAt.value,
+      updated_at: entity.updatedAt.value,
     });
   }
 }

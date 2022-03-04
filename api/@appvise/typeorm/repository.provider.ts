@@ -5,7 +5,7 @@ import {
   TypeormReadRepository,
   TypeormRepository,
   TypeormWriteRepository,
-} from './index';
+} from '.';
 import { Connection } from 'typeorm';
 
 // instead of import { Type } from '@nestjs/common';
