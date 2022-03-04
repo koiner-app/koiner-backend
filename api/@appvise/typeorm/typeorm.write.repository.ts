@@ -7,6 +7,7 @@ import {
   WriteRepository,
 } from '@appvise/domain';
 import { EntitySchemaFactory, EntityBaseSchema } from '.';
+import { convertDriverForeignKeyError } from '@appvise/typeorm/utils';
 
 export class TypeormWriteRepository<
   TEntity extends AggregateRoot<unknown>,
@@ -62,20 +63,14 @@ export class TypeormWriteRepository<
       // Handle reference errors with our custom DomainException
       if (
         error instanceof QueryFailedError &&
-        error.driverError.code === 'ER_NO_REFERENCED_ROW_2' &&
-        error.driverError.errno === 1452
+        [
+          'ER_NO_REFERENCED_ROW_2', // MySQL driver error
+          '23503', // PostGres driver error
+        ].includes(error.driverError.code)
       ) {
         // Find reference that failed
-        let reference = '';
-        if (
-          error.driverError.sqlMessage &&
-          error.driverError.sqlMessage.includes('REFERENCES')
-        ) {
-          reference = error.driverError.sqlMessage;
-          reference = reference.substring(reference.indexOf('REFERENCES') + 12);
-          reference = reference.substring(0, reference.indexOf('` (`'));
-          reference = ` to \`${reference}\``;
-        }
+        const reference = convertDriverForeignKeyError(error.driverError);
+
         throw new ReferenceNotFoundException(
           `Reference in ${typeof entity}${reference} not found`,
         );

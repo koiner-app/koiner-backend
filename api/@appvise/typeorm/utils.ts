@@ -101,3 +101,20 @@ export function camelOrPascalToUnderscore(str: string): string {
 export function pascalToUnderscore(str: string): string {
   return camelOrPascalToUnderscore(str);
 }
+
+export function convertDriverForeignKeyError(driverError: any): string {
+  let reference = '';
+
+  if (driverError.sqlMessage && driverError.sqlMessage.includes('REFERENCES')) {
+    reference = driverError.sqlMessage;
+    reference = reference.substring(reference.indexOf('REFERENCES') + 12);
+    reference = reference.substring(0, reference.indexOf('` (`'));
+  }
+
+  if (driverError.detail && driverError.detail.includes('Key (')) {
+    reference = driverError.detail.substring(5);
+    reference = reference.substring(0, reference.indexOf(')'));
+  }
+
+  return reference !== '' ? ` to \`${reference}\`` : '';
+}
