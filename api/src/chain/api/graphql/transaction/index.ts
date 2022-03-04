@@ -1,6 +1,5 @@
 import { TransactionResolver } from './queries';
 import { TransactionsResolver } from './query/transactions.resolver';
-import { TransactionsFieldResolver } from './query/transactions-field.resolver';
 
 export default [
   // Mutations
@@ -9,5 +8,4 @@ export default [
   // Queries
   TransactionResolver,
   TransactionsResolver,
-  TransactionsFieldResolver,
 ];
