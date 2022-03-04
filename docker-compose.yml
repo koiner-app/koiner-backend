@@ -47,10 +47,15 @@ services:
     restart: always
     networks:
       - default
+      - webproxy
+    ports:
+      - 5432:5432
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
+      - VIRTUAL_PORT=5432
+      - VIRTUAL_HOST=pg.docker
     container_name: postgres-db
     volumes:
       - ./pgdata:/var/lib/postgresql/data
