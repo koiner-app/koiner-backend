@@ -31,7 +31,7 @@ export class CreateKrcContractOnContractCreated
         balanceOf: undefined,
       };
 
-      for (const [key, value] of Object.entries(krc20Values)) {
+      for (const [key] of Object.entries(krc20Values)) {
         const result = await Krc20Contract.functions[key]();
 
         if (result) {
