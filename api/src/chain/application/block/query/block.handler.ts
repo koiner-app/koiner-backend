@@ -4,10 +4,10 @@ import { BlockQuery } from './block.query';
 
 @QueryHandler(BlockQuery)
 export class BlockHandler implements IQueryHandler<BlockQuery> {
-  constructor(private readonly blockReadRepository: BlockReadRepository) {}
+  constructor(private readonly readRepository: BlockReadRepository) {}
 
   async execute(query: BlockQuery): Promise<Block> {
-    return this.blockReadRepository.findOneByHeightOrThrow(
+    return this.readRepository.findOneByHeightOrThrow(
       query.blockHeight,
       query.selectionSet,
     );

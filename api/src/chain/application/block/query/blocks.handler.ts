@@ -5,9 +5,9 @@ import { BlocksQuery } from './blocks.query';
 
 @QueryHandler(BlocksQuery)
 export class BlocksHandler implements IQueryHandler<BlocksQuery> {
-  constructor(private readonly blocksReadRepository: BlockReadRepository) {}
+  constructor(private readonly readRepository: BlockReadRepository) {}
 
   async execute(query: BlocksQuery): Promise<SearchResponse<Block>> {
-    return this.blocksReadRepository.find(query.request, query.selectionSet);
+    return this.readRepository.find(query.request, query.selectionSet);
   }
 }

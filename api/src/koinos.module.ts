@@ -32,12 +32,21 @@ import * as config from '@config';
         });
       },
     },
+    {
+      provide: 'ActiveBlockDataSerializer',
+      useFactory: () => {
+        return new Serializer(utils.ProtocolTypes, {
+          defaultTypeName: 'active_block_data',
+        });
+      },
+    },
   ],
   exports: [
     Provider,
     Signer,
     'ActiveTransactionDataSerializer',
     'PassiveTransactionDataSerializer',
+    'ActiveBlockDataSerializer',
   ],
 })
 export class KoinosModule {}

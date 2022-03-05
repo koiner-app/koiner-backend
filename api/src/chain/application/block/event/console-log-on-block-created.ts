@@ -8,11 +8,6 @@ export class UpdateBlockStatsOnProjectCreated
   constructor(private commandBus: CommandBus) {}
 
   async handle(event: BlockCreated): Promise<void> {
-    console.log('BlockCreated', event);
-    // await this.commandBus.execute(
-    //   new UpdateBlockStatsCommand(event.blockId, {
-    //     projectCount: 1,
-    //   }),
-    // );
+    // TODO: Do something with event
   }
 }

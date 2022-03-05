@@ -3,12 +3,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
-import { BlockModule } from '@koiner/chain/block.module';
+import { ChainModule } from '@koiner/chain/chain.module';
 
 import * as config from '@config';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ScheduleModule } from '@nestjs/schedule';
 import { WorkersModule } from '@koiner/workers/workers.module';
+import { ContractsModule } from '@koiner/contracts/contracts.module';
 
 process.env.DB_TYPE = 'postgres';
 process.env.DB_NAME = 'test_db';
@@ -37,7 +38,8 @@ console.log('');
       context: ({ req }) => ({ req }),
     }),
     ScheduleModule.forRoot(),
-    BlockModule,
+    ChainModule,
+    ContractsModule,
     WorkersModule,
   ],
   controllers: [AppController],

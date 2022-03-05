@@ -11,7 +11,7 @@ export class BlockSchema extends EntityBaseSchema {
   readonly previous: string;
 
   @PrimaryColumn()
-  @Column({ type: 'bigint' })
+  @Column({ type: 'bigint', unique: true })
   readonly height: number;
 
   @Column({ type: 'bigint' })
@@ -23,7 +23,7 @@ export class BlockSchema extends EntityBaseSchema {
   @Column({ length: 48, nullable: true })
   readonly transaction_merkle_root: string;
 
-  @Column({ length: 34 })
+  @Column({ length: 38, nullable: true })
   readonly signer: string;
 
   @Column({ length: 136 })

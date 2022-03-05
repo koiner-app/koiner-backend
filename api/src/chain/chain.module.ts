@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import BlockApplication from '@koiner/chain/application';
+import { KoinosModule } from '@koiner/koinos.module';
+import ChainApplication from '@koiner/chain/application';
 import GraphQLResolvers from '@koiner/chain/api/graphql';
 
 // Register our models with typeorm
@@ -11,13 +12,13 @@ import Repositories from '@koiner/chain/persistence/typeorm/repositories';
 database.entities.push(...SchemaModels);
 
 @Module({
-  imports: [CqrsModule, TypeOrmModule.forFeature(SchemaModels)],
+  imports: [CqrsModule, TypeOrmModule.forFeature(SchemaModels), KoinosModule],
   providers: [
     // Domain
     //
 
     // Application
-    ...BlockApplication,
+    ...ChainApplication,
 
     // Infrastructure
     //
@@ -28,4 +29,4 @@ database.entities.push(...SchemaModels);
     ...GraphQLResolvers,
   ],
 })
-export class BlockModule {}
+export class ChainModule {}

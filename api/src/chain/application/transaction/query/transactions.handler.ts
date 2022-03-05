@@ -5,16 +5,11 @@ import { TransactionsQuery } from './transactions.query';
 
 @QueryHandler(TransactionsQuery)
 export class TransactionsHandler implements IQueryHandler<TransactionsQuery> {
-  constructor(
-    private readonly transactionsReadRepository: TransactionReadRepository,
-  ) {}
+  constructor(private readonly readRepository: TransactionReadRepository) {}
 
   async execute(
     query: TransactionsQuery,
   ): Promise<SearchResponse<Transaction>> {
-    return this.transactionsReadRepository.find(
-      query.request,
-      query.selectionSet,
-    );
+    return this.readRepository.find(query.request, query.selectionSet);
   }
 }

@@ -18,7 +18,7 @@ export class Transaction extends AggregateRoot<TransactionProps> {
 
     const transaction = new Transaction({ id, props });
 
-    transaction.apply(new TransactionCreated(id.value));
+    transaction.apply(new TransactionCreated(id.value, props.header.signer));
 
     return transaction;
   }
@@ -44,9 +44,7 @@ export class Transaction extends AggregateRoot<TransactionProps> {
   }
 
   validate(): void {
-    // if (!Guard.lengthIsBetween(this.props.height, 1, 10000000000000)) {
-    //   throw new ArgumentOutOfRangeException('height is out of range');
-    // }
+    // TODO: Add validations
 
     if (!Guard.lengthIsBetween(this.props.signature, 1, 136)) {
       throw new ArgumentOutOfRangeException('signature is out of range');

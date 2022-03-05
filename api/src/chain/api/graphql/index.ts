@@ -1,4 +1,9 @@
+import AddressResolvers from './address';
 import BlockResolvers from './block';
 import TransactionResolvers from './transaction';
 
-export default [...BlockResolvers, ...TransactionResolvers];
+export default [
+  ...AddressResolvers,
+  ...BlockResolvers,
+  ...TransactionResolvers,
+];

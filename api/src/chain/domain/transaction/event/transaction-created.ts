@@ -1,3 +1,6 @@
 export class TransactionCreated {
-  constructor(public readonly transactionId: string) {}
+  constructor(
+    public readonly transactionId: string,
+    public readonly signer: string,
+  ) {}
 }

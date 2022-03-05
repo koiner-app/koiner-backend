@@ -8,11 +8,6 @@ export class UpdateTransactionStatsOnProjectCreated
   constructor(private commandBus: CommandBus) {}
 
   async handle(event: TransactionCreated): Promise<void> {
-    console.log('TransactionCreated', event);
-    // await this.commandBus.execute(
-    //   new UpdateTransactionStatsCommand(event.transactionId, {
-    //     projectCount: 1,
-    //   }),
-    // );
+    // TODO: Do something with event
   }
 }

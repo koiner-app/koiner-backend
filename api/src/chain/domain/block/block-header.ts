@@ -61,7 +61,7 @@ export class BlockHeader extends ValueObject<BlockHeaderProps> {
       );
     }
 
-    if (!Guard.lengthIs(props.signer, 34)) {
+    if (!Guard.lengthIsBetween(props.signer, 33, 34)) {
       throw new ArgumentOutOfRangeException('signer is out of range');
     }
   }

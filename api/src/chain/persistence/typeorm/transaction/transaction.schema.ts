@@ -1,5 +1,13 @@
 import { EntityBaseSchema } from '@appvise/typeorm';
-import { Column, Entity, Index, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryColumn,
+} from 'typeorm';
+import { AddressSchema, BlockSchema } from '@koiner/chain/persistence/typeorm';
 
 @Entity('transaction')
 @Index(['id', 'block_height'])
@@ -12,6 +20,11 @@ export class TransactionSchema extends EntityBaseSchema {
   @Column({ type: 'bigint' })
   readonly block_height: number;
 
+  // Add foreign key without the need to persist the object
+  @ManyToOne(() => BlockSchema, { nullable: false })
+  @JoinColumn({ name: 'block_height', referencedColumnName: 'height' })
+  private readonly _block_height_fg: BlockSchema;
+
   @Column({ length: 20 })
   readonly rc_limit: string;
 
@@ -23,6 +36,11 @@ export class TransactionSchema extends EntityBaseSchema {
 
   @Column({ length: 34 })
   readonly signer: string;
+
+  // Add foreign key without the need to persist the object
+  @ManyToOne(() => AddressSchema, { nullable: false })
+  @JoinColumn({ name: 'signer', referencedColumnName: 'id' })
+  private readonly _signer_fg: AddressSchema;
 
   @Column({ length: 136 })
   readonly signature: string;
