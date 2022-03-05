@@ -18,7 +18,7 @@ export class CreateTransactionHandler
 
   async execute(command: CreateTransactionCommand): Promise<void> {
     const transaction = this.eventPublisher.mergeObjectContext(
-      await Transaction.create(
+      Transaction.create(
         {
           blockHeight: command.blockHeight,
           header: new TransactionHeader({

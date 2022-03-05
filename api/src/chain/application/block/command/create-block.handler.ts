@@ -13,7 +13,7 @@ export class CreateBlockHandler implements ICommandHandler<CreateBlockCommand> {
 
   async execute(command: CreateBlockCommand): Promise<void> {
     const block = this.eventPublisher.mergeObjectContext(
-      await Block.create(
+      Block.create(
         {
           header: new BlockHeader({
             previous: command.previous,

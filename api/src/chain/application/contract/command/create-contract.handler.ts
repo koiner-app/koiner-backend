@@ -14,7 +14,7 @@ export class CreateContractHandler
 
   async execute(command: CreateContractCommand): Promise<void> {
     const contract = this.eventPublisher.mergeObjectContext(
-      await Contract.create(
+      Contract.create(
         {
           blockHeight: command.blockHeight,
           transactionId: new KoinosId(command.transactionId),
