@@ -21,8 +21,7 @@ export class SyncBlocksHandler implements ICommandHandler<SyncBlocksCommand> {
     );
 
     if (blocks) {
-      for (let blockIdx = 0; blockIdx < blocks.length; blockIdx++) {
-        const block = blocks[blockIdx];
+      for (const block of blocks) {
         const active = await this.activeBlockDataSerializer.deserialize(
           block.block.active,
         );
