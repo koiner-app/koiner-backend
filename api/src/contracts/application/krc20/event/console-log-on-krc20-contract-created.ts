@@ -8,11 +8,6 @@ export class ConsoleLogOnKrc20ContractCreated
   constructor(private commandBus: CommandBus) {}
 
   async handle(event: Krc20ContractCreated): Promise<void> {
-    // console.log('Krc20ContractCreated', event.contractId);
-    // await this.commandBus.execute(
-    //   new UpdateKrc20ContractStatsCommand(event.contractId, {
-    //     projectCount: 1,
-    //   }),
-    // );
+    // TODO: Do something with event
   }
 }
