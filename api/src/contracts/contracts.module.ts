@@ -28,5 +28,6 @@ database.entities.push(...SchemaModels);
     // API
     ...GraphQLResolvers,
   ],
+  exports: [...Repositories],
 })
 export class ContractsModule {}

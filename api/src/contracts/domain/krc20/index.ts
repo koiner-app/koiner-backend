@@ -1,5 +1,10 @@
 export * from './krc20-contract.types';
+export * from './krc20-operation.types';
 export { Krc20Contract } from './krc20-contract';
 export { Krc20ContractCreated } from './event/krc20-contract-created';
 export { Krc20ContractReadRepository } from './krc20-contract.read.repository';
 export { Krc20ContractWriteRepository } from './krc20-contract.write.repository';
+export { Krc20Operation } from './krc20-operation';
+export { Krc20OperationCreated } from './event/krc20-operation-created';
+export { Krc20OperationReadRepository } from './krc20-operation.read.repository';
+export { Krc20OperationWriteRepository } from './krc20-operation.write.repository';
