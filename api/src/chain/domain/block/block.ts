@@ -36,7 +36,7 @@ export class Block extends AggregateRoot<BlockProps> {
   }
 
   validate(): void {
-    if (!Guard.lengthIs(this.props.signature, 136)) {
+    if (!Guard.lengthIsBetween(this.props.signature, 80, 136)) {
       throw new ArgumentOutOfRangeException('signature is out of range');
     }
   }
