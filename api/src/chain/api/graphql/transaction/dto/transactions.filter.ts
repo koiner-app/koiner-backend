@@ -8,10 +8,13 @@ export class TransactionsFilter implements FilterType {
   search?: StringFilterInput;
 
   @Field((type) => StringFilterInput, { nullable: true })
+  id?: StringFilterInput;
+
+  @Field((type) => StringFilterInput, { nullable: true })
   blockHeight?: StringFilterInput;
 
   @Field((type) => StringFilterInput, { nullable: true })
-  signer?: StringFilterInput;
+  payer?: StringFilterInput;
 
   @Field((type) => [TransactionsFilter], {
     nullable: true,

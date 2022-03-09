@@ -3,7 +3,7 @@ import {
   ArgumentOutOfRangeException,
   Guard,
 } from '@appvise/domain';
-import { TransactionCreated } from '@koiner/chain/domain';
+import { Operation, TransactionCreated } from '@koiner/chain/domain';
 import { TransactionProps, CreateTransactionProps } from './transaction.types';
 import { KoinosId } from '@koiner/domain';
 import { TransactionHeader } from '@koiner/chain/domain';
@@ -18,7 +18,7 @@ export class Transaction extends AggregateRoot<TransactionProps> {
 
     const transaction = new Transaction({ id, props });
 
-    transaction.apply(new TransactionCreated(id.value, props.header.signer));
+    transaction.apply(new TransactionCreated(id.value, props.header.payer));
 
     return transaction;
   }
@@ -33,6 +33,10 @@ export class Transaction extends AggregateRoot<TransactionProps> {
 
   get signature(): string {
     return this.props.signature;
+  }
+
+  get operations(): Operation[] {
+    return this.props.operations;
   }
 
   get operationCount(): number {

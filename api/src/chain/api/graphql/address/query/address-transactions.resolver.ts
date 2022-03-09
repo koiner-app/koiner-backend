@@ -19,7 +19,7 @@ export class AddressTransactionsResolver {
       request.filter = {};
     }
 
-    request.filter.signer = { equals: parent.id };
+    request.filter.payer = { equals: parent.id };
 
     return this.transactionsResolver.execute(request, selectionSet);
   }

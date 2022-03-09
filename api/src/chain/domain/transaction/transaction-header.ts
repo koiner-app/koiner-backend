@@ -8,7 +8,7 @@ export interface TransactionHeaderProps {
   rcLimit: string;
   nonce?: string;
   operationMerkleRoot?: string;
-  signer: string;
+  payer: string;
 }
 
 export class TransactionHeader extends ValueObject<TransactionHeaderProps> {
@@ -24,8 +24,8 @@ export class TransactionHeader extends ValueObject<TransactionHeaderProps> {
     return this.props.operationMerkleRoot;
   }
 
-  get signer(): string {
-    return this.props.signer;
+  get payer(): string {
+    return this.props.payer;
   }
 
   protected validate(props: TransactionHeaderProps): void {
@@ -46,8 +46,8 @@ export class TransactionHeader extends ValueObject<TransactionHeaderProps> {
       );
     }
 
-    if (!Guard.lengthIsBetween(props.signer, 20, 34)) {
-      throw new ArgumentOutOfRangeException('signer is out of range');
+    if (!Guard.lengthIsBetween(props.payer, 20, 34)) {
+      throw new ArgumentOutOfRangeException('payer is out of range');
     }
   }
 }

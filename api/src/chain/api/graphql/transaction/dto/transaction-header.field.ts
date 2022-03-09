@@ -13,12 +13,12 @@ export class TransactionHeaderField {
   operationMerkleRoot: string;
 
   @Field()
-  signer: string;
+  payer: string;
 
   constructor(entity: TransactionHeader) {
     this.rcLimit = entity.rcLimit;
     this.nonce = entity.nonce;
     this.operationMerkleRoot = entity.operationMerkleRoot;
-    this.signer = entity.signer;
+    this.payer = entity.payer;
   }
 }
