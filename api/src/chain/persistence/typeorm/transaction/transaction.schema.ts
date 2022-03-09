@@ -5,9 +5,11 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryColumn,
 } from 'typeorm';
 import { AddressSchema, BlockSchema } from '@koiner/chain/persistence/typeorm';
+import { OperationSchema } from '@koiner/chain/persistence/typeorm/operation/operation.schema';
 
 @Entity('transaction')
 @Index(['id', 'block_height'])
@@ -21,9 +23,9 @@ export class TransactionSchema extends EntityBaseSchema {
   readonly block_height: number;
 
   // Add foreign key without the need to persist the object
-  @ManyToOne(() => BlockSchema, { nullable: false })
+  @ManyToOne(() => BlockSchema, { nullable: false, persistence: false })
   @JoinColumn({ name: 'block_height', referencedColumnName: 'height' })
-  private readonly _block_height_fg: BlockSchema;
+  private readonly _block_height_fg: never;
 
   @Column({ length: 20 })
   readonly rc_limit: string;
@@ -35,18 +37,23 @@ export class TransactionSchema extends EntityBaseSchema {
   readonly operation_merkle_root: string;
 
   @Column({ length: 34 })
-  readonly signer: string;
+  readonly payer: string;
 
   // Add foreign key without the need to persist the object
-  @ManyToOne(() => AddressSchema, { nullable: false })
-  @JoinColumn({ name: 'signer', referencedColumnName: 'id' })
-  private readonly _signer_fg: AddressSchema;
+  @ManyToOne(() => AddressSchema, { nullable: false, persistence: false })
+  @JoinColumn({ name: 'payer', referencedColumnName: 'id' })
+  private readonly _payer_fg: never;
 
   @Column({ length: 136 })
   readonly signature: string;
 
   @Column({ type: 'smallint' })
   readonly transaction_index: number;
+
+  @OneToMany(() => OperationSchema, (operation) => operation.transaction, {
+    cascade: ['insert'],
+  })
+  readonly operations: OperationSchema[];
 
   @Column({ type: 'smallint' })
   readonly operation_count: number;
