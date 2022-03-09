@@ -1,54 +1,50 @@
 import { CommandBus, CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { Provider, Serializer, utils } from 'koilib';
+import { Provider } from 'koilib';
 import { CreateBlockCommand } from '@koiner/chain/application/block/command';
 import { SyncBlocksCommand } from './dto/sync-blocks.command';
 import { SyncTransactionsCommand } from './dto/sync-transactions.command';
-import { Inject } from '@nestjs/common';
 
 @CommandHandler(SyncBlocksCommand)
 export class SyncBlocksHandler implements ICommandHandler<SyncBlocksCommand> {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly provider: Provider,
-    @Inject('ActiveBlockDataSerializer')
-    private readonly activeBlockDataSerializer: Serializer,
   ) {}
 
   async execute(command: SyncBlocksCommand): Promise<void> {
-    const blocks = await this.provider.getBlocks(
-      command.startHeight,
-      command.amount,
-    );
+    try {
+      const blocks = await this.provider.getBlocks(
+        command.startHeight,
+        command.amount,
+      );
 
-    if (blocks) {
-      for (const block of blocks) {
-        const active = await this.activeBlockDataSerializer.deserialize(
-          block.block.active,
-        );
-        const block_signer = utils.encodeBase58(
-          utils.decodeBase64(<string>active.signer),
-        );
+      if (blocks) {
+        for (const block of blocks) {
+          const block_signer = <string>block.block.header.signer;
 
-        await this.commandBus.execute(
-          new CreateBlockCommand(
-            block.block_id,
-            block.block.header.previous,
-            parseInt(block.block_height),
-            parseInt(block.block.header.timestamp),
-            <string>active.previous_state_merkle_root,
-            <string>active.transaction_merkle_root,
-            block_signer,
-            block.block.signature_data,
-            block.block.transactions ? block.block.transactions.length : 0,
-          ),
-        );
-
-        if (block.block.transactions) {
           await this.commandBus.execute(
-            new SyncTransactionsCommand(block.block_height, block.block),
+            new CreateBlockCommand(
+              block.block_id,
+              block.block.header.previous,
+              parseInt(block.block_height),
+              parseInt(block.block.header.timestamp),
+              <string>block.block.header.previous_state_merkle_root,
+              <string>block.block.header.transaction_merkle_root,
+              block_signer,
+              <string>block.block.signature,
+              block.block.transactions ? block.block.transactions.length : 0,
+            ),
           );
+
+          if (block.block.transactions) {
+            await this.commandBus.execute(
+              new SyncTransactionsCommand(block.block_height, block.block),
+            );
+          }
         }
       }
+    } catch (error) {
+      console.log('Sync-blocks error', error);
     }
   }
 }

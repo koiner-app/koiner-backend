@@ -16,37 +16,7 @@ import * as config from '@config';
         return Signer.fromSeed(config.koinos.signerSeed);
       },
     },
-    {
-      provide: 'ActiveTransactionDataSerializer',
-      useFactory: () => {
-        return new Serializer(utils.ProtocolTypes, {
-          defaultTypeName: 'active_transaction_data',
-        });
-      },
-    },
-    {
-      provide: 'PassiveTransactionDataSerializer',
-      useFactory: () => {
-        return new Serializer(utils.ProtocolTypes, {
-          defaultTypeName: 'passive_transaction_data',
-        });
-      },
-    },
-    {
-      provide: 'ActiveBlockDataSerializer',
-      useFactory: () => {
-        return new Serializer(utils.ProtocolTypes, {
-          defaultTypeName: 'active_block_data',
-        });
-      },
-    },
   ],
-  exports: [
-    Provider,
-    Signer,
-    'ActiveTransactionDataSerializer',
-    'PassiveTransactionDataSerializer',
-    'ActiveBlockDataSerializer',
-  ],
+  exports: [Provider, Signer],
 })
 export class KoinosModule {}

@@ -16,7 +16,7 @@ export class SyncBlocksWorker {
   async handleCron() {
     this.logger.debug('Called every 10 seconds');
 
-    const blockNumber = 95804;
+    const blockNumber = 1;
     const MAX_NB_BLOCKS_TO_FETCH = 10000;
     let nbBlockToFetch = MAX_NB_BLOCKS_TO_FETCH;
 
@@ -42,11 +42,11 @@ export class SyncBlocksWorker {
       }
     }
     console.log(
-      `processing . block ${blockNumber} through ${lastBlockNumber} (currentHeight: ${currentHeight}, lastIrreversible: ${headInfo.last_irreversible_block}, nbBlockToFetch: ${nbBlockToFetch})`,
+      `processing block ${blockNumber} through ${lastBlockNumber} (currentHeight: ${currentHeight}, lastIrreversible: ${headInfo.last_irreversible_block}, nbBlockToFetch: ${nbBlockToFetch})`,
     );
 
-    await this.commandBus.execute(new SyncBlocksCommand(900000, 10000));
+    await this.commandBus.execute(new SyncBlocksCommand(1, 20000));
 
-    console.log('Done');
+    console.log('Done....');
   }
 }
