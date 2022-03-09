@@ -10,7 +10,7 @@ export class UpdateAddressStatsOnTransactionCreated
 
   async handle(event: TransactionCreated): Promise<void> {
     await this.commandBus.execute(
-      new UpdateAddressStatsCommand(event.signer, {
+      new UpdateAddressStatsCommand(event.payer, {
         transactionCount: 1,
       }),
     );
