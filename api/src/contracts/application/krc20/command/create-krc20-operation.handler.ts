@@ -21,9 +21,9 @@ export class CreateKrc20OperationHandler
       Krc20Operation.create(
         {
           name: command.name,
-          from: new KoinosAddressId(command.from),
           to: new KoinosAddressId(command.to),
           value: command.value,
+          from: command.from ? new KoinosAddressId(command.from) : undefined,
         },
         new UUID(command.id),
       ),

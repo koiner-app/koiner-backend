@@ -24,7 +24,7 @@ export class Krc20Operation extends AggregateRoot<Krc20OperationProps> {
     return this.props.name;
   }
 
-  get from(): KoinosAddressId {
+  get from(): KoinosAddressId | undefined {
     return this.props.from;
   }
 

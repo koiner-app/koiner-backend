@@ -19,7 +19,9 @@ export class Krc20OperationSchemaFactory extends EntitySchemaFactory<
 
     const props: Krc20OperationProps = {
       name: entitySchema.name,
-      from: new KoinosAddressId(entitySchema.from),
+      from: entitySchema.from
+        ? new KoinosAddressId(entitySchema.from)
+        : undefined,
       to: new KoinosAddressId(entitySchema.to),
       value: entitySchema.value,
     };

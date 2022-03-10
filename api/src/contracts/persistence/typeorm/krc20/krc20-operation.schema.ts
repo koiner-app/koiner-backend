@@ -16,7 +16,7 @@ export class Krc20OperationSchema extends EntityBaseSchema {
   @Column({ length: 8 })
   readonly name: string;
 
-  @Column({ length: 34 })
+  @Column({ length: 34, nullable: true })
   readonly from: string;
 
   @Column({ length: 34 })

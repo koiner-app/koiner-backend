@@ -2,7 +2,7 @@ import { KoinosAddressId } from '@koiner/domain';
 
 export interface CreateKrc20OperationProps {
   name: string;
-  from: KoinosAddressId;
+  from?: KoinosAddressId;
   to: KoinosAddressId;
   value: string;
 }

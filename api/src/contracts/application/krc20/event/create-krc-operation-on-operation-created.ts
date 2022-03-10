@@ -14,22 +14,29 @@ export class CreateKrcOperationOnOperationCreated
   ) {}
 
   async handle(event: ContractOperationCreated): Promise<void> {
+    const Krc20Abi = utils.Krc20Abi;
+
+    // TODO: Remove workaround when koilib is updated.
+    Krc20Abi.methods.name.entryPoint = 0x82a3537f;
+    Krc20Abi.methods.symbol.entryPoint = 0xb76a7ca1;
+    Krc20Abi.methods.decimals.entryPoint = 0xee80fd2f;
+    Krc20Abi.methods.totalSupply.entryPoint = 0xb0da3934;
+    Krc20Abi.methods.balanceOf.entryPoint = 0x5c721497;
+    Krc20Abi.methods.transfer.entryPoint = 0x27f576ca;
+    Krc20Abi.methods.mint.entryPoint = 0xdc6f17bb;
+
     try {
       // TODO: Add Contract.type + dispatch event for each type to listen to
       const Krc20Contract = new Contract({
         id: event.contractId,
-        abi: utils.Krc20Abi,
+        abi: Krc20Abi,
         provider: this.provider,
         signer: this.signer,
       });
 
-      const test = utils.encodeBase58(utils.decodeBase64(<string>event.args));
-
-      console.log('test ==========', test);
-
       const decodedOperation = await Krc20Contract.decodeOperation({
         call_contract: {
-          contract_id: event.contractId as any,
+          contract_id: utils.decodeBase58(event.contractId),
           entry_point: event.entryPoint,
           args: event.args as any,
         },
@@ -41,9 +48,9 @@ export class CreateKrcOperationOnOperationCreated
         new CreateKrc20OperationCommand(
           event.operationId,
           decodedOperation.name,
-          <string>decodedOperation.args.from,
           <string>decodedOperation.args.to,
           <string>decodedOperation.args.value,
+          <string>decodedOperation.args.from,
         ),
       );
     } catch (error) {
