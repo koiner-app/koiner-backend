@@ -57,6 +57,23 @@ export class TypeormReadRepository<
       queryBuilder,
     );
 
+    // Join with relations if selected
+    // TODO: Test if joining works as expected in all scenarios
+    for (const relation of this.entityModel.metadata.relations) {
+      if (
+        // Ignore soft relations starting with _
+        relation.propertyPath[0] !== '_' &&
+        (!selectionSet ||
+          selectionSet.isSelected('nodes.' + relation.propertyPath))
+      ) {
+        console.log('Join with relation', relation.propertyPath);
+        queryBuilder.leftJoinAndSelect(
+          `${this.entityType.name}.${relation.propertyPath}`,
+          relation.propertyPath,
+        );
+      }
+    }
+
     queryBuilder.where(expressions);
 
     const paginationKeys: any[] = request.sort.map((sortField) =>
@@ -97,7 +114,32 @@ export class TypeormReadRepository<
     id: string,
     selectionSet?: SelectionSet,
   ): Promise<TEntity | undefined> {
-    const entityDocument = await this.entityModel.findOne(id);
+    // Create QueryBuilder
+    const queryBuilder = this.entityModel.createQueryBuilder(
+      this.entityType.name,
+    );
+
+    // Join with relations if selected
+    // TODO: Test if joining works as expected in all scenarios
+    for (const relation of this.entityModel.metadata.relations) {
+      if (
+        // Ignore soft relations starting with _
+        relation.propertyPath[0] !== '_' &&
+        (!selectionSet || selectionSet.isSelected(relation.propertyPath))
+      ) {
+        console.log('Join with relation', relation.propertyPath);
+        queryBuilder.leftJoinAndSelect(
+          `${this.entityType.name}.${relation.propertyPath}`,
+          relation.propertyPath,
+        );
+      }
+    }
+
+    const entityDocument = await queryBuilder
+      .where(`${queryBuilder.alias}.id = :id`, { id: `${id}` })
+      .getOne();
+
+    // const entityDocument = await this.entityModel.findOne(id);
 
     return entityDocument
       ? this.entitySchemaFactory.toDomain(entityDocument)
