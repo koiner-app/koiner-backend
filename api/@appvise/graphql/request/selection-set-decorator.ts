@@ -20,6 +20,11 @@ function transformFieldNodes(selection: any, nodeIndex?: number) {
   const selectedFields: Record<string, any> = {};
 
   selection.selectionSet.selections.forEach((subSelection) => {
+    // TODO: Make possible to filter out fields of InlineFragments. We are just always selecting them now.
+    if (subSelection.kind === 'InlineFragment') {
+      return true;
+    }
+
     if (subSelection.selectionSet !== undefined) {
       // Add sub selections
       selectedFields[subSelection.name.value] = transformFieldNodes(
