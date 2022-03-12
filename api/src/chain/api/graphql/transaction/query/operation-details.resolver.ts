@@ -79,8 +79,7 @@ export class OperationDetailsResolver {
       }
     }
 
-    if (parent.type === OperationType.contractOperation) {
-      // TODO: Add OperationType.krc20Operation
+    if (parent.type === OperationType.krc20Operation) {
       try {
         const operation = await this.krc20OperationReadRepository.findOneById(
           parent.id,
