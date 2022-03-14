@@ -6,6 +6,7 @@ import {
 import { Contract, ContractProps } from '@koiner/chain/domain';
 import { ContractSchema } from './contract.schema';
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
+import { ContractStandardType } from '@koiner/contracts/domain';
 
 export class ContractSchemaFactory extends EntitySchemaFactory<
   Contract,
@@ -22,6 +23,7 @@ export class ContractSchemaFactory extends EntitySchemaFactory<
       operationIndex: entitySchema.operation_index,
       bytecode: entitySchema.bytecode,
       abi: entitySchema.abi,
+      contractStandardType: entitySchema.contract_standard_type,
     };
 
     return { id, props };
@@ -36,6 +38,8 @@ export class ContractSchemaFactory extends EntitySchemaFactory<
       operation_index: props.operationIndex,
       bytecode: props.bytecode,
       abi: props.abi,
+      contract_standard_type:
+        props.contractStandardType as ContractStandardType,
     };
   }
 }

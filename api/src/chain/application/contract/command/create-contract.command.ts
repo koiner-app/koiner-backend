@@ -6,5 +6,6 @@ export class CreateContractCommand {
     public readonly operationIndex: number,
     public readonly bytecode: string,
     public readonly abi?: string,
+    public readonly contractStandardType?: string,
   ) {}
 }

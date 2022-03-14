@@ -19,6 +19,7 @@ export class Contract extends AggregateRoot<ContractProps> {
         props.blockHeight,
         props.transactionId.value,
         props.operationIndex,
+        props.contractStandardType,
       ),
     );
 
@@ -43,6 +44,10 @@ export class Contract extends AggregateRoot<ContractProps> {
 
   get abi(): string {
     return this.props.abi;
+  }
+
+  get contractStandardType(): string | undefined {
+    return this.props.contractStandardType;
   }
 
   validate(): void {

@@ -23,6 +23,7 @@ export class CreateContractOperationHandler
           contractId: new KoinosAddressId(command.contractId),
           entryPoint: command.entryPoint,
           args: command.args,
+          contractStandardType: command.contractStandardType,
         },
         new UUID(command.id),
       ),

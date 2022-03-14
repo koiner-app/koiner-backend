@@ -6,7 +6,6 @@ export enum OperationType {
   systemContractOperation = 'systemContractOperation',
   uploadContract = 'uploadContract',
   contractOperation = 'contractOperation',
-  krc20Operation = 'krc20Operation',
 }
 
 export interface CreateOperationProps {

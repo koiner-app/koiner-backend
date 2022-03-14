@@ -1,7 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Krc20Operation } from '@koiner/contracts/domain';
+import { Krc20Operation, ContractStandardType } from '@koiner/contracts/domain';
 import { BaseNode } from '@appvise/graphql';
-import { OperationType } from '@koiner/chain/domain';
 
 @ObjectType('Krc20Operation')
 export class Krc20OperationNode extends BaseNode {
@@ -18,7 +17,7 @@ export class Krc20OperationNode extends BaseNode {
   value: string;
 
   // Used by UnionTypeResolver
-  type: OperationType = OperationType.krc20Operation;
+  contractStandardType: ContractStandardType = ContractStandardType.krc20;
 
   constructor(entity: Krc20Operation) {
     super(entity);

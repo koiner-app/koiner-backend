@@ -10,6 +10,7 @@ import {
 import { UploadContractOperationSchema } from './upload-contract-operation.schema';
 import { UUID } from '@appvise/domain';
 import { KoinosAddressId } from '@koiner/domain';
+import { ContractStandardType } from '@koiner/contracts/domain';
 
 export class UploadContractOperationSchemaFactory extends EntitySchemaFactory<
   UploadContractOperation,
@@ -24,6 +25,7 @@ export class UploadContractOperationSchemaFactory extends EntitySchemaFactory<
       contractId: new KoinosAddressId(entitySchema.contract_id),
       bytecode: entitySchema.bytecode,
       abi: entitySchema.abi,
+      contractStandardType: entitySchema.contract_standard_type,
     };
 
     return { id, props };
@@ -38,6 +40,8 @@ export class UploadContractOperationSchemaFactory extends EntitySchemaFactory<
       contract_id: props.contractId.value,
       bytecode: props.bytecode,
       abi: props.abi,
+      contract_standard_type:
+        props.contractStandardType as ContractStandardType,
     };
   }
 }

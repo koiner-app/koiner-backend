@@ -21,6 +21,7 @@ export class CreateContractHandler
           operationIndex: command.operationIndex,
           bytecode: command.bytecode,
           abi: command.abi,
+          contractStandardType: command.contractStandardType,
         },
         new KoinosAddressId(command.id),
       ),

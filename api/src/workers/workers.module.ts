@@ -4,9 +4,10 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { KoinosModule } from '@koiner/koinos.module';
 import WorkersApplication from '@koiner/workers/application';
 import { SyncBlocksWorker } from '@koiner/workers/sync-blocks.worker';
+import { ContractsModule } from '@koiner/contracts/contracts.module';
 
 @Module({
-  imports: [CqrsModule, ScheduleModule, KoinosModule],
+  imports: [CqrsModule, ScheduleModule, KoinosModule, ContractsModule],
   providers: [
     SyncBlocksWorker,
 

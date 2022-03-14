@@ -35,6 +35,10 @@ export class UploadContractOperation extends AggregateRoot<UploadContractOperati
     return this.props.abi;
   }
 
+  get contractStandardType(): string | undefined {
+    return this.props.contractStandardType;
+  }
+
   validate(): void {
     // TODO: Add validations
   }

@@ -25,6 +25,7 @@ export class ContractOperation extends AggregateRoot<ContractOperationProps> {
         props.contractId.value,
         props.entryPoint,
         props.args,
+        props.contractStandardType,
       ),
     );
 
@@ -41,6 +42,10 @@ export class ContractOperation extends AggregateRoot<ContractOperationProps> {
 
   get args(): string {
     return this.props.args;
+  }
+
+  get contractStandardType(): string | undefined {
+    return this.props.contractStandardType;
   }
 
   validate(): void {

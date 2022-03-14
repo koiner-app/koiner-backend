@@ -5,6 +5,7 @@ import {
   BlockSchema,
   TransactionSchema,
 } from '@koiner/chain/persistence/typeorm';
+import { ContractStandardType } from '@koiner/contracts/domain';
 
 @Entity('contract')
 export class ContractSchema extends EntityBaseSchema {
@@ -39,6 +40,9 @@ export class ContractSchema extends EntityBaseSchema {
 
   @Column({ type: 'text', nullable: true })
   readonly abi: string;
+
+  @Column({ type: 'enum', enum: ContractStandardType, nullable: true })
+  readonly contract_standard_type: ContractStandardType;
 
   @PrimaryColumn()
   @Column({ type: 'smallint' })

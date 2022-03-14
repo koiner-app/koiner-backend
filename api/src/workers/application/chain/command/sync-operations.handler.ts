@@ -13,8 +13,10 @@ import {
   CreateUploadContractOperationCommand,
 } from '@koiner/chain/application/operation/command';
 import { TransactionQuery } from '@koiner/chain/application/transaction/query';
-import { OperationType, Transaction } from '@koiner/chain/domain';
+import { Contract, OperationType, Transaction } from '@koiner/chain/domain';
 import { CreateContractCommand } from '@koiner/chain/application/contract/command';
+import { ContractStandardService } from '@koiner/contracts/application/contract-standard/service';
+import { ContractQuery } from '@koiner/chain/application/contract/query';
 
 @CommandHandler(SyncOperationsCommand)
 export class SyncOperationsHandler
@@ -23,6 +25,7 @@ export class SyncOperationsHandler
   constructor(
     private readonly queryBus: QueryBus,
     private readonly commandBus: CommandBus,
+    private readonly contractStandardRetriever: ContractStandardService,
   ) {}
 
   async execute(command: SyncOperationsCommand): Promise<void> {
@@ -78,12 +81,18 @@ export class SyncOperationsHandler
           // Create Address (if not already created). ContractId = address
           await this.commandBus.execute(new CreateAddressCommand(contractId));
 
+          const contractStandard =
+            await this.contractStandardRetriever.getForContract(contractId);
+
           await this.commandBus.execute(
             new CreateUploadContractOperationCommand(
               savedOperation.id.value,
               contractId,
               operationJson.upload_contract.bytecode,
               operationJson.upload_contract.abi,
+              contractStandard
+                ? contractStandard.contractStandard.type
+                : undefined,
             ),
           );
 
@@ -95,12 +104,24 @@ export class SyncOperationsHandler
               operationIndex,
               operationJson.upload_contract.bytecode,
               operationJson.upload_contract.abi,
+              contractStandard
+                ? contractStandard.contractStandard.type
+                : undefined,
             ),
           );
         } else if (savedOperation.type === OperationType.contractOperation) {
           console.log('call_contract', operationJson);
 
           const contractId = operationJson.call_contract.contract_id;
+          let contractStandardType = undefined;
+
+          try {
+            const contract = await this.queryBus.execute<
+              ContractQuery,
+              Contract
+            >(new ContractQuery(contractId));
+            contractStandardType = contract.contractStandardType;
+          } catch {}
 
           await this.commandBus.execute(
             new CreateContractOperationCommand(
@@ -108,6 +129,7 @@ export class SyncOperationsHandler
               contractId,
               operationJson.call_contract.entry_point,
               operationJson.call_contract.args,
+              contractStandardType,
             ),
           );
         }
