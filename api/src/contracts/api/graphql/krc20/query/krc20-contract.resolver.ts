@@ -2,7 +2,7 @@ import { Args, ID, Query, Resolver } from '@nestjs/graphql';
 import { QueryBus } from '@nestjs/cqrs';
 import { SelectionSet } from '@appvise/graphql';
 import { SelectionSet as SelectionSetObject } from '@appvise/domain';
-import { Krc20ContractQuery } from '@koiner/contracts/application/krc20/query/krc20-contract.query';
+import { Krc20ContractQuery } from '@koiner/contracts/application/krc20/query';
 import { Krc20ContractNode } from '../dto/krc20-contract.node';
 import { Krc20Contract } from '@koiner/contracts/domain';
 

@@ -3,7 +3,7 @@ import {
   Krc20Operation,
   Krc20OperationWriteRepository,
 } from '@koiner/contracts/domain';
-import { CreateKrc20OperationCommand } from './create-krc20-operation.command';
+import { CreateKrc20OperationCommand } from './dto/create-krc20-operation.command';
 import { KoinosAddressId } from '@koiner/domain';
 import { UUID } from '@appvise/domain';
 

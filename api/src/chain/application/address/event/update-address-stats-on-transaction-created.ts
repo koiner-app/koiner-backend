@@ -1,6 +1,6 @@
 import { CommandBus, EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { TransactionCreated } from '@koiner/chain/domain';
-import { UpdateAddressStatsCommand } from '@koiner/chain/application/address/command/update-address-stats.command';
+import { UpdateAddressStatsCommand } from '@koiner/chain/application/address/command/dto/update-address-stats.command';
 
 @EventsHandler(TransactionCreated)
 export class UpdateAddressStatsOnTransactionCreated

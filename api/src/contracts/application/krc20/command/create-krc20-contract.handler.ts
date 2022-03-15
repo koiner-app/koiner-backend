@@ -3,7 +3,7 @@ import {
   Krc20Contract,
   Krc20ContractWriteRepository,
 } from '@koiner/contracts/domain';
-import { CreateKrc20ContractCommand } from './create-krc20-contract.command';
+import { CreateKrc20ContractCommand } from './dto/create-krc20-contract.command';
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
 
 @CommandHandler(CreateKrc20ContractCommand)

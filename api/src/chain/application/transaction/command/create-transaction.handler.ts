@@ -5,7 +5,7 @@ import {
   TransactionHeader,
   TransactionWriteRepository,
 } from '@koiner/chain/domain';
-import { CreateTransactionCommand } from './create-transaction.command';
+import { CreateTransactionCommand } from './dto/create-transaction.command';
 import { KoinosId } from '@koiner/domain';
 
 @CommandHandler(CreateTransactionCommand)

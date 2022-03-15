@@ -4,7 +4,7 @@ import {
   Krc20ContractReadRepository,
 } from '@koiner/contracts/domain';
 import { SearchResponse } from '@appvise/search';
-import { Krc20ContractsQuery } from './krc20-contracts.query';
+import { Krc20ContractsQuery } from '.';
 
 @QueryHandler(Krc20ContractsQuery)
 export class Krc20ContractsHandler

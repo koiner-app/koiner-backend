@@ -1,6 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { AddressWriteRepository } from '@koiner/chain/domain';
-import { UpdateAddressStatsCommand } from './update-address-stats.command';
+import { UpdateAddressStatsCommand } from './dto/update-address-stats.command';
 
 @CommandHandler(UpdateAddressStatsCommand)
 export class UpdateAddressStatsHandler

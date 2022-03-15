@@ -1,8 +1,10 @@
+import { SearchQuery } from '@appvise/domain';
+
+export { BlockQuery } from './dto/block.query';
+export class BlocksQuery extends SearchQuery {}
+
 import { BlockHandler } from './block.handler';
 import { BlocksHandler } from './blocks.handler';
-
-export { BlockQuery } from './block.query';
-export { BlocksQuery } from './blocks.query';
 
 export default {
   handlers: [BlockHandler, BlocksHandler],
