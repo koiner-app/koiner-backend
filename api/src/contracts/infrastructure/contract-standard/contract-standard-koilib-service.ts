@@ -8,6 +8,7 @@ import { Injectable } from '@nestjs/common';
 import { ContractStandardService } from '@koiner/contracts/application/contract-standard/service';
 import { Contract, Provider, Signer, utils } from 'koilib';
 import { Abi } from 'koilib/lib/interface';
+import { promiseWithTimeout } from '@koiner/contracts/infrastructure/utils';
 
 /**
  * TODO: Revisit this class to see if it can be simplified
@@ -26,7 +27,7 @@ export class ContractStandardKoilibService extends ContractStandardService {
     contractId: string,
     contractStandardType?: ContractStandardType,
   ): Promise<ContractStandardWithValues | undefined> {
-    let contractStandards = [];
+    let contractStandards;
 
     if (contractStandardType) {
       // Fetch specific contract standard
@@ -70,25 +71,31 @@ export class ContractStandardKoilibService extends ContractStandardService {
         signer: this.signer,
       });
 
-      let gettersValid = true;
       const getterValues = {};
 
       // Validate if all getters return a value
       for (const getter of contractStandard.getters) {
-        const result = await contract.functions[getter]();
+        // Handle timeouts for corrupt contracts
+        try {
+          const result = await promiseWithTimeout(
+            contract.functions[getter](),
+            10000,
+          );
 
-        // If 1 getter has no value CodingStandard is not valid
-        if (!result || !result.result.value) {
-          gettersValid = false;
-        } else {
-          getterValues[getter] = result.result.value;
+          // If 1 getter has no value CodingStandard is not valid
+          if (!result || !result.result.value) {
+            return;
+          } else {
+            getterValues[getter] = result.result.value;
+          }
+        } catch (e) {
+          // No match
+          return;
         }
       }
 
-      // If all getters are still valid we have a match
-      if (gettersValid) {
-        return getterValues;
-      }
+      // We have a match
+      return getterValues;
     } catch (error) {
       // Ignore if failed
       return;
