@@ -47,14 +47,6 @@ export class SyncOperationsHandler
         const operationJson = transactionJson.operations[operationIndex];
 
         if (savedOperation.type === OperationType.systemCall) {
-          console.log(
-            'set_system_call',
-            operationJson,
-            operationJson.set_system_call,
-            operationJson.set_system_call.target,
-            operationJson.set_system_call.target.system_call_bundle,
-          );
-
           await this.commandBus.execute(
             new CreateSystemCallOperationCommand(
               savedOperation.id.value,
@@ -65,8 +57,6 @@ export class SyncOperationsHandler
         } else if (
           savedOperation.type === OperationType.systemContractOperation
         ) {
-          console.log('set_system_contract', operationJson);
-
           await this.commandBus.execute(
             new CreateSystemContractOperationCommand(
               savedOperation.id.value,
@@ -75,7 +65,6 @@ export class SyncOperationsHandler
             ),
           );
         } else if (savedOperation.type === OperationType.uploadContract) {
-          console.log('upload_contract', operationJson);
           const contractId = operationJson.upload_contract.contract_id;
 
           // Create Address (if not already created). ContractId = address
@@ -110,8 +99,6 @@ export class SyncOperationsHandler
             ),
           );
         } else if (savedOperation.type === OperationType.contractOperation) {
-          console.log('call_contract', operationJson);
-
           const contractId = operationJson.call_contract.contract_id;
           let contractStandardType = undefined;
 

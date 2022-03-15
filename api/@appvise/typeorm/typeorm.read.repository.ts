@@ -66,7 +66,6 @@ export class TypeormReadRepository<
         (!selectionSet ||
           selectionSet.isSelected('nodes.' + relation.propertyPath))
       ) {
-        console.log('Join with relation', relation.propertyPath);
         queryBuilder.leftJoinAndSelect(
           `${this.entityType.name}.${relation.propertyPath}`,
           relation.propertyPath,
@@ -127,7 +126,6 @@ export class TypeormReadRepository<
         relation.propertyPath[0] !== '_' &&
         (!selectionSet || selectionSet.isSelected(relation.propertyPath))
       ) {
-        console.log('Join with relation', relation.propertyPath);
         queryBuilder.leftJoinAndSelect(
           `${this.entityType.name}.${relation.propertyPath}`,
           relation.propertyPath,

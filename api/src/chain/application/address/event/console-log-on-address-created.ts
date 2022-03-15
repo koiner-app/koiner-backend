@@ -8,6 +8,6 @@ export class ConsoleLogOnAddressCreated
   constructor(private commandBus: CommandBus) {}
 
   async handle(event: AddressCreated): Promise<void> {
-    console.log('AddressCreated:', event.addressId);
+    // console.log('AddressCreated:', event.addressId);
   }
 }

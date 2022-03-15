@@ -25,27 +25,22 @@ export class CreateKrcContractOnContractCreated
       );
     const contractValues = contractStandardWithValues.contractValues;
 
-    try {
-      if (
-        contractValues.name &&
-        contractValues.symbol &&
-        contractValues.decimals
-      ) {
-        await this.commandBus.execute(
-          new CreateKrc20ContractCommand(
-            event.contractId,
-            event.blockHeight,
-            event.transactionId,
-            event.operationIndex,
-            <string>contractValues.name,
-            <string>contractValues.symbol,
-            <number>contractValues.decimals,
-          ),
-        );
-      }
-    } catch (error) {
-      console.log('Not Krc20, error', error);
-      // not Krc20 compliant or already exists
+    if (
+      contractValues.name &&
+      contractValues.symbol &&
+      contractValues.decimals
+    ) {
+      await this.commandBus.execute(
+        new CreateKrc20ContractCommand(
+          event.contractId,
+          event.blockHeight,
+          event.transactionId,
+          event.operationIndex,
+          <string>contractValues.name,
+          <string>contractValues.symbol,
+          <number>contractValues.decimals,
+        ),
+      );
     }
   }
 }
