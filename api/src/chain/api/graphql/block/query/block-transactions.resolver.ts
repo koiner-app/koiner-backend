@@ -5,11 +5,11 @@ import { TransactionsRequest } from '@koiner/chain/api/graphql/transaction/dto/t
 import { TransactionsConnection } from '@koiner/chain/api/graphql/transaction/dto/transactions.connection';
 import { TransactionsResolver } from '@koiner/chain/api/graphql/transaction/query/transactions.resolver';
 
-@Resolver((of) => BlockNode)
+@Resolver(() => BlockNode)
 export class BlockTransactionsResolver {
   constructor(private transactionsResolver: TransactionsResolver) {}
 
-  @ResolveField((returns) => TransactionsConnection)
+  @ResolveField(() => TransactionsConnection)
   async transactions(
     @Parent() parent: BlockNode,
     @Args() request: TransactionsRequest,

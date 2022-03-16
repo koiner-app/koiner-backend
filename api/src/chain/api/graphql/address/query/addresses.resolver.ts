@@ -9,11 +9,11 @@ import { AddressesRequest } from '../dto/addresses.request';
 import { AddressesConnection } from '../dto/addresses.connection';
 import { AddressNode } from '../dto/address.node';
 
-@Resolver((of) => Address)
+@Resolver(() => AddressNode)
 export class AddressesResolver {
   constructor(private readonly queryBus: QueryBus) {}
 
-  @Query((returns) => AddressesConnection, { name: 'addresses' })
+  @Query(() => AddressesConnection, { name: 'addresses' })
   async execute(
     @Args() request: AddressesRequest,
     @SelectionSet() selectionSet,

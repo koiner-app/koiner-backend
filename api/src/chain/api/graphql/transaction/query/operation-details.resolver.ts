@@ -13,7 +13,7 @@ import { ContractOperationNode } from '@koiner/chain/api/graphql/operation/dto/c
 import { SystemCallOperationNode } from '@koiner/chain/api/graphql/operation/dto/system-call-operation.node';
 import { SystemContractOperationNode } from '@koiner/chain/api/graphql/operation/dto/system-contract-operation.node';
 
-@Resolver((of) => OperationNode)
+@Resolver(() => OperationNode)
 export class OperationDetailsResolver {
   constructor(
     private readonly uploadContractOperationReadRepository: UploadContractOperationReadRepository,
@@ -22,7 +22,7 @@ export class OperationDetailsResolver {
     private readonly systemContractOperationReadRepository: SystemContractOperationReadRepository,
   ) {}
 
-  @ResolveField((returns) => OperationDetailsUnion)
+  @ResolveField(() => OperationDetailsUnion)
   async details(
     @Parent() parent: OperationNode,
   ): Promise<typeof OperationDetailsUnion> {

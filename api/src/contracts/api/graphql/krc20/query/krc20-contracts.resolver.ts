@@ -9,11 +9,11 @@ import { Krc20ContractsRequest } from '../dto/krc20-contracts.request';
 import { Krc20ContractsConnection } from '../dto/krc20-contracts.connection';
 import { Krc20ContractNode } from '../dto/krc20-contract.node';
 
-@Resolver((of) => Krc20Contract)
+@Resolver(() => Krc20ContractNode)
 export class Krc20ContractsResolver {
   constructor(private readonly queryBus: QueryBus) {}
 
-  @Query((returns) => Krc20ContractsConnection, { name: 'krc20Contracts' })
+  @Query(() => Krc20ContractsConnection, { name: 'krc20Contracts' })
   async execute(
     @Args() request: Krc20ContractsRequest,
     @SelectionSet() selectionSet,

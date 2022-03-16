@@ -9,11 +9,11 @@ import { BlocksRequest } from '../dto/blocks.request';
 import { BlocksConnection } from '../dto/blocks.connection';
 import { BlockNode } from '../dto/block.node';
 
-@Resolver((of) => Block)
+@Resolver(() => BlockNode)
 export class BlocksResolver {
   constructor(private readonly queryBus: QueryBus) {}
 
-  @Query((returns) => BlocksConnection, { name: 'blocks' })
+  @Query(() => BlocksConnection, { name: 'blocks' })
   async execute(
     @Args() request: BlocksRequest,
     @SelectionSet() selectionSet,

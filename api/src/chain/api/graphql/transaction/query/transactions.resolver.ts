@@ -9,11 +9,11 @@ import { TransactionsRequest } from '../dto/transactions.request';
 import { TransactionsConnection } from '../dto/transactions.connection';
 import { TransactionNode } from '../dto/transaction.node';
 
-@Resolver((of) => Transaction)
+@Resolver(() => TransactionNode)
 export class TransactionsResolver {
   constructor(private readonly queryBus: QueryBus) {}
 
-  @Query((returns) => TransactionsConnection, { name: 'transactions' })
+  @Query(() => TransactionsConnection, { name: 'transactions' })
   async execute(
     @Args() request: TransactionsRequest,
     @SelectionSet() selectionSet,
