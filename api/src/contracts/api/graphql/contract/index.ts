@@ -1,7 +1,11 @@
+import { ContractResolver } from './query/node-queries';
+import { ContractsResolver } from './query/contracts.resolver';
 import { ContractOperationDetailsResolver } from './query/contract-operation-details.resolver';
 
 export default [
   // Queries
+  ContractResolver,
+  ContractsResolver,
   ContractOperationDetailsResolver,
 ];
 
