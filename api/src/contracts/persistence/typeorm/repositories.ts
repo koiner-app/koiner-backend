@@ -1,5 +1,8 @@
 import { TypeormRepositoryProvider } from '@appvise/typeorm';
 import {
+  Contract,
+  ContractReadRepository,
+  ContractWriteRepository,
   Krc20Contract,
   Krc20ContractReadRepository,
   Krc20ContractWriteRepository,
@@ -8,11 +11,18 @@ import {
   Krc20OperationWriteRepository,
 } from '@koiner/contracts/domain';
 import {
+  ContractSchema,
+  ContractSchemaFactory,
   Krc20ContractSchema,
   Krc20ContractSchemaFactory,
   Krc20OperationSchema,
   Krc20OperationSchemaFactory,
-} from '@koiner/contracts/persistence/typeorm/krc20';
+} from '@koiner/contracts/persistence/typeorm';
+
+const contractSchemaFactory = new ContractSchemaFactory(
+  Contract,
+  ContractSchema,
+);
 
 const krc20ContractSchemaFactory = new Krc20ContractSchemaFactory(
   Krc20Contract,
@@ -25,6 +35,18 @@ const krc20OperationSchemaFactory = new Krc20OperationSchemaFactory(
 );
 
 export default [
+  // Contract
+  TypeormRepositoryProvider.provide(
+    ContractReadRepository,
+    ContractSchema,
+    contractSchemaFactory,
+  ),
+  TypeormRepositoryProvider.provide(
+    ContractWriteRepository,
+    ContractSchema,
+    contractSchemaFactory,
+  ),
+
   // Krc20Contract
   TypeormRepositoryProvider.provide(
     Krc20ContractReadRepository,

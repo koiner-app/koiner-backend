@@ -2,9 +2,9 @@ import { EntityBaseSchema } from '@appvise/typeorm';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import {
   BlockSchema,
-  ContractSchema,
   TransactionSchema,
 } from '@koiner/chain/persistence/typeorm';
+import { ContractSchema } from '@koiner/contracts/persistence/typeorm';
 
 @Entity('krc20_contract')
 export class Krc20ContractSchema extends EntityBaseSchema {

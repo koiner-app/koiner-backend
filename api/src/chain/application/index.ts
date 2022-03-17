@@ -6,10 +6,6 @@ import BlockCommands from './block/command';
 import BlockEventHandlers from './block/event';
 import BlockQueries from './block/query';
 
-import ContractCommands from './contract/command';
-import ContractEventHandlers from './contract/event';
-import ContractQueries from './contract/query';
-
 import OperationCommands from './operation/command';
 import OperationQueries from './operation/query';
 
@@ -25,10 +21,6 @@ export default [
   ...BlockCommands.handlers,
   ...BlockEventHandlers,
   ...BlockQueries.handlers,
-
-  ...ContractCommands.handlers,
-  ...ContractEventHandlers,
-  ...ContractQueries.handlers,
 
   ...OperationCommands.handlers,
   ...OperationQueries.handlers,

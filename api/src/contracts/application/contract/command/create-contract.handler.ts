@@ -1,5 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { Contract, ContractWriteRepository } from '@koiner/chain/domain';
+import { Contract, ContractWriteRepository } from '@koiner/contracts/domain';
 import { CreateContractCommand } from './dto/create-contract.command';
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
 

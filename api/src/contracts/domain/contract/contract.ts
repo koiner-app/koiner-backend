@@ -1,5 +1,5 @@
 import { AggregateRoot } from '@appvise/domain';
-import { ContractCreated } from '@koiner/chain/domain';
+import { ContractCreated } from './event/contract-created';
 import { ContractProps, CreateContractProps } from './contract.types';
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
 

@@ -1,5 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { Contract, ContractReadRepository } from '@koiner/chain/domain';
+import { Contract, ContractReadRepository } from '@koiner/contracts/domain';
 import { SearchResponse } from '@appvise/search';
 import { ContractsQuery } from '.';
 

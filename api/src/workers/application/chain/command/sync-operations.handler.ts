@@ -13,10 +13,11 @@ import {
   CreateUploadContractOperationCommand,
 } from '@koiner/chain/application/operation/command';
 import { TransactionQuery } from '@koiner/chain/application/transaction/query';
-import { Contract, OperationType, Transaction } from '@koiner/chain/domain';
-import { CreateContractCommand } from '@koiner/chain/application/contract/command';
+import { OperationType, Transaction } from '@koiner/chain/domain';
+import { Contract } from '@koiner/contracts/domain';
+import { CreateContractCommand } from '@koiner/contracts/application/contract/command';
 import { ContractStandardService } from '@koiner/contracts/application/contract-standard/service';
-import { ContractQuery } from '@koiner/chain/application/contract/query';
+import { ContractQuery } from '@koiner/contracts/application/contract/query';
 
 @CommandHandler(SyncOperationsCommand)
 export class SyncOperationsHandler

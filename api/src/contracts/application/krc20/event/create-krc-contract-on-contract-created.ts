@@ -1,7 +1,9 @@
 import { CommandBus, EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { ContractCreated } from '@koiner/chain/domain';
+import {
+  ContractCreated,
+  ContractStandardType,
+} from '@koiner/contracts/domain';
 import { CreateKrc20ContractCommand } from '@koiner/contracts/application/krc20/command';
-import { ContractStandardType } from '@koiner/contracts/domain';
 import { ContractStandardService } from '@koiner/contracts/application/contract-standard/service';
 
 @EventsHandler(ContractCreated)
