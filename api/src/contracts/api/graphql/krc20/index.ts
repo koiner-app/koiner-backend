@@ -1,4 +1,4 @@
-import { Krc20ContractResolver } from './query/krc20-contract.resolver';
+import { Krc20ContractResolver } from './query/node-queries';
 import { Krc20ContractsResolver } from './query/krc20-contracts.resolver';
 
 export default [
