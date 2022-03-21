@@ -44,7 +44,8 @@ export class TransactionSchema extends EntityBaseSchema {
   @JoinColumn({ name: 'payer', referencedColumnName: 'id' })
   private readonly _payer_fg: never;
 
-  @Column({ length: 136 })
+  // TODO: What should be max length of signature?
+  @Column({ length: 255 })
   readonly signature: string;
 
   @Column({ type: 'smallint' })

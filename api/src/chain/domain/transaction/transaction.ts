@@ -50,7 +50,8 @@ export class Transaction extends AggregateRoot<TransactionProps> {
   validate(): void {
     // TODO: Add validations
 
-    if (!Guard.lengthIsBetween(this.props.signature, 1, 136)) {
+    // TODO: What should be max length of signature?
+    if (!Guard.lengthIsBetween(this.props.signature, 1, 255)) {
       throw new ArgumentOutOfRangeException('signature is out of range');
     }
   }
