@@ -36,7 +36,7 @@ export class Krc20OperationSchemaFactory extends EntitySchemaFactory<
 
     return {
       name: props.name,
-      from: props.from.value,
+      from: props.from ? props.from.value : undefined,
       to: props.to.value,
       value: props.value,
     };
