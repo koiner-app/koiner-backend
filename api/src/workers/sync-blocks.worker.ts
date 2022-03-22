@@ -85,7 +85,7 @@ export class SyncBlocksWorker {
     );
 
     const startBlock = parseInt(chain.lastSyncedBlock.toString()) + 1;
-    const endBlock = startBlock + SyncBlocksWorker.batchSize;
+    const endBlock = startBlock + SyncBlocksWorker.batchSize - 1;
 
     // Sync next x blocks
     this.logger.debug(
