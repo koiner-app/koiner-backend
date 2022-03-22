@@ -26,7 +26,14 @@ export class Statistics<
           );
         }
 
-        this.props[key] += value;
+        console.log([
+          'Update stats:',
+          this.props[key],
+          this.props[key] + value,
+          parseInt(this.props[key]),
+          parseInt(this.props[key]) + value,
+        ]);
+        this.props[key] = parseInt(this.props[key]) + value;
       }
     });
   }
