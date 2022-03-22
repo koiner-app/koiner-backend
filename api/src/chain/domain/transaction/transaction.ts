@@ -18,7 +18,13 @@ export class Transaction extends AggregateRoot<TransactionProps> {
 
     const transaction = new Transaction({ id, props });
 
-    transaction.apply(new TransactionCreated(id.value, props.header.payer));
+    transaction.apply(
+      new TransactionCreated(
+        id.value,
+        props.header.payer,
+        props.operationCount,
+      ),
+    );
 
     return transaction;
   }
