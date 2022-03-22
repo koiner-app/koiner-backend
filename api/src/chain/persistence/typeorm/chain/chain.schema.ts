@@ -22,6 +22,9 @@ export class ChainSchema extends EntityBaseSchema {
   @Column()
   readonly syncing: boolean;
 
+  @Column()
+  readonly stopped: boolean;
+
   @Column({ type: 'bigint' })
   readonly last_synced_block: number;
 

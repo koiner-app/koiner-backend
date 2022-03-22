@@ -41,6 +41,10 @@ export class Chain extends AggregateRoot<ChainProps> {
     return this.props.syncing;
   }
 
+  get stopped(): boolean {
+    return this.props.stopped;
+  }
+
   get stats(): ChainStatistics {
     return this.props.stats;
   }
@@ -53,6 +57,7 @@ export class Chain extends AggregateRoot<ChainProps> {
     });
     this.props.lastIrreversibleBlock = props.lastIrreversibleBlock;
     this.props.syncing = props.syncing;
+    this.props.stopped = props.stopped;
     this.props.lastSyncedBlock = props.lastSyncedBlock;
 
     // this.apply(new ChainUpdated(this._id.value));

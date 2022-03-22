@@ -5,6 +5,7 @@ export interface CreateChainProps {
   headTopology: BlockTopology;
   lastIrreversibleBlock: number;
   syncing: boolean;
+  stopped: boolean;
   lastSyncedBlock: number;
 }
 
@@ -16,5 +17,6 @@ export interface UpdateChainProps {
   headTopology: BlockTopology;
   lastIrreversibleBlock: number;
   syncing: boolean;
+  stopped: boolean;
   lastSyncedBlock: number;
 }

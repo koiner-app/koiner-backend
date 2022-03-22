@@ -27,6 +27,7 @@ export class ChainSchemaFactory extends EntitySchemaFactory<
       }),
       lastIrreversibleBlock: entitySchema.last_irreversible_block,
       syncing: entitySchema.syncing,
+      stopped: entitySchema.stopped,
       lastSyncedBlock: entitySchema.last_synced_block,
       stats: new ChainStatistics({
         addressCount: entitySchema.address_count,
@@ -48,6 +49,7 @@ export class ChainSchemaFactory extends EntitySchemaFactory<
       head_topology_height: props.headTopology.height,
       last_irreversible_block: props.lastIrreversibleBlock,
       syncing: props.syncing,
+      stopped: props.stopped,
       last_synced_block: props.lastSyncedBlock,
       address_count: props.stats.addressCount,
       contract_count: props.stats.contractCount,
