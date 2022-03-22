@@ -59,13 +59,8 @@ export class SyncBlocksWorker {
       }
     }
 
-    if (!chain) {
-      console.log('STOP! No chain');
-      return;
-    }
-
-    if (chain.syncing) {
-      console.log('STOP! Already syncing');
+    if (!chain || chain.syncing || chain.stopped) {
+      console.log('Do not sync');
       return;
     }
 
