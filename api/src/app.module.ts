@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ChainModule } from '@koiner/chain/chain.module';
@@ -32,7 +30,7 @@ console.log('');
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: process.env.APP_ENV === 'local' ? './schema.gql' : true,
-      path: '/graphql',
+      path: '/',
       debug: process.env.APP_ENV !== 'prod',
       playground: process.env.APP_ENV !== 'prod',
       context: ({ req }) => ({ req }),
@@ -42,7 +40,5 @@ console.log('');
     ContractsModule,
     WorkersModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
