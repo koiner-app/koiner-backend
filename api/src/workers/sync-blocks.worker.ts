@@ -11,13 +11,11 @@ import { Block, Chain } from '@koiner/chain/domain';
 import { NotFoundException } from '@appvise/domain';
 import { BlocksQuery } from '@koiner/chain/application/block/query';
 import { SearchResponse, SortDirection } from '@appvise/search';
+import { koinos } from '@config';
 
 @Injectable()
 export class SyncBlocksWorker {
-  private static CHAIN_ID = 'QmeehjqATVaC4ReXxwbw4DQLbEdEAo8SmTBVzZz8s5ZV5F';
-  private static batchSize = process.env.BATCH_SIZE
-    ? parseInt(process.env.BATCH_SIZE)
-    : 100;
+  private static batchSize = 2000;
 
   constructor(
     private readonly queryBus: QueryBus,
@@ -35,7 +33,7 @@ export class SyncBlocksWorker {
 
     try {
       chain = await this.queryBus.execute<ChainQuery, Chain>(
-        new ChainQuery(SyncBlocksWorker.CHAIN_ID),
+        new ChainQuery(koinos.mainChainId),
       );
     } catch (error: any) {
       // Create Chain if not yet already created
@@ -44,7 +42,7 @@ export class SyncBlocksWorker {
 
         chain = await this.commandBus.execute(
           new CreateChainCommand(
-            SyncBlocksWorker.CHAIN_ID,
+            koinos.mainChainId,
             headInfo.head_topology.id,
             headInfo.head_topology.previous,
             parseInt(headInfo.head_topology.height),
@@ -76,7 +74,7 @@ export class SyncBlocksWorker {
     // Update chain info + set syncing flag
     await this.commandBus.execute(
       new UpdateChainCommand(
-        SyncBlocksWorker.CHAIN_ID,
+        koinos.mainChainId,
         headInfo.head_topology.id,
         headInfo.head_topology.previous,
         parseInt(headInfo.head_topology.height),
@@ -118,7 +116,7 @@ export class SyncBlocksWorker {
 
     await this.commandBus.execute(
       new UpdateChainCommand(
-        SyncBlocksWorker.CHAIN_ID,
+        koinos.mainChainId,
         headInfo.head_topology.id,
         headInfo.head_topology.previous,
         parseInt(headInfo.head_topology.height),
