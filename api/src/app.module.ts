@@ -8,8 +8,9 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ScheduleModule } from '@nestjs/schedule';
 import { WorkersModule } from '@koiner/workers/workers.module';
 import { ContractsModule } from '@koiner/contracts/contracts.module';
+import { SyncController } from '@koiner/sync.controller';
 
-if (process.env.APP_ENV === 'local') {
+if (process.env.APP_ENV !== 'prod') {
   console.log('Known entity types:');
   console.log(
     config.database.entities
@@ -35,5 +36,6 @@ if (process.env.APP_ENV === 'local') {
     ContractsModule,
     WorkersModule,
   ],
+  controllers: [SyncController],
 })
 export class AppModule {}
