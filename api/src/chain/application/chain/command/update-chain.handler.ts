@@ -24,6 +24,7 @@ export class UpdateChainHandler implements ICommandHandler<UpdateChainCommand> {
       lastIrreversibleBlock: command.lastIrreversibleBlock,
       lastSyncedBlock: command.lastSyncedBlock,
       syncing: command.syncing,
+      stopped: command.stopped ?? false,
     });
 
     await this.writeRepository.save(chain);

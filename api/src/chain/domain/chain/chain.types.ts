@@ -5,12 +5,12 @@ export interface CreateChainProps {
   headTopology: BlockTopology;
   lastIrreversibleBlock: number;
   syncing: boolean;
-  stopped: boolean;
   lastSyncedBlock: number;
 }
 
 export interface ChainProps extends CreateChainProps {
   stats: ChainStatistics;
+  stopped: boolean;
 }
 
 export interface UpdateChainProps {

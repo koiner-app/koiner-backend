@@ -7,5 +7,6 @@ export class UpdateChainCommand {
     public readonly lastIrreversibleBlock: number,
     public readonly lastSyncedBlock: number,
     public readonly syncing: boolean,
+    public readonly stopped?: boolean,
   ) {}
 }

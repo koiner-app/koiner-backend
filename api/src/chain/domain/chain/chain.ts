@@ -16,6 +16,7 @@ export class Chain extends AggregateRoot<ChainProps> {
     const props: ChainProps = {
       ...create,
       stats: ChainStatistics.create(),
+      stopped: false,
     };
 
     const chain = new Chain({ id, props });
