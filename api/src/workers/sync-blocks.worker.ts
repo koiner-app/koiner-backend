@@ -26,7 +26,7 @@ export class SyncBlocksWorker {
 
   private readonly logger = new Logger(SyncBlocksWorker.name);
 
-  @Cron(CronExpression.EVERY_10_SECONDS)
+  // @Cron(CronExpression.EVERY_10_SECONDS)
   async handleCron() {
     this.logger.debug('Called every 10 seconds');
 
