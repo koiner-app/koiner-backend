@@ -7,12 +7,12 @@ export class AddressSchema extends EntityBaseSchema {
   @Column({ length: 34 })
   readonly id: string;
 
-  @Column({ type: 'smallint' })
+  @Column({ type: 'bigint' })
   readonly contract_count: number;
 
-  @Column({ type: 'smallint' })
+  @Column({ type: 'bigint' })
   readonly operation_count: number;
 
-  @Column({ type: 'smallint' })
+  @Column({ type: 'bigint' })
   readonly transaction_count: number;
 }
