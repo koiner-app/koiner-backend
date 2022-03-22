@@ -11,7 +11,6 @@ import { Block, Chain } from '@koiner/chain/domain';
 import { NotFoundException } from '@appvise/domain';
 import { BlocksQuery } from '@koiner/chain/application/block/query';
 import { SearchResponse, SortDirection } from '@appvise/search';
-import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class SyncBlocksWorker {
@@ -26,9 +25,8 @@ export class SyncBlocksWorker {
 
   private readonly logger = new Logger(SyncBlocksWorker.name);
 
-  // @Cron(CronExpression.EVERY_10_SECONDS)
-  async handleCron() {
-    this.logger.debug('Called every 10 seconds');
+  async sync() {
+    this.logger.debug('Start syncing');
 
     let chain: Chain | undefined;
     let headInfo;
@@ -86,19 +84,16 @@ export class SyncBlocksWorker {
       ),
     );
 
-    const endBlock =
-      parseInt(chain.lastSyncedBlock.toString()) + SyncBlocksWorker.batchSize;
+    const startBlock = parseInt(chain.lastSyncedBlock.toString()) + 1;
+    const endBlock = startBlock + SyncBlocksWorker.batchSize;
 
     // Sync next x blocks
     this.logger.debug(
-      `Start syncing next batch of ${SyncBlocksWorker.batchSize} blocks, from ${chain.lastSyncedBlock} to ${endBlock}`,
+      `Start syncing next batch of ${SyncBlocksWorker.batchSize} blocks, from ${startBlock} to ${endBlock}`,
     );
 
     await this.commandBus.execute(
-      new SyncBlocksCommand(
-        chain.lastSyncedBlock,
-        SyncBlocksWorker.batchSize + 1, // TODO: Fix + 1 count bug
-      ),
+      new SyncBlocksCommand(startBlock, SyncBlocksWorker.batchSize),
     );
 
     // Get highest synced block
@@ -132,7 +127,7 @@ export class SyncBlocksWorker {
     );
 
     this.logger.debug(
-      `Done syncing batch of ${SyncBlocksWorker.batchSize} blocks, from ${chain.lastSyncedBlock} to ${lastSyncedBlockHeight}`,
+      `Done syncing batch of ${SyncBlocksWorker.batchSize} blocks, from ${startBlock} to ${lastSyncedBlockHeight}`,
     );
   }
 }
