@@ -6,6 +6,9 @@ import {
   Block,
   BlockReadRepository,
   BlockWriteRepository,
+  Chain,
+  ChainReadRepository,
+  ChainWriteRepository,
   ContractOperation,
   ContractOperationReadRepository,
   ContractOperationWriteRepository,
@@ -26,28 +29,29 @@ import {
 } from '@koiner/chain/domain';
 import { BlockSchema, BlockSchemaFactory } from './block';
 import {
-  OperationSchema,
-  TransactionSchema,
-  TransactionSchemaFactory,
-} from './transaction';
-import { BlockReadTypeormRepository } from './block/block.read.typeorm.repository';
-import {
   AddressSchema,
   AddressSchemaFactory,
-} from '@koiner/chain/persistence/typeorm/address';
-import { AddressWriteTypeormRepository } from '@koiner/chain/persistence/typeorm/address/address.write.typeorm.repository';
-import { UploadContractOperationSchema } from '@koiner/chain/persistence/typeorm/operation/upload-contract-operation.schema';
-import { UploadContractOperationSchemaFactory } from '@koiner/chain/persistence/typeorm/operation/upload-contract-operation-schema.factory';
-import { OperationSchemaFactory } from '@koiner/chain/persistence/typeorm/operation/operation-schema.factory';
-import { ContractOperationSchema } from '@koiner/chain/persistence/typeorm/operation/contract-operation.schema';
-import { ContractOperationSchemaFactory } from '@koiner/chain/persistence/typeorm/operation/contract-operation-schema.factory';
-import { SystemContractOperationSchema } from '@koiner/chain/persistence/typeorm/operation/system-contract-operation.schema';
-import { SystemContractOperationSchemaFactory } from '@koiner/chain/persistence/typeorm/operation/system-contract-operation-schema.factory';
-import { SystemCallOperationSchemaFactory } from '@koiner/chain/persistence/typeorm/operation/system-call-operation-schema.factory';
-import { SystemCallOperationSchema } from '@koiner/chain/persistence/typeorm/operation/system-call-operation.schema';
+  AddressWriteTypeormRepository,
+  ChainSchema,
+  ChainSchemaFactory,
+  ContractOperationSchema,
+  ContractOperationSchemaFactory,
+  OperationSchema,
+  OperationSchemaFactory,
+  SystemCallOperationSchema,
+  SystemCallOperationSchemaFactory,
+  SystemContractOperationSchema,
+  SystemContractOperationSchemaFactory,
+  TransactionSchema,
+  TransactionSchemaFactory,
+  UploadContractOperationSchema,
+  UploadContractOperationSchemaFactory,
+} from '@koiner/chain/persistence/typeorm';
+import { BlockReadTypeormRepository } from './block/block.read.typeorm.repository';
 
 const addressSchemaFactory = new AddressSchemaFactory(Address, AddressSchema);
 const blockSchemaFactory = new BlockSchemaFactory(Block, BlockSchema);
+const chainSchemaFactory = new ChainSchemaFactory(Chain, ChainSchema);
 const transactionSchemaFactory = new TransactionSchemaFactory(
   Transaction,
   TransactionSchema,
@@ -96,6 +100,18 @@ export default [
     BlockWriteRepository,
     BlockSchema,
     blockSchemaFactory,
+  ),
+
+  // Chain
+  TypeormRepositoryProvider.provide(
+    ChainReadRepository,
+    ChainSchema,
+    chainSchemaFactory,
+  ),
+  TypeormRepositoryProvider.provide(
+    ChainWriteRepository,
+    ChainSchema,
+    chainSchemaFactory,
   ),
 
   // Transaction

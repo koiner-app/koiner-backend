@@ -1,15 +1,19 @@
-import { AddressSchema } from './address/address.schema';
-import { BlockSchema } from './block/block.schema';
-import { TransactionSchema } from './transaction/transaction.schema';
-import { OperationSchema } from './operation/operation.schema';
-import { ContractOperationSchema } from './operation/contract-operation.schema';
-import { SystemCallOperationSchema } from './operation/system-call-operation.schema';
-import { SystemContractOperationSchema } from './operation/system-contract-operation.schema';
-import { UploadContractOperationSchema } from './operation/upload-contract-operation.schema';
+import { AddressSchema } from './address';
+import { BlockSchema } from './block';
+import { ChainSchema } from './chain';
+import { TransactionSchema } from './transaction';
+import {
+  OperationSchema,
+  ContractOperationSchema,
+  SystemCallOperationSchema,
+  SystemContractOperationSchema,
+  UploadContractOperationSchema,
+} from './operation';
 
 export default [
   AddressSchema,
   BlockSchema,
+  ChainSchema,
   TransactionSchema,
 
   // Operation

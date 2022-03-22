@@ -6,6 +6,10 @@ import BlockCommands from './block/command';
 import BlockEventHandlers from './block/event';
 import BlockQueries from './block/query';
 
+import ChainCommands from './chain/command';
+import ChainEventHandlers from './chain/event';
+import ChainQueries from './chain/query';
+
 import OperationCommands from './operation/command';
 import OperationQueries from './operation/query';
 
@@ -21,6 +25,10 @@ export default [
   ...BlockCommands.handlers,
   ...BlockEventHandlers,
   ...BlockQueries.handlers,
+
+  ...ChainCommands.handlers,
+  ...ChainEventHandlers,
+  ...ChainQueries.handlers,
 
   ...OperationCommands.handlers,
   ...OperationQueries.handlers,
