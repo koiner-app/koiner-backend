@@ -15,7 +15,9 @@ import { koinos } from '@config';
 
 @Injectable()
 export class SyncBlocksWorker {
-  private static batchSize = 2000;
+  private static batchSize = process.env.BATCH_SIZE
+    ? parseInt(process.env.BATCH_SIZE)
+    : 250;
 
   constructor(
     private readonly queryBus: QueryBus,
