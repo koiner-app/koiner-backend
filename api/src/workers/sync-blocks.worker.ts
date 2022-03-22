@@ -15,7 +15,9 @@ import { SearchResponse, SortDirection } from '@appvise/search';
 @Injectable()
 export class SyncBlocksWorker {
   private static CHAIN_ID = 'QmeehjqATVaC4ReXxwbw4DQLbEdEAo8SmTBVzZz8s5ZV5F';
-  private static batchSize = 100;
+  private static batchSize = process.env.BATCH_SIZE
+    ? parseInt(process.env.BATCH_SIZE)
+    : 10;
 
   constructor(
     private readonly queryBus: QueryBus,
