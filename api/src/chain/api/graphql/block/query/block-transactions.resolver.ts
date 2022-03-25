@@ -11,7 +11,7 @@ export class BlockTransactionsResolver {
 
   @ResolveField(() => TransactionsConnection)
   async transactions(
-    @Parent() parent: BlockNode,
+    @Parent() block: BlockNode,
     @Args() request: TransactionsRequest,
     @SelectionSet() selectionSet,
   ): Promise<TransactionsConnection> {
@@ -19,8 +19,7 @@ export class BlockTransactionsResolver {
       request.filter = {};
     }
 
-    // TODO: Make NumberFilter work
-    // request.filter.blockHeight = { equals: block.header.height.toString() };
+    request.filter.blockHeight = { equals: block.header.height };
 
     return this.transactionsResolver.execute(request, selectionSet);
   }
