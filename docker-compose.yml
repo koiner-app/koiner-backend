@@ -61,26 +61,6 @@ services:
     volumes:
       - ./pgdata:/var/lib/postgresql/data
 
-  pgadmin:
-    image: dpage/pgadmin4
-    restart: always
-    container_name: nest-pgadmin4
-    ports:
-      - 8080:80
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
-      - PGADMIN_LISTEN_PORT=${PGADMIN_LISTEN_PORT}
-      - VIRTUAL_PORT=8080
-      - VIRTUAL_HOST=pgadmin.docker
-    volumes:
-      - ./pgadmin-data:/var/lib/pgadmin
-    depends_on:
-      - postgres
-    networks:
-      - webproxy
-      - default
-
 networks:
   default:
   webproxy:
