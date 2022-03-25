@@ -8,7 +8,7 @@ import {
 } from '@koiner/chain/application/chain/command';
 import { ChainQuery } from '@koiner/chain/application/chain/query';
 import { Block, Chain } from '@koiner/chain/domain';
-import { NotFoundException } from '@appvise/domain';
+import { DateVO, NotFoundException } from '@appvise/domain';
 import { BlocksQuery } from '@koiner/chain/application/block/query';
 import { SearchResponse, SortDirection } from '@appvise/search';
 import { koinos } from '@config';
@@ -55,13 +55,22 @@ export class SyncBlocksWorker {
         );
 
         // TODO: Add first block
-        // Add 0/first block
+        // Add 0/first block to match previous foreign key
       }
     }
 
     if (!chain || chain.syncing || chain.stopped) {
-      console.log('Do not sync');
-      return;
+      if (
+        chain.updatedAt.value.getTime() >
+        DateVO.now().subtract(0, 5).value.getTime()
+      ) {
+        // Only stop if we are still within timeout window
+        console.log('Do not sync');
+
+        return;
+      }
+
+      // TODO: Revert last block because it probably failed to be processed
     }
 
     if (!headInfo) {
