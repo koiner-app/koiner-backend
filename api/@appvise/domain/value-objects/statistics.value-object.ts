@@ -26,7 +26,7 @@ export class Statistics<
           );
         }
 
-        this.props[key] = parseInt(this.props[key]) + parseInt(value);
+        this.props[key] += value;
       }
     });
   }
