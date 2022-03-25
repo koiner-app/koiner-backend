@@ -1,27 +1,39 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { FilterType } from '@appvise/search';
-import { StringFilterInput } from '@appvise/graphql';
+import { NumericFilterInput, StringFilterInput } from '@appvise/graphql';
 
 @InputType()
 export class TransactionsFilter implements FilterType {
-  @Field((type) => StringFilterInput, { nullable: true })
+  @Field(() => StringFilterInput, { nullable: true })
   search?: StringFilterInput;
 
-  @Field((type) => StringFilterInput, { nullable: true })
+  @Field(() => StringFilterInput, { nullable: true })
   id?: StringFilterInput;
 
-  @Field((type) => StringFilterInput, { nullable: true })
-  blockHeight?: StringFilterInput;
+  @Field(() => NumericFilterInput, { nullable: true })
+  blockHeight?: NumericFilterInput;
 
-  @Field((type) => StringFilterInput, { nullable: true })
+  @Field(() => StringFilterInput, { nullable: true })
+  rcLimit?: StringFilterInput;
+
+  @Field(() => StringFilterInput, { nullable: true })
+  nonce?: StringFilterInput;
+
+  @Field(() => StringFilterInput, { nullable: true })
   payer?: StringFilterInput;
 
-  @Field((type) => [TransactionsFilter], {
+  @Field(() => NumericFilterInput, { nullable: true })
+  transactionIndex?: NumericFilterInput;
+
+  @Field(() => NumericFilterInput, { nullable: true })
+  operationCount?: NumericFilterInput;
+
+  @Field(() => [TransactionsFilter], {
     nullable: true,
   })
   AND?: TransactionsFilter[];
 
-  @Field((type) => [TransactionsFilter], {
+  @Field(() => [TransactionsFilter], {
     nullable: true,
   })
   OR?: TransactionsFilter[];
