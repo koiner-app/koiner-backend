@@ -6,6 +6,7 @@ import {
 import { ContractOperationNode } from '@koiner/chain/api/graphql/operation/dto/contract-operation.node';
 import { Krc20OperationNode } from '@koiner/contracts/api/graphql/krc20/dto/krc20-operation.node';
 import { ContractOperationDetailsUnion } from '@koiner/contracts/api/graphql/contract/dto/contract-operation.union';
+import { UnknownContractOperationNode } from '@koiner/contracts/api/graphql/contract/dto/unknown-contract-operation.node';
 
 @Resolver(() => ContractOperationNode)
 export class ContractOperationDetailsResolver {
@@ -13,7 +14,7 @@ export class ContractOperationDetailsResolver {
     private readonly krc20OperationReadRepository: Krc20OperationReadRepository,
   ) {}
 
-  @ResolveField(() => ContractOperationDetailsUnion)
+  @ResolveField(() => ContractOperationDetailsUnion, { nullable: true })
   async details(
     @Parent() parent: ContractOperationNode,
   ): Promise<typeof ContractOperationDetailsUnion> {
@@ -28,5 +29,7 @@ export class ContractOperationDetailsResolver {
         console.log('Error', error);
       }
     }
+
+    return new UnknownContractOperationNode();
   }
 }
