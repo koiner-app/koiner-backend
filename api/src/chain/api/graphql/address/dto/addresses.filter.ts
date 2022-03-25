@@ -1,24 +1,30 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { FilterType } from '@appvise/search';
-import { StringFilterInput } from '@appvise/graphql';
+import { NumericFilterInput, StringFilterInput } from '@appvise/graphql';
 
 @InputType()
 export class AddressesFilter implements FilterType {
-  @Field((type) => StringFilterInput, { nullable: true })
+  @Field(() => StringFilterInput, { nullable: true })
   search?: StringFilterInput;
 
-  @Field((type) => StringFilterInput, { nullable: true })
-  blockHeight?: StringFilterInput;
+  @Field(() => StringFilterInput, { nullable: true })
+  id?: StringFilterInput;
 
-  @Field((type) => StringFilterInput, { nullable: true })
-  signer?: StringFilterInput;
+  @Field(() => NumericFilterInput, { nullable: true })
+  contractCount?: NumericFilterInput;
 
-  @Field((type) => [AddressesFilter], {
+  @Field(() => NumericFilterInput, { nullable: true })
+  operationCount?: NumericFilterInput;
+
+  @Field(() => NumericFilterInput, { nullable: true })
+  transactionCount?: NumericFilterInput;
+
+  @Field(() => [AddressesFilter], {
     nullable: true,
   })
   AND?: AddressesFilter[];
 
-  @Field((type) => [AddressesFilter], {
+  @Field(() => [AddressesFilter], {
     nullable: true,
   })
   OR?: AddressesFilter[];
