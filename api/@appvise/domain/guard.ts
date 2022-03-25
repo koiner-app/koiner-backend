@@ -76,4 +76,17 @@ export class Guard {
 
     return valueLength === length;
   }
+
+  /**
+   * Checks minimum value of a provided number
+   */
+  static isGreatherThan(value: number, minValue: number): boolean {
+    if (Guard.isEmpty(value)) {
+      throw new Error(
+        'Cannot check min value of a value. Provided value is empty',
+      );
+    }
+
+    return value > minValue;
+  }
 }
