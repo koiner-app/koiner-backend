@@ -29,40 +29,47 @@ export class QueryHelper {
             }),
           );
         } else {
-          // Get sub filter
-          let where: string | undefined;
-          let parameters: ObjectLiteral | undefined;
+          enum filterTypes {
+            'equals' = '=',
+            'contains' = 'LIKE',
+            'lt' = '<',
+            'lte' = '<=',
+            'gt' = '>',
+            'gte' = '>=',
+          }
 
-          // TODO: Add filtering for all filter types
-          if (
-            filter['equals'] != null ||
-            filter['contains'] != null
-            // (filter instanceof StringFilter) ||
-            // (filter instanceof NumericFilter) ||
-            // (filter instanceof BooleanFilter)
-          ) {
-            // Convert filter keys because field names are in snake case
-            const snakeKey = camelToSnakeCase(key);
+          let selectedFilterType: string | null = null;
+          let filterValue = null;
 
-            // Parameter must be unique
-            const paramName = `${snakeKey}_${Math.round(
-              Math.random() * 100000000,
-            )}`;
-
-            if (filter['equals']) {
-              where = `${builder.alias}.${snakeKey} = :${paramName}`;
-              parameters = { [paramName]: filter['equals'] };
-            } else if (filter['contains']) {
-              where = `${builder.alias}.${snakeKey} LIKE :${paramName}`;
-              parameters = { [paramName]: `%${filter['contains']}%` };
-            } else {
-              throw new Error('Non-equals filter not implemented yet');
+          for (const filterType in filterTypes) {
+            if (filter[filterType] != null) {
+              selectedFilterType = filterType;
+              filterValue = filter[filterType];
             }
+          }
 
-            qb.andWhere(where, parameters);
-          } else {
+          if (selectedFilterType == null && filterValue == null) {
             throw new Error(`Unknown filter type: ${filter.constructor.name}`);
           }
+
+          // Convert filter keys because field names are in snake case
+          const snakeKey = camelToSnakeCase(key);
+
+          // Parameter must be unique
+          const paramName = `${snakeKey}_${Math.round(
+            Math.random() * 100000000,
+          )}`;
+
+          if (selectedFilterType === 'contains') {
+            filterValue = `%${filterValue}%`;
+          }
+
+          const operator = filterTypes[selectedFilterType];
+
+          const where = `${builder.alias}.${snakeKey} ${operator} :${paramName}`;
+          const parameters: ObjectLiteral = { [paramName]: filterValue };
+
+          qb.andWhere(where, parameters);
         }
       }
     });
