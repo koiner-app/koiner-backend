@@ -9,9 +9,6 @@ async function bootstrap() {
   // app.use(morgan('tiny'));
 
   app.useGlobalPipes(new ValidationPipe());
-  app.enableCors({
-    origin: ['http://web.docker:3000', 'http://localhost:8081'],
-  });
 
   // BigInt is returned as string. Use this workaround for parsing them as ints
   // See: https://github.com/typeorm/typeorm/issues/2400
