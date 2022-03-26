@@ -1,6 +1,6 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
-import { OperationDetailsUnion } from '@koiner/chain/api/graphql/transaction/dto/operation.union';
-import { OperationNode } from '@koiner/chain/api/graphql/transaction/dto/operation.node';
+import { OperationDetailsUnion } from '@koiner/chain/api/graphql/operation/dto/operation.union';
+import { OperationNode } from '@koiner/chain/api/graphql/operation/dto/operation.node';
 import {
   ContractOperationReadRepository,
   OperationType,

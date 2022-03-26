@@ -2,20 +2,20 @@ import { Field, ObjectType } from '@nestjs/graphql';
 import { Transaction } from '@koiner/chain/domain';
 import { BaseNode } from '@appvise/graphql';
 import { TransactionHeaderField } from '@koiner/chain/api/graphql/transaction/dto/transaction-header.field';
-import { OperationNode } from '@koiner/chain/api/graphql/transaction/dto/operation.node';
+import { OperationNode } from '@koiner/chain/api/graphql/operation/dto/operation.node';
 
 @ObjectType('Transaction')
 export class TransactionNode extends BaseNode {
   @Field()
   blockHeight: number;
 
-  @Field((type) => TransactionHeaderField)
+  @Field(() => TransactionHeaderField)
   header: TransactionHeaderField;
 
   @Field()
   signature: string;
 
-  @Field((type) => [OperationNode])
+  @Field(() => [OperationNode])
   operations: OperationNode[];
 
   @Field()

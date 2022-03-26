@@ -1,18 +1,23 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Operation } from '@koiner/chain/domain';
+import { Operation, OperationType } from '@koiner/chain/domain';
 import { BaseNode } from '@appvise/graphql';
-import { OperationType } from '@koiner/chain/domain';
-import { OperationDetailsUnion } from '@koiner/chain/api/graphql/transaction/dto/operation.union';
+import { OperationDetailsUnion } from './operation.union';
 
 @ObjectType('Operation')
 export class OperationNode extends BaseNode {
   @Field()
   index: number;
 
-  @Field((type) => OperationType)
+  @Field(() => OperationType)
   type: OperationType;
 
-  @Field((type) => OperationDetailsUnion)
+  @Field()
+  blockHeight: number;
+
+  @Field()
+  transactionId: string;
+
+  @Field(() => OperationDetailsUnion)
   details: typeof OperationDetailsUnion;
 
   constructor(entity: Operation) {
@@ -20,5 +25,7 @@ export class OperationNode extends BaseNode {
 
     this.index = entity.operationIndex;
     this.type = entity.type;
+    this.blockHeight = entity.blockHeight;
+    this.transactionId = entity.transactionId.value;
   }
 }

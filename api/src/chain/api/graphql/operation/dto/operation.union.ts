@@ -1,9 +1,9 @@
 import { createUnionType } from '@nestjs/graphql';
-import { UploadContractOperationNode } from '@koiner/chain/api/graphql/operation/dto/upload-contract-operation.node';
-import { ContractOperationNode } from '@koiner/chain/api/graphql/operation/dto/contract-operation.node';
 import { OperationType } from '@koiner/chain/domain';
-import { SystemCallOperationNode } from '@koiner/chain/api/graphql/operation/dto/system-call-operation.node';
-import { SystemContractOperationNode } from '@koiner/chain/api/graphql/operation/dto/system-contract-operation.node';
+import { UploadContractOperationNode } from './upload-contract-operation.node';
+import { ContractOperationNode } from './contract-operation.node';
+import { SystemCallOperationNode } from './system-call-operation.node';
+import { SystemContractOperationNode } from './system-contract-operation.node';
 
 export const OperationDetailsUnion = createUnionType({
   name: 'OperationDetailsUnion',
