@@ -9,6 +9,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { WorkersModule } from '@koiner/workers/workers.module';
 import { ContractsModule } from '@koiner/contracts/contracts.module';
 import { SyncController } from '@koiner/sync.controller';
+import { IntegrationModule } from '@koiner/integration/integration.module';
 
 if (process.env.APP_ENV !== 'prod') {
   console.log('Known entity types:');
@@ -35,6 +36,7 @@ if (process.env.APP_ENV !== 'prod') {
     ChainModule,
     ContractsModule,
     WorkersModule,
+    IntegrationModule,
   ],
   controllers: [SyncController],
 })
