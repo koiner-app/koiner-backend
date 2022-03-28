@@ -28,7 +28,7 @@ export class SyncBlocksWorker {
   private readonly logger = new Logger(SyncBlocksWorker.name);
 
   async sync() {
-    this.logger.debug('Start syncing');
+    this.logger.debug('Start syncing!');
 
     let chain: Chain | undefined;
     let headInfo;
