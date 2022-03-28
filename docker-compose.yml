@@ -39,9 +39,6 @@ services:
       - DB_NAME=${DB_NAME}
       - DB_PORT=${DB_PORT}
       - POSTGRES_SYNC=false
-      - JWT_SECRET=${JWT_SECRET}
-      - APP_EXPIRES=${APP_EXPIRES}
-      - APP_PORT=${APP_PORT}
 
   postgres:
     image: postgres
