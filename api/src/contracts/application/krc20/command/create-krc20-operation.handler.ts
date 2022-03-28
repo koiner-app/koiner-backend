@@ -20,6 +20,7 @@ export class CreateKrc20OperationHandler
     const operation = this.eventPublisher.mergeObjectContext(
       Krc20Operation.create(
         {
+          contractId: new KoinosAddressId(command.contractId),
           name: command.name,
           to: new KoinosAddressId(command.to),
           value: command.value,

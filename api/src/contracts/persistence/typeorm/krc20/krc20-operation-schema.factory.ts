@@ -18,6 +18,7 @@ export class Krc20OperationSchemaFactory extends EntitySchemaFactory<
     const id = new UUID(entitySchema.id);
 
     const props: Krc20OperationProps = {
+      contractId: new KoinosAddressId(entitySchema.contract_id),
       name: entitySchema.name,
       from: entitySchema.from
         ? new KoinosAddressId(entitySchema.from)
@@ -35,6 +36,7 @@ export class Krc20OperationSchemaFactory extends EntitySchemaFactory<
     const props = entity.getPropsCopy();
 
     return {
+      contract_id: props.contractId.value,
       name: props.name,
       from: props.from ? props.from.value : undefined,
       to: props.to.value,

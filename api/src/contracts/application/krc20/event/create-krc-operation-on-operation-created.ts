@@ -30,6 +30,7 @@ export class CreateKrcOperationOnOperationCreated
       await this.commandBus.execute(
         new CreateKrc20OperationCommand(
           event.operationId,
+          event.contractId,
           decodedOperation.name,
           <string>decodedOperation.args.to,
           <string>decodedOperation.args.value,

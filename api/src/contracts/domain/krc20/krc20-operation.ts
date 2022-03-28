@@ -1,7 +1,7 @@
 import { AggregateRoot, UUID } from '@appvise/domain';
 import {
-  Krc20OperationProps,
   CreateKrc20OperationProps,
+  Krc20OperationProps,
 } from './krc20-operation.types';
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
 
@@ -13,11 +13,13 @@ export class Krc20Operation extends AggregateRoot<Krc20OperationProps> {
       ...create,
     };
 
-    const operation = new Krc20Operation({ id, props });
-
     // operation.apply(new Krc20OperationCreated(id.value, props.header.signer));
 
-    return operation;
+    return new Krc20Operation({ id, props });
+  }
+
+  get contractId(): KoinosAddressId {
+    return this.props.contractId;
   }
 
   get name(): string {
