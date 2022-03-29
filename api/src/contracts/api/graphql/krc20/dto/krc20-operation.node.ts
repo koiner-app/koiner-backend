@@ -7,8 +7,8 @@ export class Krc20OperationNode extends BaseNode {
   @Field()
   operation: string;
 
-  @Field()
-  from: string;
+  @Field({ nullable: true })
+  from?: string;
 
   @Field()
   to: string;
@@ -23,7 +23,7 @@ export class Krc20OperationNode extends BaseNode {
     super(entity);
 
     this.operation = entity.name;
-    this.from = entity.from.value;
+    this.from = entity.from ? entity.from.value : undefined;
     this.to = entity.from.value;
     this.value = entity.value;
   }
