@@ -3,12 +3,12 @@ import { StringFilter } from '@appvise/search';
 
 @InputType('StringFilter')
 export class StringFilterInput implements StringFilter {
-  @Field((type) => String, {
+  @Field(() => String, {
     nullable: true,
   })
   equals?: string;
 
-  @Field((type) => String, {
+  @Field(() => String, {
     nullable: true,
   })
   contains?: string;

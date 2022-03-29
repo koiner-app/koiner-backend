@@ -3,27 +3,27 @@ import { NumericFilter } from '@appvise/search';
 
 @InputType('NumericFilter')
 export class NumericFilterInput implements NumericFilter {
-  @Field((type) => Number, {
+  @Field(() => Number, {
     nullable: true,
   })
   equals?: number;
 
-  @Field((type) => Number, {
+  @Field(() => Number, {
     nullable: true,
   })
   lt?: number;
 
-  @Field((type) => Number, {
+  @Field(() => Number, {
     nullable: true,
   })
   lte?: number;
 
-  @Field((type) => Number, {
+  @Field(() => Number, {
     nullable: true,
   })
   gt?: number;
 
-  @Field((type) => Number, {
+  @Field(() => Number, {
     nullable: true,
   })
   gte?: number;

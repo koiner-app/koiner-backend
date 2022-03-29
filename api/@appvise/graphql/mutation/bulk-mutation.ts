@@ -35,7 +35,7 @@ export function BulkMutation<TEntity, TNode, TQuery, TInput>(
 
   @InputType(`${queryNameClass}Input`)
   class BulkMutationInputClass {
-    @Field((type) => [inputType])
+    @Field(() => [inputType])
     @IsArray()
     @TypeDecorator(() => inputType)
     @ValidateNested({ each: true })
@@ -44,13 +44,13 @@ export function BulkMutation<TEntity, TNode, TQuery, TInput>(
 
   @ObjectType(`${queryNameClass}Result`)
   class BulkMutationResult {
-    @Field((type) => Int)
+    @Field(() => Int)
     index: number;
 
-    @Field((type) => nodeType, { nullable: true })
+    @Field(() => nodeType, { nullable: true })
     node?: TNode;
 
-    @Field((type) => BulkMutationError, { nullable: true })
+    @Field(() => BulkMutationError, { nullable: true })
     error?: BulkMutationError;
 
     constructor(index: number, node?: TNode, error?: BulkMutationError) {
@@ -62,7 +62,7 @@ export function BulkMutation<TEntity, TNode, TQuery, TInput>(
 
   @ObjectType(`${queryNameClass}Response`)
   class BulkMutationResponse {
-    @Field((type) => [BulkMutationResult])
+    @Field(() => [BulkMutationResult])
     results: BulkMutationResult[];
 
     @Field(() => Int)
@@ -76,7 +76,7 @@ export function BulkMutation<TEntity, TNode, TQuery, TInput>(
       private readonly queryBus: QueryBus,
     ) {}
 
-    @Mutation((returns) => BulkMutationResponse, { name: queryName })
+    @Mutation(() => BulkMutationResponse, { name: queryName })
     async execute(
       @Args('data', { type: () => BulkMutationInputClass })
       input: BulkMutationInputClass,

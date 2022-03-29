@@ -12,10 +12,10 @@ export function Edge<TEntity, TNode>(
 ): Type<IEdgeType<TNode>> {
   @ObjectType({ isAbstract: true })
   abstract class EdgeType {
-    @Field((type) => String)
+    @Field(() => String)
     cursor: string;
 
-    @Field((type) => nodeRef)
+    @Field(() => nodeRef)
     node: TNode;
 
     protected constructor(searchResult: SearchResult<TEntity>, node: TNode) {

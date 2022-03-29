@@ -25,16 +25,16 @@ export function Connection<TEntity, TNode, TEdge extends IEdgeType<TNode>>(
 
   @ObjectType({ isAbstract: true })
   abstract class ConnectionType implements IConnectionType<TNode, TEdge> {
-    @Field((type) => [customEdgeRef ?? generatedEdgeRef], { nullable: true })
+    @Field(() => [customEdgeRef ?? generatedEdgeRef], { nullable: true })
     edges: TEdge[];
 
-    @Field((type) => [nodeRef], { nullable: true })
+    @Field(() => [nodeRef], { nullable: true })
     nodes: TNode[];
 
-    @Field((type) => Int)
+    @Field(() => Int)
     totalCount: number;
 
-    @Field((type) => PageInfo)
+    @Field(() => PageInfo)
     pageInfo: PageInfo;
   }
 

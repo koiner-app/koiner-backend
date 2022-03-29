@@ -5,6 +5,6 @@ import { SortDirection, SortField } from '@appvise/search';
 export abstract class SortFieldInput implements SortField {
   abstract field: string;
 
-  @Field((type) => SortDirection)
+  @Field(() => SortDirection)
   direction: SortDirection;
 }
