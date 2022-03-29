@@ -22,7 +22,7 @@ export class OperationDetailsResolver {
     private readonly systemContractOperationReadRepository: SystemContractOperationReadRepository,
   ) {}
 
-  @ResolveField(() => OperationDetailsUnion)
+  @ResolveField('details', () => OperationDetailsUnion)
   async details(
     @Parent() parent: OperationNode,
   ): Promise<typeof OperationDetailsUnion> {

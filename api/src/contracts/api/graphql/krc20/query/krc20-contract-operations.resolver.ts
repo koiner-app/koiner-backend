@@ -9,7 +9,7 @@ import { Krc20OperationsResolver } from '@koiner/contracts/api/graphql/krc20/que
 export class Krc20ContractOperationsResolver {
   constructor(private krc20OperationsResolver: Krc20OperationsResolver) {}
 
-  @ResolveField(() => Krc20OperationsConnection, { name: 'operations' })
+  @ResolveField('operations', () => Krc20OperationsConnection)
   async operations(
     @Parent() contractNode: Krc20ContractNode,
     @Args() request: Krc20OperationsRequest,

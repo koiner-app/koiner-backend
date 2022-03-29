@@ -9,7 +9,7 @@ import { TransactionsResolver } from '@koiner/chain/api/graphql/transaction/quer
 export class BlockTransactionsResolver {
   constructor(private transactionsResolver: TransactionsResolver) {}
 
-  @ResolveField(() => TransactionsConnection)
+  @ResolveField('transactions', () => TransactionsConnection)
   async transactions(
     @Parent() block: BlockNode,
     @Args() request: TransactionsRequest,

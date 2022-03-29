@@ -14,7 +14,9 @@ export class ContractOperationDetailsResolver {
     private readonly krc20OperationReadRepository: Krc20OperationReadRepository,
   ) {}
 
-  @ResolveField(() => ContractOperationDetailsUnion, { nullable: true })
+  @ResolveField('details', () => ContractOperationDetailsUnion, {
+    nullable: true,
+  })
   async details(
     @Parent() parent: ContractOperationNode,
   ): Promise<typeof ContractOperationDetailsUnion> {
