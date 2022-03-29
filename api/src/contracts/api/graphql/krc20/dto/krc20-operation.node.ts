@@ -24,7 +24,7 @@ export class Krc20OperationNode extends BaseNode {
 
     this.operation = entity.name;
     this.from = entity.from ? entity.from.value : undefined;
-    this.to = entity.from.value;
+    this.to = entity.to.value;
     this.value = entity.value;
   }
 }
