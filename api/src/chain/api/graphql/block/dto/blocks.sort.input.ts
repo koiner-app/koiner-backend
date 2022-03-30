@@ -4,6 +4,6 @@ import { BlocksSortFieldEnum } from '@koiner/chain/api/graphql/block/dto/blocks.
 
 @InputType()
 export class BlocksSortInput extends SortFieldInput {
-  @Field((type) => BlocksSortFieldEnum)
+  @Field(() => BlocksSortFieldEnum)
   field: BlocksSortFieldEnum;
 }

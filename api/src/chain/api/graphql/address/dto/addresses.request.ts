@@ -8,11 +8,11 @@ import { AddressesFilter } from './addresses.filter';
 
 @ArgsType()
 export class AddressesRequest extends SearchRequestArgs {
-  @Field((type) => AddressesFilter, { nullable: true })
+  @Field(() => AddressesFilter, { nullable: true })
   filter?: AddressesFilter;
 
   @Optional()
-  @Field((type) => [AddressesSortInput], {
+  @Field(() => [AddressesSortInput], {
     nullable: true,
     defaultValue: [
       {

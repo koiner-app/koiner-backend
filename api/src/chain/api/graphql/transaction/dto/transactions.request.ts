@@ -8,11 +8,11 @@ import { TransactionsFilter } from '@koiner/chain/api/graphql/transaction/dto/tr
 
 @ArgsType()
 export class TransactionsRequest extends SearchRequestArgs {
-  @Field((type) => TransactionsFilter, { nullable: true })
+  @Field(() => TransactionsFilter, { nullable: true })
   filter?: TransactionsFilter;
 
   @Optional()
-  @Field((type) => [TransactionsSortInput], {
+  @Field(() => [TransactionsSortInput], {
     nullable: true,
     defaultValue: [
       {

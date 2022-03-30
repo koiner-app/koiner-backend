@@ -8,11 +8,11 @@ import { BlocksFilter } from '@koiner/chain/api/graphql/block/dto/blocks.filter'
 
 @ArgsType()
 export class BlocksRequest extends SearchRequestArgs {
-  @Field((type) => BlocksFilter, { nullable: true })
+  @Field(() => BlocksFilter, { nullable: true })
   filter?: BlocksFilter;
 
   @Optional()
-  @Field((type) => [BlocksSortInput], {
+  @Field(() => [BlocksSortInput], {
     nullable: true,
     defaultValue: [
       {

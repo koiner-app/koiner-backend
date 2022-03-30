@@ -6,10 +6,10 @@ import { TransactionsConnection } from '@koiner/chain/api/graphql/transaction/dt
 
 @ObjectType('Address')
 export class AddressNode extends BaseNode {
-  @Field((type) => AddressStatisticsField)
+  @Field(() => AddressStatisticsField)
   stats: AddressStatisticsField;
 
-  @Field((type) => TransactionsConnection)
+  @Field(() => TransactionsConnection)
   transactions: TransactionsConnection;
 
   constructor(entity: Address) {

@@ -8,11 +8,11 @@ import { Krc20ContractsFilter } from './krc20-contracts.filter';
 
 @ArgsType()
 export class Krc20ContractsRequest extends SearchRequestArgs {
-  @Field((type) => Krc20ContractsFilter, { nullable: true })
+  @Field(() => Krc20ContractsFilter, { nullable: true })
   filter?: Krc20ContractsFilter;
 
   @Optional()
-  @Field((type) => [Krc20ContractsSortInput], {
+  @Field(() => [Krc20ContractsSortInput], {
     nullable: true,
     defaultValue: [
       {

@@ -4,6 +4,6 @@ import { Krc20ContractsSortFieldEnum } from './krc20-contracts.sort-field.enum';
 
 @InputType()
 export class Krc20ContractsSortInput extends SortFieldInput {
-  @Field((type) => Krc20ContractsSortFieldEnum)
+  @Field(() => Krc20ContractsSortFieldEnum)
   field: Krc20ContractsSortFieldEnum;
 }

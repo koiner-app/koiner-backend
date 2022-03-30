@@ -4,6 +4,6 @@ import { TransactionsSortFieldEnum } from '@koiner/chain/api/graphql/transaction
 
 @InputType()
 export class TransactionsSortInput extends SortFieldInput {
-  @Field((type) => TransactionsSortFieldEnum)
+  @Field(() => TransactionsSortFieldEnum)
   field: TransactionsSortFieldEnum;
 }

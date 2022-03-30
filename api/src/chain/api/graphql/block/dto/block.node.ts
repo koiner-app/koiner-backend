@@ -6,7 +6,7 @@ import { TransactionsConnection } from '@koiner/chain/api/graphql/transaction/dt
 
 @ObjectType('Block')
 export class BlockNode extends BaseNode {
-  @Field((type) => BlockHeaderField)
+  @Field(() => BlockHeaderField)
   header: BlockHeaderField;
 
   @Field()
@@ -15,7 +15,7 @@ export class BlockNode extends BaseNode {
   @Field()
   transactionCount: number;
 
-  @Field((type) => TransactionsConnection)
+  @Field(() => TransactionsConnection)
   transactions: TransactionsConnection;
 
   constructor(entity: Block) {

@@ -18,10 +18,10 @@ export class ContractOperationNode extends BaseNode {
   // Used by UnionTypeResolver
   type: OperationType = OperationType.contractOperation;
 
-  @Field((type) => ContractStandardType, { nullable: true })
+  @Field(() => ContractStandardType, { nullable: true })
   contractStandardType: ContractStandardType;
 
-  @Field((type) => ContractOperationDetailsUnion)
+  @Field(() => ContractOperationDetailsUnion)
   details: typeof ContractOperationDetailsUnion;
 
   constructor(entity: ContractOperation) {
