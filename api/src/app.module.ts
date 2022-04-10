@@ -1,4 +1,5 @@
-import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ChainModule } from '@koiner/chain/chain.module';
@@ -6,10 +7,9 @@ import { ChainModule } from '@koiner/chain/chain.module';
 import * as config from '@config';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ScheduleModule } from '@nestjs/schedule';
-import { WorkersModule } from '@koiner/workers/workers.module';
 import { ContractsModule } from '@koiner/contracts/contracts.module';
-import { SyncController } from '@koiner/sync.controller';
 import { IntegrationModule } from '@koiner/integration/integration.module';
+import { SyncModule } from '@koiner/sync/sync.module';
 
 if (process.env.APP_ENV !== 'prod') {
   console.log('Known entity types:');
@@ -23,6 +23,7 @@ if (process.env.APP_ENV !== 'prod') {
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot(config.database),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -33,11 +34,13 @@ if (process.env.APP_ENV !== 'prod') {
       context: ({ req }) => ({ req }),
     }),
     ScheduleModule.forRoot(),
+
+    // App modules
     ChainModule,
     ContractsModule,
-    WorkersModule,
     IntegrationModule,
+    SyncModule,
   ],
-  controllers: [SyncController],
+  providers: [Logger],
 })
 export class AppModule {}

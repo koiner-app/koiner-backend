@@ -20,6 +20,7 @@ services:
       - postgres
     volumes:
       - ./api:/app
+      - ./logs:/var/logs
     networks:
       - webproxy
       - default
@@ -39,6 +40,9 @@ services:
       - DB_NAME=${DB_NAME}
       - DB_PORT=${DB_PORT}
       - POSTGRES_SYNC=false
+      - RABBITMQ_USER=guest
+      - RABBITMQ_PASSWORD=guest
+      - RABBITMQ_HOST=amqp:5672
 
   postgres:
     image: postgres
@@ -57,6 +61,113 @@ services:
     container_name: postgres-db
     volumes:
       - ./pgdata:/var/lib/postgresql/data
+
+  #
+  # Koinos
+  #
+  amqp:
+    image: rabbitmq:3-management
+    ports:
+      - "${AMQP_INTERFACE:-127.0.0.1}:5672:5672"
+      - "${AMQP_INTERFACE:-127.0.0.1}:15672:15672"
+
+  config:
+    build:
+      context: ./koinos/config
+      args:
+        - CONFIG_TAG=${CONFIG_TAG:-latest}
+    environment:
+      - DESCRIPTORS_TAG=${DESCRIPTORS_TAG:-master}
+    volumes:
+      - "${BASEDIR}:/koinos"
+
+  mempool:
+    image: koinos/koinos-mempool:${MEMPOOL_TAG:-latest}
+    depends_on:
+      - amqp
+      - config
+    volumes:
+      - "${BASEDIR}:/koinos"
+    command: --basedir=/koinos
+
+  block_store:
+    image: koinos/koinos-block-store:${BLOCK_STORE_TAG:-latest}
+    depends_on:
+      - amqp
+      - config
+    volumes:
+      - "${BASEDIR}:/koinos"
+    command: --basedir=/koinos
+
+  chain:
+    image: koinos/koinos-chain:${CHAIN_TAG:-latest}
+    depends_on:
+      - amqp
+      - block_store
+      - mempool
+      - config
+    volumes:
+      - "${BASEDIR}:/koinos"
+    command: --basedir=/koinos
+
+  p2p:
+    image: koinos/koinos-p2p:${P2P_TAG:-latest}
+    depends_on:
+      - amqp
+      - block_store
+      - chain
+      - config
+    volumes:
+      - "${BASEDIR}:/koinos"
+    ports:
+      - "${P2P_INTERFACE:-0.0.0.0}:8888:8888"
+    command: --basedir=/koinos
+
+  #   block_producer:
+  #      image: koinos/koinos-block-producer:${BLOCK_PRODUCER_TAG:-latest}
+  #      profiles: ["block_producer", "all"]
+  #      depends_on:
+  #         - amqp
+  #         - mempool
+  #         - chain
+  #         - config
+  #      volumes:
+  #         - "${BASEDIR}:/koinos"
+  #      command: --basedir=/koinos
+
+  jsonrpc:
+    image: koinos/koinos-jsonrpc:${JSONRPC_TAG:-latest}
+    profiles: ["jsonrpc", "all"]
+    depends_on:
+      - amqp
+      - config
+    volumes:
+      - "${BASEDIR}:/koinos"
+    ports:
+      - "${JSONRPC_INTERFACE:-0.0.0.0}:8080:8080"
+    command: --basedir=/koinos
+
+  transaction_store:
+    image: koinos/koinos-transaction-store:${TRANSACTION_STORE_TAG:-latest}
+    profiles: ["transaction_store", "all"]
+    depends_on:
+      - amqp
+      - chain
+      - config
+    volumes:
+      - "${BASEDIR}:/koinos"
+    command: --basedir=/koinos
+
+  contract_meta_store:
+    image: koinos/koinos-contract-meta-store:${CONTRACT_META_STORE_TAG:-latest}
+    profiles: ["contract_meta_store", "all"]
+    depends_on:
+      - amqp
+      - chain
+      - config
+    volumes:
+      - "${BASEDIR}:/koinos"
+    command: --basedir=/koinos
 
 networks:
   default:

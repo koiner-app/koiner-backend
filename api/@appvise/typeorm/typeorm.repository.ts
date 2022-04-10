@@ -6,7 +6,7 @@ import {
   SelectionSet,
   WriteRepository,
 } from '@appvise/domain';
-import { SearchRequest, SearchResponse } from '@appvise/search';
+import { SearchRequest, SearchResponse } from '@appvise/domain';
 import {
   EntityBaseSchema,
   EntitySchemaFactory,
@@ -39,6 +39,7 @@ export class TypeormRepository<
     this.writeRepository = new TypeormWriteRepository(
       entityModel,
       entitySchemaFactory,
+      entityType,
     );
   }
 

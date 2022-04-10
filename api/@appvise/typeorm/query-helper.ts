@@ -1,4 +1,4 @@
-import { FilterType } from '@appvise/search';
+import { FilterType } from '@appvise/domain';
 import { Brackets, SelectQueryBuilder } from 'typeorm';
 import { ObjectLiteral } from 'typeorm/common/ObjectLiteral';
 import { camelToSnakeCase } from '@appvise/typeorm/utils';
@@ -32,6 +32,7 @@ export class QueryHelper {
           enum filterTypes {
             'equals' = '=',
             'contains' = 'LIKE',
+            'excludes' = 'NOT LIKE',
             'lt' = '<',
             'lte' = '<=',
             'gt' = '>',
@@ -60,7 +61,7 @@ export class QueryHelper {
             Math.random() * 100000000,
           )}`;
 
-          if (selectedFilterType === 'contains') {
+          if (['contains', 'excludes'].includes(selectedFilterType)) {
             filterValue = `%${filterValue}%`;
           }
 

@@ -1,4 +1,9 @@
-import { Repository, ObjectLiteral, QueryFailedError } from 'typeorm';
+import {
+  Repository,
+  ObjectLiteral,
+  QueryFailedError,
+  ObjectType,
+} from 'typeorm';
 import {
   AggregateRoot,
   NotFoundException,
@@ -7,7 +12,11 @@ import {
   WriteRepository,
 } from '@appvise/domain';
 import { EntitySchemaFactory, EntityBaseSchema } from '.';
-import { convertDriverForeignKeyError } from '@appvise/typeorm/utils';
+import {
+  convertDriverForeignKeyError,
+  snakeToCamelCase,
+} from '@appvise/typeorm/utils';
+import { NotUniqueException } from '@appvise/domain';
 
 export class TypeormWriteRepository<
   TEntity extends AggregateRoot<unknown>,
@@ -20,13 +29,44 @@ export class TypeormWriteRepository<
       TEntity,
       TEntitySchema
     >,
+    protected readonly entityType: ObjectType<TEntitySchema>,
   ) {}
+
+  async existsById(id: string): Promise<boolean> {
+    const found = await this.findOneById(id);
+
+    return !!found;
+  }
 
   async findOneById(
     id: string,
     selectionSet?: SelectionSet,
   ): Promise<TEntity | undefined> {
-    const entityDocument = await this.entityModel.findOne(id);
+    // Create QueryBuilder
+    const queryBuilder = this.entityModel.createQueryBuilder(
+      this.entityType.name,
+    );
+
+    // Join with relations if selected
+    for (const relation of this.entityModel.metadata.relations) {
+      // Convert schema key to camel case
+      const camelCaseRelation = snakeToCamelCase(relation.propertyPath);
+
+      if (
+        // Ignore soft relations starting with _
+        relation.propertyPath[0] !== '_' &&
+        (!selectionSet || selectionSet.isSelected(camelCaseRelation))
+      ) {
+        queryBuilder.leftJoinAndSelect(
+          `${this.entityType.name}.${relation.propertyPath}`,
+          relation.propertyPath,
+        );
+      }
+    }
+
+    const entityDocument = await queryBuilder
+      .where(`${queryBuilder.alias}.id = :id`, { id: `${id}` })
+      .getOne();
 
     return entityDocument
       ? this.entitySchemaFactory.toDomain(entityDocument)
@@ -61,19 +101,27 @@ export class TypeormWriteRepository<
       return this.entitySchemaFactory.toDomain(result);
     } catch (error) {
       // Handle reference errors with our custom DomainException
-      if (
-        error instanceof QueryFailedError &&
-        [
-          'ER_NO_REFERENCED_ROW_2', // MySQL driver error
-          '23503', // PostGres driver error
-        ].includes(error.driverError.code)
-      ) {
-        // Find reference that failed
-        const reference = convertDriverForeignKeyError(error.driverError);
+      if (error instanceof QueryFailedError) {
+        if (
+          [
+            'ER_NO_REFERENCED_ROW_2', // MySQL driver error
+            '23503', // PostGres driver error
+          ].includes(error.driverError.code)
+        ) {
+          // Find reference that failed
+          const reference = convertDriverForeignKeyError(error.driverError);
 
-        throw new ReferenceNotFoundException(
-          `Reference in ${typeof entity}${reference} not found`,
-        );
+          throw new ReferenceNotFoundException(
+            `Reference in ${entity.constructor.name}${reference} not found`,
+          );
+        }
+
+        // Handle not unique errors
+        if (['ER_DUP_ENTRY'].includes(error.driverError.code)) {
+          throw new NotUniqueException(
+            `${entity.constructor.name} is not unique`,
+          );
+        }
       }
 
       throw error;

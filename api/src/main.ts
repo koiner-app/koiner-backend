@@ -3,9 +3,13 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import * as config from '@config';
 import * as pg from 'pg';
+import { winstonLogger } from '@koiner/winston';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: winstonLogger,
+  });
+
   // app.use(morgan('tiny'));
 
   app.useGlobalPipes(new ValidationPipe());

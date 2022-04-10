@@ -31,7 +31,6 @@ import { BlockSchema, BlockSchemaFactory } from './block';
 import {
   AddressSchema,
   AddressSchemaFactory,
-  AddressWriteTypeormRepository,
   ChainSchema,
   ChainSchemaFactory,
   ContractOperationSchema,
@@ -86,10 +85,11 @@ export default [
     AddressSchema,
     addressSchemaFactory,
   ),
-  {
-    provide: AddressWriteRepository,
-    useClass: AddressWriteTypeormRepository,
-  },
+  TypeormRepositoryProvider.provide(
+    AddressWriteRepository,
+    AddressSchema,
+    addressSchemaFactory,
+  ),
 
   // Block
   {

@@ -41,6 +41,7 @@ export class TypeormRepositoryProvider {
           return new TypeormWriteRepository<TEntity, TEntitySchema>(
             connection.getRepository(schemaType),
             schemaFactory,
+            schemaType,
           );
         }
 

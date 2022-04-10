@@ -11,10 +11,10 @@ import {
   SearchResponse,
   SearchResult,
   SortDirection,
-} from '@appvise/search';
+} from '@appvise/domain';
 import { EntityBaseSchema } from '.';
 import Paginator from '@appvise/typeorm/paginator';
-import { camelToSnakeCase } from '@appvise/typeorm/utils';
+import { camelToSnakeCase, snakeToCamelCase } from '@appvise/typeorm/utils';
 
 export class TypeormReadRepository<
   TEntity extends AggregateRoot<unknown>,
@@ -58,13 +58,14 @@ export class TypeormReadRepository<
     );
 
     // Join with relations if selected
-    // TODO: Test if joining works as expected in all scenarios
     for (const relation of this.entityModel.metadata.relations) {
+      // Convert schema key to camel case
+      const camelCaseRelation = snakeToCamelCase(relation.propertyPath);
+
       if (
         // Ignore soft relations starting with _
         relation.propertyPath[0] !== '_' &&
-        (!selectionSet ||
-          selectionSet.isSelected('nodes.' + relation.propertyPath))
+        (!selectionSet || selectionSet.isSelected('nodes.' + camelCaseRelation))
       ) {
         queryBuilder.leftJoinAndSelect(
           `${this.entityType.name}.${relation.propertyPath}`,
@@ -119,12 +120,14 @@ export class TypeormReadRepository<
     );
 
     // Join with relations if selected
-    // TODO: Test if joining works as expected in all scenarios
     for (const relation of this.entityModel.metadata.relations) {
+      // Convert schema key to camel case
+      const camelCaseRelation = snakeToCamelCase(relation.propertyPath);
+
       if (
         // Ignore soft relations starting with _
         relation.propertyPath[0] !== '_' &&
-        (!selectionSet || selectionSet.isSelected(relation.propertyPath))
+        (!selectionSet || selectionSet.isSelected(camelCaseRelation))
       ) {
         queryBuilder.leftJoinAndSelect(
           `${this.entityType.name}.${relation.propertyPath}`,
@@ -136,8 +139,6 @@ export class TypeormReadRepository<
     const entityDocument = await queryBuilder
       .where(`${queryBuilder.alias}.id = :id`, { id: `${id}` })
       .getOne();
-
-    // const entityDocument = await this.entityModel.findOne(id);
 
     return entityDocument
       ? this.entitySchemaFactory.toDomain(entityDocument)

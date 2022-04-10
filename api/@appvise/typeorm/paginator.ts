@@ -5,7 +5,7 @@ import {
   SelectQueryBuilder,
   WhereExpressionBuilder,
 } from 'typeorm';
-import { SearchRequest, SearchResponse, SortDirection } from '@appvise/search';
+import { SearchRequest, SearchResponse, SortDirection } from '@appvise/domain';
 import { EntityBaseSchema } from '@appvise/typeorm';
 import { atob, btoa, decodeByType, encodeByType } from './utils';
 

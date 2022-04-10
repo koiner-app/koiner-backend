@@ -24,8 +24,6 @@
       "@koiner/*": ["src/*"],
       "@appvise/graphql": ["@appvise/graphql"],
       "@appvise/graphql/*": ["@appvise/graphql/*"],
-      "@appvise/domain": ["@appvise/domain"],
-      "@appvise/domain/*": ["@appvise/domain/*"],
       "@appvise/search": ["@appvise/search"],
       "@appvise/search/*": ["@appvise/search/*"],
       "@appvise/typeorm": ["@appvise/typeorm"],

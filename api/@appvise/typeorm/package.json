@@ -7,7 +7,6 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@appvise/domain": "*",
-    "@appvise/search": "*",
     "typeorm": "^0.2.41"
   }
 }

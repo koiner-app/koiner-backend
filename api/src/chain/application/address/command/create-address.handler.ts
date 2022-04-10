@@ -13,7 +13,7 @@ export class CreateAddressHandler
   ) {}
 
   async execute(command: CreateAddressCommand): Promise<void> {
-    if (!(await this.writeRepository.exists(command.id))) {
+    if (!(await this.writeRepository.existsById(command.id))) {
       const address = this.eventPublisher.mergeObjectContext(
         Address.create({}, new KoinosAddressId(command.id)),
       );

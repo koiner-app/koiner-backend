@@ -2,6 +2,20 @@ export function camelToSnakeCase(str: string) {
   return str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
 }
 
+export function snakeToCamelCase(str: string) {
+  return str
+    .split('_')
+    .reduce(
+      (res, word, i) =>
+        i === 0
+          ? word.toLowerCase()
+          : `${res}${word.charAt(0).toUpperCase()}${word
+              .substr(1)
+              .toLowerCase()}`,
+      '',
+    );
+}
+
 export function atob(value: string): string {
   return Buffer.from(value, 'base64').toString();
 }
