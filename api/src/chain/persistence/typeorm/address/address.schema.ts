@@ -7,8 +7,14 @@ export class AddressSchema extends EntityBaseSchema {
   @Column({ length: 34 })
   readonly id: string;
 
+  @Column()
+  readonly is_producer: boolean;
+
+  @Column()
+  readonly rewards_received: string;
+
   @Column({ type: 'bigint' })
-  readonly contract_count: number;
+  readonly block_count: number;
 
   @Column({ type: 'bigint' })
   readonly operation_count: number;

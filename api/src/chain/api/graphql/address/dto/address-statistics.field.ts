@@ -4,7 +4,7 @@ import { AddressStatistics } from '@koiner/chain/domain';
 @ObjectType('AddressStatistics')
 export class AddressStatisticsField {
   @Field(() => Int)
-  contractCount: number;
+  blockCount: number;
 
   @Field(() => Int)
   operationCount: number;
@@ -13,7 +13,7 @@ export class AddressStatisticsField {
   transactionCount: number;
 
   constructor(stats: AddressStatistics) {
-    this.contractCount = stats.contractCount;
+    this.blockCount = stats.blockCount;
     this.operationCount = stats.operationCount;
     this.transactionCount = stats.transactionCount;
   }

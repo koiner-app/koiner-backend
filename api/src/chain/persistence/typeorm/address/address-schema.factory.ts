@@ -17,8 +17,10 @@ export class AddressSchemaFactory extends EntitySchemaFactory<
     const id = new KoinosAddressId(entitySchema.id);
 
     const props: AddressProps = {
+      isProducer: entitySchema.is_producer,
+      rewardsReceived: parseInt(entitySchema.rewards_received),
       stats: new AddressStatistics({
-        contractCount: entitySchema.contract_count,
+        blockCount: entitySchema.block_count,
         operationCount: entitySchema.operation_count,
         transactionCount: entitySchema.transaction_count,
       }),
@@ -31,8 +33,10 @@ export class AddressSchemaFactory extends EntitySchemaFactory<
     const props = entity.getPropsCopy();
 
     return {
-      contract_count: props.stats.transactionCount,
-      operation_count: props.stats.transactionCount,
+      is_producer: props.isProducer,
+      rewards_received: props.rewardsReceived.toString(),
+      block_count: props.stats.blockCount,
+      operation_count: props.stats.operationCount,
       transaction_count: props.stats.transactionCount,
     };
   }

@@ -2,7 +2,7 @@ import { CommandBus, CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CreateTransactionCommand } from '@koiner/chain/application/transaction/command';
 import { SyncTransactionsCommand } from './dto/sync-transactions.command';
 import { SyncOperationsCommand } from '@koiner/sync/application/chain/command/dto/sync-operations.command';
-import { CreateAddressCommand } from '@koiner/chain/application/address/command';
+import { CreateOrUpdateAddressCommand } from '@koiner/chain/application/address/command';
 import {
   OperationProps,
   OperationType,
@@ -28,7 +28,7 @@ export class SyncTransactionsHandler
       const transactionId = `0x${utils.toHexString(transactionJson.id)}`;
 
       // Create Address (if not already created)
-      await this.commandBus.execute(new CreateAddressCommand(payer));
+      await this.commandBus.execute(new CreateOrUpdateAddressCommand(payer));
 
       // Setup operations array
       const operations: OperationProps[] = [];

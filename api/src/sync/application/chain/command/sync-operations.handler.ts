@@ -5,7 +5,7 @@ import {
   QueryBus,
 } from '@nestjs/cqrs';
 import { SyncOperationsCommand } from './dto/sync-operations.command';
-import { CreateAddressCommand } from '@koiner/chain/application/address/command';
+import { CreateOrUpdateAddressCommand } from '@koiner/chain/application/address/command';
 import {
   CreateContractOperationCommand,
   CreateSystemCallOperationCommand,
@@ -75,7 +75,9 @@ export class SyncOperationsHandler
           );
 
           // Create Address (if not already created). ContractId = address
-          await this.commandBus.execute(new CreateAddressCommand(contractId));
+          await this.commandBus.execute(
+            new CreateOrUpdateAddressCommand(contractId),
+          );
 
           const contractStandard =
             await this.contractStandardRetriever.getForContract(contractId);

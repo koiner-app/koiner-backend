@@ -39,7 +39,7 @@ export class BlockHeader extends ValueObject<BlockHeaderProps> {
   }
 
   protected validate(props: BlockHeaderProps): void {
-    if (!Guard.lengthIs(props.previous, 70)) {
+    if (!Guard.lengthIsBetween(props.previous, 0, 70)) {
       throw new ArgumentOutOfRangeException('previous is out of range');
     }
 

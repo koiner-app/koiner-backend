@@ -5,13 +5,13 @@ import {
 } from '@appvise/domain';
 
 export interface AddressStatisticsProps extends StatisticsProps {
-  contractCount: number;
+  blockCount: number;
   operationCount: number;
   transactionCount: number;
 }
 
 export interface UpdateAddressStatisticsProps extends UpdateStatisticsProps {
-  contractCount?: number;
+  blockCount?: number;
   operationCount?: number;
   transactionCount?: number;
 }
@@ -20,16 +20,16 @@ export class AddressStatistics extends Statistics<
   AddressStatisticsProps,
   UpdateAddressStatisticsProps
 > {
-  static create(): AddressStatistics {
+  static create(blockCount = 0): AddressStatistics {
     return new AddressStatistics({
-      contractCount: 0,
+      blockCount: blockCount,
       operationCount: 0,
       transactionCount: 0,
     });
   }
 
-  get contractCount(): number {
-    return this.props.contractCount;
+  get blockCount(): number {
+    return this.props.blockCount;
   }
 
   get operationCount(): number {

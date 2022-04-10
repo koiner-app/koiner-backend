@@ -3,9 +3,9 @@ import {
   EntitySchemaFactory,
   EntitySchemaProps,
 } from '@appvise/typeorm';
-import { Block, BlockProps } from '@koiner/chain/domain';
+import { Block, BlockProps, BlockReceipt } from '@koiner/chain/domain';
 import { BlockSchema } from './block.schema';
-import { KoinosId } from '@koiner/domain';
+import { KoinosAddressId, KoinosId } from '@koiner/domain';
 import { BlockHeader } from '@koiner/chain/domain';
 
 export class BlockSchemaFactory extends EntitySchemaFactory<
@@ -26,6 +26,14 @@ export class BlockSchemaFactory extends EntitySchemaFactory<
       }),
       signature: entitySchema.signature,
       transactionCount: entitySchema.transaction_count,
+      producerId: new KoinosAddressId(entitySchema.producer_id),
+      producerRewards: parseInt(entitySchema.producer_rewards),
+      receipt: new BlockReceipt({
+        diskStorageUsed: entitySchema.disk_storage_used,
+        networkBandwidthUsed: entitySchema.network_bandwidth_used,
+        computeBandwidthUsed: entitySchema.compute_bandwidth_used,
+        eventCount: entitySchema.event_count,
+      }),
     };
 
     return { id, props };
@@ -43,6 +51,12 @@ export class BlockSchemaFactory extends EntitySchemaFactory<
       signer: props.header.signer,
       signature: props.signature,
       transaction_count: props.transactionCount,
+      producer_id: props.producerId.value,
+      producer_rewards: props.producerRewards.toString(),
+      disk_storage_used: props.receipt.diskStorageUsed,
+      network_bandwidth_used: props.receipt.networkBandwidthUsed,
+      compute_bandwidth_used: props.receipt.computeBandwidthUsed,
+      event_count: props.receipt.eventCount,
     };
   }
 }

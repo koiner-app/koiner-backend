@@ -3,6 +3,7 @@ import { AddressCreated, AddressStatistics } from '@koiner/chain/domain';
 import { AddressProps, CreateAddressProps } from './address.types';
 import { KoinosAddressId } from '@koiner/domain';
 import { UpdateAddressStatisticsProps } from '@koiner/chain/domain/address/address-statistics';
+import { BlockRewardsReceived } from '@koiner/chain/domain/address/event/block-rewards-received';
 
 export class Address extends AggregateRoot<AddressProps> {
   protected readonly _id: KoinosAddressId;
@@ -10,7 +11,6 @@ export class Address extends AggregateRoot<AddressProps> {
   static create(create: CreateAddressProps, id: KoinosAddressId): Address {
     const props: AddressProps = {
       ...create,
-      stats: AddressStatistics.create(),
     };
 
     const address = new Address({ id, props });
@@ -20,8 +20,32 @@ export class Address extends AggregateRoot<AddressProps> {
     return address;
   }
 
+  get isProducer(): boolean {
+    return this.props.isProducer;
+  }
+
+  get rewardsReceived(): number {
+    return this.props.rewardsReceived;
+  }
+
   get stats(): AddressStatistics {
     return this.props.stats;
+  }
+
+  markAsProducer(): void {
+    this.props.isProducer = true;
+  }
+
+  addRewards(rewards: number): void {
+    this.props.rewardsReceived += rewards;
+
+    this.apply(
+      new BlockRewardsReceived(
+        this.id.value,
+        rewards,
+        this.props.rewardsReceived,
+      ),
+    );
   }
 
   updateStats(props: UpdateAddressStatisticsProps): void {

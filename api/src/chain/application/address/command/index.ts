@@ -1,9 +1,9 @@
-import { CreateAddressHandler } from './create-address.handler';
+import { CreateOrUpdateAddressHandler } from './create-or-update-address.handler';
 import { UpdateAddressStatsHandler } from './update-address-stats.handler';
 
-export { CreateAddressCommand } from './dto/create-address.command';
+export { CreateOrUpdateAddressCommand } from './dto/create-or-update-address.command';
 export { UpdateAddressStatsCommand } from './dto/update-address-stats.command';
 
 export default {
-  handlers: [CreateAddressHandler, UpdateAddressStatsHandler],
+  handlers: [CreateOrUpdateAddressHandler, UpdateAddressStatsHandler],
 };
