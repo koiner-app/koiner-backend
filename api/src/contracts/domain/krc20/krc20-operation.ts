@@ -34,7 +34,7 @@ export class Krc20Operation extends AggregateRoot<Krc20OperationProps> {
     return this.props.to;
   }
 
-  get value(): string {
+  get value(): number {
     return this.props.value;
   }
 

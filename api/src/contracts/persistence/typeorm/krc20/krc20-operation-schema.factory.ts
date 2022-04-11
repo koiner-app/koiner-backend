@@ -24,7 +24,7 @@ export class Krc20OperationSchemaFactory extends EntitySchemaFactory<
         ? new KoinosAddressId(entitySchema.from)
         : undefined,
       to: new KoinosAddressId(entitySchema.to),
-      value: entitySchema.value,
+      value: parseInt(entitySchema.value),
     };
 
     return { id, props };
@@ -40,7 +40,7 @@ export class Krc20OperationSchemaFactory extends EntitySchemaFactory<
       name: props.name,
       from: props.from ? props.from.value : undefined,
       to: props.to.value,
-      value: props.value,
+      value: props.value.toString(),
     };
   }
 }

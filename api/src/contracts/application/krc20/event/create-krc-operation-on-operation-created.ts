@@ -33,7 +33,7 @@ export class CreateKrcOperationOnOperationCreated
           event.contractId,
           decodedOperation.name,
           <string>decodedOperation.args.to,
-          <string>decodedOperation.args.value,
+          parseInt(<string>decodedOperation.args.value),
           <string>decodedOperation.args.from,
         ),
       );

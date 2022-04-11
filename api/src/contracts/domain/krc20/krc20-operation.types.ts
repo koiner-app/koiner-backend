@@ -5,7 +5,7 @@ export interface CreateKrc20OperationProps {
   name: string;
   from?: KoinosAddressId;
   to: KoinosAddressId;
-  value: string;
+  value: number;
 }
 
 export type Krc20OperationProps = CreateKrc20OperationProps;
