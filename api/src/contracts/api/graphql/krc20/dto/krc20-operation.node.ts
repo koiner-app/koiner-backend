@@ -14,7 +14,7 @@ export class Krc20OperationNode extends BaseNode {
   to: string;
 
   @Field()
-  value: string;
+  value: number;
 
   // Used by UnionTypeResolver
   contractStandardType: ContractStandardType = ContractStandardType.krc20;
