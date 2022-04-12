@@ -5,7 +5,7 @@ import {
 } from '@appvise/domain';
 import { BlockCreated, BlockReceipt } from '@koiner/chain/domain';
 import { BlockProps, CreateBlockProps } from './block.types';
-import { KoinosAddressId, KoinosId } from '@koiner/domain';
+import { KoinosId } from '@koiner/domain';
 import { BlockHeader } from '@koiner/chain/domain';
 
 export class Block extends AggregateRoot<BlockProps> {
@@ -33,14 +33,6 @@ export class Block extends AggregateRoot<BlockProps> {
 
   get transactionCount(): number {
     return this.props.transactionCount;
-  }
-
-  get producerId(): KoinosAddressId {
-    return this.props.producerId;
-  }
-
-  get producerRewards(): number {
-    return this.props.producerRewards;
   }
 
   get receipt(): BlockReceipt {

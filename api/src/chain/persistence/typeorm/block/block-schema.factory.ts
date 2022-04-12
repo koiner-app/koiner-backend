@@ -5,7 +5,7 @@ import {
 } from '@appvise/typeorm';
 import { Block, BlockProps, BlockReceipt } from '@koiner/chain/domain';
 import { BlockSchema } from './block.schema';
-import { KoinosAddressId, KoinosId } from '@koiner/domain';
+import { KoinosId } from '@koiner/domain';
 import { BlockHeader } from '@koiner/chain/domain';
 
 export class BlockSchemaFactory extends EntitySchemaFactory<
@@ -26,8 +26,6 @@ export class BlockSchemaFactory extends EntitySchemaFactory<
       }),
       signature: entitySchema.signature,
       transactionCount: entitySchema.transaction_count,
-      producerId: new KoinosAddressId(entitySchema.producer_id),
-      producerRewards: parseInt(entitySchema.producer_rewards),
       receipt: new BlockReceipt({
         diskStorageUsed: entitySchema.disk_storage_used,
         networkBandwidthUsed: entitySchema.network_bandwidth_used,
@@ -51,8 +49,6 @@ export class BlockSchemaFactory extends EntitySchemaFactory<
       signer: props.header.signer,
       signature: props.signature,
       transaction_count: props.transactionCount,
-      producer_id: props.producerId.value,
-      producer_rewards: props.producerRewards.toString(),
       disk_storage_used: props.receipt.diskStorageUsed,
       network_bandwidth_used: props.receipt.networkBandwidthUsed,
       compute_bandwidth_used: props.receipt.computeBandwidthUsed,

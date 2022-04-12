@@ -45,17 +45,6 @@ export class BlockSchema extends EntityBaseSchema {
   @Column({ type: 'smallint' })
   readonly transaction_count: number;
 
-  @Column({ length: 38, nullable: true })
-  readonly producer_id: string;
-
-  // Add foreign key without the need to always use the relation
-  @ManyToOne(() => AddressSchema, { nullable: false, persistence: false })
-  @JoinColumn({ name: 'producer_id', referencedColumnName: 'id' })
-  private _producer_id_fg: never;
-
-  @Column({ length: 20 })
-  readonly producer_rewards: string;
-
   /** Receipt */
 
   @Column({ type: 'bigint' })

@@ -1,5 +1,16 @@
 export * from './krc20-contract.types';
+export * from './block-reward.types';
 export * from './krc20-operation.types';
+export * from './krc20-balance.types';
+export { BlockReward } from './block-reward';
+export { BlockRewardCreated } from './event/block-reward-created';
+export { BlockRewardReadRepository } from './block-reward.read.repository';
+export { BlockRewardWriteRepository } from './block-reward.write.repository';
+export { Krc20Balance } from './krc20-balance';
+export { Krc20BalanceCreated } from './event/krc20-balance-created';
+export { Krc20BalanceUpdated } from './event/krc20-balance-updated';
+export { Krc20BalanceReadRepository } from './krc20-balance.read.repository';
+export { Krc20BalanceWriteRepository } from './krc20-balance.write.repository';
 export { Krc20Contract } from './krc20-contract';
 export { Krc20ContractCreated } from './event/krc20-contract-created';
 export { Krc20ContractReadRepository } from './krc20-contract.read.repository';

@@ -5,7 +5,7 @@ import {
   BlockWriteRepository,
 } from '@koiner/chain/domain';
 import { CreateBlockCommand } from './create-block.command';
-import { KoinosAddressId, KoinosId } from '@koiner/domain';
+import { KoinosId } from '@koiner/domain';
 import { BlockHeader } from '@koiner/chain/domain';
 
 @CommandHandler(CreateBlockCommand)
@@ -22,8 +22,6 @@ export class CreateBlockHandler implements ICommandHandler<CreateBlockCommand> {
           header: new BlockHeader(command.header),
           transactionCount: command.transactionCount,
           signature: command.signature,
-          producerId: new KoinosAddressId(command.producer.id),
-          producerRewards: command.producer.rewards,
           receipt: new BlockReceipt(command.receipt),
         },
         new KoinosId(command.id),
