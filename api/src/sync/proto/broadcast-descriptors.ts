@@ -58,7 +58,7 @@ export const broadcastDescriptors = {
                     jstype: 'JS_STRING',
                   },
                 },
-                pendingRcUsed: {
+                pending_rc_used: {
                   type: 'uint64',
                   id: 4,
                   options: {
@@ -93,7 +93,7 @@ export const broadcastDescriptors = {
             },
             fork_heads: {
               fields: {
-                lastIrreversibleBlock: {
+                last_irreversible_block: {
                   type: 'block_topology',
                   id: 1,
                 },
@@ -114,12 +114,12 @@ export const broadcastDescriptors = {
             },
             event_parcel: {
               oneofs: {
-                _transactionId: {
-                  oneof: ['transactionId'],
+                _transaction_id: {
+                  oneof: ['transaction_id'],
                 },
               },
               fields: {
-                blockId: {
+                block_id: {
                   type: 'bytes',
                   id: 1,
                   options: {
@@ -130,7 +130,7 @@ export const broadcastDescriptors = {
                   type: 'uint64',
                   id: 2,
                 },
-                transactionId: {
+                transaction_id: {
                   type: 'bytes',
                   id: 3,
                   options: {
@@ -231,14 +231,14 @@ export const broadcastDescriptors = {
             },
             contract_call_bundle: {
               fields: {
-                contractId: {
+                contract_id: {
                   type: 'bytes',
                   id: 1,
                   options: {
                     '(btype)': 'CONTRACT_ID',
                   },
                 },
-                entryPoint: {
+                entry_point: {
                   type: 'uint32',
                   id: 2,
                 },
@@ -247,15 +247,15 @@ export const broadcastDescriptors = {
             system_call_target: {
               oneofs: {
                 target: {
-                  oneof: ['thunkId', 'systemCallBundle'],
+                  oneof: ['thunk_id', 'system_call_bundle'],
                 },
               },
               fields: {
-                thunkId: {
+                thunk_id: {
                   type: 'uint32',
                   id: 1,
                 },
-                systemCallBundle: {
+                system_call_bundle: {
                   type: 'contract_call_bundle',
                   id: 2,
                 },
@@ -263,7 +263,7 @@ export const broadcastDescriptors = {
             },
             upload_contract_operation: {
               fields: {
-                contractId: {
+                contract_id: {
                   type: 'bytes',
                   id: 1,
                   options: {
@@ -278,15 +278,15 @@ export const broadcastDescriptors = {
                   type: 'string',
                   id: 3,
                 },
-                authorizesCallContract: {
+                authorizes_call_contract: {
                   type: 'bool',
                   id: 4,
                 },
-                authorizesTransactionApplication: {
+                authorizes_transaction_application: {
                   type: 'bool',
                   id: 5,
                 },
-                authorizesUploadContract: {
+                authorizes_upload_contract: {
                   type: 'bool',
                   id: 6,
                 },
@@ -294,14 +294,14 @@ export const broadcastDescriptors = {
             },
             call_contract_operation: {
               fields: {
-                contractId: {
+                contract_id: {
                   type: 'bytes',
                   id: 1,
                   options: {
                     '(btype)': 'CONTRACT_ID',
                   },
                 },
-                entryPoint: {
+                entry_point: {
                   type: 'uint32',
                   id: 2,
                 },
@@ -313,7 +313,7 @@ export const broadcastDescriptors = {
             },
             set_system_call_operation: {
               fields: {
-                callId: {
+                call_id: {
                   type: 'uint32',
                   id: 1,
                 },
@@ -325,14 +325,14 @@ export const broadcastDescriptors = {
             },
             set_system_contract_operation: {
               fields: {
-                contractId: {
+                contract_id: {
                   type: 'bytes',
                   id: 1,
                   options: {
                     '(btype)': 'CONTRACT_ID',
                   },
                 },
-                systemContract: {
+                system_contract: {
                   type: 'bool',
                   id: 2,
                 },
@@ -342,27 +342,27 @@ export const broadcastDescriptors = {
               oneofs: {
                 op: {
                   oneof: [
-                    'uploadContract',
-                    'callContract',
-                    'setSystemCall',
-                    'setSystemContract',
+                    'upload_contract',
+                    'call_contract',
+                    'set_system_call',
+                    'set_system_contract',
                   ],
                 },
               },
               fields: {
-                uploadContract: {
+                upload_contract: {
                   type: 'upload_contract_operation',
                   id: 1,
                 },
-                callContract: {
+                call_contract: {
                   type: 'call_contract_operation',
                   id: 2,
                 },
-                setSystemCall: {
+                set_system_call: {
                   type: 'set_system_call_operation',
                   id: 3,
                 },
-                setSystemContract: {
+                set_system_contract: {
                   type: 'set_system_contract_operation',
                   id: 4,
                 },
@@ -370,11 +370,11 @@ export const broadcastDescriptors = {
             },
             transaction_header: {
               fields: {
-                chainId: {
+                chain_id: {
                   type: 'bytes',
                   id: 1,
                 },
-                rcLimit: {
+                rc_limit: {
                   type: 'uint64',
                   id: 2,
                   options: {
@@ -385,7 +385,7 @@ export const broadcastDescriptors = {
                   type: 'bytes',
                   id: 3,
                 },
-                operationMerkleRoot: {
+                operation_merkle_root: {
                   type: 'bytes',
                   id: 4,
                 },
@@ -446,42 +446,42 @@ export const broadcastDescriptors = {
                     '(btype)': 'ADDRESS',
                   },
                 },
-                maxPayerRc: {
+                max_payer_rc: {
                   type: 'uint64',
                   id: 3,
                   options: {
                     jstype: 'JS_STRING',
                   },
                 },
-                rcLimit: {
+                rc_limit: {
                   type: 'uint64',
                   id: 4,
                   options: {
                     jstype: 'JS_STRING',
                   },
                 },
-                rcUsed: {
+                rc_used: {
                   type: 'uint64',
                   id: 5,
                   options: {
                     jstype: 'JS_STRING',
                   },
                 },
-                diskStorageUsed: {
+                disk_storage_used: {
                   type: 'uint64',
                   id: 6,
                   options: {
                     jstype: 'JS_STRING',
                   },
                 },
-                networkBandwidthUsed: {
+                network_bandwidth_used: {
                   type: 'uint64',
                   id: 7,
                   options: {
                     jstype: 'JS_STRING',
                   },
                 },
-                computeBandwidthUsed: {
+                compute_bandwidth_used: {
                   type: 'uint64',
                   id: 8,
                   options: {
@@ -527,11 +527,11 @@ export const broadcastDescriptors = {
                     jstype: 'JS_STRING',
                   },
                 },
-                previousStateMerkleRoot: {
+                previous_state_merkleRoot: {
                   type: 'bytes',
                   id: 4,
                 },
-                transactionMerkleRoot: {
+                transaction_merkle_root: {
                   type: 'bytes',
                   id: 5,
                 },
@@ -542,7 +542,7 @@ export const broadcastDescriptors = {
                     '(btype)': 'ADDRESS',
                   },
                 },
-                approvedProposals: {
+                approved_proposals: {
                   rule: 'repeated',
                   type: 'bytes',
                   id: 7,
@@ -592,28 +592,28 @@ export const broadcastDescriptors = {
                     jstype: 'JS_STRING',
                   },
                 },
-                diskStorageUsed: {
+                disk_storage_used: {
                   type: 'uint64',
                   id: 3,
                   options: {
                     jstype: 'JS_STRING',
                   },
                 },
-                networkBandwidthUsed: {
+                network_bandwidth_used: {
                   type: 'uint64',
                   id: 4,
                   options: {
                     jstype: 'JS_STRING',
                   },
                 },
-                computeBandwidthUsed: {
+                compute_bandwidth_used: {
                   type: 'uint64',
                   id: 5,
                   options: {
                     jstype: 'JS_STRING',
                   },
                 },
-                stateMerkleRoot: {
+                state_merkle_root: {
                   type: 'bytes',
                   id: 6,
                 },
@@ -622,7 +622,7 @@ export const broadcastDescriptors = {
                   type: 'event_data',
                   id: 7,
                 },
-                transactionReceipts: {
+                transaction_receipts: {
                   rule: 'repeated',
                   type: 'transaction_receipt',
                   id: 8,

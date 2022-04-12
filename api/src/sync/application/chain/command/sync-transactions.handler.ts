@@ -9,7 +9,6 @@ import {
 } from '@koiner/chain/domain/operation/operation.types';
 import { KoinosId } from '@koiner/domain';
 import { UUID } from '@appvise/domain';
-import { utils } from 'koilib';
 
 @CommandHandler(SyncTransactionsCommand)
 export class SyncTransactionsHandler
@@ -24,8 +23,8 @@ export class SyncTransactionsHandler
       transactionIndex++
     ) {
       const transactionJson: any = command.block.transactions[transactionIndex];
-      const payer = utils.encodeBase58(transactionJson.header.payer);
-      const transactionId = `0x${utils.toHexString(transactionJson.id)}`;
+      const payer = transactionJson.header.payer;
+      const transactionId = transactionJson.id;
 
       // Create Address (if not already created)
       await this.commandBus.execute(new CreateOrUpdateAddressCommand(payer));
@@ -42,19 +41,19 @@ export class SyncTransactionsHandler
           const operation = transactionJson.operations[operationIndex];
           let operationType: OperationType;
 
-          if (operation.setSystemCall) {
+          if (operation.set_system_call) {
             operationType = OperationType.systemCall;
           }
 
-          if (operation.setSystemContract) {
+          if (operation.set_system_contract) {
             operationType = OperationType.systemContractOperation;
           }
 
-          if (operation.uploadContract) {
+          if (operation.upload_contract) {
             operationType = OperationType.uploadContract;
           }
 
-          if (operation.callContract) {
+          if (operation.call_contract) {
             operationType = OperationType.contractOperation;
           }
 
@@ -73,15 +72,13 @@ export class SyncTransactionsHandler
         new CreateTransactionCommand(
           transactionId,
           command.blockHeight,
-          <string>transactionJson.header.rcLimit,
+          <string>transactionJson.header.rc_limit,
           payer,
-          transactionJson.signatures
-            .map((signature) => utils.encodeBase64(signature))
-            .join(','),
+          transactionJson.signatures,
           operations,
           transactionIndex,
           <string>transactionJson.header.nonce,
-          utils.encodeBase64(transactionJson.header.operationMerkleRoot),
+          transactionJson.header.operation_merkle_root,
         ),
       );
 

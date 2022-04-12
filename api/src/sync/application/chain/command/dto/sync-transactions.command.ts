@@ -1,9 +1,8 @@
-import { koinos } from '@koiner/sync/proto/koinos.broadcast';
-import Iblock = koinos.protocol.Iblock;
+import { BlockJson } from 'koilib/lib/interface';
 
 export class SyncTransactionsCommand {
   constructor(
     public readonly blockHeight: number,
-    public readonly block: Iblock,
+    public readonly block: BlockJson,
   ) {}
 }

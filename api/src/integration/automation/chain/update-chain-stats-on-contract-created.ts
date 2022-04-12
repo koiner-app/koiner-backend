@@ -11,7 +11,7 @@ export class UpdateChainStatsOnContractCreated
 
   async handle(): Promise<void> {
     await this.commandBus.execute(
-      new UpdateChainStatsCommand(koinos.mainChainId, {
+      new UpdateChainStatsCommand(koinos.chainId, {
         contractCount: 1,
       }),
     );

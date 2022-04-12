@@ -11,7 +11,7 @@ export class UpdateChainStatsOnTransactionCreated
 
   async handle(event: TransactionCreated): Promise<void> {
     await this.commandBus.execute(
-      new UpdateChainStatsCommand(koinos.mainChainId, {
+      new UpdateChainStatsCommand(koinos.chainId, {
         transactionCount: 1,
         operationCount: event.operationCount,
       }),

@@ -18,7 +18,6 @@ import { Contract } from '@koiner/contracts/domain';
 import { CreateContractCommand } from '@koiner/contracts/application/contract/command';
 import { ContractStandardService } from '@koiner/contracts/application/contract-standard/service';
 import { ContractQuery } from '@koiner/contracts/application/contract/query';
-import { utils } from 'koilib';
 
 @CommandHandler(SyncOperationsCommand)
 export class SyncOperationsHandler
@@ -32,7 +31,7 @@ export class SyncOperationsHandler
 
   async execute(command: SyncOperationsCommand): Promise<void> {
     const transactionJson: any = command.transaction;
-    const transactionId = `0x${utils.toHexString(command.transaction.id)}`;
+    const transactionId = <string>(<unknown>command.transaction.id);
 
     // We need both persisted transaction (with operationIds) and transactionJson from JSON-RPC api
     const transaction = await this.queryBus.execute<
@@ -53,10 +52,8 @@ export class SyncOperationsHandler
           await this.commandBus.execute(
             new CreateSystemCallOperationCommand(
               savedOperation.id.value,
-              utils.encodeBase58(
-                operationJson.setSystemCall.target.systemCallBundle.contractId,
-              ),
-              operationJson.setSystemCall.callId,
+              operationJson.set_system_call.target.system_call_bundle.contract_id,
+              operationJson.set_system_call.call_id,
             ),
           );
         } else if (
@@ -65,15 +62,12 @@ export class SyncOperationsHandler
           await this.commandBus.execute(
             new CreateSystemContractOperationCommand(
               savedOperation.id.value,
-              utils.encodeBase58(operationJson.setSystemContract.contractId),
-              operationJson.setSystemContract.systemContract,
+              operationJson.set_system_contract.contract_id,
+              operationJson.set_system_contract.system_contract,
             ),
           );
         } else if (savedOperation.type === OperationType.uploadContract) {
-          const contractId = utils.encodeBase58(
-            operationJson.uploadContract.contractId,
-          );
-
+          const contractId = operationJson.upload_contract.contract_id;
           // Create Address (if not already created). ContractId = address
           await this.commandBus.execute(
             new CreateOrUpdateAddressCommand(contractId),
@@ -86,8 +80,8 @@ export class SyncOperationsHandler
             new CreateUploadContractOperationCommand(
               savedOperation.id.value,
               contractId,
-              operationJson.uploadContract.bytecode,
-              operationJson.uploadContract.abi,
+              operationJson.upload_contract.bytecode,
+              operationJson.upload_contract.abi,
               contractStandard
                 ? contractStandard.contractStandard.type
                 : undefined,
@@ -100,17 +94,15 @@ export class SyncOperationsHandler
               command.blockHeight,
               transactionId,
               operationIndex,
-              operationJson.uploadContract.bytecode,
-              operationJson.uploadContract.abi,
+              operationJson.upload_contract.bytecode,
+              operationJson.upload_contract.abi,
               contractStandard
                 ? contractStandard.contractStandard.type
                 : undefined,
             ),
           );
         } else if (savedOperation.type === OperationType.contractOperation) {
-          const contractId = utils.encodeBase58(
-            operationJson.callContract.contractId,
-          );
+          const contractId = operationJson.call_contract.contract_id;
           let contractStandardType = undefined;
 
           try {
@@ -125,8 +117,8 @@ export class SyncOperationsHandler
             new CreateContractOperationCommand(
               savedOperation.id.value,
               contractId,
-              operationJson.callContract.entryPoint,
-              operationJson.callContract.args,
+              operationJson.call_contract.entry_point,
+              operationJson.call_contract.args,
               contractStandardType,
             ),
           );
