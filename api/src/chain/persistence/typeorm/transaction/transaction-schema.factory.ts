@@ -31,16 +31,16 @@ export class TransactionSchemaFactory extends EntitySchemaFactory<
       transactionIndex: entitySchema.transaction_index,
       operations: entitySchema.operations
         ? entitySchema.operations.map((operationSchema) => {
-            return Operation.create(
-              {
+            return new Operation({
+              id: new UUID(operationSchema.id),
+              props: {
                 parentId: new UUID(operationSchema.id),
                 blockHeight: operationSchema.block_height,
                 transactionId: new KoinosId(operationSchema.transaction_id),
                 operationIndex: operationSchema.operation_index,
                 type: operationSchema.type,
               },
-              new UUID(operationSchema.id),
-            );
+            });
           })
         : [],
       operationCount: entitySchema.operation_count,
