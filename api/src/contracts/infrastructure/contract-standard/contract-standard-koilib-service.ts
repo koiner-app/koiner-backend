@@ -6,7 +6,7 @@ import {
 } from '@koiner/contracts/domain';
 import { Injectable } from '@nestjs/common';
 import { ContractStandardService } from '@koiner/contracts/application/contract-standard/service';
-import { Contract, Provider, Signer, utils } from 'koilib';
+import { Contract, Provider, Signer } from 'koilib';
 import { Abi } from 'koilib/lib/interface';
 import { promiseWithTimeout } from '@koiner/contracts/infrastructure/utils';
 
@@ -121,7 +121,7 @@ export class ContractStandardKoilibService extends ContractStandardService {
 
     return await contract.decodeOperation({
       call_contract: {
-        contract_id: utils.decodeBase58(contractId),
+        contract_id: contractId,
         entry_point: entryPoint,
         args: args as any,
       },
