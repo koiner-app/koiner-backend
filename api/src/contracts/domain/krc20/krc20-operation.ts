@@ -22,6 +22,10 @@ export class Krc20Operation extends AggregateRoot<Krc20OperationProps> {
     return this.props.contractId;
   }
 
+  get transactionId(): KoinosId {
+    return this.props.transactionId;
+  }
+
   get name(): string {
     return this.props.name;
   }

@@ -5,7 +5,7 @@ import {
 } from '@appvise/typeorm';
 import { Krc20Operation, Krc20OperationProps } from '@koiner/contracts/domain';
 import { Krc20OperationSchema } from './krc20-operation.schema';
-import { KoinosAddressId } from '@koiner/domain';
+import { KoinosAddressId, KoinosId } from '@koiner/domain';
 import { UUID } from '@appvise/domain';
 
 export class Krc20OperationSchemaFactory extends EntitySchemaFactory<
@@ -19,6 +19,7 @@ export class Krc20OperationSchemaFactory extends EntitySchemaFactory<
 
     const props: Krc20OperationProps = {
       contractId: new KoinosAddressId(entitySchema.contract_id),
+      transactionId: new KoinosId(entitySchema.transaction_id),
       name: entitySchema.name,
       from: entitySchema.from
         ? new KoinosAddressId(entitySchema.from)
@@ -37,6 +38,7 @@ export class Krc20OperationSchemaFactory extends EntitySchemaFactory<
 
     return {
       contract_id: props.contractId.value,
+      transaction_id: props.transactionId.value,
       name: props.name,
       from: props.from ? props.from.value : undefined,
       to: props.to.value,

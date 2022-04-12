@@ -6,5 +6,6 @@ export class CreateKrc20OperationCommand {
     public readonly to: string,
     public readonly value: number,
     public readonly from?: string,
+    public readonly transactionId?: string,
   ) {}
 }
