@@ -44,4 +44,19 @@ export class Krc20ContractSchema extends EntityBaseSchema {
 
   @Column({ type: 'smallint' })
   readonly decimals: number;
+
+  @Column({ length: 20 })
+  readonly total_supply: string;
+
+  @Column({ type: 'bigint' })
+  readonly holder_count: number;
+
+  @Column({ type: 'bigint' })
+  readonly operation_count: number;
+
+  @Column({ type: 'bigint' })
+  readonly mint_count: number;
+
+  @Column({ type: 'bigint' })
+  readonly transfer_count: number;
 }

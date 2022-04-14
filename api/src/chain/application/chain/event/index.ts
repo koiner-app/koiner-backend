@@ -1,9 +1,10 @@
-import { ConsoleLogOnChainCreated } from './console-log-on-chain-created';
+import { provideEventHandlers } from '@appvise/nestjs-utils';
 import { UpdateChainStatsOnAddressCreated } from './update-chain-stats-on-address-created';
 import { UpdateChainStatsOnTransactionCreated } from './update-chain-stats-on-transaction-created';
 
 export default [
-  ConsoleLogOnChainCreated,
-  UpdateChainStatsOnAddressCreated,
-  UpdateChainStatsOnTransactionCreated,
+  ...provideEventHandlers([
+    UpdateChainStatsOnAddressCreated,
+    UpdateChainStatsOnTransactionCreated,
+  ]),
 ];

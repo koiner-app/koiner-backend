@@ -1,4 +1,4 @@
-import { AggregateRoot } from '@appvise/domain';
+import { AggregateRoot, ConflictException, UUID } from '@appvise/domain';
 import {
   CreateKrc20BalanceProps,
   Krc20BalanceProps,
@@ -6,7 +6,6 @@ import {
   Krc20BalanceUpdated,
 } from '.';
 import { KoinosAddressId } from '@koiner/domain';
-import { UUID } from '@appvise/domain/dist/types';
 
 export class Krc20Balance extends AggregateRoot<Krc20BalanceProps> {
   protected readonly _id: KoinosAddressId;
@@ -18,7 +17,14 @@ export class Krc20Balance extends AggregateRoot<Krc20BalanceProps> {
 
     const tokenBalance = new Krc20Balance({ id, props });
 
-    tokenBalance.apply(new Krc20BalanceCreated(id.value, props.balance));
+    tokenBalance.addEvent(
+      new Krc20BalanceCreated({
+        aggregateId: id.value,
+        addressId: props.addressId.value,
+        contractId: props.contractId.value,
+        balance: props.balance,
+      }),
+    );
 
     return tokenBalance;
   }
@@ -38,8 +44,19 @@ export class Krc20Balance extends AggregateRoot<Krc20BalanceProps> {
   update(amountChanged: number): number {
     this.props.balance += amountChanged;
 
-    this.apply(
-      new Krc20BalanceUpdated(this.id.value, this.balance, amountChanged),
+    if (this.props.balance < 0) {
+      // TODO: Add custom exception
+      throw new ConflictException('Balance cannot be lower than 0');
+    }
+
+    this.addEvent(
+      new Krc20BalanceUpdated({
+        aggregateId: this.id.value,
+        addressId: this.addressId.value,
+        contractId: this.contractId.value,
+        balance: this.balance,
+        amountChanged: amountChanged,
+      }),
     );
 
     return this.balance;

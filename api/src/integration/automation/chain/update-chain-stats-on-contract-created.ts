@@ -1,9 +1,8 @@
-import { CommandBus, EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { CommandBus, IEventHandler } from '@nestjs/cqrs';
 import { ContractCreated } from '@koiner/contracts/domain';
 import { UpdateChainStatsCommand } from '@koiner/chain/application/chain/command/dto/update-chain-stats.command';
 import { koinos } from '@config';
 
-@EventsHandler(ContractCreated)
 export class UpdateChainStatsOnContractCreated
   implements IEventHandler<ContractCreated>
 {

@@ -8,6 +8,7 @@ import {
 import { ChainProps, CreateChainProps } from './chain.types';
 import { BlockTopology } from '@koiner/domain';
 import { UpdateChainStatisticsProps } from '@koiner/chain/domain/chain/chain-statistics';
+import { ChainUpdated } from '@koiner/chain/domain/chain/event/chain-updated';
 
 export class Chain extends AggregateRoot<ChainProps> {
   protected readonly _id: ChainId;
@@ -21,7 +22,11 @@ export class Chain extends AggregateRoot<ChainProps> {
 
     const chain = new Chain({ id, props });
 
-    chain.apply(new ChainCreated(id.value));
+    chain.addEvent(
+      new ChainCreated({
+        aggregateId: id.value,
+      }),
+    );
 
     return chain;
   }
@@ -61,7 +66,15 @@ export class Chain extends AggregateRoot<ChainProps> {
     this.props.stopped = props.stopped;
     this.props.lastSyncedBlock = props.lastSyncedBlock;
 
-    // this.apply(new ChainUpdated(this._id.value));
+    this.addEvent(
+      new ChainUpdated({
+        aggregateId: this._id.value,
+        height: props.headTopology.height,
+        previous: props.headTopology.previous,
+        lastIrreversibleBlock: props.lastIrreversibleBlock,
+        lastSyncedBlock: props.lastSyncedBlock,
+      }),
+    );
   }
 
   updateStats(props: UpdateChainStatisticsProps): void {

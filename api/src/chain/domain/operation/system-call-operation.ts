@@ -4,6 +4,7 @@ import {
   CreateSystemCallOperationProps,
 } from './system-call-operation.types';
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
+import { SystemCallOperationCreated } from '@koiner/chain/domain/operation/event/system-call-operation-created';
 
 export class SystemCallOperation extends AggregateRoot<SystemCallOperationProps> {
   protected readonly _id: KoinosId;
@@ -18,7 +19,13 @@ export class SystemCallOperation extends AggregateRoot<SystemCallOperationProps>
 
     const systemCallOperation = new SystemCallOperation({ id, props });
 
-    // systemCallOperation.apply(new SystemCallOperationCreated(id.value, props.header.signer));
+    systemCallOperation.addEvent(
+      new SystemCallOperationCreated({
+        aggregateId: id.value,
+        contractId: props.contractId.value,
+        callId: props.callId,
+      }),
+    );
 
     return systemCallOperation;
   }

@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { PageInfo as PageInfoInterface } from '@appvise/search';
+import { PageInfo as PageInfoInterface } from '@appvise/domain';
 
 @ObjectType()
 export class PageInfo implements PageInfoInterface {

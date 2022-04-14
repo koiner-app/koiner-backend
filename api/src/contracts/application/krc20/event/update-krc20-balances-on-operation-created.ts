@@ -1,12 +1,12 @@
-import { CommandBus, EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { CommandBus } from '@nestjs/cqrs';
+import { DomainEventHandler } from '@appvise/domain';
 import { Krc20OperationCreated } from '@koiner/contracts/domain';
 import { UpdateKrc20BalanceCommand } from '../command';
 
-@EventsHandler(Krc20OperationCreated)
-export class UpdateKrc20BalancesOnOperationCreated
-  implements IEventHandler<Krc20OperationCreated>
-{
-  constructor(private readonly commandBus: CommandBus) {}
+export class UpdateKrc20BalancesOnOperationCreated extends DomainEventHandler {
+  constructor(private readonly commandBus: CommandBus) {
+    super(Krc20OperationCreated);
+  }
 
   async handle(event: Krc20OperationCreated): Promise<void> {
     await this.commandBus.execute(

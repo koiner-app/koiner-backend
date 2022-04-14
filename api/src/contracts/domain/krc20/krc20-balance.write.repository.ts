@@ -1,6 +1,5 @@
-import { WriteRepository } from '@appvise/domain';
+import { SelectionSet, WriteRepository } from '@appvise/domain';
 import { Krc20Balance } from '@koiner/contracts/domain';
-import { SelectionSet } from '@appvise/domain/dist/types/repository/selection-set';
 
 export abstract class Krc20BalanceWriteRepository extends WriteRepository<Krc20Balance> {
   abstract findOne(

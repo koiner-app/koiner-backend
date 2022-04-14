@@ -1,6 +1,8 @@
 import { ObjectType, Repository as BaseRepository } from 'typeorm';
 import {
   AggregateRoot,
+  Entity,
+  Logger,
   ReadRepository,
   Repository,
   SelectionSet,
@@ -15,7 +17,7 @@ import {
 } from '.';
 
 export class TypeormRepository<
-  TEntity extends AggregateRoot<unknown>,
+  TEntity extends AggregateRoot<unknown> | Entity<unknown>,
   TEntitySchema extends EntityBaseSchema,
 > implements Repository<TEntity>
 {
@@ -29,6 +31,7 @@ export class TypeormRepository<
       TEntitySchema
     >,
     protected readonly entityType: ObjectType<TEntitySchema>,
+    protected readonly logger: Logger,
   ) {
     this.readRepository = new TypeormReadRepository(
       entityModel,
@@ -40,6 +43,7 @@ export class TypeormRepository<
       entityModel,
       entitySchemaFactory,
       entityType,
+      logger,
     );
   }
 

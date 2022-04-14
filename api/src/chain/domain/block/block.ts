@@ -18,7 +18,13 @@ export class Block extends AggregateRoot<BlockProps> {
 
     const block = new Block({ id, props });
 
-    block.apply(new BlockCreated(id.value));
+    block.addEvent(
+      new BlockCreated({
+        aggregateId: id.value,
+        timestamp: props.header.timestamp,
+        transactionCount: props.transactionCount,
+      }),
+    );
 
     return block;
   }

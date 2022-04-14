@@ -1,6 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { IsLatitude, IsLongitude, IsNumber } from 'class-validator';
-import { GeoFilter } from '@appvise/search';
+import { GeoFilter } from '@appvise/domain';
 
 @InputType('GeoFilter')
 export class GeoFilterInput implements GeoFilter {

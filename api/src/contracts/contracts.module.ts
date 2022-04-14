@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { KoinosModule } from '@koiner/koinos.module';
@@ -13,11 +13,14 @@ import { ContractStandardImReadRepository } from '@koiner/contracts/infrastructu
 import { database } from '@config';
 import SchemaModels from '@koiner/contracts/persistence/typeorm/models';
 import Repositories from '@koiner/contracts/persistence/typeorm/repositories';
+import { CreateKrcContractOnContractCreated } from '@koiner/contracts/application/krc20/event/create-krc-contract-on-contract-created';
 database.entities.push(...SchemaModels);
 
 @Module({
   imports: [CqrsModule, TypeOrmModule.forFeature(SchemaModels), KoinosModule],
   providers: [
+    Logger,
+
     // Domain
     //
 
@@ -40,6 +43,10 @@ database.entities.push(...SchemaModels);
     // API
     ...GraphQLResolvers,
   ],
-  exports: [...Repositories, ContractStandardService],
+  exports: [
+    ...Repositories,
+    ContractStandardService,
+    CreateKrcContractOnContractCreated,
+  ],
 })
 export class ContractsModule {}

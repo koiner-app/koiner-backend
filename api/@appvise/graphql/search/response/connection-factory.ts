@@ -1,4 +1,4 @@
-import { SearchResponse, SearchResult } from '@appvise/search';
+import { SearchResponse, SearchResult } from '@appvise/domain';
 import { IConnectionType } from '@appvise/graphql/search/response/connection';
 import { SelectionSet } from '@appvise/domain';
 import { IEdgeType } from '.';

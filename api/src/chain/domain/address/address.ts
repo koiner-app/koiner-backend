@@ -15,7 +15,11 @@ export class Address extends AggregateRoot<AddressProps> {
 
     const address = new Address({ id, props });
 
-    address.apply(new AddressCreated(id.value));
+    address.addEvent(
+      new AddressCreated({
+        aggregateId: id.value,
+      }),
+    );
 
     return address;
   }
@@ -39,12 +43,12 @@ export class Address extends AggregateRoot<AddressProps> {
   addRewards(rewards: number): void {
     this.props.rewardsReceived += rewards;
 
-    this.apply(
-      new BlockRewardsReceived(
-        this.id.value,
-        rewards,
-        this.props.rewardsReceived,
-      ),
+    this.addEvent(
+      new BlockRewardsReceived({
+        aggregateId: this.id.value,
+        rewardsReceived: rewards,
+        totalRewardsReceived: this.props.rewardsReceived,
+      }),
     );
   }
 

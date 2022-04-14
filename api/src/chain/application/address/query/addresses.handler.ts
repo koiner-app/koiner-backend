@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Address, AddressReadRepository } from '@koiner/chain/domain';
-import { SearchResponse } from '@appvise/search';
+import { SearchResponse } from '@appvise/domain';
 import { AddressesQuery } from '.';
 
 @QueryHandler(AddressesQuery)

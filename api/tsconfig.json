@@ -24,8 +24,8 @@
       "@koiner/*": ["src/*"],
       "@appvise/graphql": ["@appvise/graphql"],
       "@appvise/graphql/*": ["@appvise/graphql/*"],
-      "@appvise/search": ["@appvise/search"],
-      "@appvise/search/*": ["@appvise/search/*"],
+      "@appvise/nestjs-utils": ["@appvise/nestjs-utils"],
+      "@appvise/nestjs-utils/*": ["@appvise/nestjs-utils/*"],
       "@appvise/typeorm": ["@appvise/typeorm"],
       "@appvise/typeorm/*": ["@appvise/typeorm/*"]
     }

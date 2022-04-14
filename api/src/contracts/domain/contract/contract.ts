@@ -13,14 +13,14 @@ export class Contract extends AggregateRoot<ContractProps> {
 
     const contract = new Contract({ id, props });
 
-    contract.apply(
-      new ContractCreated(
-        id.value,
-        props.blockHeight,
-        props.transactionId.value,
-        props.operationIndex,
-        props.contractStandardType,
-      ),
+    contract.addEvent(
+      new ContractCreated({
+        aggregateId: id.value,
+        blockHeight: props.blockHeight,
+        transactionId: props.transactionId.value,
+        operationIndex: props.operationIndex,
+        contractStandardType: props.contractStandardType,
+      }),
     );
 
     return contract;

@@ -1,5 +1,5 @@
 import { Args, Parent, ResolveField, Resolver } from '@nestjs/graphql';
-import { SearchResponse } from '@appvise/search';
+import { SearchResponse } from '@appvise/domain';
 import { ConnectionFactory, SelectionSet } from '@appvise/graphql';
 import { QueryBus } from '@nestjs/cqrs';
 import { AddressNode } from '@koiner/chain/api/graphql/address/dto/address.node';

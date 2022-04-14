@@ -1,7 +1,6 @@
-import { ConsoleLogOnAddressCreated } from './console-log-on-address-created';
+import { provideEventHandlers } from '@appvise/nestjs-utils';
 import { UpdateAddressStatsOnTransactionCreated } from './update-address-stats-on-transaction-created';
 
 export default [
-  ConsoleLogOnAddressCreated,
-  UpdateAddressStatsOnTransactionCreated,
+  ...provideEventHandlers([UpdateAddressStatsOnTransactionCreated]),
 ];

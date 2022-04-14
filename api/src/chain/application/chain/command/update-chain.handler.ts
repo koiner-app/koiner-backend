@@ -1,18 +1,15 @@
-import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UpdateChainCommand } from '@koiner/chain/application/chain/command/dto/update-chain.command';
 import { ChainWriteRepository } from '@koiner/chain/domain';
 import { BlockTopology, KoinosId } from '@koiner/domain';
 
 @CommandHandler(UpdateChainCommand)
 export class UpdateChainHandler implements ICommandHandler<UpdateChainCommand> {
-  constructor(
-    private readonly writeRepository: ChainWriteRepository,
-    private readonly eventPublisher: EventPublisher,
-  ) {}
+  constructor(private readonly writeRepository: ChainWriteRepository) {}
 
   async execute(command: UpdateChainCommand): Promise<void> {
-    const chain = this.eventPublisher.mergeObjectContext(
-      await this.writeRepository.findOneByIdOrThrow(command.chainId),
+    const chain = await this.writeRepository.findOneByIdOrThrow(
+      command.chainId,
     );
 
     chain.update({
@@ -28,7 +25,5 @@ export class UpdateChainHandler implements ICommandHandler<UpdateChainCommand> {
     });
 
     await this.writeRepository.save(chain);
-
-    chain.commit();
   }
 }

@@ -1,4 +1,5 @@
-import { CommandBus, EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { CommandBus } from '@nestjs/cqrs';
+import { DomainEventHandler, Logger } from '@appvise/domain';
 import {
   ContractCreated,
   ContractStandardType,
@@ -6,26 +7,36 @@ import {
 import { CreateKrc20ContractCommand } from '@koiner/contracts/application/krc20/command';
 import { ContractStandardService } from '@koiner/contracts/application/contract-standard/service';
 
-@EventsHandler(ContractCreated)
-export class CreateKrcContractOnContractCreated
-  implements IEventHandler<ContractCreated>
-{
+export class CreateKrcContractOnContractCreated extends DomainEventHandler {
   constructor(
     private readonly commandBus: CommandBus,
+    private readonly logger: Logger,
     private readonly contractStandardService: ContractStandardService,
-  ) {}
+  ) {
+    super(ContractCreated);
+  }
 
   async handle(event: ContractCreated): Promise<void> {
     if (event.contractStandardType !== ContractStandardType.krc20) {
       return;
     }
 
+    this.logger.log(
+      `Create Krc20Contract ${event.aggregateId}`,
+      'CreateKrcContractOnContractCreated',
+    );
+
     const contractStandardWithValues =
       await this.contractStandardService.getForContract(
-        event.contractId,
+        event.aggregateId,
         event.contractStandardType,
       );
     const contractValues = contractStandardWithValues.contractValues;
+
+    this.logger.log(
+      `Create Krc20Contract . contractStandardWithValues`,
+      'CreateKrcContractOnContractCreated',
+    );
 
     if (
       contractValues.name &&
@@ -34,7 +45,7 @@ export class CreateKrcContractOnContractCreated
     ) {
       await this.commandBus.execute(
         new CreateKrc20ContractCommand(
-          event.contractId,
+          event.aggregateId,
           event.blockHeight,
           event.transactionId,
           event.operationIndex,
@@ -42,6 +53,11 @@ export class CreateKrcContractOnContractCreated
           <string>contractValues.symbol,
           <number>contractValues.decimals,
         ),
+      );
+
+      this.logger.log(
+        `Done creating Krc20Contract ${event.aggregateId}`,
+        'CreateKrcContractOnContractCreated',
       );
     }
   }

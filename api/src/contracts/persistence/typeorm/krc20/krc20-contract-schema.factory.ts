@@ -3,7 +3,11 @@ import {
   EntitySchemaFactory,
   EntitySchemaProps,
 } from '@appvise/typeorm';
-import { Krc20Contract, Krc20ContractProps } from '@koiner/contracts/domain';
+import {
+  Krc20Contract,
+  Krc20ContractProps,
+  Krc20ContractStatistics,
+} from '@koiner/contracts/domain';
 import { Krc20ContractSchema } from './krc20-contract.schema';
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
 
@@ -23,6 +27,13 @@ export class Krc20ContractSchemaFactory extends EntitySchemaFactory<
       name: entitySchema.name,
       symbol: entitySchema.symbol,
       decimals: entitySchema.decimals,
+      totalSupply: parseInt(entitySchema.total_supply),
+      stats: new Krc20ContractStatistics({
+        holderCount: entitySchema.holder_count,
+        operationCount: entitySchema.operation_count,
+        mintCount: entitySchema.mint_count,
+        transferCount: entitySchema.transfer_count,
+      }),
     };
 
     return { id, props };
@@ -40,6 +51,11 @@ export class Krc20ContractSchemaFactory extends EntitySchemaFactory<
       name: props.name,
       symbol: props.symbol,
       decimals: props.decimals,
+      total_supply: props.totalSupply.toString(),
+      holder_count: props.stats.holderCount,
+      operation_count: props.stats.operationCount,
+      mint_count: props.stats.mintCount,
+      transfer_count: props.stats.transferCount,
     };
   }
 }

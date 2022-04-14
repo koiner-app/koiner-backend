@@ -1,5 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { DateTimeFilter } from '@appvise/search';
+import { DateTimeFilter } from '@appvise/domain';
 
 @InputType('DateTimeFilter')
 export class DateTimeFilterInput implements DateTimeFilter {

@@ -1,6 +1,6 @@
 import { ArgsType, Field } from '@nestjs/graphql';
 import { Optional } from '@nestjs/common';
-import { SortDirection } from '@appvise/search';
+import { SortDirection } from '@appvise/domain';
 import { SearchRequestArgs } from '@appvise/graphql';
 import { BlocksSortInput } from '@koiner/chain/api/graphql/block/dto/blocks.sort.input';
 import { BlocksSortFieldEnum } from '@koiner/chain/api/graphql/block/dto/blocks.sort-field.enum';

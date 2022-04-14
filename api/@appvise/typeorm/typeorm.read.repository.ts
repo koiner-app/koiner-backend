@@ -1,6 +1,7 @@
 import { ObjectType, Repository } from 'typeorm';
 import {
   AggregateRoot,
+  Entity,
   NotFoundException,
   ReadRepository,
   SelectionSet,
@@ -17,7 +18,7 @@ import Paginator from '@appvise/typeorm/paginator';
 import { camelToSnakeCase, snakeToCamelCase } from '@appvise/typeorm/utils';
 
 export class TypeormReadRepository<
-  TEntity extends AggregateRoot<unknown>,
+  TEntity extends AggregateRoot<unknown> | Entity<unknown>,
   TEntitySchema extends EntityBaseSchema,
 > implements ReadRepository<TEntity>
 {

@@ -3,7 +3,7 @@ import {
   Krc20Operation,
   Krc20OperationReadRepository,
 } from '@koiner/contracts/domain';
-import { SearchResponse } from '@appvise/search';
+import { SearchResponse } from '@appvise/domain';
 import { Krc20OperationsQuery } from '.';
 
 @QueryHandler(Krc20OperationsQuery)

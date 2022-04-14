@@ -1,4 +1,4 @@
-import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import {
   Block,
   BlockReceipt,
@@ -10,26 +10,19 @@ import { BlockHeader } from '@koiner/chain/domain';
 
 @CommandHandler(CreateBlockCommand)
 export class CreateBlockHandler implements ICommandHandler<CreateBlockCommand> {
-  constructor(
-    private readonly writeRepository: BlockWriteRepository,
-    private readonly eventPublisher: EventPublisher,
-  ) {}
+  constructor(private readonly writeRepository: BlockWriteRepository) {}
 
   async execute(command: CreateBlockCommand): Promise<void> {
-    const block = this.eventPublisher.mergeObjectContext(
-      Block.create(
-        {
-          header: new BlockHeader(command.header),
-          transactionCount: command.transactionCount,
-          signature: command.signature,
-          receipt: new BlockReceipt(command.receipt),
-        },
-        new KoinosId(command.id),
-      ),
+    const block = Block.create(
+      {
+        header: new BlockHeader(command.header),
+        transactionCount: command.transactionCount,
+        signature: command.signature,
+        receipt: new BlockReceipt(command.receipt),
+      },
+      new KoinosId(command.id),
     );
 
     await this.writeRepository.save(block);
-
-    block.commit();
   }
 }

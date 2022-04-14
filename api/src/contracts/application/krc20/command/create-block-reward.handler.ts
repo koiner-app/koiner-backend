@@ -1,4 +1,4 @@
-import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import {
   BlockReward,
   BlockRewardWriteRepository,
@@ -11,26 +11,19 @@ import { UUID } from '@appvise/domain';
 export class CreateBlockRewardHandler
   implements ICommandHandler<CreateBlockRewardCommand>
 {
-  constructor(
-    private readonly writeRepository: BlockRewardWriteRepository,
-    private readonly eventPublisher: EventPublisher,
-  ) {}
+  constructor(private readonly writeRepository: BlockRewardWriteRepository) {}
 
   async execute(command: CreateBlockRewardCommand): Promise<void> {
-    const operation = this.eventPublisher.mergeObjectContext(
-      BlockReward.create(
-        {
-          blockHeight: command.blockHeight,
-          producerId: new KoinosAddressId(command.producerId),
-          value: command.value,
-          contractId: new KoinosAddressId(command.contractId),
-        },
-        UUID.generate(),
-      ),
+    const operation = BlockReward.create(
+      {
+        blockHeight: command.blockHeight,
+        producerId: new KoinosAddressId(command.producerId),
+        value: command.value,
+        contractId: new KoinosAddressId(command.contractId),
+      },
+      UUID.generate(),
     );
 
     await this.writeRepository.save(operation);
-
-    operation.commit();
   }
 }

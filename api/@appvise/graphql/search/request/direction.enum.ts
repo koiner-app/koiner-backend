@@ -1,5 +1,5 @@
 import { registerEnumType } from '@nestjs/graphql';
-import { SortDirection } from '@appvise/search/request/sort-direction-enum';
+import { SortDirection } from '@appvise/domain';
 
 registerEnumType(SortDirection, {
   name: 'Direction',

@@ -10,7 +10,7 @@ import {
   Krc20BalanceSchema,
   Krc20BalanceSchemaFactory,
 } from '@koiner/contracts/persistence/typeorm';
-import { SelectionSet } from '@appvise/domain/dist/types/repository/selection-set';
+import { Logger, SelectionSet } from '@appvise/domain';
 import { snakeToCamelCase } from '@appvise/typeorm/utils';
 
 @Injectable()
@@ -21,11 +21,13 @@ export class Krc20BalanceWriteTypeormRepository
   constructor(
     @InjectRepository(Krc20BalanceSchema)
     readonly entityModel: Repository<Krc20BalanceSchema>,
+    readonly logger: Logger,
   ) {
     super(
       entityModel,
       new Krc20BalanceSchemaFactory(Krc20Balance, Krc20BalanceSchema),
       Krc20BalanceSchema,
+      logger,
     );
   }
 

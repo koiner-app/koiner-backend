@@ -5,6 +5,7 @@ import {
   OperationType,
 } from './operation.types';
 import { KoinosId } from '@koiner/domain';
+import { OperationCreated } from '@koiner/chain/domain';
 
 export class Operation extends AggregateRoot<OperationProps> {
   protected readonly _id: KoinosId;
@@ -17,7 +18,15 @@ export class Operation extends AggregateRoot<OperationProps> {
     id = id ?? UUID.generate();
     const operation = new Operation({ id, props });
 
-    // operation.apply(new OperationCreated(id.value, props.header.signer));
+    operation.addEvent(
+      new OperationCreated({
+        aggregateId: id.value,
+        blockHeight: props.blockHeight,
+        transactionId: props.transactionId.value,
+        operationIndex: props.operationIndex,
+        type: props.type,
+      }),
+    );
 
     return operation;
   }

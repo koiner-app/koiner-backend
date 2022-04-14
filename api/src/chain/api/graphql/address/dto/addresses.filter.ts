@@ -1,5 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { FilterType } from '@appvise/search';
+import { FilterType } from '@appvise/domain';
 import { NumericFilterInput, StringFilterInput } from '@appvise/graphql';
 
 @InputType()

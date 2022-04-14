@@ -1,13 +1,12 @@
-import { OperationCreated } from '@koiner/chain/domain';
+import { DomainEvent, DomainEventProps } from '@appvise/domain';
 
-export class SystemCallOperationCreated {
-  public readonly operationId: string;
-  public readonly contractId: string;
-  public readonly blockHeight: number;
-  public readonly transactionId: string;
-  public readonly operationIndex: number;
+export class SystemCallOperationCreated extends DomainEvent {
+  constructor(props: DomainEventProps<SystemCallOperationCreated>) {
+    super(props);
 
-  constructor(event: OperationCreated) {
-    this.operationId = event.operationId;
+    Object.assign(this, props);
   }
+
+  readonly contractId: string;
+  readonly callId: number;
 }

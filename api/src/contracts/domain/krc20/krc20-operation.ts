@@ -4,6 +4,11 @@ import {
   Krc20OperationProps,
 } from './krc20-operation.types';
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
+import {
+  Krc20OperationCreated,
+  Krc20TokensMinted,
+  Krc20TokensTransferred,
+} from '.';
 
 export class Krc20Operation extends AggregateRoot<Krc20OperationProps> {
   protected readonly _id: KoinosId;
@@ -13,9 +18,42 @@ export class Krc20Operation extends AggregateRoot<Krc20OperationProps> {
       ...create,
     };
 
-    // operation.apply(new Krc20OperationCreated(id.value, props.header.signer));
+    const operation = new Krc20Operation({ id, props });
 
-    return new Krc20Operation({ id, props });
+    operation.addEvent(
+      new Krc20OperationCreated({
+        aggregateId: id.value,
+        contractId: props.contractId.value,
+        name: props.name,
+        to: props.to.value,
+        value: props.value,
+        from: props.from ? props.from.value : undefined,
+      }),
+    );
+
+    if (operation.name === 'mint') {
+      operation.addEvent(
+        new Krc20TokensMinted({
+          aggregateId: id.value,
+          contractId: props.contractId.value,
+          to: props.to.value,
+          value: props.value,
+        }),
+      );
+    }
+
+    if (operation.name === 'transfer') {
+      operation.addEvent(
+        new Krc20TokensTransferred({
+          aggregateId: id.value,
+          contractId: props.contractId.value,
+          to: props.to.value,
+          value: props.value,
+        }),
+      );
+    }
+
+    return operation;
   }
 
   get contractId(): KoinosAddressId {

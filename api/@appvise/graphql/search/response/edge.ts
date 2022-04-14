@@ -1,6 +1,6 @@
 import { Type } from '@nestjs/common';
 import { Field, ObjectType } from '@nestjs/graphql';
-import { SearchResult } from '@appvise/search';
+import { SearchResult } from '@appvise/domain';
 
 export interface IEdgeType<TNode> {
   cursor: string;

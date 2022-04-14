@@ -8,9 +8,13 @@ import {
 } from '@koiner/chain/application/chain/command';
 import { ChainQuery } from '@koiner/chain/application/chain/query';
 import { Block, Chain } from '@koiner/chain/domain';
-import { DateVO, NotFoundException } from '@appvise/domain';
+import {
+  DateVO,
+  NotFoundException,
+  SearchResponse,
+  SortDirection,
+} from '@appvise/domain';
 import { BlocksQuery } from '@koiner/chain/application/block/query';
-import { SearchResponse, SortDirection } from '@appvise/search';
 import { koinos } from '@config';
 
 @Injectable()

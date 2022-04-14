@@ -1,9 +1,14 @@
-export class ContractOperationCreated {
-  constructor(
-    public readonly operationId: string,
-    public readonly contractId: string,
-    public readonly entryPoint: number,
-    public readonly args: string,
-    public readonly contractStandardType?: string,
-  ) {}
+import { DomainEvent, DomainEventProps } from '@appvise/domain';
+
+export class ContractOperationCreated extends DomainEvent {
+  constructor(props: DomainEventProps<ContractOperationCreated>) {
+    super(props);
+
+    Object.assign(this, props);
+  }
+
+  readonly contractId: string;
+  readonly entryPoint: number;
+  readonly args: string;
+  readonly contractStandardType?: string;
 }

@@ -4,6 +4,7 @@ import {
   CreateSystemContractOperationProps,
 } from './system-contract-operation.types';
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
+import { SystemContractOperationCreated } from '@koiner/chain/domain/operation/event/system-contract-operation-created';
 
 export class SystemContractOperation extends AggregateRoot<SystemContractOperationProps> {
   protected readonly _id: KoinosId;
@@ -18,7 +19,13 @@ export class SystemContractOperation extends AggregateRoot<SystemContractOperati
 
     const operation = new SystemContractOperation({ id, props });
 
-    // operation.apply(new OperationCreated(id.value, props.header.signer));
+    operation.addEvent(
+      new SystemContractOperationCreated({
+        aggregateId: id.value,
+        contractId: props.contractId.value,
+        systemContract: props.systemContract,
+      }),
+    );
 
     return operation;
   }

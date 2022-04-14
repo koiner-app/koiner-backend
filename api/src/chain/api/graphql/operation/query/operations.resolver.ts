@@ -1,6 +1,6 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { QueryBus } from '@nestjs/cqrs';
-import { SearchResponse } from '@appvise/search';
+import { SearchResponse } from '@appvise/domain';
 import { SelectionSet, ConnectionFactory } from '@appvise/graphql';
 
 import { Operation } from '@koiner/chain/domain';

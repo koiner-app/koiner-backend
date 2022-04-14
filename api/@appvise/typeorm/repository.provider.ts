@@ -1,4 +1,4 @@
-import { AggregateRoot } from '@appvise/domain';
+import { AggregateRoot, Entity, Logger } from '@appvise/domain';
 import {
   EntitySchemaFactory,
   EntityBaseSchema,
@@ -16,7 +16,7 @@ export interface Type<T = any> extends Function {
 export class TypeormRepositoryProvider {
   static provide<
     TRepository,
-    TEntity extends AggregateRoot<unknown>,
+    TEntity extends AggregateRoot<unknown> | Entity<unknown>,
     TEntitySchema extends EntityBaseSchema,
     TEntitySchemaFactory extends EntitySchemaFactory<TEntity, TEntitySchema>,
   >(
@@ -26,7 +26,7 @@ export class TypeormRepositoryProvider {
   ) {
     return {
       provide: repository,
-      useFactory: (connection: Connection) => {
+      useFactory: (connection: Connection, logger: Logger) => {
         // Check if ReadRepository is implemented
         if (repository.toString().includes('ReadRepository')) {
           return new TypeormReadRepository<TEntity, TEntitySchema>(
@@ -42,6 +42,7 @@ export class TypeormRepositoryProvider {
             connection.getRepository(schemaType),
             schemaFactory,
             schemaType,
+            logger,
           );
         }
 
@@ -50,9 +51,10 @@ export class TypeormRepositoryProvider {
           connection.getRepository(schemaType),
           schemaFactory,
           schemaType,
+          logger,
         );
       },
-      inject: [Connection],
+      inject: [Connection, Logger],
     };
   }
 }

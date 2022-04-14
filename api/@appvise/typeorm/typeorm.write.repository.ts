@@ -6,6 +6,9 @@ import {
 } from 'typeorm';
 import {
   AggregateRoot,
+  DomainEvents,
+  Entity,
+  Logger,
   NotFoundException,
   ReferenceNotFoundException,
   SelectionSet,
@@ -19,7 +22,7 @@ import {
 import { NotUniqueException } from '@appvise/domain';
 
 export class TypeormWriteRepository<
-  TEntity extends AggregateRoot<unknown>,
+  TEntity extends AggregateRoot<unknown> | Entity<unknown>,
   TEntitySchema extends EntityBaseSchema & ObjectLiteral,
 > implements WriteRepository<TEntity>
 {
@@ -30,6 +33,7 @@ export class TypeormWriteRepository<
       TEntitySchema
     >,
     protected readonly entityType: ObjectType<TEntitySchema>,
+    protected readonly logger: Logger,
   ) {}
 
   async existsById(id: string): Promise<boolean> {
@@ -96,6 +100,17 @@ export class TypeormWriteRepository<
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const result = await this.entityModel.save(ormEntity);
+
+      this.logger.debug(
+        `[${entity.constructor.name}] persisted ${entity.id.value}`,
+      );
+
+      await DomainEvents.publishEvents(
+        entity.id,
+        this.logger,
+        this.correlationId,
+      );
+
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       return this.entitySchemaFactory.toDomain(result);
@@ -130,6 +145,33 @@ export class TypeormWriteRepository<
 
   async delete(entity: TEntity): Promise<void> {
     entity.validate();
+
+    await DomainEvents.publishEvents(
+      entity.id,
+      this.logger,
+      this.correlationId,
+    );
+
+    this.logger.debug(
+      `[${entity.constructor.name}] deleted ${entity.id.value}`,
+    );
+
     await this.entityModel.remove(this.entitySchemaFactory.toSchema(entity));
+  }
+
+  protected correlationId?: string;
+
+  setCorrelationId(correlationId: string): this {
+    this.correlationId = correlationId;
+    this.setContext();
+    return this;
+  }
+
+  private setContext() {
+    if (this.correlationId) {
+      this.logger.setContext(`${this.constructor.name}:${this.correlationId}`);
+    } else {
+      this.logger.setContext(this.constructor.name);
+    }
   }
 }

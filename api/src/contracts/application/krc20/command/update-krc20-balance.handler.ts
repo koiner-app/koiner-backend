@@ -1,4 +1,4 @@
-import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UUID } from '@appvise/domain';
 import {
   Krc20Balance,
@@ -11,10 +11,7 @@ import { KoinosAddressId } from '@koiner/domain';
 export class UpdateKrc20BalanceHandler
   implements ICommandHandler<UpdateKrc20BalanceCommand>
 {
-  constructor(
-    private readonly writeRepository: Krc20BalanceWriteRepository,
-    private readonly eventPublisher: EventPublisher,
-  ) {}
+  constructor(private readonly writeRepository: Krc20BalanceWriteRepository) {}
 
   async execute(command: UpdateKrc20BalanceCommand): Promise<void> {
     let krc20Balance = await this.writeRepository.findOne(
@@ -23,29 +20,20 @@ export class UpdateKrc20BalanceHandler
     );
 
     if (krc20Balance) {
-      // Make possible to dispatch event
-      krc20Balance = this.eventPublisher.mergeObjectContext(krc20Balance);
-
       krc20Balance.update(command.amountChanged);
 
       await this.writeRepository.save(krc20Balance);
-
-      krc20Balance.commit();
     } else {
-      krc20Balance = this.eventPublisher.mergeObjectContext(
-        Krc20Balance.create(
-          {
-            addressId: new KoinosAddressId(command.addressId),
-            contractId: new KoinosAddressId(command.contractId),
-            balance: command.amountChanged,
-          },
-          UUID.generate(),
-        ),
+      krc20Balance = Krc20Balance.create(
+        {
+          addressId: new KoinosAddressId(command.addressId),
+          contractId: new KoinosAddressId(command.contractId),
+          balance: command.amountChanged,
+        },
+        UUID.generate(),
       );
 
       await this.writeRepository.save(krc20Balance);
-
-      krc20Balance.commit();
     }
   }
 }

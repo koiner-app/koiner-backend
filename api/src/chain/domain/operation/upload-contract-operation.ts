@@ -4,6 +4,7 @@ import {
   CreateUploadContractOperationProps,
 } from './upload-contract-operation.types';
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
+import { UploadContractOperationCreated } from '@koiner/chain/domain/operation/event/upload-contract-operation-created';
 
 export class UploadContractOperation extends AggregateRoot<UploadContractOperationProps> {
   protected readonly _id: KoinosId;
@@ -18,7 +19,13 @@ export class UploadContractOperation extends AggregateRoot<UploadContractOperati
 
     const operation = new UploadContractOperation({ id, props });
 
-    // operation.apply(new OperationCreated(id.value, props.header.signer));
+    operation.addEvent(
+      new UploadContractOperationCreated({
+        aggregateId: id.value,
+        contractId: props.contractId.value,
+        contractStandardType: props.contractStandardType,
+      }),
+    );
 
     return operation;
   }

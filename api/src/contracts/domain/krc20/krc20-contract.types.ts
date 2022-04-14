@@ -1,4 +1,5 @@
 import { KoinosId } from '@koiner/domain';
+import { Krc20ContractStatistics } from '@koiner/contracts/domain';
 
 export interface CreateKrc20ContractProps {
   blockHeight: number;
@@ -9,4 +10,7 @@ export interface CreateKrc20ContractProps {
   decimals: number;
 }
 
-export type Krc20ContractProps = CreateKrc20ContractProps;
+export interface Krc20ContractProps extends CreateKrc20ContractProps {
+  totalSupply: number;
+  stats: Krc20ContractStatistics;
+}

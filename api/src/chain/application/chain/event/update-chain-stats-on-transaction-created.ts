@@ -1,13 +1,13 @@
-import { CommandBus, EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { CommandBus } from '@nestjs/cqrs';
+import { DomainEventHandler } from '@appvise/domain';
 import { TransactionCreated } from '@koiner/chain/domain';
 import { UpdateChainStatsCommand } from '@koiner/chain/application/chain/command/dto/update-chain-stats.command';
 import { koinos } from '@config';
 
-@EventsHandler(TransactionCreated)
-export class UpdateChainStatsOnTransactionCreated
-  implements IEventHandler<TransactionCreated>
-{
-  constructor(private commandBus: CommandBus) {}
+export class UpdateChainStatsOnTransactionCreated extends DomainEventHandler {
+  constructor(private commandBus: CommandBus) {
+    super(TransactionCreated);
+  }
 
   async handle(event: TransactionCreated): Promise<void> {
     await this.commandBus.execute(

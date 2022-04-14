@@ -13,13 +13,14 @@ export class BlockReward extends AggregateRoot<BlockRewardProps> {
 
     const blockReward = new BlockReward({ id, props });
 
-    blockReward.apply(
-      new BlockRewardCreated(
-        blockReward.blockHeight,
-        blockReward.producerId.value,
-        blockReward.value,
-        blockReward.contractId.value,
-      ),
+    blockReward.addEvent(
+      new BlockRewardCreated({
+        aggregateId: id.value,
+        blockHeight: blockReward.blockHeight,
+        producerId: blockReward.producerId.value,
+        value: blockReward.value,
+        contractId: blockReward.contractId.value,
+      }),
     );
 
     return blockReward;

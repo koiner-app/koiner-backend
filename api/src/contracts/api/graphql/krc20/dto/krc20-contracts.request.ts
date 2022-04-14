@@ -1,6 +1,6 @@
 import { ArgsType, Field } from '@nestjs/graphql';
 import { Optional } from '@nestjs/common';
-import { SortDirection } from '@appvise/search';
+import { SortDirection } from '@appvise/domain';
 import { SearchRequestArgs } from '@appvise/graphql';
 import { Krc20ContractsSortInput } from './krc20-contracts.sort.input';
 import { Krc20ContractsSortFieldEnum } from './krc20-contracts.sort-field.enum';

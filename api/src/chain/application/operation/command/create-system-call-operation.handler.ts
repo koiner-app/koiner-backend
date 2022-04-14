@@ -1,4 +1,4 @@
-import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UUID } from '@appvise/domain';
 import { CreateSystemCallOperationCommand } from './dto/create-system-call-operation.command';
 import {
@@ -13,22 +13,17 @@ export class CreateSystemCallOperationHandler
 {
   constructor(
     private readonly writeRepository: SystemCallOperationWriteRepository,
-    private readonly eventPublisher: EventPublisher,
   ) {}
 
   async execute(command: CreateSystemCallOperationCommand): Promise<void> {
-    const operation = this.eventPublisher.mergeObjectContext(
-      SystemCallOperation.create(
-        {
-          contractId: new KoinosAddressId(command.contractId),
-          callId: command.callId,
-        },
-        new UUID(command.id),
-      ),
+    const operation = SystemCallOperation.create(
+      {
+        contractId: new KoinosAddressId(command.contractId),
+        callId: command.callId,
+      },
+      new UUID(command.id),
     );
 
     await this.writeRepository.save(operation);
-
-    operation.commit();
   }
 }

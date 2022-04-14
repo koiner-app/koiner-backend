@@ -1,6 +1,6 @@
 import { ArgsType, Field, Int } from '@nestjs/graphql';
 import { Max, Min } from 'class-validator';
-import { FilterType, SearchRequest, SortField } from '@appvise/search';
+import { FilterType, SearchRequest, SortField } from '@appvise/domain';
 
 @ArgsType()
 export abstract class SearchRequestArgs implements SearchRequest {

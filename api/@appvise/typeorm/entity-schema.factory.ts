@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AggregateRoot, CreateEntityProps, DateVO, ID } from '@appvise/domain';
+import { CreateEntityProps, DateVO, Entity, ID } from '@appvise/domain';
 import { EntityBaseSchema } from './entity-base.schema';
 
 export type EntitySchemaProps<TEntitySchema> = Omit<
@@ -13,7 +13,7 @@ export interface EntityProps<TEntityProps> {
 }
 
 export abstract class EntitySchemaFactory<
-  TEntity extends AggregateRoot<unknown>,
+  TEntity extends Entity<unknown>,
   TEntitySchema extends EntityBaseSchema,
 > {
   constructor(

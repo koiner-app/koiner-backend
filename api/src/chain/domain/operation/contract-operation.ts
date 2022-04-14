@@ -19,14 +19,14 @@ export class ContractOperation extends AggregateRoot<ContractOperationProps> {
 
     const operation = new ContractOperation({ id, props });
 
-    operation.apply(
-      new ContractOperationCreated(
-        id.value,
-        props.contractId.value,
-        props.entryPoint,
-        props.args,
-        props.contractStandardType,
-      ),
+    operation.addEvent(
+      new ContractOperationCreated({
+        aggregateId: id.value,
+        contractId: props.contractId.value,
+        entryPoint: props.entryPoint,
+        args: props.args,
+        contractStandardType: props.contractStandardType,
+      }),
     );
 
     return operation;
