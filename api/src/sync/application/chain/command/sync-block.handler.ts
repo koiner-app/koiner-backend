@@ -24,6 +24,8 @@ export class SyncBlockHandler implements ICommandHandler<SyncBlockCommand> {
       const height = parseInt(command.block.header.height.toString());
       const signer = <string>command.block.header.signer;
 
+      this.logger.debug(`Height: ${height}`, 'SyncBlockHandler');
+
       // Add address for signer
       await this.commandBus.execute(new CreateOrUpdateAddressCommand(signer));
 
