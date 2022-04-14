@@ -26,7 +26,7 @@ export class RawBlocksService {
 
     for (let i = 0; i < blocks.length; i++) {
       // Save to memory
-      this.blocksInMemory[height.toString()] = blocks[i];
+      this.blocksInMemory[blocks[i].block_height.toString()] = blocks[i];
     }
 
     return blocks;
