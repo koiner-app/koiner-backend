@@ -1,3 +1,4 @@
-import ChainWorkersCommands from './chain/command';
+import SyncCommands from './chain/command';
+import SyncEventHandlers from './chain/event';
 
-export default [...ChainWorkersCommands.handlers];
+export default [...SyncCommands.handlers, ...SyncEventHandlers];

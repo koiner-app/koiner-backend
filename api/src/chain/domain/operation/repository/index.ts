@@ -1,6 +1,7 @@
 export { ContractOperationReadRepository } from './contract-operation.read.repository';
 export { ContractOperationWriteRepository } from './contract-operation.write.repository';
 export { OperationReadRepository } from './operation.read.repository';
+export { OperationWriteRepository } from './operation.write.repository';
 export { SystemCallOperationReadRepository } from './system-call-operation.read.repository';
 export { SystemCallOperationWriteRepository } from './system-call-operation.write.repository';
 export { SystemContractOperationReadRepository } from './system-contract-operation.read.repository';

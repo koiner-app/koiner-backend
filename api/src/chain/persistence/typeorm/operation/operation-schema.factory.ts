@@ -18,7 +18,6 @@ export class OperationSchemaFactory extends EntitySchemaFactory<
     const id = new UUID(entitySchema.id);
 
     const props: OperationProps = {
-      parentId: new UUID(entitySchema.id),
       blockHeight: entitySchema.block_height,
       transactionId: new KoinosId(entitySchema.transaction_id),
       operationIndex: entitySchema.operation_index,
@@ -36,7 +35,6 @@ export class OperationSchemaFactory extends EntitySchemaFactory<
     return {
       block_height: props.blockHeight,
       transaction_id: props.transactionId.value,
-      // TODO: This will always be ignored?
       transaction: null,
       operation_index: props.operationIndex,
       type: props.type,

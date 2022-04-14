@@ -7,6 +7,7 @@ export class TransactionCreated extends DomainEvent {
     Object.assign(this, props);
   }
 
+  readonly blockHeight: number;
   readonly payer: string;
   readonly operationCount: number;
 }

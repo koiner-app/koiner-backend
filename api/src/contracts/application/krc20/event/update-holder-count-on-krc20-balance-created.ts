@@ -12,7 +12,7 @@ export class UpdateHolderCountOnKrc20BalanceCreated extends DomainEventHandler {
   }
 
   async handle(event: Krc20BalanceCreated): Promise<void> {
-    this.logger.log(
+    this.logger.debug(
       `${event.contractId}, ${event.balance}, ${event.addressId}`,
       'UpdateHolderCountOnKrc20BalanceCreated',
     );

@@ -20,7 +20,6 @@ export class CreateKrcContractOnContractCreated extends DomainEventHandler {
     if (event.contractStandardType !== ContractStandardType.krc20) {
       return;
     }
-
     this.logger.log(
       `Create Krc20Contract ${event.aggregateId}`,
       'CreateKrcContractOnContractCreated',
@@ -32,11 +31,6 @@ export class CreateKrcContractOnContractCreated extends DomainEventHandler {
         event.contractStandardType,
       );
     const contractValues = contractStandardWithValues.contractValues;
-
-    this.logger.log(
-      `Create Krc20Contract . contractStandardWithValues`,
-      'CreateKrcContractOnContractCreated',
-    );
 
     if (
       contractValues.name &&
@@ -55,7 +49,7 @@ export class CreateKrcContractOnContractCreated extends DomainEventHandler {
         ),
       );
 
-      this.logger.log(
+      this.logger.debug(
         `Done creating Krc20Contract ${event.aggregateId}`,
         'CreateKrcContractOnContractCreated',
       );

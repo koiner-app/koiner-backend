@@ -14,6 +14,7 @@ import {
   ContractOperationWriteRepository,
   Operation,
   OperationReadRepository,
+  OperationWriteRepository,
   SystemCallOperation,
   SystemCallOperationReadRepository,
   SystemCallOperationWriteRepository,
@@ -133,6 +134,11 @@ export default [
   // Operation
   TypeormRepositoryProvider.provide(
     OperationReadRepository,
+    OperationSchema,
+    operationSchemaFactory,
+  ),
+  TypeormRepositoryProvider.provide(
+    OperationWriteRepository,
     OperationSchema,
     operationSchemaFactory,
   ),

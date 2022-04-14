@@ -14,6 +14,7 @@ export class Transaction extends AggregateRoot<TransactionProps> {
   static create(create: CreateTransactionProps, id: KoinosId): Transaction {
     const props: TransactionProps = {
       ...create,
+      operations: [],
     };
 
     const transaction = new Transaction({ id, props });
@@ -21,6 +22,7 @@ export class Transaction extends AggregateRoot<TransactionProps> {
     transaction.addEvent(
       new TransactionCreated({
         aggregateId: id.value,
+        blockHeight: props.blockHeight,
         payer: props.header.payer,
         operationCount: props.operationCount,
       }),

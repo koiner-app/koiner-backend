@@ -1,5 +1,4 @@
 import { KoinosId } from '@koiner/domain';
-import { UUID } from '@appvise/domain';
 
 export enum OperationType {
   systemCall = 'systemCall',
@@ -9,7 +8,6 @@ export enum OperationType {
 }
 
 export interface CreateOperationProps {
-  parentId: UUID;
   blockHeight: number;
   transactionId: KoinosId;
   operationIndex: number;

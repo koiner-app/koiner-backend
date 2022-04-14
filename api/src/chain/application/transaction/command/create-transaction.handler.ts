@@ -1,6 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import {
-  Operation,
   Transaction,
   TransactionHeader,
   TransactionWriteRepository,
@@ -24,10 +23,7 @@ export class CreateTransactionHandler
           operationMerkleRoot: command.operationMerkleRoot,
           payer: command.payer,
         }),
-        operations: command.operations.map((operationProps) =>
-          Operation.create(operationProps, operationProps.parentId),
-        ),
-        operationCount: command.operations.length,
+        operationCount: command.operationCount,
         signature: command.signature,
         transactionIndex: command.transactionIndex,
       },

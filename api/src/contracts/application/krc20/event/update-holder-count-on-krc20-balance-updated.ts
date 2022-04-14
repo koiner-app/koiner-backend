@@ -13,7 +13,7 @@ export class UpdateHolderCountOnKrc20BalanceUpdated extends DomainEventHandler {
 
   async handle(event: Krc20BalanceUpdated): Promise<void> {
     if (event.balance === 0) {
-      this.logger.log(
+      this.logger.debug(
         `${event.contractId}, ${event.balance}, ${event.amountChanged}`,
         'UpdateHolderCountOnKrc20BalanceUpdated',
       );

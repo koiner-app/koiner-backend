@@ -34,7 +34,6 @@ export class TransactionSchemaFactory extends EntitySchemaFactory<
             return new Operation({
               id: new UUID(operationSchema.id),
               props: {
-                parentId: new UUID(operationSchema.id),
                 blockHeight: operationSchema.block_height,
                 transactionId: new KoinosId(operationSchema.transaction_id),
                 operationIndex: operationSchema.operation_index,

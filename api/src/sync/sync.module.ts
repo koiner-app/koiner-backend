@@ -8,6 +8,7 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { BlockAcceptedHandler } from '@koiner/sync/event/block-accepted.handler';
 import { SyncController } from '@koiner/sync/sync.controller';
 import { ManualSyncService } from '@koiner/sync/application/chain/manual-sync.service';
+import { RawBlocksService } from '@koiner/sync/raw-blocks.service';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { ManualSyncService } from '@koiner/sync/application/chain/manual-sync.se
     // EventHandlers
     BlockAcceptedHandler,
 
+    RawBlocksService,
     ManualSyncService,
   ],
   controllers: [SyncController],

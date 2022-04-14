@@ -3,7 +3,11 @@ import {
   ArgumentOutOfRangeException,
   Guard,
 } from '@appvise/domain';
-import { BlockCreated, BlockReceipt } from '@koiner/chain/domain';
+import {
+  BlockCreated,
+  BlockReceipt,
+  BlockWithTransactionsCreated,
+} from '@koiner/chain/domain';
 import { BlockProps, CreateBlockProps } from './block.types';
 import { KoinosId } from '@koiner/domain';
 import { BlockHeader } from '@koiner/chain/domain';
@@ -21,10 +25,22 @@ export class Block extends AggregateRoot<BlockProps> {
     block.addEvent(
       new BlockCreated({
         aggregateId: id.value,
+        height: props.header.height,
         timestamp: props.header.timestamp,
         transactionCount: props.transactionCount,
       }),
     );
+
+    if (props.transactionCount) {
+      block.addEvent(
+        new BlockWithTransactionsCreated({
+          aggregateId: id.value,
+          height: props.header.height,
+          timestamp: props.header.timestamp,
+          transactionCount: props.transactionCount,
+        }),
+      );
+    }
 
     return block;
   }

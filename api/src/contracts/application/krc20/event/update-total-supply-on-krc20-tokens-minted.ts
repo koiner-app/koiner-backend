@@ -12,7 +12,7 @@ export class UpdateTotalSupplyOnKrc20TokensMinted extends DomainEventHandler {
   }
 
   async handle(event: Krc20TokensMinted): Promise<void> {
-    this.logger.log(
+    this.logger.debug(
       `${event.contractId}, ${event.value}`,
       'UpdateTotalSupplyOnKrc20TokensMinted',
     );

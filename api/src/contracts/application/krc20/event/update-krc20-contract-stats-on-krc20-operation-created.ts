@@ -12,7 +12,7 @@ export class UpdateKrc20ContractStatsOnKrc20OperationCreated extends DomainEvent
   }
 
   async handle(event: Krc20OperationCreated): Promise<void> {
-    this.logger.log(
+    this.logger.debug(
       `${event.contractId}, ${event.value}, ${event.name}`,
       'UpdateKrc20ContractStatsOnKrc20OperationCreated',
     );

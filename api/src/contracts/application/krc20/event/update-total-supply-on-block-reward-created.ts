@@ -12,7 +12,7 @@ export class UpdateTotalSupplyOnBlockRewardCreated extends DomainEventHandler {
   }
 
   async handle(event: BlockRewardCreated): Promise<void> {
-    this.logger.log(
+    this.logger.debug(
       `${event.contractId}, ${event.value}`,
       'UpdateTotalSupplyOnBlockRewardCreated',
     );
