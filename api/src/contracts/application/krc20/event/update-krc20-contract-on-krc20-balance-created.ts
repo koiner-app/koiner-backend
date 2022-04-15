@@ -14,9 +14,7 @@ export class UpdateKrc20ContractOnKrc20BalanceCreated extends DomainEventHandler
     const stats: UpdateKrc20ContractStatisticsProps = {};
 
     // Do all stats updates to Krc20Contract in one go to prevent read/write conflicts
-    if (event.balance === 0) {
-      stats.holderCount = 1;
-    }
+    stats.holderCount = 1;
 
     if (event.tokensOrigin !== TokensOrigin.blockReward) {
       stats.operationCount = 1;
@@ -35,10 +33,8 @@ export class UpdateKrc20ContractOnKrc20BalanceCreated extends DomainEventHandler
       mintedTokens = event.balance;
     }
 
-    if (mintedTokens || Object.entries(stats).length) {
-      await this.commandBus.execute(
-        new UpdateKrc20ContractCommand(event.contractId, mintedTokens, stats),
-      );
-    }
+    await this.commandBus.execute(
+      new UpdateKrc20ContractCommand(event.contractId, mintedTokens, stats),
+    );
   }
 }

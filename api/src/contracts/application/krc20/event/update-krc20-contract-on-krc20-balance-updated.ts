@@ -19,7 +19,11 @@ export class UpdateKrc20ContractOnKrc20BalanceUpdated extends DomainEventHandler
       stats.holderCount = -1;
     }
 
-    if (event.tokensOrigin !== TokensOrigin.blockReward) {
+    // Only count operations for receiver to prevent double counting
+    if (
+      event.tokensOrigin !== TokensOrigin.blockReward &&
+      event.amountChanged > 0
+    ) {
       stats.operationCount = 1;
     }
 
@@ -28,7 +32,11 @@ export class UpdateKrc20ContractOnKrc20BalanceUpdated extends DomainEventHandler
       stats.mintCount = 1;
     }
 
-    if (event.tokensOrigin === TokensOrigin.transfer) {
+    // Only count operations for receiver to prevent double counting
+    if (
+      event.tokensOrigin === TokensOrigin.transfer &&
+      event.amountChanged > 0
+    ) {
       stats.transferCount = 1;
     }
 
