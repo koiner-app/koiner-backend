@@ -21,7 +21,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@appvise/domain": "^1.0.4",
+    "@appvise/domain": "^1.0.6",
+    "@appvise/typeorm": "^1.0.3",
     "@golevelup/nestjs-rabbitmq": "^2.2.0",
     "@leocode/sequential-events": "^2.0.1",
     "@nestjs/apollo": "^10.0.4",
@@ -35,7 +36,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/schedule": "^1.0.2",
     "@nestjs/schematics": "^8.0.0",
-    "@nestjs/typeorm": "^8.0.3",
+    "@nestjs/typeorm": "^9.0.0-next.2",
     "amqp-connection-manager": "^4.1.1",
     "amqplib": "^0.8.0",
     "apollo-server-express": "^3.6.3",
@@ -49,7 +50,6 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "typeorm": "^0.2.43",
     "uuid": "^8.3.2",
     "winston": "^3.7.2",
     "winston-daily-rotate-file": "^4.6.1"
