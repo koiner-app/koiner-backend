@@ -66,6 +66,7 @@ export default [
     ContractWriteRepository,
     ContractSchema,
     contractSchemaFactory,
+    false,
   ),
 
   // BlockReward
@@ -78,6 +79,7 @@ export default [
     BlockRewardWriteRepository,
     BlockRewardSchema,
     blockRewardSchemaFactory,
+    false,
   ),
 
   // Krc20Balance
@@ -101,6 +103,7 @@ export default [
     Krc20ContractWriteRepository,
     Krc20ContractSchema,
     krc20ContractSchemaFactory,
+    false,
   ),
 
   // Krc20Operation
@@ -113,5 +116,6 @@ export default [
     Krc20OperationWriteRepository,
     Krc20OperationSchema,
     krc20OperationSchemaFactory,
+    false,
   ),
 ];

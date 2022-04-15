@@ -90,6 +90,7 @@ export default [
     AddressWriteRepository,
     AddressSchema,
     addressSchemaFactory,
+    false,
   ),
 
   // Block
@@ -101,6 +102,7 @@ export default [
     BlockWriteRepository,
     BlockSchema,
     blockSchemaFactory,
+    false,
   ),
 
   // Chain
@@ -113,6 +115,7 @@ export default [
     ChainWriteRepository,
     ChainSchema,
     chainSchemaFactory,
+    false,
   ),
 
   // Transaction
@@ -125,6 +128,7 @@ export default [
     TransactionWriteRepository,
     TransactionSchema,
     transactionSchemaFactory,
+    false,
   ),
 
   //
@@ -141,6 +145,7 @@ export default [
     OperationWriteRepository,
     OperationSchema,
     operationSchemaFactory,
+    false,
   ),
 
   // ContractOperation
@@ -153,6 +158,7 @@ export default [
     ContractOperationWriteRepository,
     ContractOperationSchema,
     contractOperationSchemaFactory,
+    false,
   ),
 
   // SystemCallOperation
@@ -165,6 +171,7 @@ export default [
     SystemCallOperationWriteRepository,
     SystemCallOperationSchema,
     systemCallOperationSchemaFactory,
+    false,
   ),
 
   // SystemContractOperation
@@ -177,6 +184,7 @@ export default [
     SystemContractOperationWriteRepository,
     SystemContractOperationSchema,
     systemContractOperationSchemaFactory,
+    false,
   ),
 
   // UploadContractOperation
@@ -189,5 +197,6 @@ export default [
     UploadContractOperationWriteRepository,
     UploadContractOperationSchema,
     uploadContractOperationSchemaFactory,
+    false,
   ),
 ];

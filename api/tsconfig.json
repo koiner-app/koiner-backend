@@ -25,9 +25,7 @@
       "@appvise/graphql": ["@appvise/graphql"],
       "@appvise/graphql/*": ["@appvise/graphql/*"],
       "@appvise/nestjs-utils": ["@appvise/nestjs-utils"],
-      "@appvise/nestjs-utils/*": ["@appvise/nestjs-utils/*"],
-      "@appvise/typeorm": ["@appvise/typeorm"],
-      "@appvise/typeorm/*": ["@appvise/typeorm/*"]
+      "@appvise/nestjs-utils/*": ["@appvise/nestjs-utils/*"]
     }
   }
 }

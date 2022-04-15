@@ -11,7 +11,6 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { ContractsModule } from '@koiner/contracts/contracts.module';
 import { IntegrationModule } from '@koiner/integration/integration.module';
 import { SyncModule } from '@koiner/sync/sync.module';
-import { SequentialEventsModule } from '@leocode/sequential-events';
 
 if (process.env.APP_ENV !== 'prod') {
   console.log('Known entity types:');
@@ -38,7 +37,6 @@ if (process.env.APP_ENV !== 'prod') {
       context: ({ req }) => ({ req }),
     }),
     ScheduleModule.forRoot(),
-    SequentialEventsModule,
 
     // App modules
     ChainModule,

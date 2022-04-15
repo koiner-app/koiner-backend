@@ -28,6 +28,7 @@ export class Krc20BalanceWriteTypeormRepository
       new Krc20BalanceSchemaFactory(Krc20Balance, Krc20BalanceSchema),
       Krc20BalanceSchema,
       logger,
+      false,
     );
   }
 
