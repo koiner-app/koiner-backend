@@ -11,7 +11,7 @@ import {
   Krc20BalanceSchemaFactory,
 } from '@koiner/contracts/persistence/typeorm';
 import { Logger, SelectionSet } from '@appvise/domain';
-import { snakeToCamelCase } from '@appvise/typeorm/utils';
+import { snakeToCamelCase } from '@appvise/typeorm';
 
 @Injectable()
 export class Krc20BalanceWriteTypeormRepository
