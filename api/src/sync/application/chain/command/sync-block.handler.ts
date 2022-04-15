@@ -63,6 +63,11 @@ export class SyncBlockHandler implements ICommandHandler<SyncBlockCommand> {
           },
         }),
       );
+
+      this.logger.debug(
+        `END BLOCK PROCESSING Height: ${command.blockHeight}`,
+        'SyncBlockHandler',
+      );
     } catch (error) {
       this.logger.error(error.message, error.stack, 'Sync-blocks error');
     }

@@ -3,6 +3,7 @@ import { UUID } from '@appvise/domain';
 import {
   Krc20Balance,
   Krc20BalanceWriteRepository,
+  TokensOrigin,
 } from '@koiner/contracts/domain';
 import { UpdateKrc20BalanceCommand } from './dto/update-krc20-balance.command';
 import { KoinosAddressId } from '@koiner/domain';
@@ -20,7 +21,10 @@ export class UpdateKrc20BalanceHandler
     );
 
     if (krc20Balance) {
-      krc20Balance.update(command.amountChanged);
+      krc20Balance.update({
+        amountChanged: command.amountChanged,
+        tokensOrigin: command.tokensOrigin,
+      });
 
       await this.writeRepository.save(krc20Balance);
     } else {
@@ -29,7 +33,12 @@ export class UpdateKrc20BalanceHandler
           addressId: new KoinosAddressId(command.addressId),
           contractId: new KoinosAddressId(command.contractId),
           balance: command.amountChanged,
+          rewardsReceived:
+            command.tokensOrigin === TokensOrigin.blockReward
+              ? command.amountChanged
+              : undefined,
         },
+        command.tokensOrigin,
         UUID.generate(),
       );
 

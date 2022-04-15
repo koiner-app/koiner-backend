@@ -10,9 +10,6 @@ export class AddressSchema extends EntityBaseSchema {
   @Column()
   readonly is_producer: boolean;
 
-  @Column()
-  readonly rewards_received: string;
-
   @Column({ type: 'bigint' })
   readonly block_count: number;
 

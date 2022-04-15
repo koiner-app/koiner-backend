@@ -2,27 +2,19 @@ import { CreateKrcContractOnContractCreated } from './create-krc-contract-on-con
 import { CreateKrcOperationOnOperationCreated } from './create-krc-operation-on-operation-created';
 import { UpdateKrc20BalanceOnBlockRewardCreated } from './update-krc20-balance-on-block-reward-created';
 import { UpdateKrc20BalancesOnOperationCreated } from './update-krc20-balances-on-operation-created';
-import { UpdateHolderCountOnKrc20BalanceCreated } from './update-holder-count-on-krc20-balance-created';
-import { UpdateHolderCountOnKrc20BalanceUpdated } from './update-holder-count-on-krc20-balance-updated';
-import { UpdateKrc20ContractStatsOnKrc20OperationCreated } from './update-krc20-contract-stats-on-krc20-operation-created';
-import { UpdateTotalSupplyOnBlockRewardCreated } from './update-total-supply-on-block-reward-created';
-import { UpdateTotalSupplyOnKrc20TokensMinted } from './update-total-supply-on-krc20-tokens-minted';
+import { UpdateKrc20ContractOnKrc20BalanceCreated } from './update-krc20-contract-on-krc20-balance-created';
 import { provideEventHandlers } from '@appvise/nestjs-utils';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Logger } from '@appvise/domain';
 import { ContractStandardService } from '@koiner/contracts/application/contract-standard/service';
+import { UpdateKrc20ContractOnKrc20BalanceUpdated } from '@koiner/contracts/application/krc20/event/update-krc20-contract-on-krc20-balance-updated';
 
 export default [
   ...provideEventHandlers([
     UpdateKrc20BalanceOnBlockRewardCreated,
     UpdateKrc20BalancesOnOperationCreated,
-
-    UpdateHolderCountOnKrc20BalanceCreated,
-    UpdateHolderCountOnKrc20BalanceUpdated,
-    UpdateKrc20ContractStatsOnKrc20OperationCreated,
-
-    UpdateTotalSupplyOnBlockRewardCreated,
-    UpdateTotalSupplyOnKrc20TokensMinted,
+    UpdateKrc20ContractOnKrc20BalanceCreated,
+    UpdateKrc20ContractOnKrc20BalanceUpdated,
   ]),
 
   {

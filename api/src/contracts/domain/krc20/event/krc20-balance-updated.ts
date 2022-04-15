@@ -11,4 +11,5 @@ export class Krc20BalanceUpdated extends DomainEvent {
   readonly contractId: string;
   readonly balance: number;
   readonly amountChanged: number;
+  readonly tokensOrigin: string;
 }

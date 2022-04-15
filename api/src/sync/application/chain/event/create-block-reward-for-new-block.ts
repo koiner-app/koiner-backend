@@ -1,6 +1,6 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { DomainEventHandler } from '@appvise/domain';
-import { BlockCreated } from '@koiner/chain/domain';
+import { AfterBlockCreated } from '@koiner/chain/domain';
 import { RawBlocksService } from '@koiner/sync/raw-blocks.service';
 import { ContractStandardType } from '@koiner/contracts/domain';
 import { Provider, utils } from 'koilib';
@@ -16,10 +16,10 @@ export class CreateBlockRewardForNewBlock extends DomainEventHandler {
     private readonly rawBlocksService: RawBlocksService,
     private readonly contractStandardService: ContractStandardService,
   ) {
-    super(BlockCreated);
+    super(AfterBlockCreated);
   }
 
-  async handle(event: BlockCreated): Promise<void> {
+  async handle(event: AfterBlockCreated): Promise<void> {
     const rawBlock = await this.rawBlocksService.getBlock(event.height);
 
     if (rawBlock.receipt.events) {
@@ -42,11 +42,7 @@ export class CreateBlockRewardForNewBlock extends DomainEventHandler {
 
         // Add address for block producer
         await this.commandBus.execute(
-          new CreateOrUpdateAddressCommand(
-            blockProducerId,
-            true,
-            producerRewards,
-          ),
+          new CreateOrUpdateAddressCommand(blockProducerId, true),
         );
 
         await this.commandBus.execute(

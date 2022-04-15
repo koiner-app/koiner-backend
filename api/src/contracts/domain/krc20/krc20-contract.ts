@@ -3,6 +3,7 @@ import {
   Krc20ContractCreated,
   Krc20ContractStatsUpdated,
   Krc20ContractTotalSupplyUpdated,
+  UpdateKrc20ContractProps,
 } from '@koiner/contracts/domain';
 import {
   Krc20ContractProps,
@@ -72,6 +73,16 @@ export class Krc20Contract extends AggregateRoot<Krc20ContractProps> {
 
   get stats(): Krc20ContractStatistics {
     return this.props.stats;
+  }
+
+  update(props: UpdateKrc20ContractProps): void {
+    if (props.mintedTokens) {
+      this.updateTotalSupply(props.mintedTokens);
+    }
+
+    if (props.stats) {
+      this.updateStats(props.stats);
+    }
   }
 
   updateTotalSupply(mintedTokens: number): void {

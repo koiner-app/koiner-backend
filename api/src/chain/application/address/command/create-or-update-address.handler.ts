@@ -22,10 +22,6 @@ export class CreateOrUpdateAddressHandler
         address.markAsProducer();
       }
 
-      if (command.rewardsReceived) {
-        address.addRewards(command.rewardsReceived);
-      }
-
       // Update stats
       address.updateStats({
         blockCount: 1,
@@ -38,7 +34,6 @@ export class CreateOrUpdateAddressHandler
       address = Address.create(
         {
           isProducer: command.producedBlock,
-          rewardsReceived: command.rewardsReceived ?? 0,
           stats: AddressStatistics.create(command.producedBlock ? 1 : 0),
         },
         new KoinosAddressId(command.id),

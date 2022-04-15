@@ -21,6 +21,9 @@ export class Krc20BalanceSchemaFactory extends EntitySchemaFactory<
       contractId: new KoinosAddressId(entitySchema.contract_id),
       addressId: new KoinosAddressId(entitySchema.address_id),
       balance: parseInt(entitySchema.balance),
+      rewardsReceived: entitySchema.rewards_received
+        ? parseInt(entitySchema.rewards_received)
+        : undefined,
     };
 
     return { id, props };
@@ -35,6 +38,9 @@ export class Krc20BalanceSchemaFactory extends EntitySchemaFactory<
       contract_id: props.contractId.value,
       address_id: props.addressId.value,
       balance: props.balance.toString(),
+      rewards_received: props.rewardsReceived
+        ? props.rewardsReceived.toString()
+        : undefined,
     };
   }
 }

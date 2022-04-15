@@ -18,7 +18,6 @@ export class AddressSchemaFactory extends EntitySchemaFactory<
 
     const props: AddressProps = {
       isProducer: entitySchema.is_producer,
-      rewardsReceived: parseInt(entitySchema.rewards_received),
       stats: new AddressStatistics({
         blockCount: entitySchema.block_count,
         operationCount: entitySchema.operation_count,
@@ -34,7 +33,6 @@ export class AddressSchemaFactory extends EntitySchemaFactory<
 
     return {
       is_producer: props.isProducer,
-      rewards_received: props.rewardsReceived.toString(),
       block_count: props.stats.blockCount,
       operation_count: props.stats.operationCount,
       transaction_count: props.stats.transactionCount,

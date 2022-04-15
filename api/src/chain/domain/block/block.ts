@@ -4,6 +4,7 @@ import {
   Guard,
 } from '@appvise/domain';
 import {
+  AfterBlockCreated,
   BlockCreated,
   BlockReceipt,
   BlockWithTransactionsCreated,
@@ -41,6 +42,16 @@ export class Block extends AggregateRoot<BlockProps> {
         }),
       );
     }
+
+    // Fire event after BlockCreated event has been handled
+    block.addEvent(
+      new AfterBlockCreated({
+        aggregateId: id.value,
+        height: props.header.height,
+        timestamp: props.header.timestamp,
+        transactionCount: props.transactionCount,
+      }),
+    );
 
     return block;
   }

@@ -1,6 +1,6 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { DomainEventHandler } from '@appvise/domain';
-import { BlockRewardCreated } from '@koiner/contracts/domain';
+import { BlockRewardCreated, TokensOrigin } from '@koiner/contracts/domain';
 import { UpdateKrc20BalanceCommand } from '../command';
 
 export class UpdateKrc20BalanceOnBlockRewardCreated extends DomainEventHandler {
@@ -14,6 +14,7 @@ export class UpdateKrc20BalanceOnBlockRewardCreated extends DomainEventHandler {
         event.producerId,
         event.contractId,
         event.value,
+        TokensOrigin.blockReward,
       ),
     );
   }

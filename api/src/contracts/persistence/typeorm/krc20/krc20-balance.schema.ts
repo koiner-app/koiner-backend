@@ -23,4 +23,7 @@ export class Krc20BalanceSchema extends EntityBaseSchema {
 
   @Column({ length: 20 })
   readonly balance: string;
+
+  @Column({ nullable: true })
+  readonly rewards_received: string;
 }
