@@ -8,7 +8,6 @@ import {
   UpdateKrc20BalanceProps,
 } from '.';
 import { KoinosAddressId } from '@koiner/domain';
-import { BlockRewardsReceived } from '@koiner/contracts/domain/krc20/event/block-rewards-received';
 
 export class Krc20Balance extends AggregateRoot<Krc20BalanceProps> {
   protected readonly _id: KoinosAddressId;
@@ -49,10 +48,6 @@ export class Krc20Balance extends AggregateRoot<Krc20BalanceProps> {
     return this.props.balance;
   }
 
-  get rewardsReceived(): number {
-    return this.props.rewardsReceived;
-  }
-
   update(props: UpdateKrc20BalanceProps): number {
     this.props.balance += props.amountChanged;
 
@@ -72,23 +67,7 @@ export class Krc20Balance extends AggregateRoot<Krc20BalanceProps> {
       }),
     );
 
-    if (props.tokensOrigin === TokensOrigin.blockReward) {
-      this.addRewards(props.amountChanged);
-    }
-
     return this.balance;
-  }
-
-  addRewards(rewards: number): void {
-    this.props.rewardsReceived += rewards;
-
-    this.addEvent(
-      new BlockRewardsReceived({
-        aggregateId: this.id.value,
-        rewardsReceived: rewards,
-        totalRewardsReceived: this.props.rewardsReceived,
-      }),
-    );
   }
 
   validate(): void {

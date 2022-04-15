@@ -15,6 +15,9 @@ import {
   Krc20Operation,
   Krc20OperationReadRepository,
   Krc20OperationWriteRepository,
+  BlockRewardBalanceReadRepository,
+  BlockRewardBalanceWriteRepository,
+  BlockRewardBalance,
 } from '@koiner/contracts/domain';
 import {
   ContractSchema,
@@ -27,8 +30,11 @@ import {
   Krc20ContractSchemaFactory,
   Krc20OperationSchema,
   Krc20OperationSchemaFactory,
+  BlockRewardBalanceSchema,
+  BlockRewardBalanceSchemaFactory,
 } from '@koiner/contracts/persistence/typeorm';
 import { Krc20BalanceWriteTypeormRepository } from '@koiner/contracts/persistence/typeorm/krc20/krc20-balance.write.typeorm.repository';
+import { BlockRewardBalanceWriteTypeormRepository } from '@koiner/contracts/persistence/typeorm/krc20/block-reward-balance.write.typeorm.repository';
 
 const contractSchemaFactory = new ContractSchemaFactory(
   Contract,
@@ -38,6 +44,11 @@ const contractSchemaFactory = new ContractSchemaFactory(
 const blockRewardSchemaFactory = new BlockRewardSchemaFactory(
   BlockReward,
   BlockRewardSchema,
+);
+
+const blockRewardBalanceSchemaFactory = new BlockRewardBalanceSchemaFactory(
+  BlockRewardBalance,
+  BlockRewardBalanceSchema,
 );
 
 const krc20BalanceSchemaFactory = new Krc20BalanceSchemaFactory(
@@ -81,6 +92,17 @@ export default [
     blockRewardSchemaFactory,
     false,
   ),
+
+  // BlockRewardBalance
+  TypeormRepositoryProvider.provide(
+    BlockRewardBalanceReadRepository,
+    BlockRewardBalanceSchema,
+    blockRewardBalanceSchemaFactory,
+  ),
+  {
+    provide: BlockRewardBalanceWriteRepository,
+    useClass: BlockRewardBalanceWriteTypeormRepository,
+  },
 
   // Krc20Balance
   TypeormRepositoryProvider.provide(

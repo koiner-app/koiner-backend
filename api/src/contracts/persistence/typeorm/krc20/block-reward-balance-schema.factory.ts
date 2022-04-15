@@ -3,21 +3,24 @@ import {
   EntitySchemaFactory,
   EntitySchemaProps,
 } from '@appvise/typeorm';
-import { Krc20Balance, Krc20BalanceProps } from '@koiner/contracts/domain';
-import { Krc20BalanceSchema } from './krc20-balance.schema';
+import {
+  BlockRewardBalance,
+  BlockRewardBalanceProps,
+} from '@koiner/contracts/domain';
+import { BlockRewardBalanceSchema } from './block-reward-balance.schema';
 import { KoinosAddressId } from '@koiner/domain';
 import { UUID } from '@appvise/domain';
 
-export class Krc20BalanceSchemaFactory extends EntitySchemaFactory<
-  Krc20Balance,
-  Krc20BalanceSchema
+export class BlockRewardBalanceSchemaFactory extends EntitySchemaFactory<
+  BlockRewardBalance,
+  BlockRewardBalanceSchema
 > {
   protected toDomainProps(
-    entitySchema: Krc20BalanceSchema,
-  ): EntityProps<Krc20BalanceProps> {
+    entitySchema: BlockRewardBalanceSchema,
+  ): EntityProps<BlockRewardBalanceProps> {
     const id = new UUID(entitySchema.id);
 
-    const props: Krc20BalanceProps = {
+    const props: BlockRewardBalanceProps = {
       contractId: new KoinosAddressId(entitySchema.contract_id),
       addressId: new KoinosAddressId(entitySchema.address_id),
       balance: parseInt(entitySchema.balance),
@@ -27,8 +30,8 @@ export class Krc20BalanceSchemaFactory extends EntitySchemaFactory<
   }
 
   protected toSchemaProps(
-    entity: Krc20Balance,
-  ): EntitySchemaProps<Krc20BalanceSchema> {
+    entity: BlockRewardBalance,
+  ): EntitySchemaProps<BlockRewardBalanceSchema> {
     const props = entity.getPropsCopy();
 
     return {

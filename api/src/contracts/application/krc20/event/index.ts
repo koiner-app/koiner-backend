@@ -1,6 +1,6 @@
 import { CreateKrcContractOnContractCreated } from './create-krc-contract-on-contract-created';
 import { CreateKrcOperationOnOperationCreated } from './create-krc-operation-on-operation-created';
-import { UpdateKrc20BalanceOnBlockRewardCreated } from './update-krc20-balance-on-block-reward-created';
+import { UpdateBlockRewardBalanceOnBlockRewardCreated } from './update-block-reward-balance-on-block-reward-created';
 import { UpdateKrc20BalancesOnOperationCreated } from './update-krc20-balances-on-operation-created';
 import { UpdateKrc20ContractOnKrc20BalanceCreated } from './update-krc20-contract-on-krc20-balance-created';
 import { provideEventHandlers } from '@appvise/nestjs-utils';
@@ -11,7 +11,7 @@ import { UpdateKrc20ContractOnKrc20BalanceUpdated } from '@koiner/contracts/appl
 
 export default [
   ...provideEventHandlers([
-    UpdateKrc20BalanceOnBlockRewardCreated,
+    UpdateBlockRewardBalanceOnBlockRewardCreated,
     UpdateKrc20BalancesOnOperationCreated,
     UpdateKrc20ContractOnKrc20BalanceCreated,
     UpdateKrc20ContractOnKrc20BalanceUpdated,

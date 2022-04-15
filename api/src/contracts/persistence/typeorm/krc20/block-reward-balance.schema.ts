@@ -3,8 +3,8 @@ import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { AddressSchema } from '@koiner/chain/persistence/typeorm';
 import { Krc20ContractSchema } from '@koiner/contracts/persistence/typeorm';
 
-@Entity('krc20_balance')
-export class Krc20BalanceSchema extends EntityBaseSchema {
+@Entity('block_reward_balance')
+export class BlockRewardBalanceSchema extends EntityBaseSchema {
   @Column({ length: 34 })
   readonly contract_id: string;
 
