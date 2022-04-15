@@ -1,4 +1,4 @@
-import { TypeormReadRepository } from '@appvise/typeorm';
+import { snakeToCamelCase, TypeormReadRepository } from '@appvise/typeorm';
 import { Injectable } from '@nestjs/common';
 import {
   BlockSchema,
@@ -7,7 +7,7 @@ import {
 import { NotFoundException, SelectionSet } from '@appvise/domain';
 import { Block, BlockReadRepository } from '@koiner/chain/domain';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Equal, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class BlockReadTypeormRepository
@@ -25,10 +25,31 @@ export class BlockReadTypeormRepository
     height: number,
     selectionSet?: SelectionSet,
   ): Promise<Block | undefined> {
-    // TODO: Use selectionSet for selecting fields
-    const entityDocument = await this.entityModel.findOne({
-      height: Equal(height),
-    });
+    // Create QueryBuilder
+    const queryBuilder = this.entityModel.createQueryBuilder(
+      this.entityType.name,
+    );
+
+    // Join with relations if selected
+    for (const relation of this.entityModel.metadata.relations) {
+      // Convert schema key to camel case
+      const camelCaseRelation = snakeToCamelCase(relation.propertyPath);
+
+      if (
+        // Ignore soft relations starting with _
+        relation.propertyPath[0] !== '_' &&
+        (!selectionSet || selectionSet.isSelected(camelCaseRelation))
+      ) {
+        queryBuilder.leftJoinAndSelect(
+          `${this.entityType.name}.${relation.propertyPath}`,
+          relation.propertyPath,
+        );
+      }
+    }
+
+    const entityDocument = await queryBuilder
+      .where(`${queryBuilder.alias}.height = :height`, { height: `${height}` })
+      .getOne();
 
     return entityDocument
       ? this.entitySchemaFactory.toDomain(entityDocument)
