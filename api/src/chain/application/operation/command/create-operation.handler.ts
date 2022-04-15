@@ -21,6 +21,6 @@ export class CreateOperationHandler
       UUID.generate(),
     );
 
-    await this.writeRepository.save(operation);
+    await this.writeRepository.save(operation, true);
   }
 }
