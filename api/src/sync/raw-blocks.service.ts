@@ -24,6 +24,23 @@ export class RawBlocksService {
   async getBlocks(height: number, amount = 1): Promise<RawBlock[]> {
     const blocks = await this._koilibGetBlocks(height, amount);
 
+    // console.log('RESET IN MEMORY');
+    // this.blocksInMemory = {};
+
+    for (let i = 0; i < blocks.length; i++) {
+      // Save to memory
+      this.blocksInMemory[blocks[i].block_height.toString()] = blocks[i];
+    }
+
+    return blocks;
+  }
+
+  async getBlocksByIds(blockIds: string[]): Promise<RawBlock[]> {
+    const blocks = await this._koilibGetBlocksByIds(blockIds);
+
+    // console.log('RESET IN MEMORY');
+    // this.blocksInMemory = {};
+
     for (let i = 0; i < blocks.length; i++) {
       // Save to memory
       this.blocksInMemory[blocks[i].block_height.toString()] = blocks[i];
@@ -36,6 +53,8 @@ export class RawBlocksService {
     // Only fetch from memory when 1 block is retrieved
     // We only use memory for event listeners that process block data
     if (this.blocksInMemory[height]) {
+      // console.log(`:: LOAD FROM MEMORY ${height}`);
+      // this.blocksInMemory = {};
       return this.blocksInMemory[height];
     }
 
@@ -104,5 +123,24 @@ export class RawBlocksService {
         return_receipt: true,
       })
     ).block_items;
+  }
+
+  private async _koilibGetBlocksByIds(blockIds: string[]): Promise<RawBlock[]> {
+    const blocks = await this.provider.call<{
+      block_items: {
+        block_id: string;
+        block_height: string;
+        block: BlockJson;
+        receipt: {
+          [x: string]: unknown;
+        };
+      }[];
+    }>('block_store.get_blocks_by_id', {
+      block_ids: blockIds,
+      return_block: true,
+      return_receipt: true,
+    });
+
+    return blocks.block_items;
   }
 }
