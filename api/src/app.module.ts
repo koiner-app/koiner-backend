@@ -9,8 +9,9 @@ import * as config from '@config';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ContractsModule } from '@koiner/contracts/contracts.module';
-import { IntegrationModule } from '@koiner/integration/integration.module';
-import { SyncModule } from '@koiner/sync/sync.module';
+import { ChainIntegrationModule } from '@koiner/integration/chain/chain-integration.module';
+import { ChainSyncModule } from '@koiner/chain/sync/chain-sync.module';
+import { ContractsSyncModule } from '@koiner/contracts/sync/contracts-sync.module';
 
 if (process.env.APP_ENV !== 'prod') {
   console.log('Known entity types:');
@@ -41,8 +42,9 @@ if (process.env.APP_ENV !== 'prod') {
     // App modules
     ChainModule,
     ContractsModule,
-    IntegrationModule,
-    SyncModule,
+    ChainIntegrationModule,
+    ChainSyncModule,
+    ContractsSyncModule,
   ],
 })
 export class AppModule {}

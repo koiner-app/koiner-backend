@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@appvise/domain": "^1.0.7",
-    "@appvise/typeorm": "^1.0.4",
+    "@appvise/typeorm": "^1.0.5",
     "@golevelup/nestjs-rabbitmq": "^2.2.0",
     "@nestjs/apollo": "^10.0.4",
     "@nestjs/cli": "^8.0.0",
@@ -41,6 +41,7 @@
     "apollo-server-express": "^3.6.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
+    "dataloader": "^2.1.0",
     "graphql": "^16.3.0",
     "koilib": "^3.1.0",
     "nest-winston": "^1.6.2",
