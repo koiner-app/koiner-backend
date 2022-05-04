@@ -16,26 +16,11 @@ export class Contract extends AggregateRoot<ContractProps> {
     contract.addEvent(
       new ContractCreated({
         aggregateId: id.value,
-        blockHeight: props.blockHeight,
-        transactionId: props.transactionId.value,
-        operationIndex: props.operationIndex,
         contractStandardType: props.contractStandardType,
       }),
     );
 
     return contract;
-  }
-
-  get blockHeight(): number {
-    return this.props.blockHeight;
-  }
-
-  get transactionId(): KoinosId {
-    return this.props.transactionId;
-  }
-
-  get operationIndex(): number {
-    return this.props.operationIndex;
   }
 
   get bytecode(): string {

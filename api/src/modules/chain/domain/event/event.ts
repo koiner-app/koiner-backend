@@ -2,7 +2,6 @@ import { AggregateRoot, UUID } from '@appvise/domain';
 import { EventProps, CreateEventProps } from './event.types';
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
 import { EventCreated } from '@koiner/chain/domain';
-import { ContractStandardType } from '@koiner/contracts/domain';
 
 export class Event extends AggregateRoot<EventProps> {
   protected readonly _id: KoinosId;
@@ -19,13 +18,12 @@ export class Event extends AggregateRoot<EventProps> {
       new EventCreated({
         aggregateId: props.transactionId.value,
         sequence: props.sequence,
-        contractId: props.contractId.value,
-        contractStandardType: props.contractStandardType,
+        contractId: props.contractId ? props.contractId.value : undefined,
         name: props.name,
         data: props.data,
-        impacted: props.impacted.map(
-          (impactedAddress) => impactedAddress.value,
-        ),
+        impacted: props.impacted
+          ? props.impacted.map((impactedAddress) => impactedAddress.value)
+          : undefined,
       }),
     );
 
@@ -40,12 +38,8 @@ export class Event extends AggregateRoot<EventProps> {
     return this.props.sequence;
   }
 
-  get contractId(): KoinosAddressId {
+  get contractId(): KoinosAddressId | undefined {
     return this.props.contractId;
-  }
-
-  get contractStandardType(): ContractStandardType | undefined {
-    return this.props.contractStandardType;
   }
 
   get name(): string {
@@ -56,11 +50,11 @@ export class Event extends AggregateRoot<EventProps> {
     return this.props.data;
   }
 
-  get impacted(): KoinosAddressId[] {
+  get impacted(): KoinosAddressId[] | undefined {
     return this.props.impacted;
   }
 
   validate(): void {
-    // TODO: Add validations
+    //
   }
 }

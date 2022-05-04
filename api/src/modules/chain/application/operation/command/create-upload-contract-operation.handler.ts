@@ -19,7 +19,6 @@ export class CreateUploadContractOperationHandler
         contractId: new KoinosAddressId(command.contractId),
         bytecode: command.bytecode,
         abi: command.abi,
-        contractStandardType: command.contractStandardType,
       },
       new UUID(command.id),
     );

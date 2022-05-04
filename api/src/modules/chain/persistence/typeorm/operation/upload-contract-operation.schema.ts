@@ -1,7 +1,6 @@
 import { EntityBaseSchema } from '@appvise/typeorm';
 import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
 import { OperationSchema } from '@koiner/chain/persistence/typeorm';
-import { ContractStandardType } from '@koiner/contracts/domain';
 
 @Entity('chain_upload_contract_operation')
 export class UploadContractOperationSchema extends EntityBaseSchema {
@@ -22,7 +21,4 @@ export class UploadContractOperationSchema extends EntityBaseSchema {
 
   @Column({ type: 'text', nullable: true })
   readonly abi: string;
-
-  @Column({ type: 'enum', enum: ContractStandardType, nullable: true })
-  readonly contract_standard_type: ContractStandardType;
 }

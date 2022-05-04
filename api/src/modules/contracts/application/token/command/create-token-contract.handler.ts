@@ -4,7 +4,7 @@ import {
   TokenContractWriteRepository,
 } from '@koiner/contracts/domain';
 import { CreateTokenContractCommand } from './dto/create-token-contract.command';
-import { KoinosAddressId, KoinosId } from '@koiner/domain';
+import { KoinosAddressId } from '@koiner/domain';
 
 @CommandHandler(CreateTokenContractCommand)
 export class CreateTokenContractHandler
@@ -15,9 +15,6 @@ export class CreateTokenContractHandler
   async execute(command: CreateTokenContractCommand): Promise<void> {
     const contract = TokenContract.create(
       {
-        blockHeight: command.blockHeight,
-        transactionId: new KoinosId(command.transactionId),
-        operationIndex: command.operationIndex,
         name: command.name,
         symbol: command.symbol,
         decimals: command.decimals,

@@ -43,18 +43,6 @@ export class TokenContract extends AggregateRoot<TokenContractProps> {
     return contract;
   }
 
-  get blockHeight(): number {
-    return this.props.blockHeight;
-  }
-
-  get transactionId(): KoinosId {
-    return this.props.transactionId;
-  }
-
-  get operationIndex(): number {
-    return this.props.operationIndex;
-  }
-
   get name(): string {
     return this.props.name;
   }

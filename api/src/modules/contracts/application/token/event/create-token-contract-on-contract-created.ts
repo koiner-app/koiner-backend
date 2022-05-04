@@ -40,9 +40,6 @@ export class CreateTokenContractOnContractCreated extends DomainEventHandler {
       await this.commandBus.execute(
         new CreateTokenContractCommand(
           event.aggregateId,
-          event.blockHeight,
-          event.transactionId,
-          event.operationIndex,
           <string>contractValues.name,
           <string>contractValues.symbol,
           <number>contractValues.decimals,

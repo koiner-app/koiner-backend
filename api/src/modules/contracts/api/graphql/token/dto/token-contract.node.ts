@@ -5,15 +5,6 @@ import { BaseNode } from '@appvise/graphql';
 @ObjectType('TokenContract')
 export class TokenContractNode extends BaseNode {
   @Field()
-  blockHeight: number;
-
-  @Field()
-  transactionId: string;
-
-  @Field()
-  operationIndex: number;
-
-  @Field()
   name: string;
 
   @Field()
@@ -25,9 +16,6 @@ export class TokenContractNode extends BaseNode {
   constructor(entity: TokenContract) {
     super(entity);
 
-    this.blockHeight = entity.blockHeight;
-    this.transactionId = entity.transactionId.value;
-    this.operationIndex = entity.operationIndex;
     this.name = entity.name;
     this.symbol = entity.symbol;
     this.decimals = entity.decimals;

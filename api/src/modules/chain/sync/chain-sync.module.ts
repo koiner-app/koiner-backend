@@ -3,7 +3,6 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { CqrsModule } from '@nestjs/cqrs';
 import { KoinosModule } from '@koinos/koinos.module';
 import ChainSyncApplication from '@koiner/chain/sync/application';
-import { ContractsModule } from '@koiner/contracts/contracts.module';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { BlockAcceptedHandler } from '@koiner/chain/sync/event/block-accepted.handler';
 import { SyncController } from '@koiner/chain/sync/sync.controller';
@@ -16,7 +15,6 @@ import ChainSyncEventHandlers from '@koiner/chain/sync/event';
     CqrsModule,
     ScheduleModule,
     KoinosModule,
-    ContractsModule,
     RabbitMQModule.forRoot(RabbitMQModule, {
       exchanges: [
         {

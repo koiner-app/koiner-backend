@@ -1,14 +1,12 @@
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
-import { ContractStandardType } from '@koiner/contracts/domain';
 
 export interface CreateEventProps {
   transactionId: KoinosId;
   sequence: number;
-  contractId: KoinosAddressId;
-  contractStandardType?: ContractStandardType;
+  contractId?: KoinosAddressId;
   name: string;
   data: string;
-  impacted: KoinosAddressId[];
+  impacted?: KoinosAddressId[];
 }
 
 export type EventProps = CreateEventProps;

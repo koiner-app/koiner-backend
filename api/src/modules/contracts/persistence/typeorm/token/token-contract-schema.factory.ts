@@ -9,7 +9,7 @@ import {
   TokenContractStatistics,
 } from '@koiner/contracts/domain';
 import { TokenContractSchema } from './token-contract.schema';
-import { KoinosAddressId, KoinosId } from '@koiner/domain';
+import { KoinosAddressId } from '@koiner/domain';
 
 export class TokenContractSchemaFactory extends EntitySchemaFactory<
   TokenContract,
@@ -21,9 +21,6 @@ export class TokenContractSchemaFactory extends EntitySchemaFactory<
     const id = new KoinosAddressId(entitySchema.id);
 
     const props: TokenContractProps = {
-      blockHeight: entitySchema.block_height,
-      transactionId: new KoinosId(entitySchema.transaction_id),
-      operationIndex: entitySchema.operation_index,
       name: entitySchema.name,
       symbol: entitySchema.symbol,
       decimals: entitySchema.decimals,
@@ -45,9 +42,6 @@ export class TokenContractSchemaFactory extends EntitySchemaFactory<
     const props = entity.getPropsCopy();
 
     return {
-      block_height: props.blockHeight,
-      transaction_id: props.transactionId.value,
-      operation_index: props.operationIndex,
       name: props.name,
       symbol: props.symbol,
       decimals: props.decimals,

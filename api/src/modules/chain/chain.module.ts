@@ -12,16 +12,10 @@ import { UploadContractOperationTypeResolver } from '@koiner/chain/api/graphql/o
 import { database } from '@config';
 import SchemaModels from '@koiner/chain/persistence/typeorm/models';
 import Repositories from '@koiner/chain/persistence/typeorm/repositories';
-import { ContractsModule } from '@koiner/contracts/contracts.module';
 database.entities.push(...SchemaModels);
 
 @Module({
-  imports: [
-    CqrsModule,
-    TypeOrmModule.forFeature(SchemaModels),
-    KoinosModule,
-    ContractsModule,
-  ],
+  imports: [CqrsModule, TypeOrmModule.forFeature(SchemaModels), KoinosModule],
   providers: [
     // Domain
     //

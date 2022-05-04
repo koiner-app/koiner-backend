@@ -4,7 +4,7 @@ import {
   EntitySchemaProps,
 } from '@appvise/typeorm';
 import { ContractSchema } from './contract.schema';
-import { KoinosAddressId, KoinosId } from '@koiner/domain';
+import { KoinosAddressId } from '@koiner/domain';
 import {
   Contract,
   ContractProps,
@@ -21,9 +21,6 @@ export class ContractSchemaFactory extends EntitySchemaFactory<
     const id = new KoinosAddressId(entitySchema.id);
 
     const props: ContractProps = {
-      blockHeight: entitySchema.block_height,
-      transactionId: new KoinosId(entitySchema.transaction_id),
-      operationIndex: entitySchema.operation_index,
       bytecode: entitySchema.bytecode,
       abi: entitySchema.abi,
       contractStandardType: entitySchema.contract_standard_type,
@@ -36,9 +33,6 @@ export class ContractSchemaFactory extends EntitySchemaFactory<
     const props = entity.getPropsCopy();
 
     return {
-      block_height: props.blockHeight,
-      transaction_id: props.transactionId.value,
-      operation_index: props.operationIndex,
       bytecode: props.bytecode,
       abi: props.abi,
       contract_standard_type:

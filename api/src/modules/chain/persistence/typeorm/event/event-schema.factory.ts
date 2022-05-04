@@ -7,7 +7,6 @@ import { Event, EventProps } from '@koiner/chain/domain';
 import { EventSchema } from './event.schema';
 import { UUID } from '@appvise/domain';
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
-import { ContractStandardType } from '@koiner/contracts/domain';
 
 export class EventSchemaFactory extends EntitySchemaFactory<
   Event,
@@ -19,14 +18,14 @@ export class EventSchemaFactory extends EntitySchemaFactory<
     const props: EventProps = {
       transactionId: new KoinosId(entitySchema.transaction_id),
       sequence: entitySchema.sequence,
-      contractId: new KoinosAddressId(entitySchema.contract_id),
-      contractStandardType:
-        entitySchema.contract_standard_type as ContractStandardType,
+      contractId: entitySchema.contract_id
+        ? new KoinosAddressId(entitySchema.contract_id)
+        : undefined,
       name: entitySchema.name,
       data: entitySchema.data,
-      impacted: entitySchema.impacted.map(
-        (impacted) => new KoinosAddressId(impacted),
-      ),
+      impacted: entitySchema.impacted
+        ? entitySchema.impacted.map((impacted) => new KoinosAddressId(impacted))
+        : undefined,
     };
 
     return { id, props };
@@ -39,11 +38,12 @@ export class EventSchemaFactory extends EntitySchemaFactory<
       transaction_id: props.transactionId.value,
       transaction: null,
       sequence: props.sequence,
-      contract_id: props.contractId.value,
-      contract_standard_type: props.contractStandardType,
+      contract_id: props.contractId ? props.contractId.value : undefined,
       name: props.name,
       data: props.data,
-      impacted: props.impacted.map((impacted) => impacted.value),
+      impacted: props.impacted
+        ? props.impacted.map((impacted) => impacted.value)
+        : undefined,
     };
   }
 }

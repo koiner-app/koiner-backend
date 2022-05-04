@@ -8,9 +8,8 @@ export class EventCreated extends DomainEvent {
   }
 
   readonly sequence: number;
-  readonly contractId: string;
-  readonly contractStandardType?: string;
+  readonly contractId?: string;
   readonly name: string;
   readonly data: string;
-  readonly impacted: string[];
+  readonly impacted?: string[];
 }

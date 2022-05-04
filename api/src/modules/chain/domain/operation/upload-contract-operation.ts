@@ -23,7 +23,8 @@ export class UploadContractOperation extends AggregateRoot<UploadContractOperati
       new UploadContractOperationCreated({
         aggregateId: id.value,
         contractId: props.contractId.value,
-        contractStandardType: props.contractStandardType,
+        bytecode: props.bytecode,
+        abi: props.abi,
       }),
     );
 
@@ -38,12 +39,8 @@ export class UploadContractOperation extends AggregateRoot<UploadContractOperati
     return this.props.bytecode;
   }
 
-  get abi(): string {
+  get abi(): string | undefined {
     return this.props.abi;
-  }
-
-  get contractStandardType(): string | undefined {
-    return this.props.contractStandardType;
   }
 
   validate(): void {
