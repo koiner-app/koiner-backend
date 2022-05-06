@@ -5,7 +5,7 @@ import { QueryBus } from '@nestjs/cqrs';
 import { BlockQuery } from '@koiner/chain/application/block/query';
 import { BlockNode } from '@koiner/chain/api/graphql/block/dto/block.node';
 
-export class GraphqlSubscriptionForNewBlock extends DomainEventHandler {
+export class PublishBlockCreatedEvent extends DomainEventHandler {
   constructor(
     private readonly pubSub: PubSubEngine,
     private readonly queryBus: QueryBus,
