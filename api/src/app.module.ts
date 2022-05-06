@@ -1,6 +1,6 @@
 import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
-import { GlobalModule } from '@koiner/global.module';
+import { GlobalAppModule } from '@koiner/global.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 
@@ -25,7 +25,7 @@ if (process.env.APP_ENV !== 'prod') {
 
 @Module({
   imports: [
-    GlobalModule,
+    GlobalAppModule,
 
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot(config.database),
@@ -35,6 +35,11 @@ if (process.env.APP_ENV !== 'prod') {
       path: '/',
       debug: process.env.APP_ENV !== 'prod',
       playground: true,
+      subscriptions: {
+        'graphql-ws': {
+          path: '/graphql',
+        },
+      },
       context: ({ req }) => ({ req }),
     }),
     ScheduleModule.forRoot(),

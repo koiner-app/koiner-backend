@@ -7,6 +7,7 @@ import GraphQLResolvers from '@koiner/chain/api/graphql';
 import { SystemCallOperationTypeResolver } from '@koiner/chain/api/graphql/operation/detail-resolver/system-call-operation-type.resolver';
 import { SystemContractOperationTypeResolver } from '@koiner/chain/api/graphql/operation/detail-resolver/system-contract-operation-type.resolver';
 import { UploadContractOperationTypeResolver } from '@koiner/chain/api/graphql/operation/detail-resolver/upload-contract-operation-type.resolver';
+import { GlobalAppModule } from '@koiner/global.module';
 
 // Register our models with typeorm
 import { database } from '@config';
@@ -15,7 +16,12 @@ import Repositories from '@koiner/chain/persistence/typeorm/repositories';
 database.entities.push(...SchemaModels);
 
 @Module({
-  imports: [CqrsModule, TypeOrmModule.forFeature(SchemaModels), KoinosModule],
+  imports: [
+    CqrsModule,
+    TypeOrmModule.forFeature(SchemaModels),
+    KoinosModule,
+    GlobalAppModule,
+  ],
   providers: [
     // Domain
     //
