@@ -16,7 +16,7 @@ export class TokenContractsRequest extends SearchRequestArgs {
     nullable: true,
     defaultValue: [
       {
-        field: TokenContractsSortFieldEnum.blockHeight,
+        field: TokenContractsSortFieldEnum.createdAt,
         direction: SortDirection.desc,
       } as TokenContractsSortInput,
     ],
