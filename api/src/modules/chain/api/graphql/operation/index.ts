@@ -6,6 +6,8 @@ import { UploadContractOperationsLoader } from './dataloader/upload-contract-ope
 import { SystemCallOperationTypeResolver } from './detail-resolver/system-call-operation-type.resolver';
 import { SystemContractOperationTypeResolver } from './detail-resolver/system-contract-operation-type.resolver';
 import { UploadContractOperationTypeResolver } from './detail-resolver/upload-contract-operation-type.resolver';
+import { OperationCreatedSubscription } from './subscription/operation-created.subscription';
+import OperationPubSubEventHandlers from './pubsub';
 
 export default [
   // Mutations
@@ -24,6 +26,12 @@ export default [
   SystemCallOperationsLoader,
   SystemContractOperationsLoader,
   UploadContractOperationsLoader,
+
+  // Subscriptions
+  OperationCreatedSubscription,
+
+  // PubSub
+  ...OperationPubSubEventHandlers,
 ];
 
 // Must be exported for the enum to be registered in GraphQL schema
