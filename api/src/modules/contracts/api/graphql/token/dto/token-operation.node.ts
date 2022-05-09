@@ -5,7 +5,10 @@ import { BaseNode } from '@appvise/graphql';
 @ObjectType('TokenOperation')
 export class TokenOperationNode extends BaseNode {
   @Field()
-  operation: string;
+  transactionId: string;
+
+  @Field()
+  name: string;
 
   @Field({ nullable: true })
   from?: string;
@@ -22,7 +25,8 @@ export class TokenOperationNode extends BaseNode {
   constructor(entity: TokenOperation) {
     super(entity);
 
-    this.operation = entity.name;
+    this.transactionId = entity.transactionId.value;
+    this.name = entity.name;
     this.from = entity.from ? entity.from.value : undefined;
     this.to = entity.to.value;
     this.value = entity.value;

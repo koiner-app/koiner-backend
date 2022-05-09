@@ -8,7 +8,7 @@ export class TokenOperationsFilter implements FilterType {
   contractId?: StringFilterInput;
 
   @Field(() => StringFilterInput, { nullable: true })
-  operation?: StringFilterInput;
+  name?: StringFilterInput;
 
   @Field(() => StringFilterInput, { nullable: true })
   from?: StringFilterInput;
