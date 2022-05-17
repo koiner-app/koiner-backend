@@ -1,10 +1,10 @@
 import { AggregateRoot, UUID } from '@appvise/domain';
-import {
-  SystemCallOperationProps,
-  CreateSystemCallOperationProps,
-} from './system-call-operation.types';
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
-import { SystemCallOperationCreated } from '@koiner/chain/domain/operation/event/system-call-operation-created';
+import {
+  CreateSystemCallOperationProps,
+  SystemCallOperationCreated,
+  SystemCallOperationProps,
+} from '.';
 
 export class SystemCallOperation extends AggregateRoot<SystemCallOperationProps> {
   protected readonly _id: KoinosId;

@@ -1,14 +1,18 @@
+import { UUID } from '@appvise/domain';
 import {
   EntityProps,
   EntitySchemaFactory,
   EntitySchemaProps,
 } from '@appvise/typeorm';
-import { Operation, Transaction, TransactionProps } from '@koiner/chain/domain';
-import { TransactionSchema } from './transaction.schema';
 import { KoinosId } from '@koiner/domain';
-import { TransactionHeader } from '@koiner/chain/domain';
-import { OperationSchema } from '@koiner/chain/persistence/typeorm/operation/operation.schema';
-import { UUID } from '@appvise/domain';
+import {
+  Operation,
+  Transaction,
+  TransactionHeader,
+  TransactionProps,
+} from '@koiner/chain/domain';
+import { OperationSchema } from '../operation';
+import { TransactionSchema } from '.';
 
 export class TransactionSchemaFactory extends EntitySchemaFactory<
   Transaction,

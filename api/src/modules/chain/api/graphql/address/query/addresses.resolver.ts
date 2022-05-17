@@ -2,12 +2,9 @@ import { Args, Query, Resolver } from '@nestjs/graphql';
 import { QueryBus } from '@nestjs/cqrs';
 import { SearchResponse } from '@appvise/domain';
 import { SelectionSet, ConnectionFactory } from '@appvise/graphql';
-
 import { Address } from '@koiner/chain/domain';
-import { AddressesQuery } from '@koiner/chain/application/address/query';
-import { AddressesRequest } from '../dto/addresses.request';
-import { AddressesConnection } from '../dto/addresses.connection';
-import { AddressNode } from '../dto/address.node';
+import { AddressesQuery } from '@koiner/chain/application';
+import { AddressNode, AddressesConnection, AddressesRequest } from '../dto';
 
 @Resolver(() => AddressNode)
 export class AddressesResolver {

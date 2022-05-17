@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Transaction, TransactionReadRepository } from '@koiner/chain/domain';
-import { TransactionQuery } from '@koiner/chain/application/transaction/query';
+import { TransactionQuery } from '.';
 
 @QueryHandler(TransactionQuery)
 export class TransactionHandler implements IQueryHandler<TransactionQuery> {

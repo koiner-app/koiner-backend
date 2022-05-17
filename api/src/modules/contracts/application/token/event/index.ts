@@ -8,9 +8,9 @@ import { UpdateTokenContractOnTokenBalanceUpdated } from './update-token-contrac
 import { provideEventHandlers } from '@appvise/nestjs-utils';
 import { CommandBus } from '@nestjs/cqrs';
 import { Logger } from '@appvise/domain';
-import { ContractStandardService } from '@koiner/contracts/application/contract-standard/service';
+import { ContractStandardService } from '@koiner/contracts/application/contract-standard/service/contract-standard-service';
 
-export default [
+export const TokenEventHandlers = [
   ...provideEventHandlers([
     UpdateBlockRewardBalanceOnBlockRewardCreated,
     UpdateTokenBalanceOnBlockRewardCreated,

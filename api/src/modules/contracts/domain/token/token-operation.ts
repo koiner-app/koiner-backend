@@ -1,10 +1,8 @@
 import { AggregateRoot, UUID } from '@appvise/domain';
+import { KoinosAddressId, KoinosId } from '@koiner/domain';
 import {
   CreateTokenOperationProps,
   TokenOperationProps,
-} from './token-operation.types';
-import { KoinosAddressId, KoinosId } from '@koiner/domain';
-import {
   TokenOperationCreated,
   TokenTokensMinted,
   TokenTokensTransferred,

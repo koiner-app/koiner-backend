@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Block, BlockReadRepository } from '@koiner/chain/domain';
-import { BlockQuery } from './dto/block.query';
+import { BlockQuery } from '.';
 
 @QueryHandler(BlockQuery)
 export class BlockHandler implements IQueryHandler<BlockQuery> {

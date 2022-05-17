@@ -1,10 +1,10 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { KoinosAddressId } from '@koiner/domain';
 import {
   TokenContract,
   TokenContractWriteRepository,
 } from '@koiner/contracts/domain';
 import { CreateTokenContractCommand } from './dto/create-token-contract.command';
-import { KoinosAddressId } from '@koiner/domain';
 
 @CommandHandler(CreateTokenContractCommand)
 export class CreateTokenContractHandler

@@ -2,12 +2,13 @@ import { Args, Query, Resolver } from '@nestjs/graphql';
 import { QueryBus } from '@nestjs/cqrs';
 import { SearchResponse } from '@appvise/domain';
 import { SelectionSet, ConnectionFactory } from '@appvise/graphql';
-
 import { Transaction } from '@koiner/chain/domain';
-import { TransactionsQuery } from '@koiner/chain/application/transaction/query';
-import { TransactionsRequest } from '../dto/transactions.request';
-import { TransactionsConnection } from '../dto/transactions.connection';
-import { TransactionNode } from '../dto/transaction.node';
+import { TransactionsQuery } from '@koiner/chain/application';
+import {
+  TransactionNode,
+  TransactionsConnection,
+  TransactionsRequest,
+} from '../dto';
 
 @Resolver(() => TransactionNode)
 export class TransactionsResolver {

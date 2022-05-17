@@ -10,11 +10,9 @@ import { TokenContractsHandler } from './token-contracts.handler';
 import { TokenOperationHandler } from './token-operation.handler';
 import { TokenOperationsHandler } from './token-operations.handler';
 
-export default {
-  handlers: [
-    TokenContractHandler,
-    TokenContractsHandler,
-    TokenOperationHandler,
-    TokenOperationsHandler,
-  ],
-};
+export const TokenQueryHandlers = [
+  TokenContractHandler,
+  TokenContractsHandler,
+  TokenOperationHandler,
+  TokenOperationsHandler,
+];

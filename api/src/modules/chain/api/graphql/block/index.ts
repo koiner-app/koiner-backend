@@ -1,12 +1,15 @@
-import { BlockResolver } from './query/block.resolver';
-import { BlocksResolver } from './query/blocks.resolver';
-import { BlockTransactionsResolver } from './query/block-transactions.resolver';
-import { BlockCreatedSubscription } from './subscription/block-created.subscription';
-import BlockPubSubEventHandlers from './pubsub';
+import { BlocksLoader } from './dataloader';
+import {
+  BlockResolver,
+  BlocksResolver,
+  BlockTransactionsResolver,
+} from './query';
+import { BlockCreatedSubscription } from './subscription';
+import { BlockPubSubEventHandlers } from './pubsub';
 
-export default [
-  // Mutations
-  //
+export const BlockGraphQLServices = [
+  // DataLoaders
+  BlocksLoader,
 
   // Queries
   BlockResolver,
@@ -19,3 +22,6 @@ export default [
   // PubSub
   ...BlockPubSubEventHandlers,
 ];
+
+export * from './dataloader';
+export * from './dto';

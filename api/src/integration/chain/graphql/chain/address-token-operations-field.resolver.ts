@@ -4,8 +4,8 @@ import { ConnectionFactory, SelectionSet } from '@appvise/graphql';
 import { QueryBus } from '@nestjs/cqrs';
 import { AddressNode } from '@koiner/chain/api/graphql/address/dto/address.node';
 import { TokenOperation } from '@koiner/contracts/domain';
+import { TokenOperationsQuery } from '@koiner/contracts/application';
 import { TokenOperationsRequest } from '@koiner/contracts/api/graphql/token/dto/token-operations.request';
-import { TokenOperationsQuery } from '@koiner/contracts/application/token/query';
 import { TokenOperationsConnection } from '@koiner/contracts/api/graphql/token/dto/token-operations.connection';
 import { TokenOperationNode } from '@koiner/contracts/api/graphql/token/dto/token-operation.node';
 

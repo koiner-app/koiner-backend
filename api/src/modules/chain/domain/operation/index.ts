@@ -1,13 +1,11 @@
-export * from './repository';
 export * from './operation.types';
-export * from './upload-contract-operation.types';
+export * from './operation';
 export * from './system-call-operation.types';
+export * from './system-call-operation';
 export * from './system-contract-operation.types';
-export { Operation } from './operation';
-export { OperationCreated } from './event/operation-created';
-export { SystemCallOperation } from './system-call-operation';
-export { SystemCallOperationCreated } from './event/system-call-operation-created';
-export { SystemContractOperation } from './system-contract-operation';
-export { SystemContractOperationCreated } from './event/system-contract-operation-created';
-export { UploadContractOperation } from './upload-contract-operation';
-export { UploadContractOperationCreated } from './event/upload-contract-operation-created';
+export * from './system-contract-operation';
+export * from './upload-contract-operation.types';
+export * from './upload-contract-operation';
+
+export * from './event';
+export * from './repository';

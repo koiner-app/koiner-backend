@@ -1,9 +1,9 @@
 import { Injectable, Scope } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import * as DataLoader from 'dataloader';
+import DataLoader from 'dataloader';
 import { SearchResponse } from '@appvise/domain';
-import { TokenOperationsQuery } from '@koiner/contracts/application/token/query';
 import { TokenOperation } from '@koiner/contracts/domain';
+import { TokenOperationsQuery } from '@koiner/contracts/application';
 import { OperationsRequest } from '@koiner/chain/api/graphql/operation/dto/operations.request';
 import { TokenOperationNode } from '../dto/token-operation.node';
 

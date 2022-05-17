@@ -12,12 +12,10 @@ import { SystemCallOperationsHandler } from './system-call-operations.handler';
 import { SystemContractOperationsHandler } from './system-contract-operations.handler';
 import { UploadContractOperationsHandler } from './upload-contract-operations.handler';
 
-export default {
-  handlers: [
-    OperationHandler,
-    OperationsHandler,
-    SystemCallOperationsHandler,
-    SystemContractOperationsHandler,
-    UploadContractOperationsHandler,
-  ],
-};
+export const OperationQueryHandlers = [
+  OperationHandler,
+  OperationsHandler,
+  SystemCallOperationsHandler,
+  SystemContractOperationsHandler,
+  UploadContractOperationsHandler,
+];

@@ -1,17 +1,13 @@
-import { TypeormWriteRepository } from '@appvise/typeorm';
+import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { snakeToCamelCase, TypeormWriteRepository } from '@appvise/typeorm';
+import { Logger, SelectionSet } from '@appvise/domain';
 import {
   BlockRewardBalance,
   BlockRewardBalanceWriteRepository,
 } from '@koiner/contracts/domain';
-import {
-  BlockRewardBalanceSchema,
-  BlockRewardBalanceSchemaFactory,
-} from '@koiner/contracts/persistence/typeorm';
-import { Logger, SelectionSet } from '@appvise/domain';
-import { snakeToCamelCase } from '@appvise/typeorm';
+import { BlockRewardBalanceSchema, BlockRewardBalanceSchemaFactory } from '.';
 
 @Injectable()
 export class BlockRewardBalanceWriteTypeormRepository

@@ -1,8 +1,7 @@
 import { registerEnumType } from '@nestjs/graphql';
 
 export enum ContractsSortFieldEnum {
-  id = 'id',
-  blockHeight = 'blockHeight',
+  createdAt = 'createdAt',
 }
 
 registerEnumType(ContractsSortFieldEnum, {

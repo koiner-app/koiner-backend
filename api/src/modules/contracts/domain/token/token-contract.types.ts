@@ -1,5 +1,5 @@
 import { TokenContractStatistics } from '@koiner/contracts/domain';
-import { UpdateTokenContractStatisticsProps } from './token-contract-statistics';
+import { UpdateTokenContractStatisticsProps } from '.';
 
 export interface CreateTokenContractProps {
   name: string;

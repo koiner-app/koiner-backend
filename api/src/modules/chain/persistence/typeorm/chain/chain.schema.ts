@@ -5,26 +5,26 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 export class ChainSchema extends EntityBaseSchema {
   @PrimaryColumn()
   @Column({ length: 46 })
-  readonly id: string;
+  readonly id!: string;
 
   @Column({ length: 70 })
-  readonly head_topology_id: string;
+  readonly head_topology_id!: string;
 
   @Column({ length: 70 })
-  readonly head_topology_previous: string;
+  readonly head_topology_previous!: string;
 
   @Column({ type: 'bigint' })
-  readonly head_topology_height: number;
+  readonly head_topology_height!: number;
 
   @Column({ type: 'bigint' })
-  readonly last_irreversible_block: number;
+  readonly last_irreversible_block!: number;
 
   @Column()
-  readonly syncing: boolean;
+  readonly syncing!: boolean;
 
   @Column()
-  readonly stopped: boolean;
+  readonly stopped!: boolean;
 
   @Column({ type: 'bigint' })
-  readonly last_synced_block: number;
+  readonly last_synced_block!: number;
 }

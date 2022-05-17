@@ -1,7 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Event, EventReadRepository } from '@koiner/chain/domain';
 import { SearchResponse } from '@appvise/domain';
-import { EventsQuery } from './index';
+import { EventsQuery } from '.';
 
 @QueryHandler(EventsQuery)
 export class EventsHandler implements IQueryHandler<EventsQuery> {

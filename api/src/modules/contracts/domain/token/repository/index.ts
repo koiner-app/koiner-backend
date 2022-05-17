@@ -5,7 +5,7 @@ import {
   TokenBalance,
   TokenContract,
   TokenOperation,
-} from '@koiner/contracts/domain';
+} from '..';
 
 export abstract class BlockRewardReadRepository extends ReadRepository<BlockReward> {}
 export abstract class BlockRewardWriteRepository extends WriteRepository<BlockReward> {}

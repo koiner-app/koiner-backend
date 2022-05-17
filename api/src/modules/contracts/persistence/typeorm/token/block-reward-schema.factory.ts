@@ -1,12 +1,12 @@
+import { UUID } from '@appvise/domain';
 import {
   EntityProps,
   EntitySchemaFactory,
   EntitySchemaProps,
 } from '@appvise/typeorm';
-import { BlockReward, BlockRewardProps } from '@koiner/contracts/domain';
-import { BlockRewardSchema } from './block-reward.schema';
 import { KoinosAddressId } from '@koiner/domain';
-import { UUID } from '@appvise/domain';
+import { BlockReward, BlockRewardProps } from '@koiner/contracts/domain';
+import { BlockRewardSchema } from '.';
 
 export class BlockRewardSchemaFactory extends EntitySchemaFactory<
   BlockReward,

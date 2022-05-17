@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Operation, OperationReadRepository } from '@koiner/chain/domain';
-import { OperationQuery } from './index';
+import { OperationQuery } from '.';
 
 @QueryHandler(OperationQuery)
 export class OperationHandler implements IQueryHandler<OperationQuery> {

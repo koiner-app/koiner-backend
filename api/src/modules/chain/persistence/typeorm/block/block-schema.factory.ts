@@ -3,10 +3,14 @@ import {
   EntitySchemaFactory,
   EntitySchemaProps,
 } from '@appvise/typeorm';
-import { Block, BlockProps, BlockReceipt } from '@koiner/chain/domain';
-import { BlockSchema } from './block.schema';
 import { KoinosId } from '@koiner/domain';
-import { BlockHeader } from '@koiner/chain/domain';
+import {
+  Block,
+  BlockHeader,
+  BlockProps,
+  BlockReceipt,
+} from '@koiner/chain/domain';
+import { BlockSchema } from '.';
 
 export class BlockSchemaFactory extends EntitySchemaFactory<
   Block,

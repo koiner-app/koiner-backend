@@ -4,8 +4,10 @@ import {
   ContractCreated,
   ContractStandardType,
 } from '@koiner/contracts/domain';
-import { CreateTokenContractCommand } from '@koiner/contracts/application/token/command';
-import { ContractStandardService } from '@koiner/contracts/application/contract-standard/service';
+import {
+  ContractStandardService,
+  CreateTokenContractCommand,
+} from '@koiner/contracts/application';
 
 export class CreateTokenContractOnContractCreated extends DomainEventHandler {
   constructor(
@@ -20,6 +22,7 @@ export class CreateTokenContractOnContractCreated extends DomainEventHandler {
     if (event.contractStandardType !== ContractStandardType.token) {
       return;
     }
+
     this.logger.log(
       `Create TokenContract ${event.aggregateId}`,
       'CreateKrcContractOnContractCreated',
@@ -38,12 +41,12 @@ export class CreateTokenContractOnContractCreated extends DomainEventHandler {
       contractValues.decimals
     ) {
       await this.commandBus.execute(
-        new CreateTokenContractCommand(
-          event.aggregateId,
-          <string>contractValues.name,
-          <string>contractValues.symbol,
-          <number>contractValues.decimals,
-        ),
+        new CreateTokenContractCommand({
+          id: event.aggregateId,
+          name: <string>contractValues.name,
+          symbol: <string>contractValues.symbol,
+          decimals: <number>contractValues.decimals,
+        }),
       );
 
       this.logger.debug(

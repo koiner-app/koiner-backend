@@ -6,16 +6,16 @@ import { OperationSchema } from '@koiner/chain/persistence/typeorm';
 export class SystemCallOperationSchema extends EntityBaseSchema {
   @PrimaryColumn()
   @Column({ length: 34 })
-  readonly id: string;
+  readonly id!: string;
 
   // Add foreign key without the need to always use the relation
   @OneToOne(() => OperationSchema, { nullable: false, persistence: false })
   @JoinColumn({ name: 'id', referencedColumnName: 'id' })
-  private _operation_id_fg: never;
+  private _operation_id_fg!: never;
 
   @Column({ length: 34 })
-  readonly contract_id: string;
+  readonly contract_id!: string;
 
   @Column({ type: 'bigint' })
-  readonly call_id: number;
+  readonly call_id!: number;
 }

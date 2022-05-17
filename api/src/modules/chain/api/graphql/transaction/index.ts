@@ -1,11 +1,11 @@
-import { TransactionResolver } from './queries';
-import { TransactionsResolver } from './query/transactions.resolver';
-import { TransactionCreatedSubscription } from './subscription/transaction-created.subscription';
-import TransactionPubSubEventHandlers from './pubsub';
+import { TransactionsLoader } from './dataloader';
+import { TransactionResolver, TransactionsResolver } from './query';
+import { TransactionCreatedSubscription } from './subscription';
+import { TransactionPubSubEventHandlers } from './pubsub';
 
-export default [
-  // Mutations
-  //
+export const TransactionGraphQLServices = [
+  // DataLoaders
+  TransactionsLoader,
 
   // Queries
   TransactionResolver,
@@ -17,3 +17,6 @@ export default [
   // PubSub
   ...TransactionPubSubEventHandlers,
 ];
+
+export * from './dataloader';
+export * from './dto';

@@ -6,3 +6,6 @@ export { SystemContractOperationSchema } from './system-contract-operation.schem
 export { SystemContractOperationSchemaFactory } from './system-contract-operation-schema.factory';
 export { UploadContractOperationSchema } from './upload-contract-operation.schema';
 export { UploadContractOperationSchemaFactory } from './upload-contract-operation-schema.factory';
+
+export * from './models';
+export * from './repositories';

@@ -1,8 +1,8 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { DomainEventHandler } from '@appvise/domain';
 import { TransactionCreated } from '@koiner/chain/domain';
+import { CreateEventCommand } from '@koiner/chain/application';
 import { RawBlocksService } from '@koinos/raw-blocks.service';
-import { CreateEventCommand } from '@koiner/chain/application/event/command';
 
 export class SyncEventsForNewTransaction extends DomainEventHandler {
   constructor(

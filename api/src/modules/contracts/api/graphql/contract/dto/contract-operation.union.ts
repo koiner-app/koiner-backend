@@ -1,6 +1,6 @@
 import { createUnionType } from '@nestjs/graphql';
-import { TokenOperationNode } from '@koiner/contracts/api/graphql/token/dto/token-operation.node';
 import { ContractStandardType } from '@koiner/contracts/domain';
+import { TokenOperationNode } from '@koiner/contracts/api/graphql/token/dto/token-operation.node';
 
 export const ContractOperationDetailsUnion = createUnionType({
   name: 'ContractOperationDetailsUnion',

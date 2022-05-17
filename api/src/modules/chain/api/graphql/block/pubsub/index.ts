@@ -2,7 +2,7 @@ import { QueryBus } from '@nestjs/cqrs';
 import { PublishBlockCreatedEvent } from './publish-block-created-event';
 import { PubSubEngine } from '@koiner/pubsub-engine';
 
-export default [
+export const BlockPubSubEventHandlers = [
   {
     provide: PublishBlockCreatedEvent,
     useFactory: (

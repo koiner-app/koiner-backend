@@ -3,9 +3,9 @@ import {
   TokenOperationReadRepository,
   ContractStandardType,
 } from '@koiner/contracts/domain';
-import { ContractOperationNode } from '@koiner/contracts/api/graphql/operation/dto/contract-operation.node';
 import { TokenOperationNode } from '@koiner/contracts/api/graphql/token/dto/token-operation.node';
 import { ContractOperationDetailsUnion } from '@koiner/contracts/api/graphql/contract/dto/contract-operation.union';
+import { ContractOperationNode } from '../dto';
 
 @Resolver(() => ContractOperationNode)
 export class ContractOperationDetailsResolver {

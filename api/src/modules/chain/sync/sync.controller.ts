@@ -8,9 +8,8 @@ import {
 } from '@nestjs/common';
 import { ManualSyncService } from '@koiner/chain/sync/manual-sync.service';
 import { koinos } from '@config';
-import { SyncBlockSetsCommand } from '@koiner/chain/sync/application/command';
+import { SyncBlockSetsCommand, SyncSet } from '@koiner/chain/sync/application';
 import { CommandBus } from '@nestjs/cqrs';
-import { SyncSet } from '@koiner/chain/sync/application/command/dto/sync-block-set.dto';
 
 @Controller()
 export class SyncController {
@@ -38,7 +37,11 @@ export class SyncController {
   ): Promise<void> {
     if (secret && koinos.syncSecret && secret === koinos.syncSecret) {
       console.log(input.sets);
-      await this.commandBus.execute(new SyncBlockSetsCommand(input.sets));
+      await this.commandBus.execute(
+        new SyncBlockSetsCommand({
+          sets: input.sets,
+        }),
+      );
     } else {
       throw new ForbiddenException();
     }

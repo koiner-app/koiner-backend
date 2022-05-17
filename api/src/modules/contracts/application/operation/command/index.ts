@@ -2,6 +2,6 @@ import { CreateContractOperationHandler } from './create-contract-operation.hand
 
 export { CreateContractOperationCommand } from './dto/create-contract-operation.command';
 
-export default {
-  handlers: [CreateContractOperationHandler],
-};
+export const ContractOperationCommandHandlers = [
+  CreateContractOperationHandler,
+];

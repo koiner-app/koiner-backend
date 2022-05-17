@@ -6,6 +6,4 @@ export class AddressesQuery extends SearchQuery {}
 import { AddressHandler } from './address.handler';
 import { AddressesHandler } from './addresses.handler';
 
-export default {
-  handlers: [AddressHandler, AddressesHandler],
-};
+export const AddressQueryHandlers = [AddressHandler, AddressesHandler];

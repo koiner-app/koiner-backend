@@ -4,6 +4,4 @@ import { UpdateChainHandler } from './update-chain.handler';
 export { CreateChainCommand } from './dto/create-chain.command';
 export { UpdateChainCommand } from './dto/update-chain.command';
 
-export default {
-  handlers: [CreateChainHandler, UpdateChainHandler],
-};
+export const ChainCommandHandlers = [CreateChainHandler, UpdateChainHandler];

@@ -1,7 +1,7 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { DomainEventHandler } from '@appvise/domain';
 import { OperationCreated, OperationType } from '@koiner/chain/domain';
-import { CreateSystemContractOperationCommand } from '@koiner/chain/application/operation/command';
+import { CreateSystemContractOperationCommand } from '@koiner/chain/application';
 import { RawBlocksService } from '@koinos/raw-blocks.service';
 
 export class CreateSystemContractOperationForNewOperation extends DomainEventHandler {
@@ -21,11 +21,11 @@ export class CreateSystemContractOperationForNewOperation extends DomainEventHan
       );
 
       await this.commandBus.execute(
-        new CreateSystemContractOperationCommand(
-          event.aggregateId,
-          rawOperation.set_system_contract.contract_id,
-          rawOperation.set_system_contract.system_contract,
-        ),
+        new CreateSystemContractOperationCommand({
+          id: event.aggregateId,
+          contractId: rawOperation.set_system_contract.contract_id,
+          systemContract: rawOperation.set_system_contract.system_contract,
+        }),
       );
     }
   }

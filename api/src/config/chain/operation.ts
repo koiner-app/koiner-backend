@@ -1,8 +1,8 @@
+import { OperationType } from '@koiner/chain/domain';
 import { ContractOperationNode } from '@koiner/contracts/api/graphql/operation/dto/contract-operation.node';
 import { SystemCallOperationNode } from '@koiner/chain/api/graphql/operation/dto/system-call-operation.node';
 import { SystemContractOperationNode } from '@koiner/chain/api/graphql/operation/dto/system-contract-operation.node';
 import { UploadContractOperationNode } from '@koiner/chain/api/graphql/operation/dto/upload-contract-operation.node';
-import { OperationType } from '@koiner/chain/domain';
 
 export const operationUnionTypes = [
   // Chain

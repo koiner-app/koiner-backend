@@ -1,8 +1,10 @@
 import { ReadRepository, WriteRepository } from '@appvise/domain';
-import { Operation } from '../operation';
-import { SystemCallOperation } from '../system-call-operation';
-import { SystemContractOperation } from '../system-contract-operation';
-import { UploadContractOperation } from '../upload-contract-operation';
+import {
+  Operation,
+  SystemCallOperation,
+  SystemContractOperation,
+  UploadContractOperation,
+} from '..';
 
 export abstract class OperationReadRepository extends ReadRepository<Operation> {}
 export abstract class OperationWriteRepository extends WriteRepository<Operation> {}

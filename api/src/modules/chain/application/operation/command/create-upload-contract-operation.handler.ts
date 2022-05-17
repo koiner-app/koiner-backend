@@ -1,9 +1,11 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UUID } from '@appvise/domain';
-import { UploadContractOperation } from '@koiner/chain/domain/operation/upload-contract-operation';
-import { CreateUploadContractOperationCommand } from '@koiner/chain/application/operation/command/dto/create-upload-contract-operation.command';
-import { UploadContractOperationWriteRepository } from '@koiner/chain/domain/operation/repository';
 import { KoinosAddressId } from '@koiner/domain';
+import {
+  UploadContractOperation,
+  UploadContractOperationWriteRepository,
+} from '@koiner/chain/domain';
+import { CreateUploadContractOperationCommand } from './dto/create-upload-contract-operation.command';
 
 @CommandHandler(CreateUploadContractOperationCommand)
 export class CreateUploadContractOperationHandler

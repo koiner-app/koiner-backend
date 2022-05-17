@@ -1,6 +1,6 @@
 import { ObjectType } from '@nestjs/graphql';
 import { Connection } from '@appvise/graphql';
-import { BlockNode } from './block.node';
+import { BlockNode } from '.';
 
 @ObjectType()
 export class BlocksConnection extends Connection(BlockNode) {}

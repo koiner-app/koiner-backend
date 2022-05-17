@@ -1,5 +1,5 @@
 import { Resolver, Subscription } from '@nestjs/graphql';
-import { TransactionNode } from '@koiner/chain/api/graphql/transaction/dto/transaction.node';
+import { TransactionNode } from '../dto/transaction.node';
 import { PubSubEngine } from '@koiner/pubsub-engine';
 
 @Resolver(() => TransactionNode)

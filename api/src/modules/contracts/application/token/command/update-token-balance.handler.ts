@@ -1,12 +1,12 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UUID } from '@appvise/domain';
+import { KoinosAddressId } from '@koiner/domain';
 import {
   TokenBalance,
   TokenBalanceWriteRepository,
   TokensOrigin,
 } from '@koiner/contracts/domain';
 import { UpdateTokenBalanceCommand } from './dto/update-token-balance.command';
-import { KoinosAddressId } from '@koiner/domain';
 
 @CommandHandler(UpdateTokenBalanceCommand)
 export class UpdateTokenBalanceHandler

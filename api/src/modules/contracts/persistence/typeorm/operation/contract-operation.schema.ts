@@ -6,20 +6,20 @@ import { ContractStandardType } from '@koiner/contracts/domain';
 export class ContractOperationSchema extends EntityBaseSchema {
   @PrimaryColumn()
   @Column({ length: 34 })
-  readonly id: string;
+  readonly id!: string;
 
   @Column({ length: 34 })
-  readonly contract_id: string;
+  readonly contract_id!: string;
 
   @Column({ length: 70 })
-  readonly transaction_id: string;
+  readonly transaction_id!: string;
 
   @Column({ type: 'bigint' })
-  readonly entry_point: number;
+  readonly entry_point!: number;
 
   @Column({ type: 'bytea' })
-  readonly args: string;
+  readonly args!: string;
 
   @Column({ type: 'enum', enum: ContractStandardType, nullable: true })
-  readonly contract_standard_type: ContractStandardType;
+  readonly contract_standard_type?: ContractStandardType;
 }

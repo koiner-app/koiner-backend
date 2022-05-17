@@ -6,6 +6,4 @@ export class ContractsQuery extends SearchQuery {}
 import { ContractHandler } from './contract.handler';
 import { ContractsHandler } from './contracts.handler';
 
-export default {
-  handlers: [ContractHandler, ContractsHandler],
-};
+export const ContractQueryHandlers = [ContractHandler, ContractsHandler];

@@ -1,11 +1,11 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UUID } from '@appvise/domain';
-import { CreateContractOperationCommand } from '@koiner/contracts/application/operation/command/dto/create-contract-operation.command';
+import { KoinosAddressId, KoinosId } from '@koiner/domain';
 import {
   ContractOperation,
   ContractOperationWriteRepository,
 } from '@koiner/contracts/domain';
-import { KoinosAddressId, KoinosId } from '@koiner/domain';
+import { CreateContractOperationCommand } from './dto/create-contract-operation.command';
 
 @CommandHandler(CreateContractOperationCommand)
 export class CreateContractOperationHandler

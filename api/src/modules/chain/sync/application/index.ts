@@ -1,4 +1,10 @@
-import ChainSyncCommands from './command';
-import ChainSyncEventHandlers from './event';
+import { ChainSyncCommandHandlers } from './command';
+import { ChainSyncEventHandlers } from './event';
 
-export default [...ChainSyncCommands.handlers, ...ChainSyncEventHandlers];
+export * from './command';
+export * from './event';
+
+export const ChainSyncApplicationHandlers = [
+  ...ChainSyncCommandHandlers,
+  ...ChainSyncEventHandlers,
+];

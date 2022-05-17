@@ -1,13 +1,19 @@
-export class CreateTransactionCommand {
-  constructor(
-    public readonly id: string,
-    public readonly blockHeight: number,
-    public readonly rcLimit: string,
-    public readonly payer: string,
-    public readonly signature: string,
-    public readonly transactionIndex: number,
-    public readonly operationCount: number,
-    public readonly nonce?: string,
-    public readonly operationMerkleRoot?: string,
-  ) {}
+import { Command, CommandProps } from '@appvise/domain';
+
+export class CreateTransactionCommand extends Command {
+  constructor(props: CommandProps<CreateTransactionCommand>) {
+    super(props);
+
+    Object.assign(this, props);
+  }
+
+  readonly id: string;
+  readonly blockHeight: number;
+  readonly rcLimit: string;
+  readonly payer: string;
+  readonly signature: string;
+  readonly transactionIndex: number;
+  readonly operationCount: number;
+  readonly nonce?: string;
+  readonly operationMerkleRoot?: string;
 }

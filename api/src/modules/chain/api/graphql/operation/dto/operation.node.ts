@@ -1,7 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Operation, OperationType } from '@koiner/chain/domain';
 import { BaseNode } from '@appvise/graphql';
-import { OperationDetailsUnion } from './operation-details.union';
+import { Operation, OperationType } from '@koiner/chain/domain';
+import { OperationDetailsUnion } from '.';
 
 @ObjectType('Operation')
 export class OperationNode extends BaseNode {

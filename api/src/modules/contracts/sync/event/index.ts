@@ -1,12 +1,12 @@
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { RawBlocksService } from '@koinos/raw-blocks.service';
-import { ContractStandardService } from '@koiner/contracts/application/contract-standard/service';
-import { CreateContractForUploadedContract } from '@koiner/contracts/sync/event/create-contract-for-uploaded-contract';
-import { CreateBlockRewardForNewBlock } from '@koiner/contracts/sync/event/create-block-reward-for-new-block';
-import { CreateContractOperationForNewOperation } from './create-contract-operation-for-new-operation';
 import { Provider } from 'koilib';
+import { ContractStandardService } from '@koiner/contracts/application';
+import { CreateBlockRewardForNewBlock } from './create-block-reward-for-new-block';
+import { CreateContractForUploadedContract } from './create-contract-for-uploaded-contract';
+import { CreateContractOperationForNewOperation } from './create-contract-operation-for-new-operation';
 
-export default [
+export const ContractsSyncEventHandlers = [
   {
     provide: CreateContractForUploadedContract,
     useFactory: (

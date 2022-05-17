@@ -3,10 +3,13 @@ import {
   ArgumentOutOfRangeException,
   Guard,
 } from '@appvise/domain';
-import { Operation, TransactionCreated } from '@koiner/chain/domain';
-import { TransactionProps, CreateTransactionProps } from './transaction.types';
 import { KoinosId } from '@koiner/domain';
-import { TransactionHeader } from '@koiner/chain/domain';
+import {
+  Operation,
+  TransactionCreated,
+  TransactionHeader,
+} from '@koiner/chain/domain';
+import { TransactionProps, CreateTransactionProps } from '.';
 
 export class Transaction extends AggregateRoot<TransactionProps> {
   protected readonly _id: KoinosId;

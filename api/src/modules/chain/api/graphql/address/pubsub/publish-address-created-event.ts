@@ -2,8 +2,8 @@ import { DomainEventHandler } from '@appvise/domain';
 import { Address, AddressCreated } from '@koiner/chain/domain';
 import { PubSubEngine } from '@koiner/pubsub-engine';
 import { QueryBus } from '@nestjs/cqrs';
-import { AddressQuery } from '@koiner/chain/application/address/query';
-import { AddressNode } from '@koiner/chain/api/graphql/address/dto/address.node';
+import { AddressQuery } from '@koiner/chain/application';
+import { AddressNode } from '../dto';
 
 export class PublishAddressCreatedEvent extends DomainEventHandler {
   constructor(

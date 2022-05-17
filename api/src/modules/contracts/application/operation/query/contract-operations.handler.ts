@@ -4,7 +4,7 @@ import {
   ContractOperationReadRepository,
 } from '@koiner/contracts/domain';
 import { SearchResponse } from '@appvise/domain';
-import { ContractOperationsQuery } from './index';
+import { ContractOperationsQuery } from '.';
 
 @QueryHandler(ContractOperationsQuery)
 export class ContractOperationsHandler

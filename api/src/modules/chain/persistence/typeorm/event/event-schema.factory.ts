@@ -1,12 +1,12 @@
+import { UUID } from '@appvise/domain';
 import {
   EntityProps,
   EntitySchemaFactory,
   EntitySchemaProps,
 } from '@appvise/typeorm';
-import { Event, EventProps } from '@koiner/chain/domain';
-import { EventSchema } from './event.schema';
-import { UUID } from '@appvise/domain';
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
+import { Event, EventProps } from '@koiner/chain/domain';
+import { EventSchema } from '.';
 
 export class EventSchemaFactory extends EntitySchemaFactory<
   Event,

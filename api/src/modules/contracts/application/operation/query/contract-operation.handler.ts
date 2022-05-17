@@ -3,7 +3,7 @@ import {
   ContractOperation,
   ContractOperationReadRepository,
 } from '@koiner/contracts/domain';
-import { ContractOperationQuery } from './index';
+import { ContractOperationQuery } from '.';
 
 @QueryHandler(ContractOperationQuery)
 export class ContractOperationHandler

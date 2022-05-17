@@ -5,8 +5,8 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 export class AddressSchema extends EntityBaseSchema {
   @PrimaryColumn()
   @Column({ length: 34 })
-  readonly id: string;
+  readonly id!: string;
 
   @Column()
-  readonly is_producer: boolean;
+  readonly is_producer!: boolean;
 }

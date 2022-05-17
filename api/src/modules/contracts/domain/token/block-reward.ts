@@ -1,7 +1,7 @@
 import { AggregateRoot, UUID } from '@appvise/domain';
-import { CreateBlockRewardProps, BlockRewardProps } from './block-reward.types';
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
 import { BlockRewardCreated } from '@koiner/contracts/domain';
+import { CreateBlockRewardProps, BlockRewardProps } from '.';
 
 export class BlockReward extends AggregateRoot<BlockRewardProps> {
   protected readonly _id: KoinosId;

@@ -10,22 +10,23 @@ export class UpdateTokenBalancesOnOperationCreated extends DomainEventHandler {
 
   async handle(event: TokenOperationCreated): Promise<void> {
     await this.commandBus.execute(
-      new UpdateTokenBalanceCommand(
-        event.to,
-        event.contractId,
-        event.value,
-        event.name === 'mint' ? TokensOrigin.mint : TokensOrigin.transfer,
-      ),
+      new UpdateTokenBalanceCommand({
+        addressId: event.to,
+        contractId: event.contractId,
+        amountChanged: event.value,
+        tokensOrigin:
+          event.name === 'mint' ? TokensOrigin.mint : TokensOrigin.transfer,
+      }),
     );
 
     if (event.from) {
       await this.commandBus.execute(
-        new UpdateTokenBalanceCommand(
-          event.from,
-          event.contractId,
-          -event.value,
-          TokensOrigin.transfer,
-        ),
+        new UpdateTokenBalanceCommand({
+          addressId: event.from,
+          contractId: event.contractId,
+          amountChanged: -event.value,
+          tokensOrigin: TokensOrigin.transfer,
+        }),
       );
     }
   }

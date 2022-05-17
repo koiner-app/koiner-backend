@@ -1,9 +1,13 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { DomainEventHandler } from '@appvise/domain';
-import { ContractOperationCreated } from '@koiner/contracts/domain';
-import { CreateTokenOperationCommand } from '@koiner/contracts/application/token/command';
-import { ContractStandardType } from '@koiner/contracts/domain';
-import { ContractStandardService } from '@koiner/contracts/application/contract-standard/service';
+import {
+  ContractOperationCreated,
+  ContractStandardType,
+} from '@koiner/contracts/domain';
+import {
+  ContractStandardService,
+  CreateTokenOperationCommand,
+} from '@koiner/contracts/application';
 
 export class CreateTokenOperationOnOperationCreated extends DomainEventHandler {
   constructor(
@@ -28,15 +32,15 @@ export class CreateTokenOperationOnOperationCreated extends DomainEventHandler {
         );
 
       await this.commandBus.execute(
-        new CreateTokenOperationCommand(
-          event.aggregateId,
-          event.contractId,
-          decodedOperation.name,
-          <string>decodedOperation.args.to,
-          parseInt(<string>decodedOperation.args.value),
-          <string>decodedOperation.args.from,
-          event.transactionId,
-        ),
+        new CreateTokenOperationCommand({
+          id: event.aggregateId,
+          contractId: event.contractId,
+          name: decodedOperation.name,
+          to: <string>decodedOperation.args.to,
+          value: parseInt(<string>decodedOperation.args.value),
+          from: <string>decodedOperation.args.from,
+          transactionId: event.transactionId,
+        }),
       );
     } catch (error) {
       console.log('Token operation error', error);

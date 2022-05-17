@@ -1,7 +1,7 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { DomainEventHandler } from '@appvise/domain';
 import { OperationCreated, OperationType } from '@koiner/chain/domain';
-import { CreateSystemCallOperationCommand } from '@koiner/chain/application/operation/command';
+import { CreateSystemCallOperationCommand } from '@koiner/chain/application';
 import { RawBlocksService } from '@koinos/raw-blocks.service';
 
 export class CreateSystemCallOperationForNewOperation extends DomainEventHandler {
@@ -21,11 +21,12 @@ export class CreateSystemCallOperationForNewOperation extends DomainEventHandler
       );
 
       await this.commandBus.execute(
-        new CreateSystemCallOperationCommand(
-          event.aggregateId,
-          rawOperation.set_system_call.target.system_call_bundle.contract_id,
-          rawOperation.set_system_call.call_id,
-        ),
+        new CreateSystemCallOperationCommand({
+          id: event.aggregateId,
+          contractId:
+            rawOperation.set_system_call.target.system_call_bundle.contract_id,
+          callId: rawOperation.set_system_call.call_id,
+        }),
       );
     }
   }

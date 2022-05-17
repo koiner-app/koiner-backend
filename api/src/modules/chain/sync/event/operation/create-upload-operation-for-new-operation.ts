@@ -1,8 +1,10 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { DomainEventHandler } from '@appvise/domain';
 import { OperationCreated, OperationType } from '@koiner/chain/domain';
-import { CreateOrUpdateAddressCommand } from '@koiner/chain/application/address/command';
-import { CreateUploadContractOperationCommand } from '@koiner/chain/application/operation/command';
+import {
+  CreateOrUpdateAddressCommand,
+  CreateUploadContractOperationCommand,
+} from '@koiner/chain/application';
 import { RawBlocksService } from '@koinos/raw-blocks.service';
 
 export class CreateUploadOperationForNewOperation extends DomainEventHandler {
@@ -25,16 +27,18 @@ export class CreateUploadOperationForNewOperation extends DomainEventHandler {
 
       // Create Address (if not already created). ContractId = address
       await this.commandBus.execute(
-        new CreateOrUpdateAddressCommand(contractId),
+        new CreateOrUpdateAddressCommand({
+          id: contractId,
+        }),
       );
 
       await this.commandBus.execute(
-        new CreateUploadContractOperationCommand(
-          event.aggregateId,
+        new CreateUploadContractOperationCommand({
+          id: event.aggregateId,
           contractId,
-          rawOperation.upload_contract.bytecode,
-          rawOperation.upload_contract.abi,
-        ),
+          bytecode: rawOperation.upload_contract.bytecode,
+          abi: rawOperation.upload_contract.abi,
+        }),
       );
     }
   }

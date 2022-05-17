@@ -1,13 +1,10 @@
-import { snakeToCamelCase, TypeormReadRepository } from '@appvise/typeorm';
-import { Injectable } from '@nestjs/common';
-import {
-  BlockSchema,
-  BlockSchemaFactory,
-} from '@koiner/chain/persistence/typeorm';
-import { NotFoundException, SelectionSet } from '@appvise/domain';
-import { Block, BlockReadRepository } from '@koiner/chain/domain';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { NotFoundException, SelectionSet } from '@appvise/domain';
+import { snakeToCamelCase, TypeormReadRepository } from '@appvise/typeorm';
+import { Block, BlockReadRepository } from '@koiner/chain/domain';
+import { BlockSchema, BlockSchemaFactory } from '.';
 
 @Injectable()
 export class BlockReadTypeormRepository

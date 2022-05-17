@@ -6,6 +6,4 @@ export class BlocksQuery extends SearchQuery {}
 import { BlockHandler } from './block.handler';
 import { BlocksHandler } from './blocks.handler';
 
-export default {
-  handlers: [BlockHandler, BlocksHandler],
-};
+export const BlockQueryHandlers = [BlockHandler, BlocksHandler];

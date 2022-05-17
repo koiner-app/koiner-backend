@@ -4,7 +4,7 @@ import {
   UploadContractOperationReadRepository,
 } from '@koiner/chain/domain';
 import { SearchResponse } from '@appvise/domain';
-import { UploadContractOperationsQuery } from './index';
+import { UploadContractOperationsQuery } from '.';
 
 @QueryHandler(UploadContractOperationsQuery)
 export class UploadContractOperationsHandler

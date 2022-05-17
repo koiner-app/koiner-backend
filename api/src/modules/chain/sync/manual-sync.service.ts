@@ -1,12 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Provider } from 'koilib';
-import { SyncBlocksCommand } from '@koiner/chain/sync/application/command';
-import {
-  CreateChainCommand,
-  UpdateChainCommand,
-} from '@koiner/chain/application/chain/command';
-import { ChainQuery } from '@koiner/chain/application/chain/query';
 import { Block, Chain } from '@koiner/chain/domain';
 import {
   DateVO,
@@ -14,7 +8,13 @@ import {
   SearchResponse,
   SortDirection,
 } from '@appvise/domain';
-import { BlocksQuery } from '@koiner/chain/application/block/query';
+import {
+  BlocksQuery,
+  ChainQuery,
+  CreateChainCommand,
+  UpdateChainCommand,
+} from '@koiner/chain/application';
+import { SyncBlocksCommand } from '@koiner/chain/sync/application';
 import { koinos } from '@config';
 
 @Injectable()
@@ -43,15 +43,17 @@ export class ManualSyncService {
         headInfo = await this.provider.getHeadInfo();
 
         chain = await this.commandBus.execute(
-          new CreateChainCommand(
-            koinos.chainId,
-            headInfo.head_topology.id,
-            headInfo.head_topology.previous,
-            parseInt(headInfo.head_topology.height),
-            parseInt(headInfo.last_irreversible_block),
-            0,
-            false,
-          ),
+          new CreateChainCommand({
+            id: koinos.chainId,
+            headTopology: {
+              id: headInfo.head_topology.id,
+              previous: headInfo.head_topology.previous,
+              height: parseInt(headInfo.head_topology.height),
+            },
+            lastIrreversibleBlock: parseInt(headInfo.last_irreversible_block),
+            lastSyncedBlock: 0,
+            syncing: false,
+          }),
         );
 
         // TODO: Add first block
@@ -79,26 +81,33 @@ export class ManualSyncService {
 
     // Update chain info + set syncing flag
     await this.commandBus.execute(
-      new UpdateChainCommand(
-        koinos.chainId,
-        headInfo.head_topology.id,
-        headInfo.head_topology.previous,
-        parseInt(headInfo.head_topology.height),
-        parseInt(headInfo.last_irreversible_block),
-        chain.lastSyncedBlock,
-        true,
-      ),
+      new UpdateChainCommand({
+        id: koinos.chainId,
+        headTopology: {
+          id: headInfo.head_topology.id,
+          previous: headInfo.head_topology.previous,
+          height: parseInt(headInfo.head_topology.height),
+        },
+        lastIrreversibleBlock: parseInt(headInfo.last_irreversible_block),
+        lastSyncedBlock: chain.lastSyncedBlock,
+        syncing: true,
+      }),
     );
 
-    const startBlock = parseInt(chain.lastSyncedBlock.toString()) + 1;
-    const endBlock = startBlock + (batchSize - 1);
+    const startHeight = parseInt(chain.lastSyncedBlock.toString()) + 1;
+    const endBlock = startHeight + (batchSize - 1);
 
     // Sync next x blocks
     this.logger.log(
-      `Start syncing next batch of ${batchSize} blocks, from ${startBlock} to ${endBlock}`,
+      `Start syncing next batch of ${batchSize} blocks, from ${startHeight} to ${endBlock}`,
     );
 
-    await this.commandBus.execute(new SyncBlocksCommand(startBlock, batchSize));
+    await this.commandBus.execute(
+      new SyncBlocksCommand({
+        startHeight,
+        amount: batchSize,
+      }),
+    );
 
     // Get highest synced block
     const highestBlock = await this.queryBus.execute<
@@ -119,19 +128,21 @@ export class ManualSyncService {
     const lastSyncedBlockHeight = highestBlock.results[0].item.header.height;
 
     await this.commandBus.execute(
-      new UpdateChainCommand(
-        koinos.chainId,
-        headInfo.head_topology.id,
-        headInfo.head_topology.previous,
-        parseInt(headInfo.head_topology.height),
-        parseInt(headInfo.last_irreversible_block),
-        lastSyncedBlockHeight,
-        false,
-      ),
+      new UpdateChainCommand({
+        id: koinos.chainId,
+        headTopology: {
+          id: headInfo.head_topology.id,
+          previous: headInfo.head_topology.previous,
+          height: parseInt(headInfo.head_topology.height),
+        },
+        lastIrreversibleBlock: parseInt(headInfo.last_irreversible_block),
+        lastSyncedBlock: lastSyncedBlockHeight,
+        syncing: false,
+      }),
     );
 
     this.logger.log(
-      `Done syncing batch of ${batchSize} blocks, from ${startBlock} to ${lastSyncedBlockHeight}`,
+      `Done syncing batch of ${batchSize} blocks, from ${startHeight} to ${lastSyncedBlockHeight}`,
     );
   }
 }

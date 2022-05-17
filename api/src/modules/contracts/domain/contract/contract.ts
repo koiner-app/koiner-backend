@@ -1,7 +1,6 @@
 import { AggregateRoot } from '@appvise/domain';
-import { ContractCreated } from './event/contract-created';
-import { ContractProps, CreateContractProps } from './contract.types';
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
+import { ContractCreated, ContractProps, CreateContractProps } from '.';
 
 export class Contract extends AggregateRoot<ContractProps> {
   protected readonly _id: KoinosId;

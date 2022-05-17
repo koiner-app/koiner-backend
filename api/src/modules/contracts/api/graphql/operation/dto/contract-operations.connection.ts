@@ -1,6 +1,6 @@
 import { ObjectType } from '@nestjs/graphql';
 import { Connection } from '@appvise/graphql';
-import { ContractOperationNode } from './contract-operation.node';
+import { ContractOperationNode } from '.';
 
 @ObjectType()
 export class ContractOperationsConnection extends Connection(

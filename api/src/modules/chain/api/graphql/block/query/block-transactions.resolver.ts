@@ -1,8 +1,7 @@
 import { Args, Parent, ResolveField, Resolver } from '@nestjs/graphql';
 import { SelectionSet } from '@appvise/graphql';
-import { BlockNode } from '@koiner/chain/api/graphql/block/dto/block.node';
 import { TransactionsRequest } from '@koiner/chain/api/graphql/transaction/dto/transactions.request';
-import { TransactionsConnection } from '@koiner/chain/api/graphql/transaction/dto/transactions.connection';
+import { BlockNode, TransactionsConnection } from '@koiner/chain/api/graphql';
 import { TransactionsResolver } from '@koiner/chain/api/graphql/transaction/query/transactions.resolver';
 
 @Resolver(() => BlockNode)

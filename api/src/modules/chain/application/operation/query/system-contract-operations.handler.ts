@@ -4,7 +4,7 @@ import {
   SystemContractOperationReadRepository,
 } from '@koiner/chain/domain';
 import { SearchResponse } from '@appvise/domain';
-import { SystemContractOperationsQuery } from './index';
+import { SystemContractOperationsQuery } from '.';
 
 @QueryHandler(SystemContractOperationsQuery)
 export class SystemContractOperationsHandler

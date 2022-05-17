@@ -1,7 +1,7 @@
 import { CommandBus, CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { SyncBlocksCommand } from './dto/sync-blocks.command';
-import { SyncBlockCommand } from '@koiner/chain/sync/application/command/dto/sync-block.command';
 import { RawBlocksService } from '@koinos/raw-blocks.service';
+import { SyncBlocksCommand } from './dto/sync-blocks.command';
+import { SyncBlockCommand } from './dto/sync-block.command';
 
 @CommandHandler(SyncBlocksCommand)
 export class SyncBlocksHandler implements ICommandHandler<SyncBlocksCommand> {

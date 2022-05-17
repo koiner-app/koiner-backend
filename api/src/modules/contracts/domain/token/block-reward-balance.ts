@@ -1,11 +1,11 @@
 import { AggregateRoot, ConflictException, UUID } from '@appvise/domain';
+import { KoinosAddressId } from '@koiner/domain';
 import {
-  CreateBlockRewardBalanceProps,
   BlockRewardBalanceCreated,
   BlockRewardBalanceProps,
+  BlockRewardsReceived,
+  CreateBlockRewardBalanceProps,
 } from '.';
-import { KoinosAddressId } from '@koiner/domain';
-import { BlockRewardsReceived } from './event/block-rewards-received';
 
 export class BlockRewardBalance extends AggregateRoot<BlockRewardBalanceProps> {
   protected readonly _id: KoinosAddressId;

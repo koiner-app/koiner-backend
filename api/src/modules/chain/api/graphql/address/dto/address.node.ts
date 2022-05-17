@@ -1,7 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Address } from '@koiner/chain/domain';
 import { BaseNode } from '@appvise/graphql';
-import { TransactionsConnection } from '@koiner/chain/api/graphql/transaction/dto/transactions.connection';
+import { Address } from '@koiner/chain/domain';
+import { TransactionsConnection } from '@koiner/chain/api/graphql';
 
 @ObjectType('Address')
 export class AddressNode extends BaseNode {

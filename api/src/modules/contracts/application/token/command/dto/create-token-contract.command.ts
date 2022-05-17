@@ -1,8 +1,14 @@
-export class CreateTokenContractCommand {
-  constructor(
-    public readonly id: string,
-    public readonly name: string,
-    public readonly symbol: string,
-    public readonly decimals: number,
-  ) {}
+import { Command, CommandProps } from '@appvise/domain';
+
+export class CreateTokenContractCommand extends Command {
+  constructor(props: CommandProps<CreateTokenContractCommand>) {
+    super(props);
+
+    Object.assign(this, props);
+  }
+
+  readonly id: string;
+  readonly name: string;
+  readonly symbol: string;
+  readonly decimals: number;
 }

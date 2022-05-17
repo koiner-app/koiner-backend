@@ -1,8 +1,8 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Transaction } from '@koiner/chain/domain';
 import { BaseNode } from '@appvise/graphql';
-import { TransactionHeaderField } from '@koiner/chain/api/graphql/transaction/dto/transaction-header.field';
-import { OperationNode } from '@koiner/chain/api/graphql/operation/dto/operation.node';
+import { Transaction } from '@koiner/chain/domain';
+import { OperationNode } from '@koiner/chain/api/graphql';
+import { TransactionHeaderField } from '.';
 
 @ObjectType('Transaction')
 export class TransactionNode extends BaseNode {

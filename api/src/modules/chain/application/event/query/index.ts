@@ -6,6 +6,4 @@ export class EventsQuery extends SearchQuery {}
 import { EventHandler } from './event.handler';
 import { EventsHandler } from './events.handler';
 
-export default {
-  handlers: [EventHandler, EventsHandler],
-};
+export const EventQueryHandlers = [EventHandler, EventsHandler];

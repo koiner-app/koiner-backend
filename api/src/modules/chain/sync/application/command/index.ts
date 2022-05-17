@@ -6,13 +6,12 @@ import { SyncTransactionsHandler } from './sync-transactions.handler';
 export { SyncBlockCommand } from './dto/sync-block.command';
 export { SyncBlocksCommand } from './dto/sync-blocks.command';
 export { SyncBlockSetsCommand } from './dto/sync-block-sets.command';
+export { SyncSet } from './dto/sync-block-set.dto';
 export { SyncTransactionsCommand } from './dto/sync-transactions.command';
 
-export default {
-  handlers: [
-    SyncBlockHandler,
-    SyncBlocksHandler,
-    SyncBlockSetsHandler,
-    SyncTransactionsHandler,
-  ],
-};
+export const ChainSyncCommandHandlers = [
+  SyncBlockHandler,
+  SyncBlocksHandler,
+  SyncBlockSetsHandler,
+  SyncTransactionsHandler,
+];

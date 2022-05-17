@@ -1,12 +1,12 @@
+import { UUID } from '@appvise/domain';
 import {
   EntityProps,
   EntitySchemaFactory,
   EntitySchemaProps,
 } from '@appvise/typeorm';
-import { TokenBalance, TokenBalanceProps } from '@koiner/contracts/domain';
-import { TokenBalanceSchema } from './token-balance.schema';
 import { KoinosAddressId } from '@koiner/domain';
-import { UUID } from '@appvise/domain';
+import { TokenBalance, TokenBalanceProps } from '@koiner/contracts/domain';
+import { TokenBalanceSchema } from '.';
 
 export class TokenBalanceSchemaFactory extends EntitySchemaFactory<
   TokenBalance,

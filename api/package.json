@@ -22,7 +22,8 @@
   },
   "dependencies": {
     "@appvise/domain": "^1.0.7",
-    "@appvise/typeorm": "^1.0.5",
+    "@appvise/graphql": "^1.0.2",
+    "@appvise/typeorm": "^1.0.6",
     "@golevelup/nestjs-rabbitmq": "^2.2.0",
     "@nestjs/apollo": "^10.0.4",
     "@nestjs/cli": "^8.0.0",

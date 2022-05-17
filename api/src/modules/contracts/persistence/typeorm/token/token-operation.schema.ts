@@ -1,4 +1,3 @@
-import { EntityBaseSchema } from '@appvise/typeorm';
 import {
   Column,
   Entity,
@@ -7,59 +6,60 @@ import {
   OneToOne,
   PrimaryColumn,
 } from 'typeorm';
+import { EntityBaseSchema } from '@appvise/typeorm';
 import {
   AddressSchema,
   OperationSchema,
   TransactionSchema,
 } from '@koiner/chain/persistence/typeorm';
-import { TokenContractSchema } from '@koiner/contracts/persistence/typeorm';
+import { TokenContractSchema } from '.';
 
 @Entity('contracts_token_operation')
 export class TokenOperationSchema extends EntityBaseSchema {
   @PrimaryColumn()
   @Column({ length: 34 })
-  readonly id: string;
+  readonly id!: string;
 
   // Add foreign key without the need to always use the relation
   @OneToOne(() => OperationSchema, { nullable: false, persistence: false })
   @JoinColumn({ name: 'id', referencedColumnName: 'id' })
-  private _operation_id_fg: never;
+  private _operation_id_fg!: never;
 
   @Column({ length: 34 })
-  readonly contract_id: string;
+  readonly contract_id!: string;
 
   // Add foreign key without the need to always use the relation
   @ManyToOne(() => TokenContractSchema, { nullable: false, persistence: false })
   @JoinColumn({ name: 'contract_id', referencedColumnName: 'id' })
-  private _contract_id_fg: never;
+  private _contract_id_fg!: never;
 
   @Column({ length: 70 })
-  readonly transaction_id: string;
+  readonly transaction_id!: string;
 
   // Add foreign key without the need to always use the relation
   @ManyToOne(() => TransactionSchema, { nullable: false, persistence: false })
   @JoinColumn({ name: 'transaction_id', referencedColumnName: 'id' })
-  private _transaction_id_fg: never;
+  private _transaction_id_fg!: never;
 
   @Column({ length: 8 })
-  readonly name: string;
+  readonly name!: string;
 
   @Column({ length: 34, nullable: true })
-  readonly from: string;
+  readonly from?: string;
 
   // Add foreign key without the need to always use the relation
   @ManyToOne(() => AddressSchema, { nullable: true, persistence: false })
   @JoinColumn({ name: 'from', referencedColumnName: 'id' })
-  private _from_fg: never;
+  private _from_fg?: never;
 
   @Column({ length: 34 })
-  readonly to: string;
+  readonly to!: string;
 
   // Add foreign key without the need to always use the relation
   @ManyToOne(() => AddressSchema, { nullable: false, persistence: false })
   @JoinColumn({ name: 'to', referencedColumnName: 'id' })
-  private _to_fg: never;
+  private _to_fg!: never;
 
   @Column({ length: 20 })
-  readonly value: string;
+  readonly value!: string;
 }

@@ -1,5 +1,5 @@
 import { Resolver, Subscription } from '@nestjs/graphql';
-import { AddressNode } from '@koiner/chain/api/graphql/address/dto/address.node';
+import { AddressNode } from '@koiner/chain/api/graphql';
 import { PubSubEngine } from '@koiner/pubsub-engine';
 
 @Resolver(() => AddressNode)

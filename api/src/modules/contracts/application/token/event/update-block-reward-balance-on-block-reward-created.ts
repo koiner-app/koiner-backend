@@ -10,11 +10,11 @@ export class UpdateBlockRewardBalanceOnBlockRewardCreated extends DomainEventHan
 
   async handle(event: BlockRewardCreated): Promise<void> {
     await this.commandBus.execute(
-      new UpdateBlockRewardBalanceCommand(
-        event.producerId,
-        event.contractId,
-        event.value,
-      ),
+      new UpdateBlockRewardBalanceCommand({
+        addressId: event.producerId,
+        contractId: event.contractId,
+        amountChanged: event.value,
+      }),
     );
   }
 }

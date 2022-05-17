@@ -2,12 +2,9 @@ import { Args, Query, Resolver } from '@nestjs/graphql';
 import { QueryBus } from '@nestjs/cqrs';
 import { SearchResponse } from '@appvise/domain';
 import { SelectionSet, ConnectionFactory } from '@appvise/graphql';
-
 import { Contract } from '@koiner/contracts/domain';
-import { ContractsQuery } from '@koiner/contracts/application/contract/query';
-import { ContractsRequest } from '../dto/contracts.request';
-import { ContractsConnection } from '../dto/contracts.connection';
-import { ContractNode } from '../dto/contract.node';
+import { ContractsQuery } from '@koiner/contracts/application';
+import { ContractNode, ContractsConnection, ContractsRequest } from '../dto';
 
 @Resolver(() => ContractNode)
 export class ContractsResolver {

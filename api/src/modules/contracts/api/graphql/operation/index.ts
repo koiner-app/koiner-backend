@@ -1,12 +1,14 @@
-import { ContractOperationResolver } from './queries';
-import { ContractOperationsResolver } from './query/contract-operations.resolver';
-import { ContractOperationDetailsResolver } from './query/contract-operation-details.resolver';
-import { ContractOperationsLoader } from './dataloader/contract-operations.loader';
-import { ContractOperationTypeResolver } from './detail-resolver/contract-operation-type.resolver';
+import { ContractOperationsLoader } from './dataloader';
+import {
+  ContractOperationDetailsResolver,
+  ContractOperationResolver,
+  ContractOperationsResolver,
+} from './query';
+import { ContractOperationTypeResolver } from './detail-resolver';
 
-export default [
-  // Mutations
-  //
+export const ContractOperationGraphQLServices = [
+  // DataLoaders
+  ContractOperationsLoader,
 
   // Queries
   ContractOperationResolver,
@@ -15,7 +17,8 @@ export default [
 
   // OperationType Resolvers
   ContractOperationTypeResolver,
-
-  // DataLoaders
-  ContractOperationsLoader,
 ];
+
+export * from './dataloader';
+export * from './detail-resolver';
+export * from './dto';

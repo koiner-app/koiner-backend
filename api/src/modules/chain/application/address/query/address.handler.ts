@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Address, AddressReadRepository } from '@koiner/chain/domain';
-import { AddressQuery } from './index';
+import { AddressQuery } from '.';
 
 @QueryHandler(AddressQuery)
 export class AddressHandler implements IQueryHandler<AddressQuery> {

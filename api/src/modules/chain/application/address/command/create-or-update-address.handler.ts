@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { KoinosAddressId } from '@koiner/domain';
 import { Address, AddressWriteRepository } from '@koiner/chain/domain';
 import { CreateOrUpdateAddressCommand } from './dto/create-or-update-address.command';
-import { KoinosAddressId } from '@koiner/domain';
 
 @CommandHandler(CreateOrUpdateAddressCommand)
 export class CreateOrUpdateAddressHandler

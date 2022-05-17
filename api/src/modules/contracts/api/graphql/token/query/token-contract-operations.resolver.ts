@@ -1,9 +1,11 @@
 import { Args, Parent, ResolveField, Resolver } from '@nestjs/graphql';
 import { SelectionSet } from '@appvise/graphql';
-import { TokenContractNode } from '@koiner/contracts/api/graphql/token/dto/token-contract.node';
-import { TokenOperationsRequest } from '@koiner/contracts/api/graphql/token/dto/token-operations.request';
-import { TokenOperationsConnection } from '@koiner/contracts/api/graphql/token/dto/token-operations.connection';
 import { TokenOperationsResolver } from '@koiner/contracts/api/graphql/token/query/token-operations.resolver';
+import {
+  TokenContractNode,
+  TokenOperationsConnection,
+  TokenOperationsRequest,
+} from '../dto';
 
 @Resolver(() => TokenContractNode)
 export class TokenContractOperationsResolver {

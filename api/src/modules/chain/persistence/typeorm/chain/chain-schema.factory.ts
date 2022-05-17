@@ -3,9 +3,9 @@ import {
   EntitySchemaFactory,
   EntitySchemaProps,
 } from '@appvise/typeorm';
-import { Chain, ChainId, ChainProps } from '@koiner/chain/domain';
-import { ChainSchema } from './chain.schema';
 import { BlockTopology, KoinosId } from '@koiner/domain';
+import { Chain, ChainId, ChainProps } from '@koiner/chain/domain';
+import { ChainSchema } from '.';
 
 export class ChainSchemaFactory extends EntitySchemaFactory<
   Chain,

@@ -2,9 +2,8 @@ import { ArgsType, Field } from '@nestjs/graphql';
 import { Optional } from '@nestjs/common';
 import { SortDirection } from '@appvise/domain';
 import { SearchRequestArgs } from '@appvise/graphql';
-import { ContractsSortInput } from './contracts.sort.input';
+import { ContractsFilter, ContractsSortInput } from '.';
 import { ContractsSortFieldEnum } from './contracts.sort-field.enum';
-import { ContractsFilter } from './contracts.filter';
 
 @ArgsType()
 export class ContractsRequest extends SearchRequestArgs {
@@ -16,7 +15,7 @@ export class ContractsRequest extends SearchRequestArgs {
     nullable: true,
     defaultValue: [
       {
-        field: ContractsSortFieldEnum.blockHeight,
+        field: ContractsSortFieldEnum.createdAt,
         direction: SortDirection.desc,
       } as ContractsSortInput,
     ],

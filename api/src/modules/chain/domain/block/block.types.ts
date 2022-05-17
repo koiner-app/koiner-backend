@@ -1,4 +1,4 @@
-import { BlockHeader, BlockReceipt } from './index';
+import { BlockHeader, BlockReceipt } from '.';
 
 export interface CreateBlockProps {
   header: BlockHeader;

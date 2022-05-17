@@ -1,11 +1,10 @@
 import { Injectable, Scope } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import * as DataLoader from 'dataloader';
+import DataLoader from 'dataloader';
 import { SearchResponse } from '@appvise/domain';
-import { ContractsQuery } from '@koiner/contracts/application/contract/query';
 import { Contract } from '@koiner/contracts/domain';
-import { ContractsRequest } from '@koiner/contracts/api/graphql/contract/dto/contracts.request';
-import { ContractNode } from '../dto/contract.node';
+import { ContractsQuery } from '@koiner/contracts/application';
+import { ContractNode, ContractsRequest } from '../dto';
 
 @Injectable({ scope: Scope.REQUEST })
 export class ContractsLoader {

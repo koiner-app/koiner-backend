@@ -3,9 +3,9 @@ import {
   EntitySchemaFactory,
   EntitySchemaProps,
 } from '@appvise/typeorm';
-import { Address, AddressProps } from '@koiner/chain/domain';
-import { AddressSchema } from './address.schema';
 import { KoinosAddressId } from '@koiner/domain';
+import { Address, AddressProps } from '@koiner/chain/domain';
+import { AddressSchema } from '.';
 
 export class AddressSchemaFactory extends EntitySchemaFactory<
   Address,

@@ -2,12 +2,9 @@ import { Args, Query, Resolver } from '@nestjs/graphql';
 import { QueryBus } from '@nestjs/cqrs';
 import { SearchResponse } from '@appvise/domain';
 import { SelectionSet, ConnectionFactory } from '@appvise/graphql';
-
 import { Block } from '@koiner/chain/domain';
-import { BlocksQuery } from '@koiner/chain/application/block/query';
-import { BlocksRequest } from '../dto/blocks.request';
-import { BlocksConnection } from '../dto/blocks.connection';
-import { BlockNode } from '../dto/block.node';
+import { BlocksQuery } from '@koiner/chain/application';
+import { BlockNode, BlocksConnection, BlocksRequest } from '../dto';
 
 @Resolver(() => BlockNode)
 export class BlocksResolver {

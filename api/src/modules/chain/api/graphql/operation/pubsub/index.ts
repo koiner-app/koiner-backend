@@ -2,7 +2,7 @@ import { QueryBus } from '@nestjs/cqrs';
 import { PublishOperationCreatedEvent } from './publish-operation-created-event';
 import { PubSubEngine } from '@koiner/pubsub-engine';
 
-export default [
+export const OperationPubSubEventHandlers = [
   {
     provide: PublishOperationCreatedEvent,
     useFactory: (

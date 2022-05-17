@@ -1,7 +1,7 @@
 import { AggregateRoot } from '@appvise/domain';
 import { AddressCreated } from '@koiner/chain/domain';
-import { AddressProps, CreateAddressProps } from './address.types';
 import { KoinosAddressId } from '@koiner/domain';
+import { AddressProps, CreateAddressProps } from '.';
 
 export class Address extends AggregateRoot<AddressProps> {
   protected readonly _id: KoinosAddressId;

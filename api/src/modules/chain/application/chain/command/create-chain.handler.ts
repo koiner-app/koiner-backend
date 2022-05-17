@@ -13,9 +13,9 @@ export class CreateChainHandler implements ICommandHandler<CreateChainCommand> {
     const chain = Chain.create(
       {
         headTopology: new BlockTopology({
-          id: new KoinosId(command.headTopologyId),
-          height: command.headTopologyHeight,
-          previous: command.headTopologyPrevious,
+          id: new KoinosId(command.headTopology.id),
+          height: command.headTopology.height,
+          previous: command.headTopology.previous,
         }),
         lastIrreversibleBlock: command.lastIrreversibleBlock,
         lastSyncedBlock: command.lastSyncedBlock,

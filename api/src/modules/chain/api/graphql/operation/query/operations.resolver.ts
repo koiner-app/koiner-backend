@@ -2,12 +2,9 @@ import { Args, Query, Resolver } from '@nestjs/graphql';
 import { QueryBus } from '@nestjs/cqrs';
 import { SearchResponse } from '@appvise/domain';
 import { SelectionSet, ConnectionFactory } from '@appvise/graphql';
-
 import { Operation } from '@koiner/chain/domain';
-import { OperationsQuery } from '@koiner/chain/application/operation/query';
-import { OperationsRequest } from '../dto/operations.request';
-import { OperationsConnection } from '../dto/operations.connection';
-import { OperationNode } from '../dto/operation.node';
+import { OperationsQuery } from '@koiner/chain/application';
+import { OperationNode, OperationsConnection, OperationsRequest } from '../dto';
 
 @Resolver(() => OperationNode)
 export class OperationsResolver {

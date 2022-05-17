@@ -1,8 +1,7 @@
 import { AggregateRoot } from '@appvise/domain';
 import { ChainCreated, ChainId, UpdateChainProps } from '@koiner/chain/domain';
-import { ChainProps, CreateChainProps } from './chain.types';
 import { BlockTopology } from '@koiner/domain';
-import { ChainUpdated } from '@koiner/chain/domain/chain/event/chain-updated';
+import { ChainProps, CreateChainProps, ChainUpdated } from '.';
 
 export class Chain extends AggregateRoot<ChainProps> {
   protected readonly _id: ChainId;

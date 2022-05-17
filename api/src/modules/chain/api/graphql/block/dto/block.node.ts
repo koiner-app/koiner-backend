@@ -1,8 +1,8 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Block } from '@koiner/chain/domain';
 import { BaseNode } from '@appvise/graphql';
-import { BlockHeaderField } from '@koiner/chain/api/graphql/block/dto/block-header.field';
-import { TransactionsConnection } from '@koiner/chain/api/graphql/transaction/dto/transactions.connection';
+import { Block } from '@koiner/chain/domain';
+import { TransactionsConnection } from '@koiner/chain/api/graphql';
+import { BlockHeaderField, BlockReceiptField } from '.';
 
 @ObjectType('Block')
 export class BlockNode extends BaseNode {
@@ -11,6 +11,9 @@ export class BlockNode extends BaseNode {
 
   @Field()
   signature: string;
+
+  @Field(() => BlockReceiptField)
+  receipt: BlockReceiptField;
 
   @Field()
   transactionCount: number;

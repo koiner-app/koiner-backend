@@ -2,9 +2,8 @@ import { ArgsType, Field } from '@nestjs/graphql';
 import { Optional } from '@nestjs/common';
 import { SortDirection } from '@appvise/domain';
 import { SearchRequestArgs } from '@appvise/graphql';
-import { TokenOperationsSortInput } from './token-operations.sort.input';
+import { TokenOperationsFilter, TokenOperationsSortInput } from '.';
 import { TokenOperationsSortFieldEnum } from './token-operations.sort-field.enum';
-import { TokenOperationsFilter } from './token-operations.filter';
 
 @ArgsType()
 export class TokenOperationsRequest extends SearchRequestArgs {

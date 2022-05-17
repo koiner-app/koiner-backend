@@ -1,11 +1,11 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { UUID } from '@appvise/domain';
+import { KoinosAddressId } from '@koiner/domain';
 import {
   BlockReward,
   BlockRewardWriteRepository,
 } from '@koiner/contracts/domain';
 import { CreateBlockRewardCommand } from './dto/create-block-reward.command';
-import { KoinosAddressId } from '@koiner/domain';
-import { UUID } from '@appvise/domain';
 
 @CommandHandler(CreateBlockRewardCommand)
 export class CreateBlockRewardHandler

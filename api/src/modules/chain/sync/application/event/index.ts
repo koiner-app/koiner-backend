@@ -1,11 +1,11 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { provideEventHandler } from '@appvise/nestjs-utils';
 import { RawBlocksService } from '@koinos/raw-blocks.service';
+import { SyncEventsForNewTransaction } from './sync-events-for-new-transaction';
+import { SyncOperationsForNewTransaction } from './sync-operations-for-new-transaction';
 import { SyncTransactionsForNewBlock } from './sync-transactions-for-new-block';
-import { SyncOperationsForNewTransaction } from '@koiner/chain/sync/application/event/sync-operations-for-new-transaction';
-import { SyncEventsForNewTransaction } from '@koiner/chain/sync/application/event/sync-events-for-new-transaction';
 
-export default [
+export const ChainSyncEventHandlers = [
   provideEventHandler(SyncTransactionsForNewBlock),
 
   {

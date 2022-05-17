@@ -1,12 +1,12 @@
+import { UUID } from '@appvise/domain';
 import {
   EntityProps,
   EntitySchemaFactory,
   EntitySchemaProps,
 } from '@appvise/typeorm';
-import { Operation, OperationProps } from '@koiner/chain/domain';
-import { OperationSchema } from './operation.schema';
-import { UUID } from '@appvise/domain';
 import { KoinosId } from '@koiner/domain';
+import { Operation, OperationProps } from '@koiner/chain/domain';
+import { OperationSchema } from '.';
 
 export class OperationSchemaFactory extends EntitySchemaFactory<
   Operation,

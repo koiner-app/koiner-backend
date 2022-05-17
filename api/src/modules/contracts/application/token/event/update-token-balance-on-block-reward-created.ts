@@ -10,12 +10,12 @@ export class UpdateTokenBalanceOnBlockRewardCreated extends DomainEventHandler {
 
   async handle(event: BlockRewardCreated): Promise<void> {
     await this.commandBus.execute(
-      new UpdateTokenBalanceCommand(
-        event.producerId,
-        event.contractId,
-        event.value,
-        TokensOrigin.blockReward,
-      ),
+      new UpdateTokenBalanceCommand({
+        addressId: event.producerId,
+        contractId: event.contractId,
+        amountChanged: event.value,
+        tokensOrigin: TokensOrigin.blockReward,
+      }),
     );
   }
 }

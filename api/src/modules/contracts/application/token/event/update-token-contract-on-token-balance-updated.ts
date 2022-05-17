@@ -46,7 +46,11 @@ export class UpdateTokenContractOnTokenBalanceUpdated extends DomainEventHandler
 
     if (mintedTokens || Object.entries(stats).length) {
       await this.commandBus.execute(
-        new UpdateTokenContractCommand(event.contractId, mintedTokens, stats),
+        new UpdateTokenContractCommand({
+          contractId: event.contractId,
+          mintedTokens,
+          stats,
+        }),
       );
     }
   }

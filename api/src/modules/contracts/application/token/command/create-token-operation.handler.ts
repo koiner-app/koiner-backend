@@ -1,12 +1,12 @@
 import { CommandBus, CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { UUID } from '@appvise/domain';
+import { KoinosAddressId, KoinosId } from '@koiner/domain';
+import { CreateOrUpdateAddressCommand } from '@koiner/chain/application';
 import {
   TokenOperation,
   TokenOperationWriteRepository,
 } from '@koiner/contracts/domain';
 import { CreateTokenOperationCommand } from './dto/create-token-operation.command';
-import { KoinosAddressId, KoinosId } from '@koiner/domain';
-import { UUID } from '@appvise/domain';
-import { CreateOrUpdateAddressCommand } from '@koiner/chain/application/address/command';
 
 @CommandHandler(CreateTokenOperationCommand)
 export class CreateTokenOperationHandler
@@ -19,11 +19,17 @@ export class CreateTokenOperationHandler
 
   async execute(command: CreateTokenOperationCommand): Promise<void> {
     // Make sure addresses exist
-    await this.commandBus.execute(new CreateOrUpdateAddressCommand(command.to));
+    await this.commandBus.execute(
+      new CreateOrUpdateAddressCommand({
+        id: command.to,
+      }),
+    );
 
     if (command.from) {
       await this.commandBus.execute(
-        new CreateOrUpdateAddressCommand(command.from),
+        new CreateOrUpdateAddressCommand({
+          id: command.from,
+        }),
       );
     }
 

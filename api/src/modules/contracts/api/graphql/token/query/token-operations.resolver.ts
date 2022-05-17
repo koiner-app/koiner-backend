@@ -2,12 +2,13 @@ import { Args, Query, Resolver } from '@nestjs/graphql';
 import { QueryBus } from '@nestjs/cqrs';
 import { SearchResponse } from '@appvise/domain';
 import { SelectionSet, ConnectionFactory } from '@appvise/graphql';
-
 import { TokenOperation } from '@koiner/contracts/domain';
-import { TokenOperationNode } from '../dto/token-operation.node';
-import { TokenOperationsConnection } from '../dto/token-operations.connection';
-import { TokenOperationsRequest } from '../dto/token-operations.request';
-import { TokenOperationsQuery } from '@koiner/contracts/application/token/query';
+import { TokenOperationsQuery } from '@koiner/contracts/application';
+import {
+  TokenOperationNode,
+  TokenOperationsConnection,
+  TokenOperationsRequest,
+} from '../dto';
 
 @Resolver(() => TokenOperationNode)
 export class TokenOperationsResolver {

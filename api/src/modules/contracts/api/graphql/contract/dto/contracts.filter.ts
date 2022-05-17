@@ -7,12 +7,6 @@ export class ContractsFilter implements FilterType {
   @Field(() => StringFilterInput, { nullable: true })
   id?: StringFilterInput;
 
-  @Field(() => StringFilterInput, { nullable: true })
-  blockHeight?: StringFilterInput;
-
-  @Field(() => StringFilterInput, { nullable: true })
-  transactionId?: StringFilterInput;
-
   @Field(() => [ContractsFilter], {
     nullable: true,
   })

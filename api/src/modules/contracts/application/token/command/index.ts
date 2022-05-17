@@ -12,13 +12,11 @@ export { CreateTokenOperationCommand } from './dto/create-token-operation.comman
 export { UpdateTokenBalanceCommand } from './dto/update-token-balance.command';
 export { UpdateTokenContractCommand } from './dto/update-token-contract.command';
 
-export default {
-  handlers: [
-    CreateTokenContractHandler,
-    CreateBlockRewardHandler,
-    UpdateBlockRewardBalanceHandler,
-    CreateTokenOperationHandler,
-    UpdateTokenBalanceHandler,
-    UpdateTokenContractHandler,
-  ],
-};
+export const TokenCommandHandlers = [
+  CreateTokenContractHandler,
+  CreateBlockRewardHandler,
+  UpdateBlockRewardBalanceHandler,
+  CreateTokenOperationHandler,
+  UpdateTokenBalanceHandler,
+  UpdateTokenContractHandler,
+];

@@ -1,15 +1,15 @@
+import { Injectable } from '@nestjs/common';
+import { Logger } from '@appvise/domain';
+import { Contract, Provider, Signer } from 'koilib';
+import { Abi } from 'koilib/lib/interface';
 import {
   ContractStandard,
   ContractStandardReadRepository,
   ContractStandardType,
   ContractStandardWithValues,
 } from '@koiner/contracts/domain';
-import { Injectable } from '@nestjs/common';
-import { ContractStandardService } from '@koiner/contracts/application/contract-standard/service';
-import { Contract, Provider, Signer } from 'koilib';
-import { Abi } from 'koilib/lib/interface';
+import { ContractStandardService } from '@koiner/contracts/application';
 import { promiseWithTimeout } from '@koiner/contracts/infrastructure/utils';
-import { Logger } from '@appvise/domain';
 
 /**
  * TODO: Revisit this class to see if it can be simplified

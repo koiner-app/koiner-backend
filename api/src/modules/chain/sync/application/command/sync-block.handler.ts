@@ -1,7 +1,9 @@
 import { CommandBus, CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { CreateBlockCommand } from '@koiner/chain/application/block/command';
+import {
+  CreateOrUpdateAddressCommand,
+  CreateBlockCommand,
+} from '@koiner/chain/application';
 import { SyncBlockCommand } from './dto/sync-block.command';
-import { CreateOrUpdateAddressCommand } from '@koiner/chain/application/address/command';
 import { Logger } from '@appvise/domain';
 import { RawBlocksService } from '@koinos/raw-blocks.service';
 
@@ -24,7 +26,11 @@ export class SyncBlockHandler implements ICommandHandler<SyncBlockCommand> {
       this.logger.log(`Height: ${command.blockHeight}`, 'SyncBlockHandler');
 
       // Add address for signer
-      await this.commandBus.execute(new CreateOrUpdateAddressCommand(signer));
+      await this.commandBus.execute(
+        new CreateOrUpdateAddressCommand({
+          id: signer,
+        }),
+      );
 
       await this.commandBus.execute(
         new CreateBlockCommand({

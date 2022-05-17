@@ -6,6 +6,4 @@ export class ChainsQuery extends SearchQuery {}
 import { ChainHandler } from './chain.handler';
 import { ChainsHandler } from './chains.handler';
 
-export default {
-  handlers: [ChainHandler, ChainsHandler],
-};
+export const ChainQueryHandlers = [ChainHandler, ChainsHandler];

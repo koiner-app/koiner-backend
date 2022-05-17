@@ -1,15 +1,15 @@
+import { UUID } from '@appvise/domain';
 import {
   EntityProps,
   EntitySchemaFactory,
   EntitySchemaProps,
 } from '@appvise/typeorm';
+import { KoinosAddressId } from '@koiner/domain';
 import {
   UploadContractOperation,
   UploadContractOperationProps,
 } from '@koiner/chain/domain';
-import { UploadContractOperationSchema } from './upload-contract-operation.schema';
-import { UUID } from '@appvise/domain';
-import { KoinosAddressId } from '@koiner/domain';
+import { UploadContractOperationSchema } from '.';
 
 export class UploadContractOperationSchemaFactory extends EntitySchemaFactory<
   UploadContractOperation,

@@ -2,9 +2,8 @@ import { ArgsType, Field } from '@nestjs/graphql';
 import { Optional } from '@nestjs/common';
 import { SortDirection } from '@appvise/domain';
 import { SearchRequestArgs } from '@appvise/graphql';
-import { AddressesSortInput } from './addresses.sort.input';
+import { AddressesFilter, AddressesSortInput } from '.';
 import { AddressesSortFieldEnum } from './addresses.sort-field.enum';
-import { AddressesFilter } from './addresses.filter';
 
 @ArgsType()
 export class AddressesRequest extends SearchRequestArgs {

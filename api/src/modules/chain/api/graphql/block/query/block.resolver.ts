@@ -2,9 +2,9 @@ import { Args, ID, Query, Resolver } from '@nestjs/graphql';
 import { QueryBus } from '@nestjs/cqrs';
 import { SelectionSet } from '@appvise/graphql';
 import { SelectionSet as SelectionSetObject } from '@appvise/domain';
-import { BlockQuery } from '@koiner/chain/application/block/query';
-import { BlockNode } from '@koiner/chain/api/graphql/block/dto/block.node';
 import { Block } from '@koiner/chain/domain';
+import { BlockQuery } from '@koiner/chain/application';
+import { BlockNode } from '../dto';
 
 @Resolver(() => BlockNode)
 export class BlockResolver {

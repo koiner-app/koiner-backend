@@ -1,37 +1,22 @@
-import AddressCommands from './address/command';
-import AddressQueries from './address/query';
+import { AddressApplicationHandlers } from './address';
+import { BlockApplicationHandlers } from './block';
+import { ChainApplicationHandlers } from './chain';
+import { EventApplicationHandlers } from './event';
+import { OperationApplicationHandlers } from './operation';
+import { TransactionApplicationHandlers } from './transaction';
 
-import BlockCommands from './block/command';
-import BlockQueries from './block/query';
+export * from './address';
+export * from './block';
+export * from './chain';
+export * from './event';
+export * from './operation';
+export * from './transaction';
 
-import ChainCommands from './chain/command';
-import ChainQueries from './chain/query';
-
-import EventCommands from './event/command';
-import EventQueries from './event/query';
-
-import OperationCommands from './operation/command';
-import OperationQueries from './operation/query';
-
-import TransactionCommands from './transaction/command';
-import TransactionQueries from './transaction/query';
-
-export default [
-  ...AddressCommands.handlers,
-  ...AddressQueries.handlers,
-
-  ...BlockCommands.handlers,
-  ...BlockQueries.handlers,
-
-  ...ChainCommands.handlers,
-  ...ChainQueries.handlers,
-
-  ...EventCommands.handlers,
-  ...EventQueries.handlers,
-
-  ...OperationCommands.handlers,
-  ...OperationQueries.handlers,
-
-  ...TransactionCommands.handlers,
-  ...TransactionQueries.handlers,
+export const ChainModuleApplicationHandlers = [
+  ...AddressApplicationHandlers,
+  ...BlockApplicationHandlers,
+  ...ChainApplicationHandlers,
+  ...EventApplicationHandlers,
+  ...OperationApplicationHandlers,
+  ...TransactionApplicationHandlers,
 ];

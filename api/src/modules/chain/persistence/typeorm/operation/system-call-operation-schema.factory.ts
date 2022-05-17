@@ -1,15 +1,15 @@
+import { UUID } from '@appvise/domain';
 import {
   EntityProps,
   EntitySchemaFactory,
   EntitySchemaProps,
 } from '@appvise/typeorm';
+import { KoinosAddressId } from '@koiner/domain';
 import {
   SystemCallOperation,
   SystemCallOperationProps,
 } from '@koiner/chain/domain';
-import { SystemCallOperationSchema } from './system-call-operation.schema';
-import { UUID } from '@appvise/domain';
-import { KoinosAddressId } from '@koiner/domain';
+import { SystemCallOperationSchema } from '.';
 
 export class SystemCallOperationSchemaFactory extends EntitySchemaFactory<
   SystemCallOperation,

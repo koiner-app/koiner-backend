@@ -1,8 +1,10 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { DomainEventHandler } from '@appvise/domain';
 import { UploadContractOperationCreated } from '@koiner/chain/domain';
-import { CreateContractCommand } from '@koiner/contracts/application/contract/command';
-import { ContractStandardService } from '@koiner/contracts/application/contract-standard/service';
+import {
+  ContractStandardService,
+  CreateContractCommand,
+} from '@koiner/contracts/application';
 
 export class CreateContractForUploadedContract extends DomainEventHandler {
   constructor(
@@ -17,14 +19,14 @@ export class CreateContractForUploadedContract extends DomainEventHandler {
       await this.contractStandardRetriever.getForContract(event.contractId);
 
     await this.commandBus.execute(
-      new CreateContractCommand(
-        event.contractId,
-        event.bytecode,
-        event.abi,
-        contractStandardWithValues
+      new CreateContractCommand({
+        id: event.contractId,
+        bytecode: event.bytecode,
+        abi: event.abi,
+        contractStandardType: contractStandardWithValues
           ? contractStandardWithValues.contractStandard.type
           : undefined,
-      ),
+      }),
     );
   }
 }

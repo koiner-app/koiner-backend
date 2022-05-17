@@ -5,15 +5,13 @@ import {
   TokenContractTotalSupplyUpdated,
   UpdateTokenContractProps,
 } from '@koiner/contracts/domain';
+import { KoinosAddressId, KoinosId } from '@koiner/domain';
 import {
   TokenContractProps,
   CreateTokenContractProps,
-} from './token-contract.types';
-import { KoinosAddressId, KoinosId } from '@koiner/domain';
-import {
   TokenContractStatistics,
   UpdateTokenContractStatisticsProps,
-} from './token-contract-statistics';
+} from '.';
 
 export class TokenContract extends AggregateRoot<TokenContractProps> {
   protected readonly _id: KoinosId;

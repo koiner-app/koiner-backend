@@ -1,8 +1,10 @@
 import { CommandBus, CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { CreateTransactionCommand } from '@koiner/chain/application/transaction/command';
-import { SyncTransactionsCommand } from './dto/sync-transactions.command';
-import { CreateOrUpdateAddressCommand } from '@koiner/chain/application/address/command';
 import { Logger } from '@appvise/domain';
+import {
+  CreateOrUpdateAddressCommand,
+  CreateTransactionCommand,
+} from '@koiner/chain/application';
+import { SyncTransactionsCommand } from './dto/sync-transactions.command';
 import { RawBlocksService } from '@koinos/raw-blocks.service';
 
 @CommandHandler(SyncTransactionsCommand)
@@ -29,23 +31,27 @@ export class SyncTransactionsHandler
       const transactionId = transactionJson.id;
 
       // Create Address (if not already created)
-      await this.commandBus.execute(new CreateOrUpdateAddressCommand(payer));
+      await this.commandBus.execute(
+        new CreateOrUpdateAddressCommand({
+          id: payer,
+        }),
+      );
 
       // Create Transaction
       await this.commandBus.execute(
-        new CreateTransactionCommand(
-          transactionId,
-          command.blockHeight,
-          <string>transactionJson.header.rc_limit,
+        new CreateTransactionCommand({
+          id: transactionId,
+          blockHeight: command.blockHeight,
+          rcLimit: <string>transactionJson.header.rc_limit,
           payer,
-          transactionJson.signatures,
+          signature: transactionJson.signatures,
           transactionIndex,
-          Array.isArray(transactionJson.operations)
+          operationCount: Array.isArray(transactionJson.operations)
             ? transactionJson.operations.length
             : 0,
-          <string>transactionJson.header.nonce,
-          transactionJson.header.operation_merkle_root,
-        ),
+          nonce: <string>transactionJson.header.nonce,
+          operationMerkleRoot: transactionJson.header.operation_merkle_root,
+        }),
       );
     }
   }

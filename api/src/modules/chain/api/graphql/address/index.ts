@@ -1,12 +1,15 @@
-import { AddressResolver } from './queries';
-import { AddressesResolver } from './query/addresses.resolver';
-import { AddressTransactionsResolver } from './query/address-transactions.resolver';
-import { AddressCreatedSubscription } from './subscription/address-created.subscription';
-import AddressPubSubEventHandlers from './pubsub';
+import { AddressesLoader } from './dataloader';
+import {
+  AddressResolver,
+  AddressesResolver,
+  AddressTransactionsResolver,
+} from './query';
+import { AddressCreatedSubscription } from './subscription';
+import { AddressPubSubEventHandlers } from './pubsub';
 
-export default [
-  // Mutations
-  //
+export const AddressGraphQLServices = [
+  // DataLoaders
+  AddressesLoader,
 
   // Queries
   AddressResolver,
@@ -19,3 +22,6 @@ export default [
   // PubSub
   ...AddressPubSubEventHandlers,
 ];
+
+export * from './dataloader';
+export * from './dto';

@@ -1,15 +1,15 @@
+import { UUID } from '@appvise/domain';
 import {
   EntityProps,
   EntitySchemaFactory,
   EntitySchemaProps,
 } from '@appvise/typeorm';
+import { KoinosAddressId } from '@koiner/domain';
 import {
   BlockRewardBalance,
   BlockRewardBalanceProps,
 } from '@koiner/contracts/domain';
-import { BlockRewardBalanceSchema } from './block-reward-balance.schema';
-import { KoinosAddressId } from '@koiner/domain';
-import { UUID } from '@appvise/domain';
+import { BlockRewardBalanceSchema } from '.';
 
 export class BlockRewardBalanceSchemaFactory extends EntitySchemaFactory<
   BlockRewardBalance,

@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Chain, ChainReadRepository } from '@koiner/chain/domain';
-import { ChainQuery } from './index';
+import { ChainQuery } from '.';
 
 @QueryHandler(ChainQuery)
 export class ChainHandler implements IQueryHandler<ChainQuery> {

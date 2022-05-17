@@ -1,6 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { TokenContract } from '@koiner/contracts/domain';
 import { BaseNode } from '@appvise/graphql';
+import { TokenContract } from '@koiner/contracts/domain';
 
 @ObjectType('TokenContract')
 export class TokenContractNode extends BaseNode {

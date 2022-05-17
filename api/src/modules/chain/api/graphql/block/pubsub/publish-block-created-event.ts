@@ -2,7 +2,7 @@ import { DomainEventHandler } from '@appvise/domain';
 import { Block, BlockCreated } from '@koiner/chain/domain';
 import { PubSubEngine } from '@koiner/pubsub-engine';
 import { QueryBus } from '@nestjs/cqrs';
-import { BlockQuery } from '@koiner/chain/application/block/query';
+import { BlockQuery } from '@koiner/chain/application';
 import { BlockNode } from '@koiner/chain/api/graphql/block/dto/block.node';
 
 export class PublishBlockCreatedEvent extends DomainEventHandler {

@@ -1,4 +1,5 @@
-import { AggregateRoot, ConflictException, UUID } from '@appvise/domain';
+import { AggregateRoot, UUID } from '@appvise/domain';
+import { KoinosAddressId } from '@koiner/domain';
 import {
   CreateTokenBalanceProps,
   TokenBalanceCreated,
@@ -7,7 +8,6 @@ import {
   TokensOrigin,
   UpdateTokenBalanceProps,
 } from '.';
-import { KoinosAddressId } from '@koiner/domain';
 
 export class TokenBalance extends AggregateRoot<TokenBalanceProps> {
   protected readonly _id: KoinosAddressId;
@@ -53,7 +53,7 @@ export class TokenBalance extends AggregateRoot<TokenBalanceProps> {
 
     if (this.props.balance < 0) {
       // TODO: Add custom exception
-      throw new ConflictException('Balance cannot be lower than 0');
+      // throw new ConflictException('Balance cannot be lower than 0');
     }
 
     this.addEvent(

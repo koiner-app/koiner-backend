@@ -1,5 +1,5 @@
 import { OperationNode } from '../dto/operation.node';
-import { OperationDetailsUnion } from '../dto/operation-details.union';
+import { OperationDetailsUnion } from '../dto';
 
 export interface OperationTypeResolver {
   supports(operation: OperationNode): Promise<boolean>;

@@ -3,13 +3,13 @@ import {
   EntitySchemaFactory,
   EntitySchemaProps,
 } from '@appvise/typeorm';
+import { KoinosAddressId } from '@koiner/domain';
 import {
   TokenContract,
   TokenContractProps,
   TokenContractStatistics,
 } from '@koiner/contracts/domain';
-import { TokenContractSchema } from './token-contract.schema';
-import { KoinosAddressId } from '@koiner/domain';
+import { TokenContractSchema } from '.';
 
 export class TokenContractSchemaFactory extends EntitySchemaFactory<
   TokenContract,

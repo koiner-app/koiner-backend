@@ -1,13 +1,15 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { DomainEventHandler } from '@appvise/domain';
-import { AfterBlockCreated } from '@koiner/chain/domain';
-import { RawBlocksService } from '@koinos/raw-blocks.service';
-import { ContractStandardType } from '@koiner/contracts/domain';
 import { Provider, utils } from 'koilib';
-import { ContractStandardService } from '@koiner/contracts/application/contract-standard/service';
+import { RawBlocksService } from '@koinos/raw-blocks.service';
+import { AfterBlockCreated } from '@koiner/chain/domain';
+import { CreateOrUpdateAddressCommand } from '@koiner/chain/application';
+import { ContractStandardType } from '@koiner/contracts/domain';
+import {
+  CreateBlockRewardCommand,
+  ContractStandardService,
+} from '@koiner/contracts/application';
 import { koinos } from '@config';
-import { CreateOrUpdateAddressCommand } from '@koiner/chain/application/address/command';
-import { CreateBlockRewardCommand } from '@koiner/contracts/application/token/command';
 
 export class CreateBlockRewardForNewBlock extends DomainEventHandler {
   constructor(
@@ -42,16 +44,19 @@ export class CreateBlockRewardForNewBlock extends DomainEventHandler {
 
         // Add address for block producer
         await this.commandBus.execute(
-          new CreateOrUpdateAddressCommand(blockProducerId, true),
+          new CreateOrUpdateAddressCommand({
+            id: blockProducerId,
+            producedBlock: true,
+          }),
         );
 
         await this.commandBus.execute(
-          new CreateBlockRewardCommand(
-            event.height,
-            blockProducerId,
-            producerRewards,
-            koinos.koinContractId,
-          ),
+          new CreateBlockRewardCommand({
+            blockHeight: event.height,
+            producerId: blockProducerId,
+            value: producerRewards,
+            contractId: koinos.koinContractId,
+          }),
         );
       }
     }

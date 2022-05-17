@@ -2,9 +2,8 @@ import { ArgsType, Field } from '@nestjs/graphql';
 import { Optional } from '@nestjs/common';
 import { SortDirection } from '@appvise/domain';
 import { SearchRequestArgs } from '@appvise/graphql';
-import { TransactionsSortInput } from '@koiner/chain/api/graphql/transaction/dto/transactions.sort.input';
-import { TransactionsSortFieldEnum } from '@koiner/chain/api/graphql/transaction/dto/transactions.sort-field.enum';
-import { TransactionsFilter } from '@koiner/chain/api/graphql/transaction/dto/transactions.filter';
+import { TransactionsFilter, TransactionsSortInput } from '.';
+import { TransactionsSortFieldEnum } from './transactions.sort-field.enum';
 
 @ArgsType()
 export class TransactionsRequest extends SearchRequestArgs {

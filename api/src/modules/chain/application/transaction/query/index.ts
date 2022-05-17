@@ -6,6 +6,7 @@ export class TransactionsQuery extends SearchQuery {}
 import { TransactionHandler } from './transaction.handler';
 import { TransactionsHandler } from './transactions.handler';
 
-export default {
-  handlers: [TransactionHandler, TransactionsHandler],
-};
+export const TransactionQueryHandlers = [
+  TransactionHandler,
+  TransactionsHandler,
+];

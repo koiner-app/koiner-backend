@@ -4,7 +4,7 @@ import { ConsumeMessage } from 'amqplib';
 import { Serializer } from 'koilib';
 import { broadcastDescriptors } from '@koiner/chain/sync/proto/broadcast-descriptors';
 import { CommandBus } from '@nestjs/cqrs';
-import { SyncBlockCommand } from '@koiner/chain/sync/application/command/dto/sync-block.command';
+import { SyncBlockCommand } from '@koiner/chain/sync/application';
 
 @Injectable()
 export class BlockAcceptedHandler {

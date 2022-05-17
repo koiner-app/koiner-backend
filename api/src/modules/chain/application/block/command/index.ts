@@ -1,7 +1,5 @@
 import { CreateBlockHandler } from './create-block.handler';
 
-export { CreateBlockCommand } from './create-block.command';
+export { CreateBlockCommand } from './dto/create-block.command';
 
-export default {
-  handlers: [CreateBlockHandler],
-};
+export const BlockCommandHandlers = [CreateBlockHandler];

@@ -3,15 +3,16 @@ import {
   ArgumentOutOfRangeException,
   Guard,
 } from '@appvise/domain';
+import { KoinosId } from '@koiner/domain';
 import {
   AfterBlockCreated,
   BlockCreated,
+  BlockHeader,
+  BlockProps,
   BlockReceipt,
   BlockWithTransactionsCreated,
-} from '@koiner/chain/domain';
-import { BlockProps, CreateBlockProps } from './block.types';
-import { KoinosId } from '@koiner/domain';
-import { BlockHeader } from '@koiner/chain/domain';
+  CreateBlockProps,
+} from '.';
 
 export class Block extends AggregateRoot<BlockProps> {
   protected readonly _id: KoinosId;

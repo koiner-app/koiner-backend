@@ -2,7 +2,7 @@ import { QueryBus } from '@nestjs/cqrs';
 import { PublishAddressCreatedEvent } from './publish-address-created-event';
 import { PubSubEngine } from '@koiner/pubsub-engine';
 
-export default [
+export const AddressPubSubEventHandlers = [
   {
     provide: PublishAddressCreatedEvent,
     useFactory: (

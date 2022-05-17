@@ -1,10 +1,12 @@
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { DomainEventHandler } from '@appvise/domain';
-import { OperationCreated, OperationType } from '@koiner/chain/domain';
-import { CreateContractOperationCommand } from '@koiner/contracts/application/operation/command';
 import { RawBlocksService } from '@koinos/raw-blocks.service';
-import { ContractQuery } from '@koiner/contracts/application/contract/query';
+import { OperationCreated, OperationType } from '@koiner/chain/domain';
 import { Contract } from '@koiner/contracts/domain';
+import {
+  ContractQuery,
+  CreateContractOperationCommand,
+} from '@koiner/contracts/application';
 
 export class CreateContractOperationForNewOperation extends DomainEventHandler {
   constructor(
@@ -35,14 +37,14 @@ export class CreateContractOperationForNewOperation extends DomainEventHandler {
       } catch {}
 
       await this.commandBus.execute(
-        new CreateContractOperationCommand(
-          event.aggregateId,
+        new CreateContractOperationCommand({
+          id: event.aggregateId,
           contractId,
-          event.transactionId,
-          rawOperation.call_contract.entry_point,
-          rawOperation.call_contract.args,
+          transactionId: event.transactionId,
+          entryPoint: rawOperation.call_contract.entry_point,
+          args: rawOperation.call_contract.args,
           contractStandardType,
-        ),
+        }),
       );
     }
   }

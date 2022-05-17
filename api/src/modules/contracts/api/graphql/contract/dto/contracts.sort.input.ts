@@ -1,6 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { SortFieldInput } from '@appvise/graphql';
-import { ContractsSortFieldEnum } from './contracts.sort-field.enum';
+import { ContractsSortFieldEnum } from '.';
 
 @InputType()
 export class ContractsSortInput extends SortFieldInput {

@@ -1,12 +1,16 @@
+import { TokenOperationsLoader } from './dataloader';
 import {
   TokenContractResolver,
+  TokenContractsResolver,
   TokenOperationResolver,
-} from './query/node-queries';
-import { TokenContractsResolver } from './query/token-contracts.resolver';
-import { TokenContractOperationsResolver } from './query/token-contract-operations.resolver';
-import { TokenOperationsResolver } from './query/token-operations.resolver';
+  TokenOperationsResolver,
+  TokenContractOperationsResolver,
+} from './query';
 
-export default [
+export const TokenGraphQLServices = [
+  // DataLoader
+  TokenOperationsLoader,
+
   // Queries
   TokenContractResolver,
   TokenContractsResolver,
@@ -16,3 +20,6 @@ export default [
   // FieldResolvers
   TokenContractOperationsResolver,
 ];
+
+export * from './dataloader';
+export * from './dto';

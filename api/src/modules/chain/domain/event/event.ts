@@ -1,7 +1,7 @@
 import { AggregateRoot, UUID } from '@appvise/domain';
-import { EventProps, CreateEventProps } from './event.types';
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
 import { EventCreated } from '@koiner/chain/domain';
+import { EventProps, CreateEventProps } from '.';
 
 export class Event extends AggregateRoot<EventProps> {
   protected readonly _id: KoinosId;

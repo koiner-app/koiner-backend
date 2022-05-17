@@ -1,9 +1,9 @@
-import { DomainEventHandler } from '@appvise/domain';
-import { Operation, OperationCreated } from '@koiner/chain/domain';
-import { PubSubEngine } from '@koiner/pubsub-engine';
 import { QueryBus } from '@nestjs/cqrs';
-import { OperationQuery } from '@koiner/chain/application/operation/query';
-import { OperationNode } from '@koiner/chain/api/graphql/operation/dto/operation.node';
+import { DomainEventHandler } from '@appvise/domain';
+import { PubSubEngine } from '@koiner/pubsub-engine';
+import { Operation, OperationCreated } from '@koiner/chain/domain';
+import { OperationQuery } from '@koiner/chain/application';
+import { OperationNode } from '../dto';
 
 export class PublishOperationCreatedEvent extends DomainEventHandler {
   constructor(
