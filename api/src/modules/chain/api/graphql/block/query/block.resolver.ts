@@ -12,11 +12,11 @@ export class BlockResolver {
 
   @Query(() => BlockNode, { name: 'block' })
   async execute(
-    @Args({ name: 'height', type: () => ID }) id: number,
+    @Args({ name: 'height', type: () => ID }) height: number,
     @SelectionSet() selectionSet: SelectionSetObject,
   ): Promise<BlockNode> {
     const entity = await this.queryBus.execute<BlockQuery, Block>(
-      new BlockQuery(id, selectionSet),
+      new BlockQuery(height, selectionSet),
     );
 
     return new BlockNode(entity);
