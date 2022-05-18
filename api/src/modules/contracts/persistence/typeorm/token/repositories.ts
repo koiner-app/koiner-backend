@@ -18,6 +18,7 @@ import {
   TokenOperationWriteRepository,
 } from '@koiner/contracts/domain';
 import {
+  BlockRewardReadTypeormRepository,
   BlockRewardBalanceSchema,
   BlockRewardBalanceSchemaFactory,
   BlockRewardBalanceWriteTypeormRepository,
@@ -60,11 +61,10 @@ const tokenOperationSchemaFactory = new TokenOperationSchemaFactory(
 
 export const TokenRepositories: Provider[] = [
   // BlockReward
-  TypeormRepositoryProvider.provide(
-    BlockRewardReadRepository,
-    BlockRewardSchema,
-    blockRewardSchemaFactory,
-  ),
+  {
+    provide: BlockRewardReadRepository,
+    useClass: BlockRewardReadTypeormRepository,
+  },
   TypeormRepositoryProvider.provide(
     BlockRewardWriteRepository,
     BlockRewardSchema,

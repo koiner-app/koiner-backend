@@ -22,13 +22,13 @@ export class TokenOperationNode extends BaseNode {
   // Used by UnionTypeResolver
   contractStandardType: ContractStandardType = ContractStandardType.token;
 
-  constructor(entity: TokenOperation) {
-    super(entity);
+  constructor(tokenOperation: TokenOperation) {
+    super(tokenOperation);
 
-    this.transactionId = entity.transactionId.value;
-    this.name = entity.name;
-    this.from = entity.from ? entity.from.value : undefined;
-    this.to = entity.to.value;
-    this.value = entity.value;
+    this.transactionId = tokenOperation.transactionId.value;
+    this.name = tokenOperation.name;
+    this.from = tokenOperation.from ? tokenOperation.from.value : undefined;
+    this.to = tokenOperation.to.value;
+    this.value = tokenOperation.value;
   }
 }

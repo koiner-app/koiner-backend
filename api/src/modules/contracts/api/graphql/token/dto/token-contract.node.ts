@@ -13,11 +13,11 @@ export class TokenContractNode extends BaseNode {
   @Field()
   decimals: number;
 
-  constructor(entity: TokenContract) {
-    super(entity);
+  constructor(tokenContract: TokenContract) {
+    super(tokenContract);
 
-    this.name = entity.name;
-    this.symbol = entity.symbol;
-    this.decimals = entity.decimals;
+    this.name = tokenContract.name;
+    this.symbol = tokenContract.symbol;
+    this.decimals = tokenContract.decimals;
   }
 }

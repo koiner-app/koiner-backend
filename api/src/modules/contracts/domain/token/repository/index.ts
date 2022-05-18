@@ -7,7 +7,17 @@ import {
   TokenOperation,
 } from '..';
 
-export abstract class BlockRewardReadRepository extends ReadRepository<BlockReward> {}
+export abstract class BlockRewardReadRepository extends ReadRepository<BlockReward> {
+  abstract findOneByHeight(
+    height: number,
+    selectionSet?: SelectionSet,
+  ): Promise<BlockReward | undefined>;
+
+  abstract findOneByHeightOrThrow(
+    height: number,
+    selectionSet?: SelectionSet,
+  ): Promise<BlockReward>;
+}
 export abstract class BlockRewardWriteRepository extends WriteRepository<BlockReward> {}
 export abstract class BlockRewardBalanceReadRepository extends ReadRepository<BlockRewardBalance> {}
 export abstract class BlockRewardBalanceWriteRepository extends WriteRepository<BlockRewardBalance> {

@@ -20,6 +20,8 @@ export class TokenOperationResolver extends NodeQuery(
   'tokenOperation',
 ) {}
 
+export * from './block-reward.resolver';
+export * from './block-rewards.resolver';
 export * from './token-contract-operations.resolver';
 export * from './token-contracts.resolver';
 export * from './token-operations.resolver';

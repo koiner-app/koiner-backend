@@ -13,6 +13,7 @@ import { ContractsModels, ContractsRepositories } from './persistence/typeorm';
 import {
   ContractsModuleGraphQLServices,
   ContractOperationTypeResolver,
+  BlockRewardsLoader,
 } from './api/graphql';
 
 // Register our models with typeorm
@@ -41,6 +42,10 @@ database.entities.push(...ContractsModels);
     },
     ...ContractsModuleGraphQLServices,
   ],
-  exports: [ContractStandardService, ContractOperationTypeResolver],
+  exports: [
+    BlockRewardsLoader,
+    ContractStandardService,
+    ContractOperationTypeResolver,
+  ],
 })
 export class ContractsModule {}
