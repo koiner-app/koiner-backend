@@ -10,12 +10,12 @@ export * from './contract';
 export * from './operation';
 export * from './token';
 
-export const ContractsModuleModels = [
+export const ContractsModels = [
   ...ContractModels,
   ...ContractOperationModels,
   ...TokenModels,
 ];
-export const ContractsModuleRepositories: Provider[] = [
+export const ContractsRepositories: Provider[] = [
   ...ContractRepositories,
   ...ContractOperationRepositories,
   ...TokenRepositories,

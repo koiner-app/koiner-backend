@@ -9,10 +9,7 @@ import {
   ContractStandardService,
   ContractsApplicationHandlers,
 } from './application';
-import {
-  ContractsModuleModels,
-  ContractsModuleRepositories,
-} from './persistence/typeorm';
+import { ContractsModels, ContractsRepositories } from './persistence/typeorm';
 import {
   ContractsModuleGraphQLServices,
   ContractOperationTypeResolver,
@@ -20,12 +17,12 @@ import {
 
 // Register our models with typeorm
 import { database } from '@config';
-database.entities.push(...ContractsModuleModels);
+database.entities.push(...ContractsModels);
 
 @Module({
   imports: [
     CqrsModule,
-    TypeOrmModule.forFeature(ContractsModuleModels),
+    TypeOrmModule.forFeature(ContractsModels),
     KoinosModule,
   ],
   providers: [
@@ -37,7 +34,7 @@ database.entities.push(...ContractsModuleModels);
     },
 
     ...ContractsApplicationHandlers,
-    ...ContractsModuleRepositories,
+    ...ContractsRepositories,
     {
       provide: ContractStandardReadRepository,
       useClass: ContractStandardImReadRepository,

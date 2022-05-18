@@ -1,6 +1,6 @@
 import { EntityBaseSchema } from '@appvise/typeorm';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
-import { OperationType } from '@koiner/chain/domain/operation/operation.types';
+import { OperationType } from '@koiner/chain/domain';
 import { TransactionSchema } from '..';
 
 @Entity('chain_operation')

@@ -1,8 +1,11 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { DomainEventHandler } from '@appvise/domain';
-import { TokenBalanceUpdated, TokensOrigin } from '@koiner/contracts/domain';
+import {
+  TokenBalanceUpdated,
+  TokensOrigin,
+  UpdateTokenContractStatisticsProps,
+} from '@koiner/contracts/domain';
 import { UpdateTokenContractCommand } from '../command';
-import { UpdateTokenContractStatisticsProps } from '@koiner/contracts/domain/token/token-contract-statistics';
 
 export class UpdateTokenContractOnTokenBalanceUpdated extends DomainEventHandler {
   constructor(private readonly commandBus: CommandBus) {

@@ -1,6 +1,6 @@
 import { Injectable, Scope } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import DataLoader from 'dataloader';
+import * as DataLoader from 'dataloader';
 import { SearchResponse } from '@appvise/domain';
 import { Block } from '@koiner/chain/domain';
 import { BlocksQuery } from '@koiner/chain/application';
