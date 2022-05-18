@@ -1,3 +1,7 @@
-import ChainResolvers from './chain';
+import { BlockIntegrationGraphQLServices } from './block';
+import { ChainIntegrationGraphQLServices } from './chain';
 
-export default [...ChainResolvers];
+export default [
+  ...BlockIntegrationGraphQLServices,
+  ...ChainIntegrationGraphQLServices,
+];
