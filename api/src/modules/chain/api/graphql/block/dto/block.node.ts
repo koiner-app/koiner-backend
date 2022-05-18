@@ -26,6 +26,7 @@ export class BlockNode extends BaseNode {
 
     this.header = new BlockHeaderField(entity.header);
     this.signature = entity.signature;
+    this.receipt = new BlockReceiptField(entity.receipt);
     this.transactionCount = entity.transactionCount;
   }
 }
