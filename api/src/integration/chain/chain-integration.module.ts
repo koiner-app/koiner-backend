@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import GraphQLResolvers from '@koiner/integration/chain/graphql';
+import { ChainIntegrationGraphqlServices } from '@koiner/integration/chain/graphql';
 import { ChainModule } from '@koiner/chain/chain.module';
 import { ContractsModule } from '@koiner/contracts/contracts.module';
 import { SystemCallOperationTypeResolver } from '@koiner/chain/api/graphql/operation/detail-resolver/system-call-operation-type.resolver';
@@ -11,7 +11,7 @@ import { ContractOperationTypeResolver } from '@koiner/contracts/api/graphql/ope
 @Module({
   imports: [CqrsModule, ChainModule, ContractsModule],
   providers: [
-    ...GraphQLResolvers,
+    ...ChainIntegrationGraphqlServices,
 
     // OperationType Resolvers
     {

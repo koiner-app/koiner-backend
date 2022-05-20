@@ -9,8 +9,10 @@ import {
 export class BlockRewardResolver {
   constructor(private blockRewardsLoader: BlockRewardsLoader) {}
 
-  @ResolveField('reward', () => BlockRewardNode)
-  async reward(@Parent() block: BlockNode): Promise<BlockRewardNode> {
+  @ResolveField('reward', () => BlockRewardNode, { nullable: true })
+  async reward(
+    @Parent() block: BlockNode,
+  ): Promise<BlockRewardNode | undefined> {
     return this.blockRewardsLoader.batch.load(block.header.height.toString());
   }
 }

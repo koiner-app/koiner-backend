@@ -1,7 +1,9 @@
+import { AddressIntegrationGraphQLServices } from './address';
 import { BlockIntegrationGraphQLServices } from './block';
-import { ChainIntegrationGraphQLServices } from './chain';
+import { OperationIntegrationGraphQLServices } from './operation';
 
-export default [
+export const ChainIntegrationGraphqlServices = [
+  ...AddressIntegrationGraphQLServices,
   ...BlockIntegrationGraphQLServices,
-  ...ChainIntegrationGraphQLServices,
+  ...OperationIntegrationGraphQLServices,
 ];
