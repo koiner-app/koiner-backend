@@ -20,12 +20,12 @@ export class OperationNode extends BaseNode {
   @Field(() => OperationDetailsUnion, { nullable: true })
   details: typeof OperationDetailsUnion;
 
-  constructor(entity: Operation) {
-    super(entity);
+  constructor(operation: Operation) {
+    super(operation);
 
-    this.index = entity.operationIndex;
-    this.type = entity.type;
-    this.blockHeight = entity.blockHeight;
-    this.transactionId = entity.transactionId.value;
+    this.index = operation.operationIndex;
+    this.type = operation.type;
+    this.blockHeight = operation.blockHeight;
+    this.transactionId = operation.transactionId.value;
   }
 }

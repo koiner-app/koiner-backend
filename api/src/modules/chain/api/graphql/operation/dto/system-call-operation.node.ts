@@ -13,10 +13,10 @@ export class SystemCallOperationNode extends BaseNode {
   // Used by UnionTypeResolver
   type: OperationType = OperationType.systemCall;
 
-  constructor(entity: SystemCallOperation) {
-    super(entity);
+  constructor(operation: SystemCallOperation) {
+    super(operation);
 
-    this.contractId = entity.contractId.value;
-    this.callId = entity.callId;
+    this.contractId = operation.contractId.value;
+    this.callId = operation.callId;
   }
 }

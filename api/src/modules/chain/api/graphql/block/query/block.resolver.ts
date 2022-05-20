@@ -15,10 +15,10 @@ export class BlockResolver {
     @Args({ name: 'height', type: () => ID }) height: number,
     @SelectionSet() selectionSet: SelectionSetObject,
   ): Promise<BlockNode> {
-    const entity = await this.queryBus.execute<BlockQuery, Block>(
+    const block = await this.queryBus.execute<BlockQuery, Block>(
       new BlockQuery(height, selectionSet),
     );
 
-    return new BlockNode(entity);
+    return new BlockNode(block);
   }
 }

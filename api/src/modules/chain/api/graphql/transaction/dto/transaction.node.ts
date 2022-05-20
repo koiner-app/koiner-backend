@@ -24,16 +24,16 @@ export class TransactionNode extends BaseNode {
   @Field()
   index: number;
 
-  constructor(entity: Transaction) {
-    super(entity);
+  constructor(transaction: Transaction) {
+    super(transaction);
 
-    this.blockHeight = entity.blockHeight;
-    this.header = new TransactionHeaderField(entity.header);
-    this.signature = entity.signature;
-    this.operations = entity.operations
-      ? entity.operations.map((operation) => new OperationNode(operation))
+    this.blockHeight = transaction.blockHeight;
+    this.header = new TransactionHeaderField(transaction.header);
+    this.signature = transaction.signature;
+    this.operations = transaction.operations
+      ? transaction.operations.map((operation) => new OperationNode(operation))
       : [];
-    this.operationCount = entity.operationCount;
-    this.index = entity.index;
+    this.operationCount = transaction.operationCount;
+    this.index = transaction.index;
   }
 }

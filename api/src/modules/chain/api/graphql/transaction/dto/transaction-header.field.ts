@@ -15,10 +15,10 @@ export class TransactionHeaderField {
   @Field()
   payer: string;
 
-  constructor(entity: TransactionHeader) {
-    this.rcLimit = entity.rcLimit;
-    this.nonce = entity.nonce;
-    this.operationMerkleRoot = entity.operationMerkleRoot;
-    this.payer = entity.payer;
+  constructor(transactionHeader: TransactionHeader) {
+    this.rcLimit = transactionHeader.rcLimit;
+    this.nonce = transactionHeader.nonce;
+    this.operationMerkleRoot = transactionHeader.operationMerkleRoot;
+    this.payer = transactionHeader.payer;
   }
 }

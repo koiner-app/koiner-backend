@@ -7,9 +7,9 @@ export class AddressNode extends BaseNode {
   @Field()
   isProducer: boolean;
 
-  constructor(entity: Address) {
-    super(entity);
+  constructor(address: Address) {
+    super(address);
 
-    this.isProducer = entity.isProducer;
+    this.isProducer = address.isProducer;
   }
 }

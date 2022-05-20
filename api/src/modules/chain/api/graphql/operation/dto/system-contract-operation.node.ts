@@ -13,10 +13,10 @@ export class SystemContractOperationNode extends BaseNode {
   // Used by UnionTypeResolver
   type: OperationType = OperationType.systemContract;
 
-  constructor(entity: SystemContractOperation) {
-    super(entity);
+  constructor(operation: SystemContractOperation) {
+    super(operation);
 
-    this.contractId = entity.contractId.value;
-    this.systemContract = entity.systemContract;
+    this.contractId = operation.contractId.value;
+    this.systemContract = operation.systemContract;
   }
 }

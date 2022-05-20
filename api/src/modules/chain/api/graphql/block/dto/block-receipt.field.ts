@@ -15,10 +15,10 @@ export class BlockReceiptField {
   @Field()
   eventCount: number;
 
-  constructor(entity: BlockReceipt) {
-    this.diskStorageUsed = entity.diskStorageUsed;
-    this.networkBandwidthUsed = entity.networkBandwidthUsed;
-    this.computeBandwidthUsed = entity.computeBandwidthUsed;
-    this.eventCount = entity.eventCount;
+  constructor(blockReceipt: BlockReceipt) {
+    this.diskStorageUsed = blockReceipt.diskStorageUsed;
+    this.networkBandwidthUsed = blockReceipt.networkBandwidthUsed;
+    this.computeBandwidthUsed = blockReceipt.computeBandwidthUsed;
+    this.eventCount = blockReceipt.eventCount;
   }
 }

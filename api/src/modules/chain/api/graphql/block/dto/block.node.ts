@@ -21,12 +21,12 @@ export class BlockNode extends BaseNode {
   @Field(() => TransactionsConnection)
   transactions: TransactionsConnection;
 
-  constructor(entity: Block) {
-    super(entity);
+  constructor(blockHeader: Block) {
+    super(blockHeader);
 
-    this.header = new BlockHeaderField(entity.header);
-    this.signature = entity.signature;
-    this.receipt = new BlockReceiptField(entity.receipt);
-    this.transactionCount = entity.transactionCount;
+    this.header = new BlockHeaderField(blockHeader.header);
+    this.signature = blockHeader.signature;
+    this.receipt = new BlockReceiptField(blockHeader.receipt);
+    this.transactionCount = blockHeader.transactionCount;
   }
 }

@@ -21,12 +21,12 @@ export class BlockHeaderField {
   @Field()
   signer: string;
 
-  constructor(entity: BlockHeader) {
-    this.height = entity.height;
-    this.timestamp = entity.timestamp;
-    this.previous = entity.previous;
-    this.previousStateMerkleRoot = entity.previousStateMerkleRoot;
-    this.transactionMerkleRoot = entity.transactionMerkleRoot;
-    this.signer = entity.signer;
+  constructor(block: BlockHeader) {
+    this.height = block.height;
+    this.timestamp = block.timestamp;
+    this.previous = block.previous;
+    this.previousStateMerkleRoot = block.previousStateMerkleRoot;
+    this.transactionMerkleRoot = block.transactionMerkleRoot;
+    this.signer = block.signer;
   }
 }

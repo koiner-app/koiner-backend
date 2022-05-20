@@ -16,11 +16,11 @@ export class UploadContractOperationNode extends BaseNode {
   // Used by UnionTypeResolver
   type: OperationType = OperationType.uploadContract;
 
-  constructor(entity: UploadContractOperation) {
-    super(entity);
+  constructor(operation: UploadContractOperation) {
+    super(operation);
 
-    this.contractId = entity.contractId.value;
-    this.bytecode = entity.bytecode;
-    this.abi = entity.abi;
+    this.contractId = operation.contractId.value;
+    this.bytecode = operation.bytecode;
+    this.abi = operation.abi;
   }
 }
