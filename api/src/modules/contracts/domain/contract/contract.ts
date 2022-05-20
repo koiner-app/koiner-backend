@@ -1,6 +1,7 @@
 import { AggregateRoot } from '@appvise/domain';
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
 import { ContractCreated, ContractProps, CreateContractProps } from '.';
+import { ContractStandardType } from '@koiner/contracts/domain';
 
 export class Contract extends AggregateRoot<ContractProps> {
   protected readonly _id: KoinosId;
@@ -30,7 +31,7 @@ export class Contract extends AggregateRoot<ContractProps> {
     return this.props.abi;
   }
 
-  get contractStandardType(): string | undefined {
+  get contractStandardType(): ContractStandardType | undefined {
     return this.props.contractStandardType;
   }
 
