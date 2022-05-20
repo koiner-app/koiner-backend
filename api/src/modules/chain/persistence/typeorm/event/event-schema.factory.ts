@@ -22,7 +22,7 @@ export class EventSchemaFactory extends EntitySchemaFactory<
         ? new KoinosAddressId(entitySchema.contract_id)
         : undefined,
       name: entitySchema.name,
-      data: entitySchema.data,
+      data: (entitySchema.data as unknown as Uint8Array).toString(),
       impacted: entitySchema.impacted
         ? entitySchema.impacted.map((impacted) => new KoinosAddressId(impacted))
         : undefined,
