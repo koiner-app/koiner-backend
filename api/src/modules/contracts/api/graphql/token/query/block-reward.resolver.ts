@@ -15,10 +15,11 @@ export class BlockRewardResolver {
     @Args({ name: 'height', type: () => ID }) height: number,
     @SelectionSet() selectionSet: SelectionSetObject,
   ): Promise<BlockRewardNode> {
-    const entity = await this.queryBus.execute<BlockRewardQuery, BlockReward>(
-      new BlockRewardQuery(height, selectionSet),
-    );
+    const blockReward = await this.queryBus.execute<
+      BlockRewardQuery,
+      BlockReward
+    >(new BlockRewardQuery(height, selectionSet));
 
-    return new BlockRewardNode(entity);
+    return new BlockRewardNode(blockReward);
   }
 }

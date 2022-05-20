@@ -10,10 +10,10 @@ export class ContractNode extends BaseNode {
   @Field(() => ContractStandardType, { nullable: true })
   contractStandardType: ContractStandardType;
 
-  constructor(entity: Contract) {
-    super(entity);
+  constructor(contract: Contract) {
+    super(contract);
 
-    this.abi = entity.abi;
-    this.contractStandardType = entity.contractStandardType;
+    this.abi = contract.abi;
+    this.contractStandardType = contract.contractStandardType;
   }
 }
