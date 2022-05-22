@@ -1,12 +1,6 @@
 import { TypeormRepositoryProvider } from '@appvise/typeorm';
 import { Provider } from '@nestjs/common';
 import {
-  BlockReward,
-  BlockRewardBalance,
-  BlockRewardBalanceReadRepository,
-  BlockRewardBalanceWriteRepository,
-  BlockRewardReadRepository,
-  BlockRewardWriteRepository,
   TokenBalance,
   TokenBalanceReadRepository,
   TokenBalanceWriteRepository,
@@ -18,12 +12,6 @@ import {
   TokenOperationWriteRepository,
 } from '@koiner/contracts/domain';
 import {
-  BlockRewardReadTypeormRepository,
-  BlockRewardBalanceSchema,
-  BlockRewardBalanceSchemaFactory,
-  BlockRewardBalanceWriteTypeormRepository,
-  BlockRewardSchema,
-  BlockRewardSchemaFactory,
   TokenBalanceSchema,
   TokenBalanceSchemaFactory,
   TokenBalanceWriteTypeormRepository,
@@ -34,16 +22,6 @@ import {
 } from '.';
 
 // Factories
-const blockRewardSchemaFactory = new BlockRewardSchemaFactory(
-  BlockReward,
-  BlockRewardSchema,
-);
-
-const blockRewardBalanceSchemaFactory = new BlockRewardBalanceSchemaFactory(
-  BlockRewardBalance,
-  BlockRewardBalanceSchema,
-);
-
 const tokenBalanceSchemaFactory = new TokenBalanceSchemaFactory(
   TokenBalance,
   TokenBalanceSchema,
@@ -60,29 +38,6 @@ const tokenOperationSchemaFactory = new TokenOperationSchemaFactory(
 );
 
 export const TokenRepositories: Provider[] = [
-  // BlockReward
-  {
-    provide: BlockRewardReadRepository,
-    useClass: BlockRewardReadTypeormRepository,
-  },
-  TypeormRepositoryProvider.provide(
-    BlockRewardWriteRepository,
-    BlockRewardSchema,
-    blockRewardSchemaFactory,
-    false,
-  ),
-
-  // BlockRewardBalance
-  TypeormRepositoryProvider.provide(
-    BlockRewardBalanceReadRepository,
-    BlockRewardBalanceSchema,
-    blockRewardBalanceSchemaFactory,
-  ),
-  {
-    provide: BlockRewardBalanceWriteRepository,
-    useClass: BlockRewardBalanceWriteTypeormRepository,
-  },
-
   // TokenBalance
   TypeormRepositoryProvider.provide(
     TokenBalanceReadRepository,

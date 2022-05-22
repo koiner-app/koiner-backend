@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { EntityBaseSchema } from '@appvise/typeorm';
 import { AddressSchema, BlockSchema } from '@koiner/chain/persistence/typeorm';
-import { TokenContractSchema } from '.';
+import { TokenContractSchema } from '../token';
 
 @Entity('contracts_block_reward')
 export class BlockRewardSchema extends EntityBaseSchema {

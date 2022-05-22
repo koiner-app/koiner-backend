@@ -1,4 +1,5 @@
 import { Provider } from '@nestjs/common';
+import { BlockRewardModels, BlockRewardRepositories } from './block-reward';
 import { ContractModels, ContractRepositories } from './contract';
 import {
   ContractOperationModels,
@@ -11,11 +12,13 @@ export * from './operation';
 export * from './token';
 
 export const ContractsModels = [
+  ...BlockRewardModels,
   ...ContractModels,
   ...ContractOperationModels,
   ...TokenModels,
 ];
 export const ContractsRepositories: Provider[] = [
+  ...BlockRewardRepositories,
   ...ContractRepositories,
   ...ContractOperationRepositories,
   ...TokenRepositories,

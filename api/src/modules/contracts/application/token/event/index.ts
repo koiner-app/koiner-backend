@@ -1,6 +1,5 @@
 import { CreateTokenContractOnContractCreated } from './create-token-contract-on-contract-created';
 import { CreateTokenOperationOnOperationCreated } from './create-token-operation-on-operation-created';
-import { UpdateBlockRewardBalanceOnBlockRewardCreated } from './update-block-reward-balance-on-block-reward-created';
 import { UpdateTokenBalanceOnBlockRewardCreated } from './update-token-balance-on-block-reward-created';
 import { UpdateTokenBalancesOnOperationCreated } from './update-token-balances-on-operation-created';
 import { UpdateTokenContractOnTokenBalanceCreated } from './update-token-contract-on-token-balance-created';
@@ -12,7 +11,6 @@ import { ContractStandardService } from '@koiner/contracts/application/contract-
 
 export const TokenEventHandlers = [
   ...provideEventHandlers([
-    UpdateBlockRewardBalanceOnBlockRewardCreated,
     UpdateTokenBalanceOnBlockRewardCreated,
     UpdateTokenBalancesOnOperationCreated,
     UpdateTokenContractOnTokenBalanceCreated,
