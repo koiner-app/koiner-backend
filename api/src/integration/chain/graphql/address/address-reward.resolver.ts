@@ -5,9 +5,9 @@ import { QueryBus } from '@nestjs/cqrs';
 import { AddressNode } from '@koiner/chain/api/graphql/address/dto/address.node';
 import { BlockReward } from '@koiner/contracts/domain';
 import { BlockRewardsQuery } from '@koiner/contracts/application';
-import { BlockRewardsRequest } from '@koiner/contracts/api/graphql/token/dto/block-rewards.request';
-import { BlockRewardsConnection } from '@koiner/contracts/api/graphql/token/dto/block-rewards.connection';
-import { BlockRewardNode } from '@koiner/contracts/api/graphql/token/dto/block-reward.node';
+import { BlockRewardsRequest } from '@koiner/contracts/api/graphql/block-reward/dto/block-rewards.request';
+import { BlockRewardsConnection } from '@koiner/contracts/api/graphql/block-reward/dto/block-rewards.connection';
+import { BlockRewardNode } from '@koiner/contracts/api/graphql/block-reward/dto/block-reward.node';
 
 @Resolver(() => AddressNode)
 export class AddressBlockRewardsFieldResolver {
