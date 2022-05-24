@@ -33,6 +33,7 @@ export class TokenOperationResolver extends NodeQuery(
 ) {}
 
 export * from './token-balances.resolver';
+export * from './token-balance-contract.resolver';
 export * from './token-contract-balances.resolver';
 export * from './token-contract-operations.resolver';
 export * from './token-contracts.resolver';

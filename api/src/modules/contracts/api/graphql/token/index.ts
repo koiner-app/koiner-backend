@@ -1,5 +1,6 @@
-import { TokenOperationsLoader } from './dataloader';
+import { TokenContractsLoader, TokenOperationsLoader } from './dataloader';
 import {
+  TokenBalanceContractResolver,
   TokenBalanceResolver,
   TokenBalancesResolver,
   TokenContractResolver,
@@ -12,6 +13,7 @@ import {
 
 export const TokenGraphQLServices = [
   // DataLoader
+  TokenContractsLoader,
   TokenOperationsLoader,
 
   // Queries
@@ -23,6 +25,7 @@ export const TokenGraphQLServices = [
   TokenOperationsResolver,
 
   // FieldResolvers
+  TokenBalanceContractResolver,
   TokenContractBalancesResolver,
   TokenContractOperationsResolver,
 ];
