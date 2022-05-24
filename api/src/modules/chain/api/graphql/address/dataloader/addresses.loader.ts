@@ -13,6 +13,7 @@ export class AddressesLoader {
   public readonly batch = new DataLoader(
     async (addressIds: readonly string[]) => {
       const request = new AddressesRequest();
+      request.first = 1000;
       request.filter = {
         OR: addressIds.map((addressId) => {
           return { id: { equals: addressId } };

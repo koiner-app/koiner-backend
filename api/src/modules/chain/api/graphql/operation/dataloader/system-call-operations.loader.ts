@@ -13,6 +13,7 @@ export class SystemCallOperationsLoader {
 
   public readonly batch = new DataLoader(async (operationIds: string[]) => {
     const request = new OperationsRequest();
+    request.first = 1000;
     request.filter = {
       OR: operationIds.map((operationId) => {
         return { id: { equals: operationId } };

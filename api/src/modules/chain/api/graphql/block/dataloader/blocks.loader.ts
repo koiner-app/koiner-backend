@@ -13,6 +13,7 @@ export class BlocksLoader {
   public readonly batch = new DataLoader(
     async (blockIds: readonly string[]) => {
       const request = new BlocksRequest();
+      request.first = 1000;
       request.filter = {
         OR: blockIds.map((blockId) => {
           return { id: { equals: blockId } };

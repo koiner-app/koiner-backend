@@ -2,17 +2,17 @@ import { Injectable, Scope } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import * as DataLoader from 'dataloader';
 import { SearchResponse } from '@appvise/domain';
-import { OperationsRequest } from '@koiner/chain/api/graphql';
 import { BlockReward } from '@koiner/contracts/domain';
 import { BlockRewardsQuery } from '@koiner/contracts/application';
-import { BlockRewardNode } from '../dto/block-reward.node';
+import { BlockRewardNode, BlockRewardsRequest } from '../dto';
 
 @Injectable({ scope: Scope.REQUEST })
 export class BlockRewardsLoader {
   constructor(private readonly queryBus: QueryBus) {}
 
   public readonly batch = new DataLoader(async (blockHeights: string[]) => {
-    const request = new OperationsRequest();
+    const request = new BlockRewardsRequest();
+    request.first = 1000;
     request.filter = {
       OR: blockHeights.map((blockHeight) => {
         return { blockHeight: { equals: parseInt(blockHeight) } };

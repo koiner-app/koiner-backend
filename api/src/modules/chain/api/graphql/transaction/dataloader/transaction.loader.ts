@@ -13,6 +13,7 @@ export class TransactionsLoader {
   public readonly batch = new DataLoader(
     async (transactionIds: readonly string[]) => {
       const request = new TransactionsRequest();
+      request.first = 1000;
       request.filter = {
         OR: transactionIds.map((transactionId) => {
           return { id: { equals: transactionId } };

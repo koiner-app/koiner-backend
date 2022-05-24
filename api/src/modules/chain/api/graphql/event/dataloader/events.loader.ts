@@ -13,6 +13,7 @@ export class EventsLoader {
   public readonly batch = new DataLoader(
     async (eventIds: readonly string[]) => {
       const request = new EventsRequest();
+      request.first = 1000;
       request.filter = {
         OR: eventIds.map((eventId) => {
           return { id: { equals: eventId } };

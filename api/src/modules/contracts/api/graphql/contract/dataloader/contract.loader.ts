@@ -12,6 +12,7 @@ export class ContractsLoader {
 
   public readonly batch = new DataLoader(async (contractIds: string[]) => {
     const request = new ContractsRequest();
+    request.first = 1000;
     request.filter = {
       OR: contractIds.map((contractId) => {
         return { id: { equals: contractId } };
