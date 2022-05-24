@@ -7,12 +7,12 @@ import {
 
 @Resolver(() => BlockNode)
 export class BlockRewardResolver {
-  constructor(private blockRewardsLoader: BlockRewardsLoader) {}
+  constructor(private loader: BlockRewardsLoader) {}
 
   @ResolveField('reward', () => BlockRewardNode, { nullable: true })
   async reward(
     @Parent() block: BlockNode,
   ): Promise<BlockRewardNode | undefined> {
-    return this.blockRewardsLoader.batch.load(block.header.height.toString());
+    return this.loader.batch.load(block.header.height.toString());
   }
 }
