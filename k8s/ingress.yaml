@@ -1,0 +1,55 @@
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  labels:
+    app.kubernetes.io/component: controller
+  name: nginx
+  annotations:
+    ingressclass.kubernetes.io/is-default-class: "true"
+spec:
+  controller: k8s.io/ingress-nginx
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: koiner-ingress
+  namespace: koiner
+  annotations:
+    cert-manager.io/cluster-issuer: "cert-manager-webhook-dnsimple-production"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - api.dev.koiner.app
+      secretName: api-dev-koiner-tls
+    - hosts:
+        - jsonrpc.dev.koiner.app
+      secretName: jsonrpc-dev-koiner-tls
+  defaultBackend:
+    service:
+      name: koiner-api
+      port:
+        number: 8000
+  rules:
+    - host: api.dev.koiner.app
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: koiner-api
+                port:
+                  number: 8000
+    - host: jsonrpc.dev.koiner.app
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: jsonrpc-tcp
+                port:
+                  number: 80
