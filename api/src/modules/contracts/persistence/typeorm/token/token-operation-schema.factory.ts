@@ -42,7 +42,7 @@ export class TokenOperationSchemaFactory extends EntitySchemaFactory<
       name: props.name,
       from: props.from ? props.from.value : undefined,
       to: props.to.value,
-      value: props.value.toString(),
+      value: String(props.value).padStart(20, '0'),
     };
   }
 }

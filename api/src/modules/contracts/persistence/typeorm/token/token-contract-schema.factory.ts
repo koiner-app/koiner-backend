@@ -45,7 +45,7 @@ export class TokenContractSchemaFactory extends EntitySchemaFactory<
       name: props.name,
       symbol: props.symbol,
       decimals: props.decimals,
-      total_supply: props.totalSupply.toString(),
+      total_supply: String(props.totalSupply).padStart(20, '0'),
       holder_count: props.stats.holderCount,
       operation_count: props.stats.operationCount,
       mint_count: props.stats.mintCount,

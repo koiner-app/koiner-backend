@@ -34,7 +34,7 @@ export class TokenBalanceSchemaFactory extends EntitySchemaFactory<
     return {
       contract_id: props.contractId.value,
       address_id: props.addressId.value,
-      balance: props.balance.toString(),
+      balance: String(props.balance).padStart(20, '0'),
     };
   }
 }
