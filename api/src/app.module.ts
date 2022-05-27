@@ -12,6 +12,7 @@ import { ContractsModule } from '@koiner/contracts/contracts.module';
 import { ChainIntegrationModule } from '@koiner/integration/chain/chain-integration.module';
 import { ChainSyncModule } from '@koiner/chain/sync/chain-sync.module';
 import { ContractsSyncModule } from '@koiner/contracts/sync/contracts-sync.module';
+import { HealthCheckController } from '@koiner/health-check.controller';
 
 if (process.env.APP_ENV !== 'prod') {
   console.log('Known entity types:');
@@ -51,5 +52,6 @@ if (process.env.APP_ENV !== 'prod') {
     ChainSyncModule,
     ContractsSyncModule,
   ],
+  controllers: [HealthCheckController],
 })
 export class AppModule {}
