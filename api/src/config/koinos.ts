@@ -2,7 +2,7 @@ export const koinos = {
   chainId:
     process.env.KOINOS_CHAIN_ID ??
     'QmeehjqATVaC4ReXxwbw4DQLbEdEAo8SmTBVzZz8s5ZV5F',
-  rpcNodes: process.env.KOINOS_RPC ?? ['http://api.koinos.io:8080'],
+  rpcNodes: process.env.KOINOS_RPC ?? ['https://jsonrpc.dev.koiner.app'],
   signerSeed: process.env.KOINOS_SIGNER_SEED ?? 'seed',
   koinContractId:
     process.env.KOIN_CONTRACT_ID ?? '19JntSm8pSNETT9aHTwAUHC5RMoaSmgZPJ',
