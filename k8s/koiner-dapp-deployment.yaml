@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: koiner-dapp
+  name: koiner-dapp
+  namespace: koiner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: koiner-dapp
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        service: koiner-dapp
+    spec:
+      containers:
+        - name: koiner-dapp
+          image: elimbatido/koiner-dapp:v0.1.2
+          env:
+            - name: NODE_ENV
+              value: "production"
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /#/health
+              port: 80
+          imagePullPolicy: Always
+      serviceAccountName: default

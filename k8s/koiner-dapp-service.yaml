@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: koiner-dapp
+  name: koiner-dapp
+  namespace: koiner
+spec:
+  ports:
+    - name: "8000"
+      port: 8000
+      targetPort: 80
+  selector:
+    service: koiner-dapp
+  type: LoadBalancer

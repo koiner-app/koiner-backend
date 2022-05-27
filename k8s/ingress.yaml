@@ -16,24 +16,27 @@ kind: Ingress
 metadata:
   name: koiner-ingress
   namespace: koiner
-  annotations:
-    cert-manager.io/cluster-issuer: "cert-manager-webhook-dnsimple-production"
+#  annotations:
+#    cert-manager.io/cluster-issuer: "cert-manager-webhook-dnsimple-production"
 spec:
   ingressClassName: nginx
-  tls:
-    - hosts:
-        - api.dev.koiner.app
-      secretName: api-dev-koiner-tls
-    - hosts:
-        - jsonrpc.dev.koiner.app
-      secretName: jsonrpc-dev-koiner-tls
+#  tls:
+#    - hosts:
+#        - api.dev.koiner.app
+#      secretName: api-dev-koiner-tls
+#    - hosts:
+#        - dev.koiner.app
+#      secretName: dev-koiner-tls
+#    - hosts:
+#        - jsonrpc.dev.koiner.app
+#      secretName: jsonrpc-dev-koiner-tls
   defaultBackend:
     service:
       name: koiner-api
       port:
         number: 8000
   rules:
-    - host: api.dev.koiner.app
+    - # host: api.dev.koiner.app
       http:
         paths:
           - pathType: Prefix
@@ -43,7 +46,17 @@ spec:
                 name: koiner-api
                 port:
                   number: 8000
-    - host: jsonrpc.dev.koiner.app
+    - # host: dev.koiner.app
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: koiner-dapp
+                port:
+                  number: 8000
+    - # host: jsonrpc.dev.koiner.app
       http:
         paths:
           - pathType: Prefix
