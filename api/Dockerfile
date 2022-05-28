@@ -1,17 +1,16 @@
 FROM node:lts-alpine AS BASEIMAGE
 
-WORKDIR /src
-COPY package*.json ./
+COPY . /app
+WORKDIR /app
 RUN npm ci
-COPY . .
 RUN npm run prebuild && npm run build && npm prune --production
 
 FROM node:lts-alpine
 
-WORKDIR /src
+WORKDIR /app
 # ENV TZ=Europe/Amsterdam
-COPY --from=BASEIMAGE /src/dist /src/dist
-COPY --from=BASEIMAGE /src/node_modules /src/node_modules
+COPY --from=BASEIMAGE /app/dist /app/dist
+COPY --from=BASEIMAGE /app/node_modules /app/node_modules
 EXPOSE 3000
 
 CMD ["node", "dist/src/main.js"]
