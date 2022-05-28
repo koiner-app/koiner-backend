@@ -30,8 +30,8 @@ services:
       - 3010:5000
     environment:
       - KOINOS_CHAIN_ID=QmeehjqATVaC4ReXxwbw4DQLbEdEAo8SmTBVzZz8s5ZV5F
-      - KOINOS_RPC=[http://localhost:8080]
-      - KOINOS_SIGNER_SEED
+      - KOINOS_RPC=['http://jsonrpc:8080']
+      - KOINOS_SIGNER_SEED=EdLl^v3zaUAf%TeY^Fe5Dm%FeXweQ$h7L$yhhlZ5Ta8P2f0E^^CV!7u%mH01
       - KOIN_CONTRACT_ID=19JntSm8pSNETT9aHTwAUHC5RMoaSmgZPJ
       - BATCH_SIZE=100
       - SYNC_SECRET=AHOY!
@@ -48,6 +48,7 @@ services:
       - RABBITMQ_USER=guest
       - RABBITMQ_PASSWORD=guest
       - RABBITMQ_HOST=amqp:5672
+      - DEBUG=
 
   postgres:
     image: postgres
@@ -142,7 +143,7 @@ services:
 
   jsonrpc:
     image: koinos/koinos-jsonrpc:${JSONRPC_TAG:-latest}
-    profiles: ["jsonrpc", "all"]
+    # profiles: ["jsonrpc", "all"]
     depends_on:
       - amqp
       - config
@@ -181,4 +182,3 @@ networks:
 volumes:
   letsencrypt-certs:
   pgdata:
-  pgadmin-data:
