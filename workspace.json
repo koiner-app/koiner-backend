@@ -5,6 +5,7 @@
     "chain-api": "apps/chain-api",
     "chain-application": "libs/chain/application",
     "chain-domain": "libs/chain/domain",
+    "chain-sync": "apps/chain-sync",
     "chain-typeorm": "libs/chain/typeorm",
     "contracts-api": "apps/contracts-api",
     "contracts-application": "libs/contracts/application",
