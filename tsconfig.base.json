@@ -1,0 +1,38 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@koiner/chain/api/graphql": ["apps/chain-api/src/app/index.ts"],
+      "@koiner/chain/api/graphql/*": ["apps/chain-api/src/app/*"],
+      "@koiner/chain/application": ["libs/chain/application/src/index.ts"],
+      "@koiner/chain/domain": ["libs/chain/domain/src/index.ts"],
+      "@koiner/chain/typeorm": ["libs/chain/typeorm/src/index.ts"],
+      "@koiner/contracts/api/graphql": ["apps/contracts-api/src/app/index.ts"],
+      "@koiner/contracts/api/graphql/*": ["apps/contracts-api/src/app/*"],
+      "@koiner/contracts/application": [
+        "libs/contracts/application/src/index.ts"
+      ],
+      "@koiner/contracts/domain": ["libs/contracts/domain/src/index.ts"],
+      "@koiner/contracts/koilib": ["libs/contracts/koilib/src/index.ts"],
+      "@koiner/contracts/typeorm": ["libs/contracts/typeorm/src/index.ts"],
+      "@koiner/domain": ["libs/domain/src/index.ts"],
+      "@koiner/jsonrpc": ["libs/jsonrpc/src/index.ts"],
+      "@koiner/nest-utils": ["libs/nest-utils/src/index.ts"],
+      "@koiner/nestjs-utils": ["libs/nestjs-utils/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

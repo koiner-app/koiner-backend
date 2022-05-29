@@ -6,49 +6,49 @@ services:
     image: nginxproxy/nginx-proxy:alpine
     restart: on-failure
     ports:
-      - 80:80
+      - "80:80"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     networks:
       - webproxy
 
-  api:
-    build:
-      context: api
-    command: npm run start:dev
-    depends_on:
-      - postgres
-    volumes:
-      - ./api:/app
-      - ./logs:/var/logs
-    networks:
-      - webproxy
-      - default
-    dns:
-      - 8.8.8.8
-    ports:
-      - 3010:5000
-    environment:
-      - KOINOS_CHAIN_ID=QmeehjqATVaC4ReXxwbw4DQLbEdEAo8SmTBVzZz8s5ZV5F
-      - KOINOS_RPC=['https://jsonrpc.dev.koiner.app']
-      - KOINOS_SIGNER_SEED=EdLl^v3zaUAf%TeY^Fe5Dm%FeXweQ$h7L$yhhlZ5Ta8P2f0E^^CV!7u%mH01
-      - KOIN_CONTRACT_ID=19JntSm8pSNETT9aHTwAUHC5RMoaSmgZPJ
-      - BATCH_SIZE=100
-      - SYNC_SECRET=AHOY!
-      - PORT=5000
-      - VIRTUAL_PORT=5000
-      - VIRTUAL_HOST=api.docker
-      - DB_TYPE=${DB_TYPE}
-      - DB_HOST=${DB_HOST}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_NAME=${DB_NAME}
-      - DB_PORT=${DB_PORT}
-      - POSTGRES_SYNC=false
-      - RABBITMQ_USER=guest
-      - RABBITMQ_PASSWORD=guest
-      - RABBITMQ_HOST=amqp:5672
-      - DEBUG=
+#  api:
+#    build:
+#      context: "services/api"
+#    command: npm run start:dev
+#    depends_on:
+#      - postgres
+#    volumes:
+#      - ./services/api:/app
+#      - ./logs:/var/logs
+#    networks:
+#      - webproxy
+#      - default
+#    dns:
+#      - 8.8.8.8
+#    ports:
+#      - 3010:5000
+#    environment:
+#      - KOINOS_CHAIN_ID=QmeehjqATVaC4ReXxwbw4DQLbEdEAo8SmTBVzZz8s5ZV5F
+#      - KOINOS_RPC=['https://jsonrpc.dev.koiner.app']
+#      - KOINOS_SIGNER_SEED=EdLl^v3zaUAf%TeY^Fe5Dm%FeXweQ$h7L$yhhlZ5Ta8P2f0E^^CV!7u%mH01
+#      - KOIN_CONTRACT_ID=19JntSm8pSNETT9aHTwAUHC5RMoaSmgZPJ
+#      - BATCH_SIZE=100
+#      - SYNC_SECRET=AHOY!
+#      - PORT=5000
+#      - VIRTUAL_PORT=5000
+#      - VIRTUAL_HOST=api.docker
+#      - DB_TYPE=${DB_TYPE}
+#      - DB_HOST=${DB_HOST}
+#      - DB_USER=${DB_USER}
+#      - DB_PASSWORD=${DB_PASSWORD}
+#      - DB_NAME=${DB_NAME}
+#      - DB_PORT=${DB_PORT}
+#      - POSTGRES_SYNC=false
+#      - RABBITMQ_USER=guest
+#      - RABBITMQ_PASSWORD=guest
+#      - RABBITMQ_HOST=amqp:5672
+#      - DEBUG=
 
   postgres:
     image: postgres
@@ -57,7 +57,7 @@ services:
       - default
       - webproxy
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
@@ -66,7 +66,7 @@ services:
       - VIRTUAL_HOST=pg.docker
     container_name: postgres-db
     volumes:
-      - ./pgdata:/var/lib/postgresql/data
+      - ./data/pgdata:/var/lib/postgresql/data
 
   #
   # Koinos

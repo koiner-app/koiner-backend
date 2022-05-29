@@ -1,0 +1,20 @@
+{
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json",
+  "version": 2,
+  "projects": {
+    "chain-api": "apps/chain-api",
+    "chain-application": "libs/chain/application",
+    "chain-domain": "libs/chain/domain",
+    "chain-typeorm": "libs/chain/typeorm",
+    "contracts-api": "apps/contracts-api",
+    "contracts-application": "libs/contracts/application",
+    "contracts-domain": "libs/contracts/domain",
+    "contracts-koilib": "libs/contracts/koilib",
+    "contracts-typeorm": "libs/contracts/typeorm",
+    "gateway": "apps/gateway",
+    "graphql-subscriptions": "apps/graphql-subscriptions",
+    "jsonrpc": "libs/jsonrpc",
+    "koiner-domain": "libs/domain",
+    "nestjs-utils": "libs/nestjs-utils"
+  }
+}

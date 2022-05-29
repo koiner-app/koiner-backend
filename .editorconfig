@@ -1,15 +1,13 @@
-# 2d0e4a3f-ac19-430c-bf1b-46c68651ce21
+# Editor configuration, see http://editorconfig.org
 root = true
 
 [*]
-end_of_line = lf
-insert_final_newline = true
 charset = utf-8
-indent_size = 2
 indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
 
-[*.{php,html}]
-indent_size = 4
-
-[Makefile*]
-indent_style = tab
+[*.md]
+max_line_length = off
+trim_trailing_whitespace = false
