@@ -31,5 +31,5 @@
       }
     ]
   },
-  "defaultProject": "graphql-subscriptions"
+  "defaultProject": "graphql-gateway"
 }
