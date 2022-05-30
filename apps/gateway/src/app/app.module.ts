@@ -3,7 +3,7 @@ import { IntrospectAndCompose } from '@apollo/gateway';
 import { ApolloGatewayDriver, ApolloGatewayDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 
-import { HealthController } from './health.controller';
+import { GlobalAppModule } from '@koiner/nestjs-utils';
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import { HealthController } from './health.controller';
         }),
       },
     }),
+    GlobalAppModule,
   ],
-  controllers: [HealthController],
 })
 export class AppModule {}

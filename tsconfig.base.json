@@ -30,7 +30,6 @@
       "@koiner/contracts/typeorm": ["libs/contracts/typeorm/src/index.ts"],
       "@koiner/domain": ["libs/domain/src/index.ts"],
       "@koiner/jsonrpc": ["libs/jsonrpc/src/index.ts"],
-      "@koiner/nest-utils": ["libs/nest-utils/src/index.ts"],
       "@koiner/nestjs-utils": ["libs/nestjs-utils/src/index.ts"]
     }
   },

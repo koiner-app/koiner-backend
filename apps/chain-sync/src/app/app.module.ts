@@ -2,10 +2,9 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
 
-import { GlobalAppModule } from './global.module';
+import { GlobalAppModule } from '@koiner/nestjs-utils';
 import { ChainModule } from './chain.module';
 import { ChainSyncModule } from './chain-sync.module';
-import { HealthController } from './health.controller';
 
 import * as config from '../config';
 
@@ -17,6 +16,5 @@ import * as config from '../config';
     ChainModule,
     ChainSyncModule,
   ],
-  controllers: [HealthController],
 })
 export class AppModule {}

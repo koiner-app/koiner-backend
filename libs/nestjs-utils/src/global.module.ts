@@ -1,6 +1,7 @@
 import { Global, Module } from '@nestjs/common';
 import { Logger } from '@appvise/domain';
-import { NestLogger } from '@koiner/nestjs-utils';
+import { NestLogger } from './nest-logger';
+import { HealthController } from './health.controller';
 
 @Global()
 @Module({
@@ -12,5 +13,6 @@ import { NestLogger } from '@koiner/nestjs-utils';
     },
   ],
   exports: [Logger, NestLogger],
+  controllers: [HealthController],
 })
 export class GlobalAppModule {}

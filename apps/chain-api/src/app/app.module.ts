@@ -6,9 +6,8 @@ import {
   ApolloFederationDriverConfig,
 } from '@nestjs/apollo';
 
-import { GlobalAppModule } from '../global.module';
+import { GlobalAppModule } from '@koiner/nestjs-utils';
 import { ChainModule } from './chain.module';
-import { HealthController } from './health.controller';
 
 import * as config from '../config';
 
@@ -22,6 +21,5 @@ import * as config from '../config';
     GlobalAppModule,
     ChainModule,
   ],
-  controllers: [HealthController],
 })
 export class AppModule {}
