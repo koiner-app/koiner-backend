@@ -1,7 +1,7 @@
 import { Logger, Module } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
 import { CqrsModule } from '@nestjs/cqrs';
-import { KoinosModule, RawBlocksService } from '@koiner/jsonrpc';
+import { KoinosModule, RawBlocksService } from '@koinos/jsonrpc';
 import { ChainSyncApplicationHandlers } from './application';
 import { BlockAcceptedHandler } from './event/block-accepted.handler';
 import { SyncController } from './sync.controller';

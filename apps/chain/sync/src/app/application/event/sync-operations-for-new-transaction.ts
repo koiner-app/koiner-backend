@@ -1,6 +1,6 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { DomainEventHandler } from '@appvise/domain';
-import { RawBlocksService } from '@koiner/jsonrpc';
+import { RawBlocksService } from '@koinos/jsonrpc';
 import { OperationType, TransactionCreated } from '@koiner/chain/domain';
 import { CreateOperationCommand } from '@koiner/chain/application';
 

@@ -1,5 +1,5 @@
 import { CommandBus, CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { RawBlocksService } from '@koiner/jsonrpc';
+import { RawBlocksService } from '@koinos/jsonrpc';
 import { SyncBlockSetsCommand } from './dto/sync-block-sets.command';
 import { SyncBlockCommand } from './dto/sync-block.command';
 

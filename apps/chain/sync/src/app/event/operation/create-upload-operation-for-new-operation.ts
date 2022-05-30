@@ -5,7 +5,7 @@ import {
   CreateOrUpdateAddressCommand,
   CreateUploadContractOperationCommand,
 } from '@koiner/chain/application';
-import { RawBlocksService } from '@koiner/jsonrpc';
+import { RawBlocksService } from '@koinos/jsonrpc';
 
 export class CreateUploadOperationForNewOperation extends DomainEventHandler {
   constructor(

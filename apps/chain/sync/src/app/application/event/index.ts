@@ -1,6 +1,6 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { provideEventHandler } from '@koiner/nestjs-utils';
-import { RawBlocksService } from '@koiner/jsonrpc';
+import { RawBlocksService } from '@koinos/jsonrpc';
 import { SyncEventsForNewTransaction } from './sync-events-for-new-transaction';
 import { SyncOperationsForNewTransaction } from './sync-operations-for-new-transaction';
 import { SyncTransactionsForNewBlock } from './sync-transactions-for-new-block';

@@ -1,5 +1,5 @@
 import { CommandBus } from '@nestjs/cqrs';
-import { RawBlocksService } from '@koiner/jsonrpc';
+import { RawBlocksService } from '@koinos/jsonrpc';
 import { CreateSystemCallOperationForNewOperation } from './operation/create-system-call-operation-for-new-operation';
 import { CreateSystemContractOperationForNewOperation } from './operation/create-system-contract-operation-for-new-operation';
 import { CreateUploadOperationForNewOperation } from './operation/create-upload-operation-for-new-operation';

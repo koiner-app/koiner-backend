@@ -1,7 +1,7 @@
 import { Logger, Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { KoinosModule } from '@koiner/jsonrpc';
+import { KoinosModule } from '@koinos/jsonrpc';
 import { ContractStandardKoilibService } from '@koiner/contracts/koilib'; // Must be imported before ContractStandardService
 import { ContractStandardImReadRepository } from '@koiner/contracts/koilib';
 import { ContractStandardReadRepository } from '@koiner/contracts/domain';

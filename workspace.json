@@ -1,10 +1,6 @@
 {
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
-  "workspaceLayout": {
-    "appsDir": "apps",
-    "libsDir": "modules"
-  },
   "projects": {
     "chain-application": "modules/chain/application",
     "chain-domain": "modules/chain/domain",
@@ -19,8 +15,9 @@
     "contracts-typeorm": "modules/contracts/typeorm",
     "graphql-gateway": "apps/graphql/gateway",
     "graphql-subscriptions": "apps/graphql/subscriptions",
-    "jsonrpc": "modules/jsonrpc",
     "koiner-domain": "modules/domain",
+    "koinos-config": "modules/koinos/config",
+    "koinos-jsonrpc": "modules/koinos/jsonrpc",
     "nestjs-utils": "modules/nestjs-utils"
   }
 }

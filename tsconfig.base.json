@@ -29,7 +29,8 @@
       "@koiner/contracts/koilib": ["modules/contracts/koilib/src/index.ts"],
       "@koiner/contracts/typeorm": ["modules/contracts/typeorm/src/index.ts"],
       "@koiner/domain": ["modules/domain/src/index.ts"],
-      "@koiner/jsonrpc": ["modules/jsonrpc/src/index.ts"],
+      "@koinos/config": ["modules/koinos/config/src/index.ts"],
+      "@koinos/jsonrpc": ["modules/koinos/jsonrpc/src/index.ts"],
       "@koiner/nestjs-utils": ["modules/nestjs-utils/src/index.ts"]
     }
   },

@@ -31,5 +31,9 @@
       }
     ]
   },
-  "defaultProject": "graphql-gateway"
+  "defaultProject": "graphql-gateway",
+  "workspaceLayout": {
+    "appsDir": "apps",
+    "libsDir": "modules"
+  }
 }
