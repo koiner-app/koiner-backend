@@ -1,21 +1,26 @@
 {
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
+  "workspaceLayout": {
+    "appsDir": "apps",
+    "libsDir": "modules"
+  },
   "projects": {
-    "chain-application": "libs/chain/application",
-    "chain-domain": "libs/chain/domain",
+    "chain-application": "modules/chain/application",
+    "chain-domain": "modules/chain/domain",
     "chain-graphql": "apps/chain/graphql",
     "chain-sync": "apps/chain/sync",
-    "chain-typeorm": "libs/chain/typeorm",
-    "contracts-application": "libs/contracts/application",
-    "contracts-domain": "libs/contracts/domain",
+    "chain-typeorm": "modules/chain/typeorm",
+    "contracts-application": "modules/contracts/application",
+    "contracts-domain": "modules/contracts/domain",
     "contracts-graphql": "apps/contracts/graphql",
-    "contracts-koilib": "libs/contracts/koilib",
-    "contracts-typeorm": "libs/contracts/typeorm",
+    "contracts-koilib": "modules/contracts/koilib",
+    "contracts-sync": "apps/contracts/sync",
+    "contracts-typeorm": "modules/contracts/typeorm",
     "graphql-gateway": "apps/graphql/gateway",
     "graphql-subscriptions": "apps/graphql/subscriptions",
-    "jsonrpc": "libs/jsonrpc",
-    "koiner-domain": "libs/domain",
-    "nestjs-utils": "libs/nestjs-utils"
+    "jsonrpc": "modules/jsonrpc",
+    "koiner-domain": "modules/domain",
+    "nestjs-utils": "modules/nestjs-utils"
   }
 }

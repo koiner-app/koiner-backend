@@ -1,0 +1,33 @@
+{
+  "$schema": "..\\..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+  "sourceRoot": "modules/contracts/typeorm/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/modules/contracts/typeorm",
+        "main": "modules/contracts/typeorm/src/index.ts",
+        "tsConfig": "modules/contracts/typeorm/tsconfig.lib.json",
+        "assets": ["modules/contracts/typeorm/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["modules/contracts/typeorm/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/modules/contracts/typeorm"],
+      "options": {
+        "jestConfig": "modules/contracts/typeorm/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
