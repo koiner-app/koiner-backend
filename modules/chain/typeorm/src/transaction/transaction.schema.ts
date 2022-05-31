@@ -15,7 +15,7 @@ import { AddressSchema, BlockSchema, OperationSchema } from '..';
 export class TransactionSchema extends EntityBaseSchema {
   @PrimaryColumn()
   @Column({ length: 70 })
-  readonly id!: string;
+  override readonly id!: string;
 
   @PrimaryColumn()
   @Column({ type: 'bigint' })

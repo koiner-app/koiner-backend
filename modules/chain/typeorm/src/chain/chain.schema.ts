@@ -5,7 +5,7 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 export class ChainSchema extends EntityBaseSchema {
   @PrimaryColumn()
   @Column({ length: 46 })
-  readonly id!: string;
+  override readonly id!: string;
 
   @Column({ length: 70 })
   readonly head_topology_id!: string;

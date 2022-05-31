@@ -36,6 +36,9 @@ export class EventSchemaFactory extends EntitySchemaFactory<
 
     return {
       transaction_id: props.transactionId.value,
+      // TODO: How to handle this?
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       transaction: null,
       sequence: props.sequence,
       contract_id: props.contractId ? props.contractId.value : undefined,

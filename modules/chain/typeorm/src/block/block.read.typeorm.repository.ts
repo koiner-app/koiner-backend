@@ -13,18 +13,18 @@ export class BlockReadTypeormRepository
 {
   constructor(
     @InjectRepository(BlockSchema)
-    readonly entityModel: Repository<BlockSchema>,
+    override readonly entityModel: Repository<BlockSchema>
   ) {
     super(entityModel, new BlockSchemaFactory(Block, BlockSchema), BlockSchema);
   }
 
   async findOneByHeight(
     height: number,
-    selectionSet?: SelectionSet,
+    selectionSet?: SelectionSet
   ): Promise<Block | undefined> {
     // Create QueryBuilder
     const queryBuilder = this.entityModel.createQueryBuilder(
-      this.entityType.name,
+      this.entityType.name
     );
 
     // Join with relations if selected
@@ -39,7 +39,7 @@ export class BlockReadTypeormRepository
       ) {
         queryBuilder.leftJoinAndSelect(
           `${this.entityType.name}.${relation.propertyPath}`,
-          relation.propertyPath,
+          relation.propertyPath
         );
       }
     }
@@ -55,7 +55,7 @@ export class BlockReadTypeormRepository
 
   async findOneByHeightOrThrow(
     height: number,
-    selectionSet?: SelectionSet,
+    selectionSet?: SelectionSet
   ): Promise<Block> {
     const entityDocument = await this.findOneByHeight(height, selectionSet);
 

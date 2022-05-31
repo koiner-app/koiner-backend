@@ -13,7 +13,7 @@ export class OperationSchemaFactory extends EntitySchemaFactory<
   OperationSchema
 > {
   protected toDomainProps(
-    entitySchema: OperationSchema,
+    entitySchema: OperationSchema
   ): EntityProps<OperationProps> {
     const id = new UUID(entitySchema.id);
 
@@ -28,13 +28,16 @@ export class OperationSchemaFactory extends EntitySchemaFactory<
   }
 
   protected toSchemaProps(
-    entity: Operation,
+    entity: Operation
   ): EntitySchemaProps<OperationSchema> {
     const props = entity.getPropsCopy();
 
     return {
       block_height: props.blockHeight,
       transaction_id: props.transactionId.value,
+      // TODO: How to handle this?
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       transaction: null,
       operation_index: props.operationIndex,
       type: props.type,

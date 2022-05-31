@@ -13,7 +13,7 @@ import { AddressSchema } from '..';
 @Unique(['id', 'previous'])
 export class BlockSchema extends EntityBaseSchema {
   @Column({ length: 70 })
-  readonly id!: string;
+  override readonly id!: string;
 
   @Column({ length: 70 })
   readonly previous!: string;
@@ -31,8 +31,8 @@ export class BlockSchema extends EntityBaseSchema {
   @Column({ length: 48, nullable: true })
   readonly transaction_merkle_root?: string;
 
-  @Column({ length: 38, nullable: true })
-  readonly signer?: string;
+  @Column({ length: 38 })
+  readonly signer!: string;
 
   // Add foreign key without the need to always use the relation
   @ManyToOne(() => AddressSchema, { nullable: false, persistence: false })
