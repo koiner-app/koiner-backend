@@ -1,54 +1,87 @@
-version: "3.9"
+version: '3.9'
 
 services:
-
   nginx-proxy:
     image: nginxproxy/nginx-proxy:alpine
     restart: on-failure
     ports:
-      - "80:80"
+      - '80:80'
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     networks:
       - webproxy
 
-#  api:
-#    build:
-#      context: "services/api"
-#    command: npm run start:dev
-#    depends_on:
-#      - postgres
-#    volumes:
-#      - ./services/api:/app
-#      - ./logs:/var/logs
-#    networks:
-#      - webproxy
-#      - default
-#    dns:
-#      - 8.8.8.8
-#    ports:
-#      - 3010:5000
-#    environment:
-#      - KOINOS_CHAIN_ID=QmeehjqATVaC4ReXxwbw4DQLbEdEAo8SmTBVzZz8s5ZV5F
-#      - KOINOS_RPC=['https://jsonrpc.dev.koiner.app']
-#      - KOINOS_SIGNER_SEED=EdLl^v3zaUAf%TeY^Fe5Dm%FeXweQ$h7L$yhhlZ5Ta8P2f0E^^CV!7u%mH01
-#      - KOIN_CONTRACT_ID=19JntSm8pSNETT9aHTwAUHC5RMoaSmgZPJ
-#      - BATCH_SIZE=100
-#      - SYNC_SECRET=AHOY!
-#      - PORT=5000
-#      - VIRTUAL_PORT=5000
-#      - VIRTUAL_HOST=api.docker
-#      - DB_TYPE=${DB_TYPE}
-#      - DB_HOST=${DB_HOST}
-#      - DB_USER=${DB_USER}
-#      - DB_PASSWORD=${DB_PASSWORD}
-#      - DB_NAME=${DB_NAME}
-#      - DB_PORT=${DB_PORT}
-#      - POSTGRES_SYNC=false
-#      - RABBITMQ_USER=guest
-#      - RABBITMQ_PASSWORD=guest
-#      - RABBITMQ_HOST=amqp:5672
-#      - DEBUG=
+  # GraphQL
+  graphql-gateway:
+    build:
+      context: .
+      dockerfile: 'apps/graphql/gateway/Dockerfile'
+      target: development
+    command: npm run start:graphql-gateway
+    env_file:
+      - 'apps/graphql/gateway/.env'
+    depends_on:
+      - chain-graphql
+      - contracts-graphql
+    volumes:
+      - ./data/logs:/var/logs
+      - ./apps:/app/apps
+      - ./modules:/app/modules
+      - /app/node_modules
+    networks:
+      - webproxy
+      - default
+    dns:
+      - 8.8.8.8
+    ports:
+      - "3000:3000"
+
+  # Koiner Chain
+  chain-graphql:
+    build:
+      context: .
+      dockerfile: 'apps/chain/graphql/Dockerfile'
+      target: development
+    command: npm run start:chain-graphql
+    env_file:
+      - 'apps/chain/graphql/.env'
+    depends_on:
+      - postgres
+    volumes:
+      - ./data/logs:/var/logs
+      - ./apps:/app/apps
+      - ./modules:/app/modules
+      - /app/node_modules
+    networks:
+      - webproxy
+      - default
+    dns:
+      - 8.8.8.8
+    ports:
+      - "3001:3001"
+
+  contracts-graphql:
+    build:
+      context: .
+      dockerfile: 'apps/contracts/graphql/Dockerfile'
+      target: development
+    command: npm run start:contracts-graphql
+    env_file:
+      - 'apps/contracts/graphql/.env'
+    depends_on:
+      - postgres
+    volumes:
+      - ./data/logs:/var/logs
+      - ./apps:/app/apps
+      - ./modules:/app/modules
+      - /app/node_modules
+    networks:
+      - webproxy
+      - default
+    dns:
+      - 8.8.8.8
+    ports:
+      - "3002:3002"
 
   postgres:
     image: postgres
@@ -57,7 +90,7 @@ services:
       - default
       - webproxy
     ports:
-      - "5432:5432"
+      - '5432:5432'
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
@@ -74,8 +107,8 @@ services:
   amqp:
     image: rabbitmq:3-management
     ports:
-      - "${AMQP_INTERFACE:-127.0.0.1}:5672:5672"
-      - "${AMQP_INTERFACE:-127.0.0.1}:15672:15672"
+      - '${AMQP_INTERFACE:-127.0.0.1}:5672:5672'
+      - '${AMQP_INTERFACE:-127.0.0.1}:15672:15672'
 
   config:
     build:
@@ -93,7 +126,7 @@ services:
       - amqp
       - config
     volumes:
-      - "${BASEDIR}:/koinos"
+      - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
 
   block_store:
@@ -102,7 +135,7 @@ services:
       - amqp
       - config
     volumes:
-      - "${BASEDIR}:/koinos"
+      - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
 
   chain:
@@ -113,7 +146,7 @@ services:
       - mempool
       - config
     volumes:
-      - "${BASEDIR}:/koinos"
+      - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
 
   p2p:
@@ -124,9 +157,9 @@ services:
       - chain
       - config
     volumes:
-      - "${BASEDIR}:/koinos"
+      - '${BASEDIR}:/koinos'
     ports:
-      - "${P2P_INTERFACE:-0.0.0.0}:8888:8888"
+      - '${P2P_INTERFACE:-0.0.0.0}:8888:8888'
     command: --basedir=/koinos
 
   #   block_producer:
@@ -148,31 +181,31 @@ services:
       - amqp
       - config
     volumes:
-      - "${BASEDIR}:/koinos"
+      - '${BASEDIR}:/koinos'
     ports:
-      - "${JSONRPC_INTERFACE:-0.0.0.0}:8080:8080"
+      - '${JSONRPC_INTERFACE:-0.0.0.0}:8080:8080'
     command: --basedir=/koinos
 
   transaction_store:
     image: koinos/koinos-transaction-store:${TRANSACTION_STORE_TAG:-latest}
-    profiles: ["transaction_store", "all"]
+    profiles: ['transaction_store', 'all']
     depends_on:
       - amqp
       - chain
       - config
     volumes:
-      - "${BASEDIR}:/koinos"
+      - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
 
   contract_meta_store:
     image: koinos/koinos-contract-meta-store:${CONTRACT_META_STORE_TAG:-latest}
-    profiles: ["contract_meta_store", "all"]
+    profiles: ['contract_meta_store', 'all']
     depends_on:
       - amqp
       - chain
       - config
     volumes:
-      - "${BASEDIR}:/koinos"
+      - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
 
 networks:

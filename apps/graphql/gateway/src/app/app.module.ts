@@ -17,8 +17,8 @@ import { GlobalAppModule } from '@koiner/nestjs-utils';
         supergraphSdl: new IntrospectAndCompose({
           subgraphs: [
             // TODO: Load from config
-            { name: 'chain', url: 'http://localhost:3001/graphql' },
-            { name: 'contracts', url: 'http://localhost:3002/graphql' },
+            { name: 'chain', url: 'http://chain-graphql:3001/graphql' },
+            { name: 'contracts', url: 'http://contracts-graphql:3002/graphql' },
           ],
         }),
       },

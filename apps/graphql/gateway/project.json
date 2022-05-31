@@ -10,7 +10,8 @@
         "outputPath": "dist/apps/graphql/gateway",
         "main": "apps/graphql/gateway/src/main.ts",
         "tsConfig": "apps/graphql/gateway/tsconfig.app.json",
-        "assets": ["apps/graphql/gateway/src/assets"]
+        "assets": ["apps/graphql/gateway/src/assets"],
+        "poll": 2000
       },
       "configurations": {
         "production": {

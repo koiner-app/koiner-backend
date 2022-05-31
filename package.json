@@ -5,7 +5,14 @@
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test"
+    "start:chain-graphql": "nx serve --project=chain-graphql",
+    "start:contracts-graphql": "nx serve --project=contracts-graphql",
+    "start:graphql-gateway": "nx serve --project=graphql-gateway",
+    "test": "nx test",
+    "build:chain-graphql": "nx build --project=chain-graphql",
+    "build:contracts-graphql": "nx build --project=contracts-graphql",
+    "build:graphql-gateway": "nx build --project=graphql-gateway",
+    "build:app": "nx build --project=docker-serve"
   },
   "private": true,
   "dependencies": {

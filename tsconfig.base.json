@@ -16,12 +16,10 @@
     "baseUrl": ".",
     "paths": {
       "@koiner/chain/api/graphql": ["apps/chain-api/src/app/index.ts"],
-      "@koiner/chain/api/graphql/*": ["apps/chain-api/src/app/*"],
       "@koiner/chain/application": ["modules/chain/application/src/index.ts"],
       "@koiner/chain/domain": ["modules/chain/domain/src/index.ts"],
       "@koiner/chain/typeorm": ["modules/chain/typeorm/src/index.ts"],
       "@koiner/contracts/api/graphql": ["apps/contracts-api/src/app/index.ts"],
-      "@koiner/contracts/api/graphql/*": ["apps/contracts-api/src/app/*"],
       "@koiner/contracts/application": [
         "modules/contracts/application/src/index.ts"
       ],
@@ -29,9 +27,9 @@
       "@koiner/contracts/koilib": ["modules/contracts/koilib/src/index.ts"],
       "@koiner/contracts/typeorm": ["modules/contracts/typeorm/src/index.ts"],
       "@koiner/domain": ["modules/domain/src/index.ts"],
+      "@koiner/nestjs-utils": ["modules/nestjs-utils/src/index.ts"],
       "@koinos/config": ["modules/koinos/config/src/index.ts"],
-      "@koinos/jsonrpc": ["modules/koinos/jsonrpc/src/index.ts"],
-      "@koiner/nestjs-utils": ["modules/nestjs-utils/src/index.ts"]
+      "@koinos/jsonrpc": ["modules/koinos/jsonrpc/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

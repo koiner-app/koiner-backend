@@ -1,5 +1,5 @@
 {
-  "name": "@koiner/contracts-koilib",
+  "name": "@koiner/contracts/koilib",
   "version": "0.0.1",
   "type": "commonjs"
 }
