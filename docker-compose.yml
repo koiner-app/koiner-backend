@@ -153,6 +153,32 @@ services:
     ports:
       - '3002:3002'
 
+  contracts-sync:
+    container_name: koiner-contracts-sync
+    build:
+      context: .
+      dockerfile: 'apps/contracts/sync/Dockerfile'
+      target: development
+    profiles: [ 'koiner-sync', 'all' ]
+    command: npm run start:contracts-sync
+    env_file:
+      - 'apps/contracts/sync/.env'
+    depends_on:
+      - contracts-postgres
+      - amqp
+    volumes:
+      - ./data/contracts/sync/logs:/var/logs
+      - ./apps:/app/apps
+      - ./modules:/app/modules
+      - /app/node_modules
+    networks:
+      - webproxy
+      - default
+    dns:
+      - 8.8.8.8
+    ports:
+      - '3102:3102'
+
   postgres-contracts:
     container_name: koiner-contracts-postgres
     image: postgres
