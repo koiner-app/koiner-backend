@@ -1,0 +1,23 @@
+{
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json",
+  "version": 2,
+  "projects": {
+    "chain-application": "modules/chain/application",
+    "chain-domain": "modules/chain/domain",
+    "chain-graphql": "apps/chain/graphql",
+    "chain-sync": "apps/chain/sync",
+    "chain-typeorm": "modules/chain/typeorm",
+    "contracts-application": "modules/contracts/application",
+    "contracts-domain": "modules/contracts/domain",
+    "contracts-graphql": "apps/contracts/graphql",
+    "contracts-koilib": "modules/contracts/koilib",
+    "contracts-sync": "apps/contracts/sync",
+    "contracts-typeorm": "modules/contracts/typeorm",
+    "graphql-gateway": "apps/graphql/gateway",
+    "graphql-subscriptions": "apps/graphql/subscriptions",
+    "koiner-domain": "modules/domain",
+    "koinos-config": "modules/koinos/config",
+    "koinos-jsonrpc": "modules/koinos/jsonrpc",
+    "nestjs-utils": "modules/nestjs-utils"
+  }
+}

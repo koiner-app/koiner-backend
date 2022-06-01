@@ -1,0 +1,16 @@
+{
+  "$schema": "..\\..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+  "sourceRoot": "modules/koinos/config/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/modules/koinos/config",
+        "assets": ["modules/koinos/config/*.md"]
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,53 @@
+{
+  "$schema": "..\\..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+  "sourceRoot": "apps/graphql/subscriptions/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/graphql/subscriptions",
+        "main": "apps/graphql/subscriptions/src/main.ts",
+        "tsConfig": "apps/graphql/subscriptions/tsconfig.app.json",
+        "assets": ["apps/graphql/subscriptions/src/assets"],
+        "poll": 2000
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/graphql/subscriptions/src/environments/environment.ts",
+              "with": "apps/graphql/subscriptions/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:node",
+      "options": {
+        "buildTarget": "graphql-subscriptions:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/graphql/subscriptions/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/graphql/subscriptions"],
+      "options": {
+        "jestConfig": "apps/graphql/subscriptions/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

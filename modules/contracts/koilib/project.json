@@ -1,0 +1,33 @@
+{
+  "$schema": "..\\..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+  "sourceRoot": "modules/contracts/koilib/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/modules/contracts/koilib",
+        "main": "modules/contracts/koilib/src/index.ts",
+        "tsConfig": "modules/contracts/koilib/tsconfig.lib.json",
+        "assets": ["modules/contracts/koilib/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["modules/contracts/koilib/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/modules/contracts/koilib"],
+      "options": {
+        "jestConfig": "modules/contracts/koilib/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

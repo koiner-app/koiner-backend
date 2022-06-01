@@ -1,111 +1,238 @@
-version: "3.9"
+version: '3.9'
 
 services:
 
+  #
+  # Infrastructure
+  #
+
   nginx-proxy:
+    container_name: koiner-nginx
     image: nginxproxy/nginx-proxy:alpine
     restart: on-failure
     ports:
-      - 80:80
+      - '80:80'
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     networks:
       - webproxy
 
-  api:
+  amqp:
+    container_name: koiner-amqp
+    image: rabbitmq:3-management
+    ports:
+      - '${AMQP_INTERFACE:-127.0.0.1}:5672:5672'
+      - '${AMQP_INTERFACE:-127.0.0.1}:15672:15672'
+
+  #
+  # GraphQL
+  #
+
+  graphql-gateway:
+    container_name: koiner-graphql-gateway
     build:
-      context: api
-    command: npm run start:dev
+      context: .
+      dockerfile: 'apps/graphql/gateway/Dockerfile'
+      target: development
+    profiles: [ 'koiner-graphql', 'all' ]
+    command: npm run start:graphql-gateway
+    env_file:
+      - 'apps/graphql/gateway/.env'
     depends_on:
-      - postgres
+      - chain-graphql
+      - contracts-graphql
     volumes:
-      - ./api:/app
-      - ./logs:/var/logs
+      - ./data/graphl/gateway/logs:/var/logs
+      - ./apps:/app/apps
+      - ./modules:/app/modules
+      - /app/node_modules
+    networks:
+      - webproxy
+    dns:
+      - 8.8.8.8
+    ports:
+      - '3000:3000'
+
+  #
+  # Koiner Chain
+  #
+
+  chain-graphql:
+    container_name: koiner-chain-graphql
+    build:
+      context: .
+      dockerfile: 'apps/chain/graphql/Dockerfile'
+      target: development
+    profiles: [ 'koiner-graphql', 'all' ]
+    command: npm run start:chain-graphql
+    env_file:
+      - 'apps/chain/graphql/.env'
+    depends_on:
+      - chain-postgres
+    volumes:
+      - ./data/chain/graphql/logs:/var/logs
+      - ./apps:/app/apps
+      - ./modules:/app/modules
+      - /app/node_modules
+    networks:
+      - webproxy
+    dns:
+      - 8.8.8.8
+    ports:
+      - '3001:3001'
+
+  chain-sync:
+    container_name: koiner-chain-sync
+    build:
+      context: .
+      dockerfile: 'apps/chain/sync/Dockerfile'
+      target: development
+    profiles: [ 'koiner-sync', 'all' ]
+    command: npm run start:chain-sync
+    env_file:
+      - 'apps/chain/sync/.env'
+    depends_on:
+      - chain-postgres
+      - amqp
+    volumes:
+      - ./data/chain/sync/logs:/var/logs
+      - ./apps:/app/apps
+      - ./modules:/app/modules
+      - /app/node_modules
     networks:
       - webproxy
       - default
     dns:
       - 8.8.8.8
     ports:
-      - 3010:5000
-    environment:
-      - KOINOS_CHAIN_ID=QmeehjqATVaC4ReXxwbw4DQLbEdEAo8SmTBVzZz8s5ZV5F
-      - KOINOS_RPC=['https://jsonrpc.dev.koiner.app']
-      - KOINOS_SIGNER_SEED=EdLl^v3zaUAf%TeY^Fe5Dm%FeXweQ$h7L$yhhlZ5Ta8P2f0E^^CV!7u%mH01
-      - KOIN_CONTRACT_ID=19JntSm8pSNETT9aHTwAUHC5RMoaSmgZPJ
-      - BATCH_SIZE=100
-      - SYNC_SECRET=AHOY!
-      - PORT=5000
-      - VIRTUAL_PORT=5000
-      - VIRTUAL_HOST=api.docker
-      - DB_TYPE=${DB_TYPE}
-      - DB_HOST=${DB_HOST}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_NAME=${DB_NAME}
-      - DB_PORT=${DB_PORT}
-      - POSTGRES_SYNC=false
-      - RABBITMQ_USER=guest
-      - RABBITMQ_PASSWORD=guest
-      - RABBITMQ_HOST=amqp:5672
-      - DEBUG=
+      - '3101:3101'
 
-  postgres:
+  chain-postgres:
+    container_name: koiner-chain-postgres
     image: postgres
+    profiles: [ 'koiner-graphql', 'koiner-sync', 'all' ]
     restart: always
     networks:
-      - default
       - webproxy
     ports:
-      - 5432:5432
+      - '5432:5432'
     environment:
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${CHAIN_DB_USER}
+      - POSTGRES_PASSWORD=${CHAIN_DB_PASSWORD}
+      - POSTGRES_DB=${CHAIN_DB_NAME}
       - VIRTUAL_PORT=5432
-      - VIRTUAL_HOST=pg.docker
-    container_name: postgres-db
+      - VIRTUAL_HOST=${CHAIN_DB_VIRTUAL_HOST}
     volumes:
-      - ./pgdata:/var/lib/postgresql/data
+      - ./data/chain/pgdata:/var/lib/postgresql/data
+
+  #
+  # Koiner Contracts
+  #
+
+  contracts-graphql:
+    container_name: koiner-contracts-graphql
+    build:
+      context: .
+      dockerfile: 'apps/contracts/graphql/Dockerfile'
+      target: development
+    profiles: [ 'koiner-graphql', 'all' ]
+    command: npm run start:contracts-graphql
+    env_file:
+      - 'apps/contracts/graphql/.env'
+    depends_on:
+      - contracts-postgres
+    volumes:
+      - ./data/contracts/graphql/logs:/var/logs
+      - ./apps:/app/apps
+      - ./modules:/app/modules
+      - /app/node_modules
+    networks:
+      - webproxy
+    dns:
+      - 8.8.8.8
+    ports:
+      - '3002:3002'
+
+  contracts-sync:
+    container_name: koiner-contracts-sync
+    build:
+      context: .
+      dockerfile: 'apps/contracts/sync/Dockerfile'
+      target: development
+    profiles: [ 'koiner-sync', 'all' ]
+    command: npm run start:contracts-sync
+    env_file:
+      - 'apps/contracts/sync/.env'
+    depends_on:
+      - contracts-postgres
+      - amqp
+    volumes:
+      - ./data/contracts/sync/logs:/var/logs
+      - ./apps:/app/apps
+      - ./modules:/app/modules
+      - /app/node_modules
+    networks:
+      - webproxy
+      - default
+    dns:
+      - 8.8.8.8
+    ports:
+      - '3102:3102'
+
+  postgres-contracts:
+    container_name: koiner-contracts-postgres
+    image: postgres
+    profiles: [ 'koiner-graphql', 'koiner-sync', 'all' ]
+    restart: always
+    networks:
+      - webproxy
+    ports:
+      - '5433:5432'
+    environment:
+      - POSTGRES_DB=${CONTRACTS_DB_NAME}
+      - POSTGRES_USER=${CONTRACTS_DB_USER}
+      - POSTGRES_PASSWORD=${CONTRACTS_DB_PASSWORD}
+      - VIRTUAL_PORT=5432
+      - VIRTUAL_HOST=${CONTRACTS_DB_VIRTUAL_HOST}
+    volumes:
+      - ./data/contracts/pgdata:/var/lib/postgresql/data
 
   #
   # Koinos
   #
-  amqp:
-    image: rabbitmq:3-management
-    ports:
-      - "${AMQP_INTERFACE:-127.0.0.1}:5672:5672"
-      - "${AMQP_INTERFACE:-127.0.0.1}:15672:15672"
 
-  config:
-    build:
-      context: ./koinos/config
-      args:
-        - CONFIG_TAG=${CONFIG_TAG:-latest}
-    environment:
-      - DESCRIPTORS_TAG=${DESCRIPTORS_TAG:-master}
-    volumes:
-      - "${BASEDIR}:/koinos"
+  #  config:
+  #    build:
+  #      context: ./modules/koinos/config
+  #      args:
+  #        - CONFIG_TAG=${CONFIG_TAG:-latest}
+  #    environment:
+  #      - DESCRIPTORS_TAG=${DESCRIPTORS_TAG:-master}
+  #    volumes:
+  #      - "${BASEDIR}:/koinos"
 
   mempool:
+    container_name: koinos-mempool
     image: koinos/koinos-mempool:${MEMPOOL_TAG:-latest}
     depends_on:
       - amqp
       - config
     volumes:
-      - "${BASEDIR}:/koinos"
+      - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
 
   block_store:
+    container_name: koinos-block-store
     image: koinos/koinos-block-store:${BLOCK_STORE_TAG:-latest}
     depends_on:
       - amqp
       - config
     volumes:
-      - "${BASEDIR}:/koinos"
+      - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
 
   chain:
+    container_name: koinos-chain
     image: koinos/koinos-chain:${CHAIN_TAG:-latest}
     depends_on:
       - amqp
@@ -113,10 +240,11 @@ services:
       - mempool
       - config
     volumes:
-      - "${BASEDIR}:/koinos"
+      - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
 
   p2p:
+    container_name: koinos-p2p
     image: koinos/koinos-p2p:${P2P_TAG:-latest}
     depends_on:
       - amqp
@@ -124,61 +252,69 @@ services:
       - chain
       - config
     volumes:
-      - "${BASEDIR}:/koinos"
+      - '${BASEDIR}:/koinos'
     ports:
-      - "${P2P_INTERFACE:-0.0.0.0}:8888:8888"
+      - '${P2P_INTERFACE:-0.0.0.0}:8888:8888'
     command: --basedir=/koinos
 
-  #   block_producer:
-  #      image: koinos/koinos-block-producer:${BLOCK_PRODUCER_TAG:-latest}
-  #      profiles: ["block_producer", "all"]
-  #      depends_on:
-  #         - amqp
-  #         - mempool
-  #         - chain
-  #         - config
-  #      volumes:
-  #         - "${BASEDIR}:/koinos"
-  #      command: --basedir=/koinos
+  block_producer:
+    container_name: koinos-block-producer
+    image: koinos/koinos-block-producer:${BLOCK_PRODUCER_TAG:-latest}
+    profiles: ['block_producer', 'all']
+    depends_on:
+      - amqp
+      - mempool
+      - chain
+      - config
+    volumes:
+      - '${BASEDIR}:/koinos'
+    command: --basedir=/koinos
 
   jsonrpc:
+    container_name: koinos-jsonrpc
     image: koinos/koinos-jsonrpc:${JSONRPC_TAG:-latest}
-    # profiles: ["jsonrpc", "all"]
+    profiles: ['jsonrpc', 'all']
     depends_on:
       - amqp
       - config
-    volumes:
-      - "${BASEDIR}:/koinos"
     ports:
-      - "${JSONRPC_INTERFACE:-0.0.0.0}:8080:8080"
+      - '${JSONRPC_INTERFACE:-0.0.0.0}:8080:8080'
+    environment:
+      - VIRTUAL_PORT=8080
+      - VIRTUAL_HOST=${JSONRPC_VIRTUAL_HOST}
+    volumes:
+      - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
+    networks:
+      - webproxy
+      - default
 
   transaction_store:
+    container_name: koinos-transaction-store
     image: koinos/koinos-transaction-store:${TRANSACTION_STORE_TAG:-latest}
-    profiles: ["transaction_store", "all"]
+    profiles: ['transaction_store', 'all']
     depends_on:
       - amqp
       - chain
       - config
     volumes:
-      - "${BASEDIR}:/koinos"
+      - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
 
   contract_meta_store:
+    container_name: koinos-contract-meta-store
     image: koinos/koinos-contract-meta-store:${CONTRACT_META_STORE_TAG:-latest}
-    profiles: ["contract_meta_store", "all"]
+    profiles: ['contract_meta_store', 'all']
     depends_on:
       - amqp
       - chain
       - config
     volumes:
-      - "${BASEDIR}:/koinos"
+      - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
 
 networks:
-  default:
   webproxy:
 
 volumes:
   letsencrypt-certs:
-  pgdata:
