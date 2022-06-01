@@ -1,5 +1,5 @@
 export const database = {
-  type: process.env.DB_TYPE || 'postgres',
+  type: process.env.DB_TYPE || ('postgres' as any),
   host: process.env.DB_HOST || 'koiner-contracts-postgres',
   port: process.env.DB_PORT || 5433,
   database: process.env.DB_NAME || 'koiner-contracts',
