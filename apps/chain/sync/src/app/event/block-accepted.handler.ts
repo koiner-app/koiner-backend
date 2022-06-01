@@ -32,7 +32,6 @@ export class BlockAcceptedHandler {
       event.block.header.height.toString(),
       'BlockAcceptedHandler height'
     );
-    this.logger.verbose(event, 'BlockAcceptedHandler.event');
 
     //   try {
     //     await this.commandBus.execute(
