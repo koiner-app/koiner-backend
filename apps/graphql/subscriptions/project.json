@@ -10,7 +10,8 @@
         "outputPath": "dist/apps/graphql/subscriptions",
         "main": "apps/graphql/subscriptions/src/main.ts",
         "tsConfig": "apps/graphql/subscriptions/tsconfig.app.json",
-        "assets": ["apps/graphql/subscriptions/src/assets"]
+        "assets": ["apps/graphql/subscriptions/src/assets"],
+        "poll": 2000
       },
       "configurations": {
         "production": {

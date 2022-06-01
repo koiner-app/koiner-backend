@@ -1,8 +1,8 @@
 export const database = {
-  type: process.env.DB_TYPE || ('postgres' as any),
-  host: process.env.DB_HOST || 'pg.docker',
-  port: process.env.DB_PORT || 5432,
-  database: process.env.DB_NAME || 'koiner',
+  type: process.env.DB_TYPE || 'postgres',
+  host: process.env.DB_HOST || 'koiner-contracts-postgres',
+  port: process.env.DB_PORT || 5433,
+  database: process.env.DB_NAME || 'koiner-contracts',
   username: process.env.DB_USER || 'db_user',
   password: process.env.DB_PASSWORD || 'password',
   ssl: process.env.SSL_CERT

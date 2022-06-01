@@ -1,7 +1,11 @@
 version: '3.9'
 
 services:
+  #
+  # Infrastructure
+  #
   nginx-proxy:
+    container_name: koiner-nginx
     image: nginxproxy/nginx-proxy:alpine
     restart: on-failure
     ports:
@@ -11,8 +15,18 @@ services:
     networks:
       - webproxy
 
+  amqp:
+    container_name: amqp
+    image: rabbitmq:3-management
+    ports:
+      - '${AMQP_INTERFACE:-127.0.0.1}:5672:5672'
+      - '${AMQP_INTERFACE:-127.0.0.1}:15672:15672'
+
+  #
   # GraphQL
+  #
   graphql-gateway:
+    container_name: koiner-graphql-gateway
     build:
       context: .
       dockerfile: 'apps/graphql/gateway/Dockerfile'
@@ -24,7 +38,7 @@ services:
       - chain-graphql
       - contracts-graphql
     volumes:
-      - ./data/logs:/var/logs
+      - ./data/graphl/gateway/logs:/var/logs
       - ./apps:/app/apps
       - ./modules:/app/modules
       - /app/node_modules
@@ -36,8 +50,11 @@ services:
     ports:
       - "3000:3000"
 
+  #
   # Koiner Chain
+  #
   chain-graphql:
+    container_name: koiner-chain-graphql
     build:
       context: .
       dockerfile: 'apps/chain/graphql/Dockerfile'
@@ -46,9 +63,9 @@ services:
     env_file:
       - 'apps/chain/graphql/.env'
     depends_on:
-      - postgres
+      - chain-postgres
     volumes:
-      - ./data/logs:/var/logs
+      - ./data/chain/graphql/logs:/var/logs
       - ./apps:/app/apps
       - ./modules:/app/modules
       - /app/node_modules
@@ -60,7 +77,53 @@ services:
     ports:
       - "3001:3001"
 
+  chain-sync:
+    container_name: koiner-chain-sync
+    build:
+      context: .
+      dockerfile: 'apps/chain/sync/Dockerfile'
+      target: development
+    command: npm run start:chain-sync
+    env_file:
+      - 'apps/chain/sync/.env'
+    depends_on:
+      - chain-postgres
+    volumes:
+      - ./data/chain/sync/logs:/var/logs
+      - ./apps:/app/apps
+      - ./modules:/app/modules
+      - /app/node_modules
+    networks:
+      - webproxy
+      - default
+    dns:
+      - 8.8.8.8
+    ports:
+      - "3101:3101"
+
+  chain-postgres:
+    container_name: koiner-chain-postgres
+    image: postgres
+    restart: always
+    networks:
+      - default
+      - webproxy
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=${CHAIN_DB_USER}
+      - POSTGRES_PASSWORD=${CHAIN_DB_PASSWORD}
+      - POSTGRES_DB=${CHAIN_DB_NAME}
+      - VIRTUAL_PORT=5432
+      - VIRTUAL_HOST=${CHAIN_DB_VIRTUAL_HOST}
+    volumes:
+      - ./data/chain/pgdata:/var/lib/postgresql/data
+
+  #
+  # Koiner Contracts
+  #
   contracts-graphql:
+    container_name: koiner-contracts-graphql
     build:
       context: .
       dockerfile: 'apps/contracts/graphql/Dockerfile'
@@ -69,9 +132,9 @@ services:
     env_file:
       - 'apps/contracts/graphql/.env'
     depends_on:
-      - postgres
+      - contracts-postgres
     volumes:
-      - ./data/logs:/var/logs
+      - ./data/contracts/graphql/logs:/var/logs
       - ./apps:/app/apps
       - ./modules:/app/modules
       - /app/node_modules
@@ -83,44 +146,40 @@ services:
     ports:
       - "3002:3002"
 
-  postgres:
+  postgres-contracts:
+    container_name: koiner-contracts-postgres
     image: postgres
     restart: always
     networks:
       - default
       - webproxy
     ports:
-      - '5432:5432'
+      - '5433:5432'
     environment:
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_DB=${CONTRACTS_DB_NAME}
+      - POSTGRES_USER=${CONTRACTS_DB_USER}
+      - POSTGRES_PASSWORD=${CONTRACTS_DB_PASSWORD}
       - VIRTUAL_PORT=5432
-      - VIRTUAL_HOST=pg.docker
-    container_name: postgres-db
+      - VIRTUAL_HOST=${CONTRACTS_DB_VIRTUAL_HOST}
     volumes:
-      - ./data/pgdata:/var/lib/postgresql/data
+      - ./data/contracts/pgdata:/var/lib/postgresql/data
 
   #
   # Koinos
   #
-  amqp:
-    image: rabbitmq:3-management
-    ports:
-      - '${AMQP_INTERFACE:-127.0.0.1}:5672:5672'
-      - '${AMQP_INTERFACE:-127.0.0.1}:15672:15672'
 
-  config:
-    build:
-      context: ./koinos/config
-      args:
-        - CONFIG_TAG=${CONFIG_TAG:-latest}
-    environment:
-      - DESCRIPTORS_TAG=${DESCRIPTORS_TAG:-master}
-    volumes:
-      - "${BASEDIR}:/koinos"
+  #  config:
+  #    build:
+  #      context: ./modules/koinos/config
+  #      args:
+  #        - CONFIG_TAG=${CONFIG_TAG:-latest}
+  #    environment:
+  #      - DESCRIPTORS_TAG=${DESCRIPTORS_TAG:-master}
+  #    volumes:
+  #      - "${BASEDIR}:/koinos"
 
   mempool:
+    container_name: koinos-mempool
     image: koinos/koinos-mempool:${MEMPOOL_TAG:-latest}
     depends_on:
       - amqp
@@ -130,6 +189,7 @@ services:
     command: --basedir=/koinos
 
   block_store:
+    container_name: koinos-block-store
     image: koinos/koinos-block-store:${BLOCK_STORE_TAG:-latest}
     depends_on:
       - amqp
@@ -139,6 +199,7 @@ services:
     command: --basedir=/koinos
 
   chain:
+    container_name: koinos-chain
     image: koinos/koinos-chain:${CHAIN_TAG:-latest}
     depends_on:
       - amqp
@@ -150,6 +211,7 @@ services:
     command: --basedir=/koinos
 
   p2p:
+    container_name: koinos-p2p
     image: koinos/koinos-p2p:${P2P_TAG:-latest}
     depends_on:
       - amqp
@@ -163,6 +225,7 @@ services:
     command: --basedir=/koinos
 
   #   block_producer:
+  #  container_name: koinos-block-producer
   #      image: koinos/koinos-block-producer:${BLOCK_PRODUCER_TAG:-latest}
   #      profiles: ["block_producer", "all"]
   #      depends_on:
@@ -175,6 +238,7 @@ services:
   #      command: --basedir=/koinos
 
   jsonrpc:
+    container_name: koinos-jsonrpc
     image: koinos/koinos-jsonrpc:${JSONRPC_TAG:-latest}
     # profiles: ["jsonrpc", "all"]
     depends_on:
@@ -187,6 +251,7 @@ services:
     command: --basedir=/koinos
 
   transaction_store:
+    container_name: koinos-transaction-store
     image: koinos/koinos-transaction-store:${TRANSACTION_STORE_TAG:-latest}
     profiles: ['transaction_store', 'all']
     depends_on:
@@ -198,6 +263,7 @@ services:
     command: --basedir=/koinos
 
   contract_meta_store:
+    container_name: koinos-contract-meta-store
     image: koinos/koinos-contract-meta-store:${CONTRACT_META_STORE_TAG:-latest}
     profiles: ['contract_meta_store', 'all']
     depends_on:

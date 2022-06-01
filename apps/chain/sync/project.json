@@ -10,7 +10,8 @@
         "outputPath": "dist/apps/chain/sync",
         "main": "apps/chain/sync/src/main.ts",
         "tsConfig": "apps/chain/sync/tsconfig.app.json",
-        "assets": ["apps/chain/sync/src/assets"]
+        "assets": ["apps/chain/sync/src/assets"],
+        "poll": 2000
       },
       "configurations": {
         "production": {
