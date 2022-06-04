@@ -14,6 +14,9 @@ export class BlockAcceptedHandler {
   ) {}
 
   @RabbitSubscribe({
+    queueOptions: {
+      channel: 'koiner.chain.sync_channel',
+    },
     exchange: 'koinos.event',
     routingKey: 'koinos.block.accept',
     queue: 'koiner.block.accept',
