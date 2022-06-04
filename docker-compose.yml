@@ -30,6 +30,7 @@ services:
 
   graphql-gateway:
     container_name: koiner-graphql-gateway
+    image: koiner/graphql-gateway
     build:
       context: .
       dockerfile: 'apps/graphql/gateway/Dockerfile'
@@ -39,8 +40,10 @@ services:
     env_file:
       - 'apps/graphql/gateway/.env'
     depends_on:
-      - chain-graphql
-      - contracts-graphql
+      chain-graphql:
+        condition: service_healthy
+      contracts-graphql:
+        condition: service_healthy
     volumes:
       - ./data/graphl/gateway/logs:/var/logs
       - ./apps:/app/apps
@@ -52,6 +55,12 @@ services:
       - 8.8.8.8
     ports:
       - '3000:3000'
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:3000/health || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s
 
   #
   # Koiner Chain
@@ -59,6 +68,7 @@ services:
 
   chain-graphql:
     container_name: koiner-chain-graphql
+    image: koiner/chain-graphql
     build:
       context: .
       dockerfile: 'apps/chain/graphql/Dockerfile'
@@ -80,9 +90,16 @@ services:
       - 8.8.8.8
     ports:
       - '3001:3001'
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:3001/health || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s
 
   chain-sync:
     container_name: koiner-chain-sync
+    image: koiner/chain-sync
     build:
       context: .
       dockerfile: 'apps/chain/sync/Dockerfile'
@@ -106,6 +123,12 @@ services:
       - 8.8.8.8
     ports:
       - '3101:3101'
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:3101/health || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s
 
   chain-postgres:
     container_name: koiner-chain-postgres
@@ -131,6 +154,7 @@ services:
 
   contracts-graphql:
     container_name: koiner-contracts-graphql
+    image: koiner/contracts-graphql
     build:
       context: .
       dockerfile: 'apps/contracts/graphql/Dockerfile'
@@ -152,9 +176,16 @@ services:
       - 8.8.8.8
     ports:
       - '3002:3002'
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:3002/health || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s
 
   contracts-sync:
     container_name: koiner-contracts-sync
+    image: koiner/contracts-sync
     build:
       context: .
       dockerfile: 'apps/contracts/sync/Dockerfile'
@@ -178,6 +209,12 @@ services:
       - 8.8.8.8
     ports:
       - '3102:3102'
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:3102/health || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s
 
   contracts-postgres:
     container_name: koiner-contracts-postgres
@@ -201,22 +238,24 @@ services:
   # Koinos
   #
 
-  #  config:
-  #    build:
-  #      context: ./modules/koinos/config
-  #      args:
-  #        - CONFIG_TAG=${CONFIG_TAG:-latest}
-  #    environment:
-  #      - DESCRIPTORS_TAG=${DESCRIPTORS_TAG:-master}
-  #    volumes:
-  #      - "${BASEDIR}:/koinos"
+  config:
+    build:
+      context: ./modules/koinos/config/src
+      args:
+        - CONFIG_TAG=${CONFIG_TAG:-latest}
+    environment:
+      - DESCRIPTORS_TAG=${DESCRIPTORS_TAG:-master}
+    volumes:
+      - "${BASEDIR}:/koinos"
 
   mempool:
     container_name: koinos-mempool
     image: koinos/koinos-mempool:${MEMPOOL_TAG:-latest}
     depends_on:
       - amqp
-#      - config
+      - config
+      - chain-sync
+      - contracts-sync
     volumes:
       - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
@@ -226,7 +265,9 @@ services:
     image: koinos/koinos-block-store:${BLOCK_STORE_TAG:-latest}
     depends_on:
       - amqp
-#      - config
+      - config
+      - chain-sync
+      - contracts-sync
     volumes:
       - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
@@ -235,10 +276,18 @@ services:
     container_name: koinos-chain
     image: koinos/koinos-chain:${CHAIN_TAG:-latest}
     depends_on:
-      - amqp
-      - block_store
-      - mempool
-#      - config
+      amqp:
+        condition: service_started
+      block_store:
+        condition: service_started
+      mempool:
+        condition: service_started
+      config:
+        condition: service_started
+      chain-sync:
+          condition: service_healthy
+      contracts-sync:
+          condition: service_healthy
     volumes:
       - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
@@ -247,10 +296,18 @@ services:
     container_name: koinos-p2p
     image: koinos/koinos-p2p:${P2P_TAG:-latest}
     depends_on:
-      - amqp
-      - block_store
-      - chain
-#      - config
+      amqp:
+        condition: service_started
+      block_store:
+        condition: service_started
+      chain:
+        condition: service_started
+      config:
+        condition: service_started
+      chain-sync:
+        condition: service_healthy
+      contracts-sync:
+        condition: service_healthy
     volumes:
       - '${BASEDIR}:/koinos'
     ports:
@@ -265,7 +322,7 @@ services:
       - amqp
       - mempool
       - chain
-#      - config
+      - config
     volumes:
       - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
@@ -276,7 +333,7 @@ services:
     profiles: ['jsonrpc', 'all']
     depends_on:
       - amqp
-#      - config
+      - config
     ports:
       - '${JSONRPC_INTERFACE:-0.0.0.0}:8080:8080'
     environment:
@@ -296,7 +353,7 @@ services:
     depends_on:
       - amqp
       - chain
-#      - config
+      - config
     volumes:
       - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
@@ -308,7 +365,7 @@ services:
     depends_on:
       - amqp
       - chain
-#      - config
+      - config
     volumes:
       - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
