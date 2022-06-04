@@ -1,3 +1,9 @@
 import { BlockAcceptedHandler } from './block-accepted.handler';
 
-export const ChainAmqpSubscribeHandlers = [BlockAcceptedHandler];
+const conditionalServices = [];
+
+if (process.env.SYNC_MODE !== 'manual' ?? BlockAcceptedHandler) {
+  conditionalServices.push(BlockAcceptedHandler);
+}
+
+export const ChainAmqpSubscribeHandlers = [...conditionalServices];

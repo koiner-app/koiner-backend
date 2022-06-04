@@ -4,7 +4,7 @@ import { CommandBus } from '@nestjs/cqrs';
 import { ConsumeMessage } from 'amqplib';
 import { Serializer } from 'koilib';
 import { broadcastDescriptors } from '../../proto/broadcast-descriptors';
-// import { SyncBlockCommand } from '../application';
+import { SyncBlockCommand } from '../../application';
 
 @Injectable()
 export class BlockAcceptedHandler {
@@ -36,18 +36,18 @@ export class BlockAcceptedHandler {
       'BlockAcceptedHandler height'
     );
 
-    //   try {
-    //     await this.commandBus.execute(
-    //       new SyncBlockCommand({
-    //         ...event,
-    //       })
-    //     );
-    //   } catch (error) {
-    //     this.logger.error(
-    //       error.message,
-    //       error.stack,
-    //       'BlockAcceptedHandler.error'
-    //     );
-    //   }
+    try {
+      await this.commandBus.execute(
+        new SyncBlockCommand({
+          blockHeight: event.block.header.height,
+        })
+      );
+    } catch (error) {
+      this.logger.error(
+        error.message,
+        error.stack,
+        'BlockAcceptedHandler.error'
+      );
+    }
   }
 }
