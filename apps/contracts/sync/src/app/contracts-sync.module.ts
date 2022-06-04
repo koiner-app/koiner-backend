@@ -13,10 +13,11 @@ import { ContractsSyncEventHandlers } from './event';
       exchanges: [
         {
           name: 'koiner.chain.sync',
+          type: 'topic',
         },
       ],
       channels: {
-        'koiner.chain.sync_channel': {
+        'koiner.contracts.sync_channel': {
           // PrefetchCount = 1 will make sure max 1 event can be handled at once,
           // thus making handling chain events synchronously.
           prefetchCount: 1,
