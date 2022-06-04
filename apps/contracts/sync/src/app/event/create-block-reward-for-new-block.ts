@@ -1,27 +1,28 @@
+import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { DomainEventHandler } from '@appvise/domain';
+import { OnEvent } from '@nestjs/event-emitter';
 import { Provider, utils } from 'koilib';
 import { RawBlocksService } from '@koinos/jsonrpc';
-import { AfterBlockCreated } from '@koiner/chain/domain';
-import { CreateOrUpdateAddressCommand } from '@koiner/chain/application';
+import { CreateOrUpdateAddressCommand } from '@koiner/contracts/application';
 import { ContractStandardType } from '@koiner/contracts/domain';
 import {
   CreateBlockRewardCommand,
   ContractStandardService,
 } from '@koiner/contracts/application';
+import { BlockCreatedMessage } from '@koiner/chain/events';
 import { koinos } from '../../config';
 
-export class CreateBlockRewardForNewBlock extends DomainEventHandler {
+@Injectable()
+export class CreateBlockRewardForNewBlock {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly provider: Provider,
     private readonly rawBlocksService: RawBlocksService,
     private readonly contractStandardService: ContractStandardService
-  ) {
-    super(AfterBlockCreated);
-  }
+  ) {}
 
-  async handle(event: AfterBlockCreated): Promise<void> {
+  @OnEvent(BlockCreatedMessage.routingKey, { async: false })
+  async handle(event: BlockCreatedMessage): Promise<void> {
     const rawBlock = await this.rawBlocksService.getBlock(event.height);
 
     if (rawBlock.receipt.events) {

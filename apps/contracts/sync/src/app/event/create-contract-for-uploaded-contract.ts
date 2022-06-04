@@ -1,20 +1,21 @@
+import { Injectable } from '@nestjs/common';
+import { OnEvent } from '@nestjs/event-emitter';
 import { CommandBus } from '@nestjs/cqrs';
-import { DomainEventHandler } from '@appvise/domain';
-import { UploadContractOperationCreated } from '@koiner/chain/domain';
 import {
   ContractStandardService,
   CreateContractCommand,
 } from '@koiner/contracts/application';
+import { UploadContractOperationCreatedMessage } from '@koiner/chain/events';
 
-export class CreateContractForUploadedContract extends DomainEventHandler {
+@Injectable()
+export class CreateContractForUploadedContract {
   constructor(
     private readonly commandBus: CommandBus,
-    private readonly contractStandardRetriever: ContractStandardService,
-  ) {
-    super(UploadContractOperationCreated);
-  }
+    private readonly contractStandardRetriever: ContractStandardService
+  ) {}
 
-  async handle(event: UploadContractOperationCreated): Promise<void> {
+  @OnEvent(UploadContractOperationCreatedMessage.routingKey, { async: false })
+  async handle(event: UploadContractOperationCreatedMessage): Promise<void> {
     const contractStandardWithValues =
       await this.contractStandardRetriever.getForContract(event.contractId);
 
@@ -26,7 +27,7 @@ export class CreateContractForUploadedContract extends DomainEventHandler {
         contractStandardType: contractStandardWithValues
           ? contractStandardWithValues.contractStandard.type
           : undefined,
-      }),
+      })
     );
   }
 }

@@ -3,7 +3,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { ConsumeMessage } from 'amqplib';
 import { Serializer } from 'koilib';
-import { broadcastDescriptors } from '../proto/broadcast-descriptors';
+import { broadcastDescriptors } from '../../proto/broadcast-descriptors';
 // import { SyncBlockCommand } from '../application';
 
 @Injectable()

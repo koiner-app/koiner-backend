@@ -179,7 +179,7 @@ services:
     ports:
       - '3102:3102'
 
-  postgres-contracts:
+  contracts-postgres:
     container_name: koiner-contracts-postgres
     image: postgres
     profiles: [ 'koiner-graphql', 'koiner-sync', 'all' ]
@@ -216,7 +216,7 @@ services:
     image: koinos/koinos-mempool:${MEMPOOL_TAG:-latest}
     depends_on:
       - amqp
-      - config
+#      - config
     volumes:
       - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
@@ -226,7 +226,7 @@ services:
     image: koinos/koinos-block-store:${BLOCK_STORE_TAG:-latest}
     depends_on:
       - amqp
-      - config
+#      - config
     volumes:
       - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
@@ -238,7 +238,7 @@ services:
       - amqp
       - block_store
       - mempool
-      - config
+#      - config
     volumes:
       - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
@@ -250,7 +250,7 @@ services:
       - amqp
       - block_store
       - chain
-      - config
+#      - config
     volumes:
       - '${BASEDIR}:/koinos'
     ports:
@@ -265,7 +265,7 @@ services:
       - amqp
       - mempool
       - chain
-      - config
+#      - config
     volumes:
       - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
@@ -276,7 +276,7 @@ services:
     profiles: ['jsonrpc', 'all']
     depends_on:
       - amqp
-      - config
+#      - config
     ports:
       - '${JSONRPC_INTERFACE:-0.0.0.0}:8080:8080'
     environment:
@@ -296,7 +296,7 @@ services:
     depends_on:
       - amqp
       - chain
-      - config
+#      - config
     volumes:
       - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
@@ -308,7 +308,7 @@ services:
     depends_on:
       - amqp
       - chain
-      - config
+#      - config
     volumes:
       - '${BASEDIR}:/koinos'
     command: --basedir=/koinos

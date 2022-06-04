@@ -18,6 +18,7 @@
       "@koiner/chain/api/graphql": ["apps/chain-api/src/app/index.ts"],
       "@koiner/chain/application": ["modules/chain/application/src/index.ts"],
       "@koiner/chain/domain": ["modules/chain/domain/src/index.ts"],
+      "@koiner/chain/events": ["modules/chain/events/src/index.ts"],
       "@koiner/chain/typeorm": ["modules/chain/typeorm/src/index.ts"],
       "@koiner/contracts/api/graphql": ["apps/contracts-api/src/app/index.ts"],
       "@koiner/contracts/application": [

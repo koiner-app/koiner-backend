@@ -1,23 +1,25 @@
+import { Injectable } from '@nestjs/common';
+import { OnEvent } from '@nestjs/event-emitter';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { DomainEventHandler } from '@appvise/domain';
 import { RawBlocksService } from '@koinos/jsonrpc';
-import { OperationCreated, OperationType } from '@koiner/chain/domain';
+import { OperationType } from '@koiner/chain/domain';
 import { Contract } from '@koiner/contracts/domain';
 import {
   ContractQuery,
   CreateContractOperationCommand,
 } from '@koiner/contracts/application';
+import { OperationCreatedMessage } from '@koiner/chain/events';
 
-export class CreateContractOperationForNewOperation extends DomainEventHandler {
+@Injectable()
+export class CreateContractOperationForNewOperation {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
     private readonly rawBlocksService: RawBlocksService
-  ) {
-    super(OperationCreated);
-  }
+  ) {}
 
-  async handle(event: OperationCreated): Promise<void> {
+  @OnEvent(OperationCreatedMessage.routingKey, { async: false })
+  async handle(event: OperationCreatedMessage): Promise<void> {
     if (event.type === OperationType.contractOperation) {
       const rawOperation = await this.rawBlocksService.getOperation(
         event.blockHeight,
@@ -40,7 +42,7 @@ export class CreateContractOperationForNewOperation extends DomainEventHandler {
 
       await this.commandBus.execute(
         new CreateContractOperationCommand({
-          id: event.aggregateId,
+          id: event.operationId,
           contractId,
           transactionId: event.transactionId,
           entryPoint: rawOperation.call_contract.entry_point,

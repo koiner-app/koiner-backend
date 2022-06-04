@@ -12,21 +12,21 @@ import { ContractsSyncEventHandlers } from './event';
     RabbitMQModule.forRoot(RabbitMQModule, {
       exchanges: [
         {
-          name: 'koinos.event',
-          type: 'topic',
+          name: 'koiner.chain.sync',
         },
       ],
+      channels: {
+        'koiner.chain.sync_channel': {
+          // PrefetchCount = 1 will make sure max 1 event can be handled at once,
+          // thus making handling chain events synchronously.
+          prefetchCount: 1,
+          default: true,
+        },
+      },
       uri: `amqp://${process.env.RABBITMQ_USER}:${process.env.RABBITMQ_PASSWORD}@${process.env.RABBITMQ_HOST}`,
     }),
     ContractsModule,
   ],
-  providers: [
-    Logger,
-
-    // EventHandlers
-    ...ContractsSyncEventHandlers,
-
-    RawBlocksService,
-  ],
+  providers: [Logger, RawBlocksService, ...ContractsSyncEventHandlers],
 })
 export class ContractsSyncModule {}

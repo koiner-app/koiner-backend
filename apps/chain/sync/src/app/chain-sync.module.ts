@@ -3,11 +3,10 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { CqrsModule } from '@nestjs/cqrs';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { KoinosModule, RawBlocksService } from '@koinos/jsonrpc';
-import { ChainSyncApplicationHandlers } from './application';
-import { BlockAcceptedHandler } from './event/block-accepted.handler';
-import { SyncController } from './sync.controller';
 import { ManualSyncService } from './manual-sync.service';
-import ChainSyncEventHandlers from './event';
+import { ChainSyncApplicationHandlers } from './application';
+import { ChainAmqpHandlers } from './amqp';
+import { SyncController } from './sync.controller';
 
 @Module({
   imports: [
@@ -20,22 +19,20 @@ import ChainSyncEventHandlers from './event';
           name: 'koinos.event',
           type: 'topic',
         },
+        {
+          name: 'koiner.chain.sync',
+        },
       ],
       uri: `amqp://${process.env.RABBITMQ_USER}:${process.env.RABBITMQ_PASSWORD}@${process.env.RABBITMQ_HOST}`,
     }),
   ],
   providers: [
     Logger,
-
-    // Application
-    ...ChainSyncApplicationHandlers,
-
-    // EventHandlers
-    BlockAcceptedHandler,
-    ...ChainSyncEventHandlers,
-
     RawBlocksService,
     ManualSyncService,
+
+    ...ChainSyncApplicationHandlers,
+    ...ChainAmqpHandlers,
   ],
   controllers: [SyncController],
 })

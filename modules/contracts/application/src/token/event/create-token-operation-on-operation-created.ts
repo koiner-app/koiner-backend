@@ -32,11 +32,11 @@ export class CreateTokenOperationOnOperationCreated extends DomainEventHandler {
         new CreateTokenOperationCommand({
           id: event.aggregateId,
           contractId: event.contractId,
+          transactionId: event.transactionId,
           name: decodedOperation.name,
           to: <string>decodedOperation.args.to,
           value: parseInt(<string>decodedOperation.args.value),
           from: <string>decodedOperation.args.from,
-          transactionId: event.transactionId,
         })
       );
     } catch (error) {
