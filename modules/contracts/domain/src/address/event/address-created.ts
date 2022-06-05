@@ -6,4 +6,6 @@ export class AddressCreated extends DomainEvent {
 
     Object.assign(this, props);
   }
+
+  readonly isProducer!: boolean;
 }

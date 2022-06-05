@@ -10,6 +10,7 @@
     "chain-typeorm": "modules/chain/typeorm",
     "contracts-application": "modules/contracts/application",
     "contracts-domain": "modules/contracts/domain",
+    "contracts-events": "modules/contracts/events",
     "contracts-graphql": "apps/contracts/graphql",
     "contracts-koilib": "modules/contracts/koilib",
     "contracts-sync": "apps/contracts/sync",

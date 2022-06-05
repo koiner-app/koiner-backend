@@ -47,7 +47,7 @@ export class CreateBlockRewardForNewBlock {
         await this.commandBus.execute(
           new CreateOrUpdateAddressCommand({
             id: blockProducerId,
-            producedBlock: true,
+            isProducer: true,
           })
         );
 

@@ -13,11 +13,11 @@ import {
 export class EmitChainSyncQueueEvents {
   constructor(
     private readonly logger: Logger,
-    private eventEmitter: EventEmitter2
+    private readonly eventEmitter: EventEmitter2
   ) {}
   @RabbitSubscribe({
     queueOptions: {
-      channel: 'koiner.contracts.sync_channel',
+      channel: 'koiner.contracts.chain_sync_channel',
     },
     exchange: 'koiner.chain.sync',
     routingKey: [
@@ -25,7 +25,7 @@ export class EmitChainSyncQueueEvents {
       OperationCreatedMessage.routingKey,
       UploadContractOperationCreatedMessage.routingKey,
     ],
-    queue: 'koiner.contracts.chain_events',
+    queue: 'koiner.contracts.chain_sync',
   })
   async handle(message: any, amqpMsg: ConsumeMessage): Promise<void> {
     return new Promise((resolve, reject) => {

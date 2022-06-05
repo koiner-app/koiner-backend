@@ -1,5 +1,5 @@
 export class BlockCreatedMessage {
-  static routingKey = 'block.created';
+  static routingKey = 'chain.block.created';
 
   constructor(props: Partial<BlockCreatedMessage>) {
     Object.assign(this, props);

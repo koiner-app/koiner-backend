@@ -4,6 +4,7 @@ import { CommandBus } from '@nestjs/cqrs';
 import {
   ContractStandardService,
   CreateContractCommand,
+  CreateOrUpdateAddressCommand,
 } from '@koiner/contracts/application';
 import { UploadContractOperationCreatedMessage } from '@koiner/chain/events';
 
@@ -18,6 +19,13 @@ export class CreateContractForUploadedContract {
   async handle(event: UploadContractOperationCreatedMessage): Promise<void> {
     const contractStandardWithValues =
       await this.contractStandardRetriever.getForContract(event.contractId);
+
+    // Create address for contract
+    await this.commandBus.execute(
+      new CreateOrUpdateAddressCommand({
+        id: event.contractId,
+      })
+    );
 
     await this.commandBus.execute(
       new CreateContractCommand({

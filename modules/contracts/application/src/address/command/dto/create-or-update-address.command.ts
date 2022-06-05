@@ -8,5 +8,5 @@ export class CreateOrUpdateAddressCommand extends Command {
   }
 
   readonly id!: string;
-  readonly producedBlock?: boolean = false;
+  readonly isProducer?: boolean = false;
 }

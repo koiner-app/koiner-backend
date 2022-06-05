@@ -25,6 +25,7 @@
         "modules/contracts/application/src/index.ts"
       ],
       "@koiner/contracts/domain": ["modules/contracts/domain/src/index.ts"],
+      "@koiner/contracts/events": ["modules/contracts/events/src/index.ts"],
       "@koiner/contracts/koilib": ["modules/contracts/koilib/src/index.ts"],
       "@koiner/contracts/typeorm": ["modules/contracts/typeorm/src/index.ts"],
       "@koiner/domain": ["modules/domain/src/index.ts"],

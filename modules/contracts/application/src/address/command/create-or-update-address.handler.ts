@@ -12,7 +12,7 @@ export class CreateOrUpdateAddressHandler
   async execute(command: CreateOrUpdateAddressCommand): Promise<void> {
     let address = await this.writeRepository.findOneById(command.id);
 
-    if (address && command.producedBlock) {
+    if (address && command.isProducer) {
       // Mark existing address as producer
       if (!address.isProducer) {
         address.markAsProducer();
@@ -24,7 +24,7 @@ export class CreateOrUpdateAddressHandler
     if (!address) {
       address = Address.create(
         {
-          isProducer: command.producedBlock ?? false,
+          isProducer: command.isProducer ?? false,
         },
         new KoinosAddressId(command.id)
       );

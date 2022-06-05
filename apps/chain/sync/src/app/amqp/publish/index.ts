@@ -1,9 +1,23 @@
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
+import { PublishAddressCreatedEvent } from './publish-address-created-event';
 import { PublishBlockCreatedEvent } from './publish-block-created-event';
 import { PublishOperationCreatedEvent } from './publish-operation-created-event';
 import { PublishUploadContractOperationCreatedEvent } from './publish-upload-contract-operation-created-event';
 
 export const ChainAmqpPublishHandlers = [
+  {
+    provide: PublishAddressCreatedEvent,
+    useFactory: (
+      amqpConnection: AmqpConnection
+    ): PublishAddressCreatedEvent => {
+      const eventHandler = new PublishAddressCreatedEvent(amqpConnection);
+
+      eventHandler.listen();
+
+      return eventHandler;
+    },
+    inject: [AmqpConnection],
+  },
   {
     provide: PublishBlockCreatedEvent,
     useFactory: (amqpConnection: AmqpConnection): PublishBlockCreatedEvent => {

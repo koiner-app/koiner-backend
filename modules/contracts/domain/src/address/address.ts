@@ -15,6 +15,7 @@ export class Address extends AggregateRoot<AddressProps> {
     address.addEvent(
       new AddressCreated({
         aggregateId: id.value,
+        isProducer: props.isProducer,
       })
     );
 

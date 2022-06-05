@@ -1,5 +1,5 @@
 export class UploadContractOperationCreatedMessage {
-  static routingKey = 'upload-contract-operation.created';
+  static routingKey = 'chain.upload-contract-operation.created';
 
   constructor(props: Partial<UploadContractOperationCreatedMessage>) {
     Object.assign(this, props);
