@@ -1,5 +1,6 @@
 #! Development image
 FROM node:lts-alpine As development
+RUN apk --no-cache add git
 
 WORKDIR /app
 COPY package*.json ./
@@ -26,7 +27,7 @@ COPY package*.json ./
 
 RUN npm ci --only=production
 
-COPY --from=development /app/dist/apps/chain-sync .
+COPY --from=development /app/dist/apps/chain/sync .
 ENV PORT=3001
 EXPOSE ${PORT}
 CMD ["node", "main"]
