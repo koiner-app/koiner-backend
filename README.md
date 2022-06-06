@@ -17,6 +17,7 @@ docker-compose up
 ### Add virtual hosts (Optional)
 ```
 127.0.0.1	gateway.docker
+127.0.0.1	subscriptions.docker
 127.0.0.1	chain.docker
 127.0.0.1	contracts.docker
 127.0.0.1	sync.chain.docker
