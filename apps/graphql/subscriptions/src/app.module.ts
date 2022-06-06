@@ -4,8 +4,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 import { AmqpModule } from './amqp.module';
 import { GlobalAppModule } from '@koiner/nestjs-utils';
-import { PubSubEngineProvider } from './pubsub-engine-provider';
-import { ChainGraphQLSubscriptions } from './chain';
+import { SubscriptionsModule } from './subscriptions.module';
 
 @Module({
   imports: [
@@ -21,7 +20,8 @@ import { ChainGraphQLSubscriptions } from './chain';
       },
       context: ({ req }) => ({ req }),
     }),
+    SubscriptionsModule,
   ],
-  providers: [PubSubEngineProvider, ...ChainGraphQLSubscriptions],
+  providers: [],
 })
 export class AppModule {}
