@@ -20,14 +20,6 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
           name: 'koiner.contracts.events',
           type: 'topic',
         },
-        {
-          name: 'graphql.subscriptions',
-          type: 'topic',
-          options: {
-            durable: false,
-            autoDelete: true,
-          },
-        },
       ],
       channels: {
         // Channel for processing events from chain to contracts synchronously

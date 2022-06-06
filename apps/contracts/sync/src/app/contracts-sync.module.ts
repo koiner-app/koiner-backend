@@ -5,14 +5,12 @@ import { AmqpModule } from './amqp.module';
 import { ContractsModule } from './contracts.module';
 import { ContractsSyncEventHandlers } from './event';
 import { ContractsAmqpHandlers } from './amqp';
-import { PubSubEngineProvider } from './pubsub-engine-provider';
 
 @Module({
   imports: [AmqpModule, CqrsModule, KoinosModule, ContractsModule],
   providers: [
     Logger,
     RawBlocksService,
-    PubSubEngineProvider,
     ...ContractsSyncEventHandlers,
     ...ContractsAmqpHandlers,
   ],
