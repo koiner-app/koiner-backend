@@ -1,18 +1,18 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BlockReceipt } from '@koiner/chain/domain';
 
 @ObjectType('BlockReceipt')
 export class BlockReceiptField {
-  @Field()
+  @Field(() => Int)
   diskStorageUsed: number;
 
-  @Field()
+  @Field(() => Int)
   networkBandwidthUsed: number;
 
-  @Field()
+  @Field(() => Int)
   computeBandwidthUsed: number;
 
-  @Field()
+  @Field(() => Int)
   eventCount: number;
 
   constructor(blockReceipt: BlockReceipt) {

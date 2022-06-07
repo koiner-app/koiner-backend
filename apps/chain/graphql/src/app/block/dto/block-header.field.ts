@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BlockHeader } from '@koiner/chain/domain';
 
 @ObjectType('BlockHeader')
@@ -6,7 +6,7 @@ export class BlockHeaderField {
   @Field()
   previous: string;
 
-  @Field()
+  @Field(() => Int)
   height: number;
 
   @Field()
