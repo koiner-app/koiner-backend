@@ -41,6 +41,7 @@
     "amqplib": "^0.9.1",
     "apollo-server-express": "^3.8.1",
     "dataloader": "^2.1.0",
+    "federation-subscription-tools": "^0.2.1",
     "graphql": "^15.8.0",
     "graphql-amqp-subscriptions": "^1.2.0",
     "graphql-subscriptions": "^2.0.0",

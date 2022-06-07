@@ -1,6 +1,5 @@
 import { Int, Resolver, Query, Subscription } from '@nestjs/graphql';
 import { PubSubEngine } from '@koiner/nestjs-utils';
-// TODO: Import from shared module
 import { BlockNode } from '@koiner/chain/graphql';
 
 @Resolver(() => BlockNode)
@@ -20,6 +19,13 @@ export class BlockCreatedSubscription {
 
   @Subscription(() => BlockNode, {
     name: 'blockCreated',
+    resolve: function (payload, args, { dataSources: { gatewayApi } }, info) {
+      return gatewayApi.fetchAndMergeNonPayloadBlockData(
+        payload.blockCreated.header.height,
+        payload,
+        info
+      );
+    },
   })
   async blockCreated() {
     return this.pubSub.asyncIterator('blockCreated');
