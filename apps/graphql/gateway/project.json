@@ -4,48 +4,34 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:webpack",
-      "outputs": ["{options.outputPath}"],
+      "executor": "nx:run-commands",
       "options": {
-        "outputPath": "dist/apps/graphql/gateway",
-        "main": "apps/graphql/gateway/src/main.ts",
-        "tsConfig": "apps/graphql/gateway/tsconfig.app.json",
-        "assets": ["apps/graphql/gateway/src/assets"],
+        "commands": [
+          {
+            "command": "mesh --dir apps/graphql/gateway build"
+          }
+        ],
         "poll": 2000
-      },
-      "configurations": {
-        "production": {
-          "optimization": true,
-          "extractLicenses": true,
-          "inspect": false,
-          "fileReplacements": [
-            {
-              "replace": "apps/graphql/gateway/src/environments/environment.ts",
-              "with": "apps/graphql/gateway/src/environments/environment.prod.ts"
-            }
-          ]
-        }
       }
     },
     "serve": {
-      "executor": "@nrwl/node:node",
+      "executor": "nx:run-commands",
       "options": {
-        "buildTarget": "graphql-gateway:build"
+        "commands": [
+          {
+            "command": "mesh --dir apps/graphql/gateway start"
+          }
+        ]
       }
     },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+    "serve-dev": {
+      "executor": "nx:run-commands",
       "options": {
-        "lintFilePatterns": ["apps/graphql/gateway/**/*.ts"]
-      }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/graphql/gateway"],
-      "options": {
-        "jestConfig": "apps/graphql/gateway/jest.config.ts",
-        "passWithNoTests": true
+        "commands": [
+          {
+            "command": "mesh --dir apps/graphql/gateway dev"
+          }
+        ]
       }
     }
   },

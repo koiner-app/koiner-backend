@@ -1,0 +1,18 @@
+sources:
+  - name: ChainGraphQLApi
+    handler:
+      graphql:
+        endpoint: http://chain-graphql:3001/graphql
+#        endpoint: http://localhost:3001/graphql
+  - name: ContractsGraphQLApi
+    handler:
+      graphql:
+        endpoint: http://contracts-graphql:3002/graphql
+#        endpoint: http://localhost:3002/graphql
+
+serve:
+  hostname: graphql-gateway
+  port: 3000
+  playground: true
+  cors:
+    origin: '*'
