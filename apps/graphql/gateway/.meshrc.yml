@@ -1,14 +1,14 @@
 sources:
-  - name: ChainGraphQLApi
+  - name: Chain
     handler:
       graphql:
         endpoint: http://chain-graphql:3001/graphql
-#        endpoint: http://localhost:3001/graphql
-  - name: ContractsGraphQLApi
+  - name: Contracts
     handler:
       graphql:
         endpoint: http://contracts-graphql:3002/graphql
-#        endpoint: http://localhost:3002/graphql
+
+additionalEnvelopPlugins: './envelop-plugins'
 
 serve:
   hostname: graphql-gateway

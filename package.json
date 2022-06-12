@@ -39,6 +39,7 @@
     "amqplib": "^0.9.1",
     "apollo-server-express": "^3.8.1",
     "dataloader": "^2.1.0",
+    "@envelop/depth-limit": "^1.5.3",
     "graphql": "^16.5.0",
     "graphql-amqp-subscriptions2": "^1.3.0",
     "graphql-subscriptions": "^2.0.0",
