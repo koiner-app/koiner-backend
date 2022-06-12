@@ -7,8 +7,9 @@ import { AddressQuery } from '@koiner/chain/application';
 export class AddressResolver extends NodeQuery(
   AddressNode,
   AddressQuery,
-  'address',
+  'address'
 ) {}
 
 export * from './addresses.resolver';
+export * from './addresses-bulk.resolver';
 export * from './address-transactions.resolver';

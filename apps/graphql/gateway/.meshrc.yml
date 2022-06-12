@@ -16,3 +16,14 @@ serve:
   playground: true
   cors:
     origin: '*'
+
+additionalTypeDefs:
+  !include ./additional-types/additional-types.yaml
+additionalResolvers:
+  # Chain
+  - !include ./resolvers/chain/address-rewards.yaml
+  - !include ./resolvers/chain/address-token-balances.yaml
+  - !include ./resolvers/chain/address-token-operations.yaml
+  - !include ./resolvers/chain/block-reward.yaml
+    # Contracts
+  - !include ./resolvers/contracts/block-reward-producer.yaml

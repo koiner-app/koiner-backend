@@ -2,6 +2,7 @@ import { AddressesLoader } from './dataloader';
 import {
   AddressResolver,
   AddressesResolver,
+  AddressesBulkResolver,
   AddressTransactionsResolver,
 } from './query';
 
@@ -12,6 +13,7 @@ export const AddressGraphQLServices = [
   // Queries
   AddressResolver,
   AddressesResolver,
+  AddressesBulkResolver,
   AddressTransactionsResolver,
 ];
 

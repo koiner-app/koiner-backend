@@ -1,0 +1,7 @@
+sourceName: Contracts
+sourceTypeName: Query
+targetTypeName: Block
+targetFieldName: reward
+sourceFieldName: blockRewardsBulk
+keyField: height
+keysArg: heights

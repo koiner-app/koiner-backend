@@ -1,0 +1,11 @@
+targetTypeName: Address
+targetFieldName: rewards
+sourceName: Contracts
+sourceTypeName: Query
+sourceFieldName: blockRewards
+requiredSelectionSet: |
+  {
+    id
+  }
+sourceArgs:
+  filter.producerId.equals: '{root.id}'

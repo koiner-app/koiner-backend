@@ -8,6 +8,9 @@ export class BlockRewardNode extends BaseNode {
   blockHeight: number;
 
   @Field()
+  height: number;
+
+  @Field()
   producerId: string;
 
   @Field()
@@ -19,6 +22,7 @@ export class BlockRewardNode extends BaseNode {
   constructor(blockReward: BlockReward) {
     super(blockReward);
 
+    this.height = blockReward.blockHeight;
     this.blockHeight = blockReward.blockHeight;
     this.producerId = blockReward.producerId.value;
     this.value = blockReward.value;

@@ -1,0 +1,11 @@
+targetTypeName: Address
+targetFieldName: tokenBalances
+sourceName: Contracts
+sourceTypeName: Query
+sourceFieldName: tokenBalances
+requiredSelectionSet: |
+  {
+    id
+  }
+sourceArgs:
+  filter.addressId.equals: '{root.id}'

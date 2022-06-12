@@ -8,6 +8,9 @@ export class BlockNode extends BaseNode {
   @Field()
   id: string;
 
+  @Field(() => Int)
+  height: number;
+
   @Field(() => BlockHeaderField)
   header: BlockHeaderField;
 
@@ -24,6 +27,7 @@ export class BlockNode extends BaseNode {
     super(block);
 
     this.id = block.id.value;
+    this.height = block.header.height;
     this.header = new BlockHeaderField(block.header);
     this.signature = block.signature;
     this.receipt = new BlockReceiptField(block.receipt);

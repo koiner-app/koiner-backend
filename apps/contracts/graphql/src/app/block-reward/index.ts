@@ -1,5 +1,10 @@
 import { BlockRewardsLoader } from './dataloader';
-import { BlockRewardResolver, BlockRewardsResolver } from './query';
+import {
+  BlockRewardContractResolver,
+  BlockRewardResolver,
+  BlockRewardsBulkResolver,
+  BlockRewardsResolver,
+} from './query';
 
 export const BlockRewardGraphQLServices = [
   // DataLoader
@@ -8,6 +13,10 @@ export const BlockRewardGraphQLServices = [
   // Queries
   BlockRewardResolver,
   BlockRewardsResolver,
+  BlockRewardsBulkResolver,
+
+  // FieldResolvers
+  BlockRewardContractResolver,
 ];
 
 export * from './dataloader';

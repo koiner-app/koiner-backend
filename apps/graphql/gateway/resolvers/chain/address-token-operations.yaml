@@ -1,0 +1,12 @@
+targetTypeName: Address
+targetFieldName: tokenOperations
+sourceName: Contracts
+sourceTypeName: Query
+sourceFieldName: tokenOperations
+requiredSelectionSet: |
+  {
+    id
+  }
+sourceArgs:
+  filter.OR[0].from.equals: '{root.id}'
+  filter.OR[1].to.equals: '{root.id}'

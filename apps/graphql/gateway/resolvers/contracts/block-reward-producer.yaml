@@ -1,0 +1,7 @@
+sourceName: Chain
+sourceTypeName: Query
+targetTypeName: BlockReward
+targetFieldName: producer
+sourceFieldName: addressesBulk
+keyField: producerId
+keysArg: ids
