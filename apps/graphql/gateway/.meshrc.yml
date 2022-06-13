@@ -21,7 +21,8 @@ additionalTypeDefs:
   !include ./additional-types/additional-types.yaml
 additionalResolvers:
   # Chain
-  - !include ./resolvers/chain/address-rewards.yaml
+  - !include ./resolvers/chain/address-block-reward-balances.yaml
+  - !include ./resolvers/chain/address-block-rewards.yaml
   - !include ./resolvers/chain/address-token-balances.yaml
   - !include ./resolvers/chain/address-token-operations.yaml
   - !include ./resolvers/chain/block-reward.yaml

@@ -1,0 +1,11 @@
+targetTypeName: Address
+targetFieldName: blockRewardBalances
+sourceName: Contracts
+sourceTypeName: Query
+sourceFieldName: blockRewardBalances
+requiredSelectionSet: |
+  {
+    id
+  }
+sourceArgs:
+  filter.addressId.equals: '{root.id}'
