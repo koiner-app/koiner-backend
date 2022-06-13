@@ -1,5 +1,5 @@
 targetTypeName: Address
-targetFieldName: rewards
+targetFieldName: blockRewards
 sourceName: Contracts
 sourceTypeName: Query
 sourceFieldName: blockRewards
