@@ -7,10 +7,10 @@ import { TokenContractNode } from '../../token/dto/token-contract.node';
 export class TokenBalanceContractResolver {
   constructor(private loader: TokenContractsLoader) {}
 
-  @ResolveField('contract', () => TokenContractNode, { nullable: true })
+  @ResolveField('contract', () => TokenContractNode)
   async contract(
     @Parent() balance: TokenBalanceNode
-  ): Promise<TokenContractNode | undefined> {
+  ): Promise<TokenContractNode> {
     return this.loader.batch.load(balance.contractId);
   }
 }
