@@ -16,7 +16,6 @@
     "contracts-sync": "apps/contracts/sync",
     "contracts-typeorm": "modules/contracts/typeorm",
     "graphql-gateway": "apps/graphql/gateway",
-    "graphql-subscriptions": "apps/graphql/subscriptions",
     "koiner-domain": "modules/domain",
     "koinos-config": "modules/koinos/config",
     "koinos-jsonrpc": "modules/koinos/jsonrpc",

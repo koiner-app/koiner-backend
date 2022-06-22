@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { KoinosModule } from '@koinos/jsonrpc';
+import { PubSubEngineProvider } from '../pubsub-engine-provider';
+import { AmqpModule } from '../amqp.module';
 import {
   SystemCallOperationTypeResolver,
   SystemContractOperationTypeResolver,
@@ -20,11 +22,13 @@ database.entities.push(...ChainModuleModels);
 
 @Module({
   imports: [
+    AmqpModule,
     CqrsModule,
     TypeOrmModule.forFeature(ChainModuleModels),
     KoinosModule,
   ],
   providers: [
+    PubSubEngineProvider,
     ...ChainModuleApplicationHandlers,
     ...ChainModuleRepositories,
     ...ChainModuleGraphQLServices,

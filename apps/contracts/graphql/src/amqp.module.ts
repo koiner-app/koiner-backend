@@ -6,19 +6,11 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
     RabbitMQModule.forRoot(RabbitMQModule, {
       exchanges: [
         {
-          name: 'koiner.chain.sync',
-          type: 'topic',
-        },
-        {
-          name: 'koiner.chain.events',
-          type: 'topic',
-        },
-        {
           name: 'koiner.contracts.events',
           type: 'topic',
         },
         {
-          name: 'koiner.graphql.subscriptions',
+          name: 'koiner.contracts.graphql.subscriptions',
           type: 'topic',
           options: {
             durable: false,
@@ -26,6 +18,11 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
           },
         },
       ],
+      channels: {
+        'koiner.contracts.graphql.subscriptions_channel': {
+          prefetchCount: 10,
+        },
+      },
       uri: `amqp://${process.env.RABBITMQ_USER}:${process.env.RABBITMQ_PASSWORD}@${process.env.RABBITMQ_HOST}`,
     }),
   ],

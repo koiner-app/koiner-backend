@@ -50,6 +50,7 @@ services:
       - ./modules:/app/modules
       - /app/node_modules
     networks:
+      - default
       - webproxy
     dns:
       - 8.8.8.8
@@ -85,6 +86,7 @@ services:
       - ./modules:/app/modules
       - /app/node_modules
     networks:
+      - default
       - webproxy
     dns:
       - 8.8.8.8
@@ -171,6 +173,7 @@ services:
       - ./modules:/app/modules
       - /app/node_modules
     networks:
+      - default
       - webproxy
     dns:
       - 8.8.8.8

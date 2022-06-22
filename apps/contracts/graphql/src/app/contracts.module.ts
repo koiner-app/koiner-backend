@@ -2,16 +2,18 @@ import { Logger, Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { KoinosModule } from '@koinos/jsonrpc';
+import { PubSubEngineProvider } from '../pubsub-engine-provider';
+import { AmqpModule } from '../amqp.module';
 import { ContractStandardKoilibService } from '@koiner/contracts/koilib'; // Must be imported before ContractStandardService
 import { ContractStandardImReadRepository } from '@koiner/contracts/koilib';
 import { ContractStandardReadRepository } from '@koiner/contracts/domain';
 import {
   ContractStandardService,
-  ContractsApplicationHandlers,
+  ContractsModuleApplicationHandlers,
 } from '@koiner/contracts/application';
 import {
   ContractsModels,
-  ContractsRepositories,
+  ContractsModuleRepositories,
 } from '@koiner/contracts/typeorm';
 import {
   ContractsModuleGraphQLServices,
@@ -26,20 +28,22 @@ database.entities.push(...ContractsModels);
 
 @Module({
   imports: [
+    AmqpModule,
     CqrsModule,
     TypeOrmModule.forFeature(ContractsModels),
     KoinosModule,
   ],
   providers: [
     Logger,
+    PubSubEngineProvider,
 
     {
       provide: ContractStandardService,
       useClass: ContractStandardKoilibService,
     },
 
-    ...ContractsApplicationHandlers,
-    ...ContractsRepositories,
+    ...ContractsModuleApplicationHandlers,
+    ...ContractsModuleRepositories,
     {
       provide: ContractStandardReadRepository,
       useClass: ContractStandardImReadRepository,

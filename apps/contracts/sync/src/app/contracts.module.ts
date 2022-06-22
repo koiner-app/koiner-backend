@@ -7,11 +7,11 @@ import { ContractStandardImReadRepository } from '@koiner/contracts/koilib';
 import { ContractStandardReadRepository } from '@koiner/contracts/domain';
 import {
   ContractStandardService,
-  ContractsApplicationHandlers,
+  ContractsModuleApplicationHandlers,
 } from '@koiner/contracts/application';
 import {
   ContractsModels,
-  ContractsRepositories,
+  ContractsModuleRepositories,
 } from '@koiner/contracts/typeorm';
 
 // Register our models with typeorm
@@ -30,8 +30,8 @@ database.entities.push(...ContractsModels);
       useClass: ContractStandardKoilibService,
     },
 
-    ...ContractsApplicationHandlers,
-    ...ContractsRepositories,
+    ...ContractsModuleApplicationHandlers,
+    ...ContractsModuleRepositories,
     {
       provide: ContractStandardReadRepository,
       useClass: ContractStandardImReadRepository,

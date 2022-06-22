@@ -20,7 +20,7 @@ export const ContractsModels = [
   ...ContractOperationModels,
   ...TokenModels,
 ];
-export const ContractsRepositories: Provider[] = [
+export const ContractsModuleRepositories: Provider[] = [
   ...AddressRepositories,
   ...BlockRewardRepositories,
   ...ContractRepositories,

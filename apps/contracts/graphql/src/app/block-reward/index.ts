@@ -8,6 +8,10 @@ import {
   BlockRewardsBulkResolver,
   BlockRewardsResolver,
 } from './query';
+import {
+  BlockRewardCreatedSubscription,
+  PublishBlockRewardCreatedToPubSub,
+} from './subscription';
 
 export const BlockRewardGraphQLServices = [
   // DataLoader
@@ -23,6 +27,10 @@ export const BlockRewardGraphQLServices = [
   // FieldResolvers
   BlockRewardBalanceContractResolver,
   BlockRewardContractResolver,
+
+  // Subscriptions
+  BlockRewardCreatedSubscription,
+  PublishBlockRewardCreatedToPubSub,
 ];
 
 export * from './dataloader';
