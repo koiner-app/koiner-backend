@@ -27,9 +27,11 @@ export class EventNode extends BaseNode {
 
     this.transactionId = event.transactionId.value;
     this.sequence = event.sequence;
-    this.contractId = event.contractId.value;
+    this.contractId = event.contractId ? event.contractId.value : undefined;
     this.name = event.name;
     this.data = event.data;
-    this.impacted = event.impacted.map((address) => address.value);
+    this.impacted = event.impacted
+      ? event.impacted.map((address) => address.value)
+      : undefined;
   }
 }
