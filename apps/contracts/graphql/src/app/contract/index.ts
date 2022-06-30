@@ -1,5 +1,9 @@
 import { ContractsLoader } from './dataloader';
-import { ContractResolver, ContractsResolver } from './query';
+import {
+  ContractResolver,
+  ContractsBulkResolver,
+  ContractsResolver,
+} from './query';
 
 export const ContractGraphQLServices = [
   // DataLoaders
@@ -8,6 +12,7 @@ export const ContractGraphQLServices = [
   // Queries
   ContractResolver,
   ContractsResolver,
+  ContractsBulkResolver,
 ];
 
 export * from './dataloader';

@@ -1,4 +1,5 @@
 export * from './contract.node';
+export * from './contract-bulk-result.node';
 export * from './contract-operation.union';
 export * from './contract-standard-type.enum';
 export * from './contracts.connection';
