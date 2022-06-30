@@ -7,8 +7,9 @@ import { ContractOperationNode } from '../dto/contract-operation.node';
 export class ContractOperationResolver extends NodeQuery(
   ContractOperationNode,
   ContractOperationQuery,
-  'contractOperation',
+  'contractOperation'
 ) {}
 
 export * from './contract-operation-details.resolver';
 export * from './contract-operations.resolver';
+export * from './contract-operations-bulk.resolver';

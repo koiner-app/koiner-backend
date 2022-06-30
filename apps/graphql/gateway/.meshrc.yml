@@ -17,8 +17,7 @@ serve:
   cors:
     origin: '*'
 
-additionalTypeDefs:
-  !include ./additional-types/additional-types.yaml
+additionalTypeDefs: ./additional-types/additional-types.graphql
 additionalResolvers:
   # Chain
   - !include ./resolvers/chain/address-block-reward-balances.yaml
@@ -26,5 +25,10 @@ additionalResolvers:
   - !include ./resolvers/chain/address-token-balances.yaml
   - !include ./resolvers/chain/address-token-operations.yaml
   - !include ./resolvers/chain/block-reward.yaml
+  - !include ./resolvers/chain/operation-contract-operation.yaml
+  - !include ./resolvers/chain/operation-contract-operation-union.yaml
+  - !include ./resolvers/chain/system-call-operation-contract.yaml
+  - !include ./resolvers/chain/system-contract-operation-contract.yaml
+  - !include ./resolvers/chain/upload-contract-operation-contract.yaml
     # Contracts
   - !include ./resolvers/contracts/block-reward-producer.yaml

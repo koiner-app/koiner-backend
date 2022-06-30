@@ -5,6 +5,9 @@ import { NumericFilterInput, StringFilterInput } from '@appvise/graphql';
 @InputType()
 export class ContractOperationsFilter implements FilterType {
   @Field(() => StringFilterInput, { nullable: true })
+  id?: StringFilterInput;
+
+  @Field(() => StringFilterInput, { nullable: true })
   contractId?: StringFilterInput;
 
   @Field(() => NumericFilterInput, { nullable: true })

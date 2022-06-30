@@ -1,0 +1,8 @@
+sourceName: Contracts
+sourceTypeName: Query
+targetTypeName: SystemContractOperation
+targetFieldName: contract
+sourceFieldName: contractsBulk
+keyField: contractId
+keysArg: ids
+result: item

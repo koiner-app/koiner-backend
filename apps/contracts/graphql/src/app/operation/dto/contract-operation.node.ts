@@ -6,7 +6,7 @@ import {
 } from '@koiner/contracts/domain';
 import { ContractOperationDetailsUnion } from '../../contract/dto/contract-operation.union';
 
-@ObjectType('ContractOperation')
+@ObjectType('ContractOperationWithDetails')
 export class ContractOperationNode extends BaseNode {
   @Field()
   contractId: string;

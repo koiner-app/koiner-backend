@@ -3,6 +3,7 @@
 import {
   ContractOperationDetailsResolver,
   ContractOperationResolver,
+  ContractOperationsBulkResolver,
   ContractOperationsResolver,
 } from './query';
 // TODO: Fix
@@ -17,6 +18,7 @@ export const ContractOperationGraphQLServices = [
   ContractOperationResolver,
   ContractOperationsResolver,
   ContractOperationDetailsResolver,
+  ContractOperationsBulkResolver,
 
   // OperationType Resolvers
   // TODO: Fix

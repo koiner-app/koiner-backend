@@ -1,4 +1,5 @@
 export * from './contract-operation.node';
+export * from './contract-operation-bulk-result.node';
 export * from './contract-operations.connection';
 export * from './contract-operations.filter';
 export * from './contract-operations.request';
