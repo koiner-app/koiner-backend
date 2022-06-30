@@ -4,56 +4,54 @@ import { SearchResponse } from '@appvise/domain';
 import { SelectionSet } from '@appvise/graphql';
 import { BlockReward } from '@koiner/contracts/domain';
 import { BlockRewardsQuery } from '@koiner/contracts/application';
-import { BlockRewardNode, BlockRewardsRequest } from '../dto';
+import {
+  BlockRewardBulkResult,
+  BlockRewardNode,
+  BlockRewardsRequest,
+} from '../dto';
 
-@Resolver(() => BlockRewardNode)
+@Resolver(() => BlockRewardBulkResult)
 export class BlockRewardsBulkResolver {
   constructor(private readonly queryBus: QueryBus) {}
 
-  @Query(() => [BlockRewardNode], { name: 'blockRewardsBulk' })
+  @Query(() => [BlockRewardBulkResult], { name: 'blockRewardsBulk' })
   async execute(
     @SelectionSet()
     selectionSet,
     @Args('heights', { type: () => [Int], nullable: true })
     heights?: number[],
-    @Args('producerIds', { type: () => [String], nullable: true })
-    producerIds?: string[],
     @Args('first', { type: () => Int, defaultValue: 1000 })
     first?: number
-  ): Promise<BlockRewardNode[]> {
+  ): Promise<BlockRewardBulkResult[]> {
     const request = new BlockRewardsRequest();
     request.first = first;
 
-    if (heights) {
-      request.filter = {
-        OR: heights.map((_blockHeight) => {
-          return {
-            blockHeight: { equals: _blockHeight },
-          };
-        }),
-      };
-    }
-
-    if (producerIds) {
-      request.filter = {
-        OR: producerIds.map((_producerId) => {
-          return {
-            producerId: { equals: _producerId },
-          };
-        }),
-      };
-    }
+    request.filter = {
+      OR: heights.map((_blockHeight) => {
+        return {
+          blockHeight: { equals: _blockHeight },
+        };
+      }),
+    };
 
     const searchResponse = await this.queryBus.execute<
       BlockRewardsQuery,
       SearchResponse<BlockReward>
     >(new BlockRewardsQuery(request, selectionSet));
 
-    const results: BlockRewardNode[] = [];
+    const results: BlockRewardBulkResult[] = [];
 
-    searchResponse.results.forEach((result) =>
-      results.push(new BlockRewardNode(result.item))
-    );
+    heights.forEach((height) => {
+      const result = searchResponse.results.find(
+        (_result) => _result.item.blockHeight.toString() === height.toString()
+      );
+
+      results.push(
+        new BlockRewardBulkResult(
+          result ? new BlockRewardNode(result.item) : undefined
+        )
+      );
+    });
 
     return results;
   }

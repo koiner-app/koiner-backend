@@ -10,3 +10,4 @@ export * from './block-reward-balances.filter';
 export * from './block-reward-balances.request';
 export * from './block-reward-balances.sort.input';
 export * from './block-reward-balances.sort-field.enum';
+export * from './block-reward-bulk-result.node';
