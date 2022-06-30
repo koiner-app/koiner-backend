@@ -5,3 +5,4 @@ targetFieldName: reward
 sourceFieldName: blockRewardsBulk
 keyField: height
 keysArg: heights
+result: item
