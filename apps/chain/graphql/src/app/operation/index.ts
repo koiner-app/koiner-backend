@@ -3,8 +3,13 @@ import {
   SystemContractOperationsLoader,
   UploadContractOperationsLoader,
 } from './dataloader';
-import { OperationResolver, OperationsResolver } from './query';
 import {
+  OperationResolver,
+  OperationsResolver,
+  OperationDetailsResolver,
+} from './query';
+import {
+  ContractOperationTypeResolver,
   SystemCallOperationTypeResolver,
   SystemContractOperationTypeResolver,
   UploadContractOperationTypeResolver,
@@ -19,11 +24,25 @@ export const OperationGraphQLServices = [
   // Queries
   OperationResolver,
   OperationsResolver,
+  OperationDetailsResolver,
 
   // OperationType Resolvers
+  ContractOperationTypeResolver,
   SystemCallOperationTypeResolver,
   SystemContractOperationTypeResolver,
   UploadContractOperationTypeResolver,
+
+  // OperationType Resolvers
+  {
+    provide: 'OperationTypeResolvers',
+    useFactory: (r1, r2, r3, r4) => [r1, r2, r3, r4],
+    inject: [
+      ContractOperationTypeResolver,
+      SystemCallOperationTypeResolver,
+      SystemContractOperationTypeResolver,
+      UploadContractOperationTypeResolver,
+    ],
+  },
 ];
 
 export * from './dataloader';

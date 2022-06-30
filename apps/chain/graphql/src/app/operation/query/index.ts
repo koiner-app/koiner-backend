@@ -7,8 +7,9 @@ import { OperationNode } from '../dto';
 export class OperationResolver extends NodeQuery(
   OperationNode,
   OperationQuery,
-  'operation',
+  'operation'
 ) {}
 
+export * from './operation-details.resolver';
 export * from './operation-type.resolver';
 export * from './operations.resolver';
