@@ -1,7 +1,7 @@
 sourceName: Contracts
 sourceTypeName: Query
 targetTypeName: ContractOperation
-targetFieldName: contractOperation
+targetFieldName: fields
 sourceFieldName: contractOperationsBulk
 keyField: id
 keysArg: ids

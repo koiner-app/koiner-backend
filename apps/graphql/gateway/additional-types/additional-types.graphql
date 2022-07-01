@@ -15,7 +15,7 @@ extend type Operation {
 }
 
 extend type ContractOperation {
-  contractOperation: ContractOperationWithDetails
+  fields: ContractOperationWithDetails
 }
 
 extend type SystemCallOperation {
@@ -33,4 +33,8 @@ extend type UploadContractOperation {
 # Contracts
 extend type BlockReward {
   producer: Address
+}
+
+extend type ContractOperationWithDetails {
+  contract: Contract!
 }
