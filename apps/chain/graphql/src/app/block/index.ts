@@ -1,5 +1,6 @@
 import { BlocksLoader } from './dataloader';
 import {
+  BlockEventsResolver,
   BlockResolver,
   BlocksResolver,
   BlockTransactionsResolver,
@@ -16,6 +17,7 @@ export const BlockGraphQLServices = [
   // Queries
   BlockResolver,
   BlocksResolver,
+  BlockEventsResolver,
   BlockTransactionsResolver,
 
   // Subscriptions
