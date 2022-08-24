@@ -1,16 +1,15 @@
 import { EntityBaseSchema } from '@appvise/typeorm';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
-import { TransactionSchema } from '..';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { EventParentType } from '@koiner/chain/domain';
 
 @Entity('chain_event')
 export class EventSchema extends EntityBaseSchema {
   @PrimaryColumn()
   @Column({ length: 70 })
-  readonly transaction_id!: string;
+  readonly parent_id!: string;
 
-  @ManyToOne(() => TransactionSchema)
-  @JoinColumn({ name: 'transaction_id', referencedColumnName: 'id' })
-  readonly transaction!: TransactionSchema;
+  @Column({ type: 'enum', enum: EventParentType })
+  readonly parent_type!: EventParentType;
 
   @PrimaryColumn()
   @Column({ type: 'smallint', nullable: true })

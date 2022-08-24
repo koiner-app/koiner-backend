@@ -1,6 +1,10 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UUID } from '@appvise/domain';
-import { Event, EventWriteRepository } from '@koiner/chain/domain';
+import {
+  Event,
+  EventParentType,
+  EventWriteRepository,
+} from '@koiner/chain/domain';
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
 import { CreateEventCommand } from './dto/create-event.command';
 
@@ -11,7 +15,8 @@ export class CreateEventHandler implements ICommandHandler<CreateEventCommand> {
   async execute(command: CreateEventCommand): Promise<void> {
     const event = Event.create(
       {
-        transactionId: new KoinosId(command.transactionId),
+        parentId: new KoinosId(command.parentId),
+        parentType: command.parentType as EventParentType,
         sequence: command.sequence,
         contractId: command.contractId
           ? new KoinosAddressId(command.contractId)

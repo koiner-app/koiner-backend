@@ -1,7 +1,13 @@
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
 
+export enum EventParentType {
+  block = 'block',
+  transaction = 'transaction',
+}
+
 export interface CreateEventProps {
-  transactionId: KoinosId;
+  parentId: KoinosId;
+  parentType: EventParentType;
   sequence?: number;
   contractId?: KoinosAddressId;
   name: string;

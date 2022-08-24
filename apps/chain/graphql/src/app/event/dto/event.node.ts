@@ -5,7 +5,10 @@ import { Event } from '@koiner/chain/domain';
 @ObjectType('Event')
 export class EventNode extends BaseNode {
   @Field()
-  transactionId: string;
+  parentId: string;
+
+  @Field()
+  parentType: string;
 
   @Field({ nullable: true })
   sequence?: number;
@@ -25,7 +28,8 @@ export class EventNode extends BaseNode {
   constructor(event: Event) {
     super(event);
 
-    this.transactionId = event.transactionId.value;
+    this.parentId = event.parentId.value;
+    this.parentType = event.parentType;
     this.sequence = event.sequence;
     this.contractId = event.contractId ? event.contractId.value : undefined;
     this.name = event.name;

@@ -8,7 +8,10 @@ export class EventsFilter implements FilterType {
   id?: StringFilterInput;
 
   @Field(() => StringFilterInput, { nullable: true })
-  transactionId?: StringFilterInput;
+  parentId?: StringFilterInput;
+
+  @Field(() => StringFilterInput, { nullable: true })
+  parentType?: StringFilterInput;
 
   @Field(() => NumericFilterInput, { nullable: true })
   sequence?: NumericFilterInput;

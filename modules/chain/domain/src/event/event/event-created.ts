@@ -7,6 +7,8 @@ export class EventCreated extends DomainEvent {
     Object.assign(this, props);
   }
 
+  readonly parentId!: string;
+  readonly parentType!: string;
   readonly sequence?: number;
   readonly contractId?: string;
   readonly name!: string;

@@ -1,6 +1,6 @@
-import { AggregateRoot, UUID } from '@appvise/domain';
+import { AggregateRoot, ArgumentInvalidException, UUID } from '@appvise/domain';
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
-import { CreateEventProps, EventCreated, EventProps } from '.';
+import { CreateEventProps, EventCreated, EventParentType, EventProps } from '.';
 
 export class Event extends AggregateRoot<EventProps> {
   protected readonly _id!: KoinosId;
@@ -15,7 +15,9 @@ export class Event extends AggregateRoot<EventProps> {
 
     event.addEvent(
       new EventCreated({
-        aggregateId: props.transactionId.value,
+        aggregateId: props.parentId.value,
+        parentId: props.parentId.value,
+        parentType: props.parentType,
         sequence: props.sequence,
         contractId: props.contractId ? props.contractId.value : undefined,
         name: props.name,
@@ -29,8 +31,12 @@ export class Event extends AggregateRoot<EventProps> {
     return event;
   }
 
-  get transactionId(): KoinosId {
-    return this.props.transactionId;
+  get parentId(): KoinosId {
+    return this.props.parentId;
+  }
+
+  get parentType(): EventParentType {
+    return this.props.parentType;
   }
 
   get sequence(): number | undefined {
@@ -54,6 +60,12 @@ export class Event extends AggregateRoot<EventProps> {
   }
 
   validate(): void {
-    //
+    const parentTypeKeys = Object.keys(EventParentType);
+
+    if (!parentTypeKeys.includes(this.props.parentType)) {
+      throw new ArgumentInvalidException(
+        'parentType is not a valid EventParentType'
+      );
+    }
   }
 }

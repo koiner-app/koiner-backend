@@ -7,7 +7,8 @@ export class CreateEventCommand extends Command {
     Object.assign(this, props);
   }
 
-  readonly transactionId!: string;
+  readonly parentId!: string;
+  readonly parentType!: string;
   readonly sequence?: number;
   readonly contractId?: string;
   readonly name!: string;

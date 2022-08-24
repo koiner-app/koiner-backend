@@ -16,7 +16,8 @@ export class EventSchemaFactory extends EntitySchemaFactory<
     const id = new UUID(entitySchema.id);
 
     const props: EventProps = {
-      transactionId: new KoinosId(entitySchema.transaction_id),
+      parentId: new KoinosId(entitySchema.parent_id),
+      parentType: entitySchema.parent_type,
       sequence: entitySchema.sequence,
       contractId: entitySchema.contract_id
         ? new KoinosAddressId(entitySchema.contract_id)
@@ -37,11 +38,8 @@ export class EventSchemaFactory extends EntitySchemaFactory<
     const props = entity.getPropsCopy();
 
     return {
-      transaction_id: props.transactionId.value,
-      // TODO: How to handle this?
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      transaction: null,
+      parent_id: props.parentId.value,
+      parent_type: props.parentType,
       sequence: props.sequence,
       contract_id: props.contractId ? props.contractId.value : undefined,
       name: props.name,

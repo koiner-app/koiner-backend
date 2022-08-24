@@ -1,7 +1,7 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { DomainEventHandler } from '@appvise/domain';
 import { RawBlocksService } from '@koinos/jsonrpc';
-import { TransactionCreated } from '@koiner/chain/domain';
+import { EventParentType, TransactionCreated } from '@koiner/chain/domain';
 import { CreateEventCommand } from '@koiner/chain/application';
 
 export class SyncEventsForNewTransaction extends DomainEventHandler {
@@ -28,14 +28,17 @@ export class SyncEventsForNewTransaction extends DomainEventHandler {
 
         await this.commandBus.execute(
           new CreateEventCommand({
-            transactionId: event.aggregateId,
+            parentId: event.aggregateId,
+            parentType: EventParentType.transaction,
             sequence: transactionEvent.sequence,
             contractId: transactionEvent.source,
             name: transactionEvent.name,
             data: transactionEvent.data,
-            impacted: transactionEvent.impacted.filter(
-              (impactedItem) => impactedItem !== '' // Filter out empty items
-            ),
+            impacted: transactionEvent.impacted
+              ? transactionEvent.impacted.filter(
+                  (impactedItem) => impactedItem !== '' // Filter out empty items
+                )
+              : [],
           })
         );
       }
