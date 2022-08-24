@@ -17,7 +17,6 @@ export class SyncEventsForNewTransaction extends DomainEventHandler {
       event.blockHeight,
       event.aggregateId
     );
-    console.log('txReceipt', txReceipt);
 
     if (Array.isArray(txReceipt.events)) {
       for (
@@ -26,16 +25,7 @@ export class SyncEventsForNewTransaction extends DomainEventHandler {
         eventIndex++
       ) {
         const transactionEvent = txReceipt.events[eventIndex];
-        console.log('transactionEvent', transactionEvent);
 
-        console.log({
-          transactionId: event.aggregateId,
-          sequence: transactionEvent.sequence,
-          contractId: transactionEvent.source,
-          name: transactionEvent.name,
-          data: transactionEvent.data,
-          impacted: transactionEvent.impacted,
-        });
         await this.commandBus.execute(
           new CreateEventCommand({
             transactionId: event.aggregateId,
@@ -43,7 +33,9 @@ export class SyncEventsForNewTransaction extends DomainEventHandler {
             contractId: transactionEvent.source,
             name: transactionEvent.name,
             data: transactionEvent.data,
-            impacted: transactionEvent.impacted,
+            impacted: transactionEvent.impacted.filter(
+              (impactedItem) => impactedItem !== '' // Filter out empty items
+            ),
           })
         );
       }
