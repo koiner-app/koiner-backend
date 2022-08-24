@@ -33,7 +33,7 @@ export class Event extends AggregateRoot<EventProps> {
     return this.props.transactionId;
   }
 
-  get sequence(): number {
+  get sequence(): number | undefined {
     return this.props.sequence;
   }
 
@@ -45,7 +45,7 @@ export class Event extends AggregateRoot<EventProps> {
     return this.props.name;
   }
 
-  get data(): string {
+  get data(): string | undefined {
     return this.props.data;
   }
 

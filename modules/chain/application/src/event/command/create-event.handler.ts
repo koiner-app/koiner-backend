@@ -12,8 +12,7 @@ export class CreateEventHandler implements ICommandHandler<CreateEventCommand> {
     const event = Event.create(
       {
         transactionId: new KoinosId(command.transactionId),
-        // -1 fallback for missing sequence (should always be there?)
-        sequence: command.sequence ?? -1,
+        sequence: command.sequence,
         contractId: command.contractId
           ? new KoinosAddressId(command.contractId)
           : undefined,

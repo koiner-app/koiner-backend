@@ -7,8 +7,8 @@ export class EventNode extends BaseNode {
   @Field()
   transactionId: string;
 
-  @Field()
-  sequence: number;
+  @Field({ nullable: true })
+  sequence?: number;
 
   @Field({ nullable: true })
   contractId?: string;
@@ -16,8 +16,8 @@ export class EventNode extends BaseNode {
   @Field()
   name: string;
 
-  @Field()
-  data: string;
+  @Field({ nullable: true })
+  data?: string;
 
   @Field(() => [String], { nullable: true })
   impacted?: string[];

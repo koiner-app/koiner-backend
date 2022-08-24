@@ -13,8 +13,8 @@ export class EventSchema extends EntityBaseSchema {
   readonly transaction!: TransactionSchema;
 
   @PrimaryColumn()
-  @Column({ type: 'smallint' })
-  readonly sequence!: number;
+  @Column({ type: 'smallint', nullable: true })
+  readonly sequence?: number;
 
   @Column({ length: 34, nullable: true })
   readonly contract_id?: string;
@@ -22,8 +22,8 @@ export class EventSchema extends EntityBaseSchema {
   @Column()
   readonly name!: string;
 
-  @Column({ type: 'bytea' })
-  readonly data!: string;
+  @Column({ type: 'bytea', nullable: true })
+  readonly data?: string;
 
   @Column({ type: 'simple-array', nullable: true })
   readonly impacted?: string[];

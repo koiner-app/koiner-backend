@@ -8,9 +8,9 @@ export class CreateEventCommand extends Command {
   }
 
   readonly transactionId!: string;
-  readonly sequence!: number;
+  readonly sequence?: number;
   readonly contractId?: string;
   readonly name!: string;
-  readonly data!: string;
+  readonly data?: string;
   readonly impacted?: string[];
 }
