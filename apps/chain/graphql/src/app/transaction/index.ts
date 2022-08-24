@@ -1,5 +1,9 @@
 import { TransactionsLoader } from './dataloader';
-import { TransactionResolver, TransactionsResolver } from './query';
+import {
+  TransactionEventsResolver,
+  TransactionResolver,
+  TransactionsResolver,
+} from './query';
 
 export const TransactionGraphQLServices = [
   // DataLoaders
@@ -8,6 +12,7 @@ export const TransactionGraphQLServices = [
   // Queries
   TransactionResolver,
   TransactionsResolver,
+  TransactionEventsResolver,
 ];
 
 export * from './dataloader';

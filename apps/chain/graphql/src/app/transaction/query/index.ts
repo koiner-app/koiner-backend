@@ -7,7 +7,8 @@ import { TransactionNode } from '../dto';
 export class TransactionResolver extends NodeQuery(
   TransactionNode,
   TransactionQuery,
-  'transaction',
+  'transaction'
 ) {}
 
 export * from './transactions.resolver';
+export * from './transaction-events.resolver';
