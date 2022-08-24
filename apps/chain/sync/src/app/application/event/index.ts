@@ -1,6 +1,7 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { provideEventHandler } from '@koiner/nestjs-utils';
 import { RawBlocksService } from '@koinos/jsonrpc';
+import { SyncEventsForNewBlock } from './sync-events-for-new-block';
 import { SyncEventsForNewTransaction } from './sync-events-for-new-transaction';
 import { SyncOperationsForNewTransaction } from './sync-operations-for-new-transaction';
 import { SyncTransactionsForNewBlock } from './sync-transactions-for-new-block';
@@ -18,6 +19,24 @@ export const ChainSyncEventHandlers = [
       rawBlocksService: RawBlocksService
     ): SyncOperationsForNewTransaction => {
       const eventHandler = new SyncOperationsForNewTransaction(
+        commandBus,
+        rawBlocksService
+      );
+
+      eventHandler.listen();
+
+      return eventHandler;
+    },
+    inject: [CommandBus, RawBlocksService],
+  },
+
+  {
+    provide: SyncEventsForNewBlock,
+    useFactory: (
+      commandBus: CommandBus,
+      rawBlocksService: RawBlocksService
+    ): SyncEventsForNewBlock => {
+      const eventHandler = new SyncEventsForNewBlock(
         commandBus,
         rawBlocksService
       );
