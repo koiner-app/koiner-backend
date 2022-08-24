@@ -1,8 +1,4 @@
-import {
-  AggregateRoot,
-  ArgumentOutOfRangeException,
-  Guard,
-} from '@appvise/domain';
+import { AggregateRoot } from '@appvise/domain';
 import { KoinosId } from '@koiner/domain';
 import {
   AfterBlockCreated,
@@ -74,8 +70,6 @@ export class Block extends AggregateRoot<BlockProps> {
   }
 
   validate(): void {
-    if (!Guard.lengthIsBetween(this.props.signature, 80, 136)) {
-      throw new ArgumentOutOfRangeException('signature is out of range');
-    }
+    //
   }
 }

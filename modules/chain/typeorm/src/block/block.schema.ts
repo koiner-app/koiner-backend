@@ -39,7 +39,7 @@ export class BlockSchema extends EntityBaseSchema {
   @JoinColumn({ name: 'signer', referencedColumnName: 'id' })
   private _signer_fg?: never;
 
-  @Column({ length: 136 })
+  @Column()
   readonly signature!: string;
 
   @Column({ type: 'smallint' })
