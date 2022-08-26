@@ -246,7 +246,7 @@ services:
       context: ./modules/koinos/config/src
       args:
         - CONFIG_TAG=${CONFIG_TAG:-latest}
-    profiles: ['koinos-core', 'all']
+    profiles: ['koinos', 'koinos-core', 'all']
     environment:
       - DESCRIPTORS_TAG=${DESCRIPTORS_TAG:-master}
     volumes:
@@ -255,12 +255,10 @@ services:
   mempool:
     container_name: koinos-mempool
     image: koinos/koinos-mempool:${MEMPOOL_TAG:-latest}
-    profiles: ['koinos-core', 'all']
+    profiles: ['koinos', 'koinos-core', 'all']
     depends_on:
       - amqp
       - config
-      - chain-sync
-      - contracts-sync
     volumes:
       - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
@@ -268,12 +266,10 @@ services:
   block_store:
     container_name: koinos-block-store
     image: koinos/koinos-block-store:${BLOCK_STORE_TAG:-latest}
-    profiles: ['koinos-core', 'all']
+    profiles: ['koinos', 'koinos-core', 'all']
     depends_on:
       - amqp
       - config
-      - chain-sync
-      - contracts-sync
     volumes:
       - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
@@ -281,7 +277,7 @@ services:
   chain:
     container_name: koinos-chain
     image: koinos/koinos-chain:${CHAIN_TAG:-latest}
-    profiles: ['koinos-core', 'all']
+    profiles: ['koinos', 'koinos-core', 'all']
     depends_on:
       amqp:
         condition: service_started
@@ -291,10 +287,6 @@ services:
         condition: service_started
       config:
         condition: service_started
-      chain-sync:
-        condition: service_healthy
-      contracts-sync:
-        condition: service_healthy
     volumes:
       - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
@@ -302,7 +294,7 @@ services:
   p2p:
     container_name: koinos-p2p
     image: koinos/koinos-p2p:${P2P_TAG:-latest}
-    profiles: ['koinos-core', 'all']
+    profiles: ['koinos', 'koinos-core', 'all']
     depends_on:
       amqp:
         condition: service_started
@@ -312,10 +304,6 @@ services:
         condition: service_started
       config:
         condition: service_started
-      chain-sync:
-        condition: service_healthy
-      contracts-sync:
-        condition: service_healthy
     volumes:
       - '${BASEDIR}:/koinos'
     ports:
@@ -325,7 +313,7 @@ services:
   block_producer:
     container_name: koinos-block-producer
     image: koinos/koinos-block-producer:${BLOCK_PRODUCER_TAG:-latest}
-    profiles: ['block_producer', 'all']
+    profiles: ['koinos', 'block_producer', 'all']
     depends_on:
       - amqp
       - mempool
@@ -338,7 +326,7 @@ services:
   jsonrpc:
     container_name: koinos-jsonrpc
     image: koinos/koinos-jsonrpc:${JSONRPC_TAG:-latest}
-    profiles: ['jsonrpc', 'all']
+    profiles: ['koinos', 'jsonrpc', 'all']
     depends_on:
       - amqp
       - config
@@ -357,7 +345,7 @@ services:
   transaction_store:
     container_name: koinos-transaction-store
     image: koinos/koinos-transaction-store:${TRANSACTION_STORE_TAG:-latest}
-    profiles: ['transaction_store', 'all']
+    profiles: ['koinos', 'transaction_store', 'all']
     depends_on:
       - amqp
       - chain
@@ -369,7 +357,7 @@ services:
   contract_meta_store:
     container_name: koinos-contract-meta-store
     image: koinos/koinos-contract-meta-store:${CONTRACT_META_STORE_TAG:-latest}
-    profiles: ['contract_meta_store', 'all']
+    profiles: ['koinos', 'contract_meta_store', 'all']
     depends_on:
       - amqp
       - chain
