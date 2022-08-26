@@ -1,5 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { EntityBaseSchema } from '@appvise/typeorm';
+import { AddressSchema } from '../address';
 import { TokenContractSchema } from '../token';
 
 @Entity('contracts_block_reward')
@@ -9,6 +10,9 @@ export class BlockRewardSchema extends EntityBaseSchema {
   readonly block_height!: number;
 
   @Column({ length: 34 })
+  readonly producer_id!: string;
+
+  @Column({ length: 34 })
   readonly contract_id!: string;
 
   // Add foreign key without the need to always use the relation
@@ -16,9 +20,25 @@ export class BlockRewardSchema extends EntityBaseSchema {
   @JoinColumn({ name: 'contract_id', referencedColumnName: 'id' })
   private _contract_id_fg!: never;
 
-  @Column({ length: 34 })
-  readonly producer_id!: string;
-
   @Column({ length: 20 })
   readonly value!: string;
+
+  @Column({ length: 34, nullable: true })
+  readonly burned_contract_id?: string;
+
+  // Add foreign key without the need to always use the relation
+  @ManyToOne(() => TokenContractSchema, { nullable: true, persistence: false })
+  @JoinColumn({ name: 'burned_contract_id', referencedColumnName: 'id' })
+  private _burned_contract_id_fg?: never;
+
+  @Column({ length: 34, nullable: true })
+  readonly burner_id?: string;
+
+  // Add foreign key without the need to always use the relation
+  @ManyToOne(() => AddressSchema, { nullable: true, persistence: false })
+  @JoinColumn({ name: 'burner_id', referencedColumnName: 'id' })
+  private _burner_id_fg?: never;
+
+  @Column({ length: 20, nullable: true })
+  readonly burned_value?: string;
 }

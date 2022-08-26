@@ -18,10 +18,17 @@ export class CreateBlockRewardHandler
       {
         blockHeight: command.blockHeight,
         producerId: new KoinosAddressId(command.producerId),
-        value: command.value,
         contractId: new KoinosAddressId(command.contractId),
+        value: command.value,
+        burnedContractId: command.burnedContractId
+          ? new KoinosAddressId(command.burnedContractId)
+          : undefined,
+        burnerId: command.burnerId
+          ? new KoinosAddressId(command.burnerId)
+          : undefined,
+        burnedValue: command.burnedValue,
       },
-      UUID.generate(),
+      UUID.generate()
     );
 
     await this.writeRepository.save(operation);

@@ -3,8 +3,11 @@ import { KoinosAddressId } from '@koiner/domain';
 export interface CreateBlockRewardProps {
   blockHeight: number;
   producerId: KoinosAddressId;
-  value: number;
   contractId: KoinosAddressId;
+  value: number;
+  burnedContractId?: KoinosAddressId;
+  burnerId?: KoinosAddressId;
+  burnedValue?: number;
 }
 
 export type BlockRewardProps = CreateBlockRewardProps;

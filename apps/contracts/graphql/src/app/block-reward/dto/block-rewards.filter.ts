@@ -13,6 +13,18 @@ export class BlockRewardsFilter implements FilterType {
   @Field(() => StringFilterInput, { nullable: true })
   contractId?: StringFilterInput;
 
+  @Field(() => NumericFilterInput, { nullable: true })
+  value?: NumericFilterInput;
+
+  @Field(() => StringFilterInput, { nullable: true })
+  burnedContractId?: StringFilterInput;
+
+  @Field(() => StringFilterInput, { nullable: true })
+  burner?: StringFilterInput;
+
+  @Field(() => NumericFilterInput, { nullable: true })
+  burnedValue?: NumericFilterInput;
+
   @Field(() => [BlockRewardsFilter], {
     nullable: true,
   })

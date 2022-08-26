@@ -30,18 +30,39 @@ export class CreateBlockRewardForNewBlock {
         (event) => event.name === 'koin.mint'
       );
 
+      const burnEvent = rawBlock.receipt.events.find(
+        (event) => event.name === 'vhp.burn'
+      );
+
       if (mintEvent) {
-        // // Decode mint event
+        // Decode mint event
         const mintOperation =
           await this.contractStandardService.decodeOperation(
             ContractStandardType.token,
             koinos.koinContractId,
-            utils.tokenAbi.methods.mint.entryPoint,
+            utils.tokenAbi.methods.mint.entry_point,
             mintEvent.data
           );
 
         const blockProducerId = <string>mintOperation.args.to;
         const producerRewards = parseInt(<string>mintOperation.args.value);
+
+        let burnerId: string | undefined;
+        let burnedValue: number | undefined;
+
+        if (burnEvent) {
+          // Decode burn event
+          const burnOperation =
+            await this.contractStandardService.decodeOperation(
+              ContractStandardType.token,
+              koinos.vhpContractId,
+              utils.tokenAbi.methods.burn.entry_point,
+              burnEvent.data
+            );
+
+          burnerId = <string>burnOperation.args.from;
+          burnedValue = parseInt(<string>burnOperation.args.value);
+        }
 
         // Add address for block producer
         await this.commandBus.execute(
@@ -55,8 +76,11 @@ export class CreateBlockRewardForNewBlock {
           new CreateBlockRewardCommand({
             blockHeight: event.height,
             producerId: blockProducerId,
-            value: producerRewards,
             contractId: koinos.koinContractId,
+            value: producerRewards,
+            burnedContractId: koinos.vhpContractId,
+            burnerId,
+            burnedValue,
           })
         );
       }

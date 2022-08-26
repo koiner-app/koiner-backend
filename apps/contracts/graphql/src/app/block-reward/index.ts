@@ -3,7 +3,7 @@ import {
   BlockRewardBalanceContractResolver,
   BlockRewardBalanceResolver,
   BlockRewardBalancesResolver,
-  BlockRewardContractResolver,
+  BlockRewardContractsResolver,
   BlockRewardResolver,
   BlockRewardsBulkResolver,
   BlockRewardsResolver,
@@ -26,7 +26,7 @@ export const BlockRewardGraphQLServices = [
 
   // FieldResolvers
   BlockRewardBalanceContractResolver,
-  BlockRewardContractResolver,
+  BlockRewardContractsResolver,
 
   // Subscriptions
   BlockRewardCreatedSubscription,

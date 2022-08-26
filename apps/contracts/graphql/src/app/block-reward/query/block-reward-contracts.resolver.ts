@@ -4,13 +4,20 @@ import { BlockRewardNode } from '../../block-reward/dto/block-reward.node';
 import { TokenContractNode } from '../../token/dto/token-contract.node';
 
 @Resolver(() => BlockRewardNode)
-export class BlockRewardContractResolver {
+export class BlockRewardContractsResolver {
   constructor(private loader: TokenContractsLoader) {}
 
-  @ResolveField('contract', () => TokenContractNode, { nullable: true })
+  @ResolveField('contract', () => TokenContractNode)
   async contract(
-    @Parent() balance: BlockRewardNode
+    @Parent() blockReward: BlockRewardNode
+  ): Promise<TokenContractNode> {
+    return this.loader.batch.load(blockReward.contractId);
+  }
+
+  @ResolveField('burnedContract', () => TokenContractNode, { nullable: true })
+  async burnedContract(
+    @Parent() blockReward: BlockRewardNode
   ): Promise<TokenContractNode | undefined> {
-    return this.loader.batch.load(balance.contractId);
+    return this.loader.batch.load(blockReward.burnedContractId);
   }
 }

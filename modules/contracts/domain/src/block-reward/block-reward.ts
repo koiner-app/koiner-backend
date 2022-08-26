@@ -21,16 +21,17 @@ export class BlockReward extends AggregateRoot<BlockRewardProps> {
         aggregateId: id.value,
         blockHeight: blockReward.blockHeight,
         producerId: blockReward.producerId.value,
-        value: blockReward.value,
         contractId: blockReward.contractId.value,
+        value: blockReward.value,
+        burnedContractId: blockReward.burnedContractId
+          ? blockReward.burnedContractId.value
+          : undefined,
+        burnerId: blockReward.burnerId ? blockReward.burnerId.value : undefined,
+        burnedValue: blockReward.burnedValue,
       })
     );
 
     return blockReward;
-  }
-
-  get contractId(): KoinosAddressId {
-    return this.props.contractId;
   }
 
   get blockHeight(): number {
@@ -41,8 +42,24 @@ export class BlockReward extends AggregateRoot<BlockRewardProps> {
     return this.props.producerId;
   }
 
+  get contractId(): KoinosAddressId {
+    return this.props.contractId;
+  }
+
   get value(): number {
     return this.props.value;
+  }
+
+  get burnedContractId(): KoinosAddressId | undefined {
+    return this.props.burnedContractId;
+  }
+
+  get burnerId(): KoinosAddressId | undefined {
+    return this.props.burnerId;
+  }
+
+  get burnedValue(): number | undefined {
+    return this.props.burnedValue;
   }
 
   validate(): void {

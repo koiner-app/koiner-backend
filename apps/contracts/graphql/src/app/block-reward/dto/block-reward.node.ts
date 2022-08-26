@@ -14,10 +14,19 @@ export class BlockRewardNode extends BaseNode {
   producerId: string;
 
   @Field()
-  value: number;
+  contractId: string;
 
   @Field()
-  contractId: string;
+  value: number;
+
+  @Field({ nullable: true })
+  burnedContractId?: string;
+
+  @Field({ nullable: true })
+  burnerId?: string;
+
+  @Field({ nullable: true })
+  burnedValue?: number;
 
   constructor(blockReward: BlockReward) {
     super(blockReward);
@@ -25,7 +34,14 @@ export class BlockRewardNode extends BaseNode {
     this.height = blockReward.blockHeight;
     this.blockHeight = blockReward.blockHeight;
     this.producerId = blockReward.producerId.value;
-    this.value = blockReward.value;
     this.contractId = blockReward.contractId.value;
+    this.value = blockReward.value;
+    this.burnedContractId = blockReward.burnedContractId
+      ? blockReward.burnedContractId.value
+      : undefined;
+    this.burnerId = blockReward.burnerId
+      ? blockReward.burnerId.value
+      : undefined;
+    this.burnedValue = blockReward.burnedValue;
   }
 }
