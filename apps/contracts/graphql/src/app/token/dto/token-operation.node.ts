@@ -13,8 +13,8 @@ export class TokenOperationNode extends BaseNode {
   @Field({ nullable: true })
   from?: string;
 
-  @Field()
-  to: string;
+  @Field({ nullable: true })
+  to?: string;
 
   @Field()
   value: number;
@@ -28,7 +28,7 @@ export class TokenOperationNode extends BaseNode {
     this.transactionId = tokenOperation.transactionId.value;
     this.name = tokenOperation.name;
     this.from = tokenOperation.from ? tokenOperation.from.value : undefined;
-    this.to = tokenOperation.to.value;
+    this.to = tokenOperation.to ? tokenOperation.to.value : undefined;
     this.value = tokenOperation.value;
   }
 }
