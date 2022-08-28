@@ -4,22 +4,21 @@ import {
   EntitySchemaFactory,
   EntitySchemaProps,
 } from '@appvise/typeorm';
-import { KoinosAddressId, KoinosId } from '@koiner/domain';
-import { TokenOperation, TokenOperationProps } from '@koiner/contracts/domain';
-import { TokenOperationSchema } from '.';
+import { KoinosAddressId } from '@koiner/domain';
+import { TokenEvent, TokenEventProps } from '@koiner/contracts/domain';
+import { TokenEventSchema } from '.';
 
-export class TokenOperationSchemaFactory extends EntitySchemaFactory<
-  TokenOperation,
-  TokenOperationSchema
+export class TokenEventSchemaFactory extends EntitySchemaFactory<
+  TokenEvent,
+  TokenEventSchema
 > {
   protected toDomainProps(
-    entitySchema: TokenOperationSchema
-  ): EntityProps<TokenOperationProps> {
+    entitySchema: TokenEventSchema
+  ): EntityProps<TokenEventProps> {
     const id = new UUID(entitySchema.id);
 
-    const props: TokenOperationProps = {
+    const props: TokenEventProps = {
       contractId: new KoinosAddressId(entitySchema.contract_id),
-      transactionId: new KoinosId(entitySchema.transaction_id),
       name: entitySchema.name,
       from: entitySchema.from
         ? new KoinosAddressId(entitySchema.from)
@@ -32,13 +31,12 @@ export class TokenOperationSchemaFactory extends EntitySchemaFactory<
   }
 
   protected toSchemaProps(
-    entity: TokenOperation
-  ): EntitySchemaProps<TokenOperationSchema> {
+    entity: TokenEvent
+  ): EntitySchemaProps<TokenEventSchema> {
     const props = entity.getPropsCopy();
 
     return {
       contract_id: props.contractId.value,
-      transaction_id: props.transactionId.value,
       name: props.name,
       from: props.from ? props.from.value : undefined,
       to: props.to ? props.to.value : undefined,

@@ -4,8 +4,6 @@ import {
   CreateTokenOperationProps,
   TokenOperationProps,
   TokenOperationCreated,
-  TokenTokensMinted,
-  TokenTokensTransferred,
 } from '.';
 
 export class TokenOperation extends AggregateRoot<TokenOperationProps> {
@@ -23,33 +21,11 @@ export class TokenOperation extends AggregateRoot<TokenOperationProps> {
         aggregateId: id.value,
         contractId: props.contractId.value,
         name: props.name,
-        to: props.to.value,
-        value: props.value,
         from: props.from ? props.from.value : undefined,
+        to: props.to ? props.to.value : undefined,
+        value: props.value,
       })
     );
-
-    if (operation.name === 'mint') {
-      operation.addEvent(
-        new TokenTokensMinted({
-          aggregateId: id.value,
-          contractId: props.contractId.value,
-          to: props.to.value,
-          value: props.value,
-        })
-      );
-    }
-
-    if (operation.name === 'transfer') {
-      operation.addEvent(
-        new TokenTokensTransferred({
-          aggregateId: id.value,
-          contractId: props.contractId.value,
-          to: props.to.value,
-          value: props.value,
-        })
-      );
-    }
 
     return operation;
   }
@@ -70,7 +46,7 @@ export class TokenOperation extends AggregateRoot<TokenOperationProps> {
     return this.props.from;
   }
 
-  get to(): KoinosAddressId {
+  get to(): KoinosAddressId | undefined {
     return this.props.to;
   }
 

@@ -5,7 +5,7 @@ export interface CreateTokenOperationProps {
   transactionId: KoinosId;
   name: string;
   from?: KoinosAddressId;
-  to: KoinosAddressId;
+  to?: KoinosAddressId;
   value: number;
 }
 

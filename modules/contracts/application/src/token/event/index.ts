@@ -1,4 +1,5 @@
 import { CreateTokenContractOnContractCreated } from './create-token-contract-on-contract-created';
+import { CreateTokenEventOnContractEventCreated } from './create-token-event-on-contract-event-created';
 import { CreateTokenOperationOnOperationCreated } from './create-token-operation-on-operation-created';
 import { UpdateTokenBalanceOnBlockRewardCreated } from './update-token-balance-on-block-reward-created';
 import { UpdateTokenBalancesOnOperationCreated } from './update-token-balances-on-operation-created';
@@ -35,6 +36,24 @@ export const TokenEventHandlers = [
       return eventHandler;
     },
     inject: [CommandBus, Logger, ContractStandardService],
+  },
+
+  {
+    provide: CreateTokenEventOnContractEventCreated,
+    useFactory: (
+      commandBus: CommandBus,
+      contractStandardService: ContractStandardService
+    ): CreateTokenEventOnContractEventCreated => {
+      const eventHandler = new CreateTokenEventOnContractEventCreated(
+        commandBus,
+        contractStandardService
+      );
+
+      eventHandler.listen();
+
+      return eventHandler;
+    },
+    inject: [CommandBus, ContractStandardService],
   },
 
   {

@@ -7,6 +7,9 @@ import {
   TokenContract,
   TokenContractReadRepository,
   TokenContractWriteRepository,
+  TokenEvent,
+  TokenEventReadRepository,
+  TokenEventWriteRepository,
   TokenOperation,
   TokenOperationReadRepository,
   TokenOperationWriteRepository,
@@ -17,6 +20,8 @@ import {
   TokenBalanceWriteTypeormRepository,
   TokenContractSchema,
   TokenContractSchemaFactory,
+  TokenEventSchema,
+  TokenEventSchemaFactory,
   TokenOperationSchema,
   TokenOperationSchemaFactory,
 } from '.';
@@ -24,17 +29,22 @@ import {
 // Factories
 const tokenBalanceSchemaFactory = new TokenBalanceSchemaFactory(
   TokenBalance,
-  TokenBalanceSchema,
+  TokenBalanceSchema
 );
 
 const tokenContractSchemaFactory = new TokenContractSchemaFactory(
   TokenContract,
-  TokenContractSchema,
+  TokenContractSchema
+);
+
+const tokenEventSchemaFactory = new TokenEventSchemaFactory(
+  TokenEvent,
+  TokenEventSchema
 );
 
 const tokenOperationSchemaFactory = new TokenOperationSchemaFactory(
   TokenOperation,
-  TokenOperationSchema,
+  TokenOperationSchema
 );
 
 export const TokenRepositories: Provider[] = [
@@ -42,7 +52,7 @@ export const TokenRepositories: Provider[] = [
   TypeormRepositoryProvider.provide(
     TokenBalanceReadRepository,
     TokenBalanceSchema,
-    tokenBalanceSchemaFactory,
+    tokenBalanceSchemaFactory
   ),
   {
     provide: TokenBalanceWriteRepository,
@@ -53,25 +63,38 @@ export const TokenRepositories: Provider[] = [
   TypeormRepositoryProvider.provide(
     TokenContractReadRepository,
     TokenContractSchema,
-    tokenContractSchemaFactory,
+    tokenContractSchemaFactory
   ),
   TypeormRepositoryProvider.provide(
     TokenContractWriteRepository,
     TokenContractSchema,
     tokenContractSchemaFactory,
-    false,
+    false
+  ),
+
+  // TokenEvent
+  TypeormRepositoryProvider.provide(
+    TokenEventReadRepository,
+    TokenEventSchema,
+    tokenEventSchemaFactory
+  ),
+  TypeormRepositoryProvider.provide(
+    TokenEventWriteRepository,
+    TokenEventSchema,
+    tokenEventSchemaFactory,
+    false
   ),
 
   // TokenOperation
   TypeormRepositoryProvider.provide(
     TokenOperationReadRepository,
     TokenOperationSchema,
-    tokenOperationSchemaFactory,
+    tokenOperationSchemaFactory
   ),
   TypeormRepositoryProvider.provide(
     TokenOperationWriteRepository,
     TokenOperationSchema,
     tokenOperationSchemaFactory,
-    false,
+    false
   ),
 ];

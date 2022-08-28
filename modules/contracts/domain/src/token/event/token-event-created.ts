@@ -1,7 +1,7 @@
 import { DomainEvent, DomainEventProps } from '@appvise/domain';
 
-export class TokenOperationCreated extends DomainEvent {
-  constructor(props: DomainEventProps<TokenOperationCreated>) {
+export class TokenEventCreated extends DomainEvent {
+  constructor(props: DomainEventProps<TokenEventCreated>) {
     super(props);
 
     Object.assign(this, props);

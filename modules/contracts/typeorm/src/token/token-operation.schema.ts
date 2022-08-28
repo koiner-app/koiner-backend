@@ -25,8 +25,8 @@ export class TokenOperationSchema extends EntityBaseSchema {
   @Column({ length: 34, nullable: true })
   readonly from?: string;
 
-  @Column({ length: 34 })
-  readonly to!: string;
+  @Column({ length: 34, nullable: true })
+  readonly to?: string;
 
   @Column({ length: 20 })
   readonly value!: string;
