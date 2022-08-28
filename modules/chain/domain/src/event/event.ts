@@ -15,7 +15,7 @@ export class Event extends AggregateRoot<EventProps> {
 
     event.addEvent(
       new EventCreated({
-        aggregateId: props.parentId.value,
+        aggregateId: id.value,
         parentId: props.parentId.value,
         parentType: props.parentType,
         sequence: props.sequence,

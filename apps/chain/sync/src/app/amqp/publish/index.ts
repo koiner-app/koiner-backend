@@ -3,6 +3,7 @@ import { PublishAddressCreatedEvent } from './publish-address-created-event';
 import { PublishBlockCreatedEvent } from './publish-block-created-event';
 import { PublishOperationCreatedEvent } from './publish-operation-created-event';
 import { PublishUploadContractOperationCreatedEvent } from './publish-upload-contract-operation-created-event';
+import { PublishEventCreatedEvent } from './publish-event-created-event';
 
 export const ChainAmqpPublishHandlers = [
   {
@@ -22,6 +23,17 @@ export const ChainAmqpPublishHandlers = [
     provide: PublishBlockCreatedEvent,
     useFactory: (amqpConnection: AmqpConnection): PublishBlockCreatedEvent => {
       const eventHandler = new PublishBlockCreatedEvent(amqpConnection);
+
+      eventHandler.listen();
+
+      return eventHandler;
+    },
+    inject: [AmqpConnection],
+  },
+  {
+    provide: PublishEventCreatedEvent,
+    useFactory: (amqpConnection: AmqpConnection): PublishEventCreatedEvent => {
+      const eventHandler = new PublishEventCreatedEvent(amqpConnection);
 
       eventHandler.listen();
 
