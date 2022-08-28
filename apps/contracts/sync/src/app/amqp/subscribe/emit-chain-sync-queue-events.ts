@@ -5,6 +5,7 @@ import { Logger } from '@appvise/domain';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import {
   BlockCreatedMessage,
+  EventCreatedMessage,
   OperationCreatedMessage,
   UploadContractOperationCreatedMessage,
 } from '@koiner/chain/events';
@@ -22,6 +23,7 @@ export class EmitChainSyncQueueEvents {
     exchange: 'koiner.chain.sync',
     routingKey: [
       BlockCreatedMessage.routingKey,
+      EventCreatedMessage.routingKey,
       OperationCreatedMessage.routingKey,
       UploadContractOperationCreatedMessage.routingKey,
     ],
@@ -31,11 +33,16 @@ export class EmitChainSyncQueueEvents {
     return new Promise((resolve, reject) => {
       let event:
         | BlockCreatedMessage
+        | EventCreatedMessage
         | OperationCreatedMessage
         | UploadContractOperationCreatedMessage;
 
       if (amqpMsg.fields.routingKey === BlockCreatedMessage.routingKey) {
         event = new BlockCreatedMessage(JSON.parse(message));
+      }
+
+      if (amqpMsg.fields.routingKey === EventCreatedMessage.routingKey) {
+        event = new EventCreatedMessage(JSON.parse(message));
       }
 
       if (amqpMsg.fields.routingKey === OperationCreatedMessage.routingKey) {
