@@ -11,6 +11,7 @@ import {
 } from '@koiner/contracts/application';
 import { BlockCreatedMessage } from '@koiner/chain/events';
 import { koinos } from '../../config';
+import * as math from 'mathjs';
 
 @Injectable()
 export class CreateBlockRewardForNewBlock {
@@ -24,7 +25,7 @@ export class CreateBlockRewardForNewBlock {
   @OnEvent(BlockCreatedMessage.routingKey, { async: false })
   async handle(event: BlockCreatedMessage): Promise<void> {
     const rawBlock = await this.rawBlocksService.getBlock(event.height);
-
+    //
     if (rawBlock.receipt.events) {
       const mintEvent = rawBlock.receipt.events.find(
         (event) => event.name === 'koin.mint'
@@ -81,6 +82,15 @@ export class CreateBlockRewardForNewBlock {
             burnedContractId: koinos.vhpContractId,
             burnerId,
             burnedValue,
+            roi: burnedValue
+              ? (math
+                  .chain<number>(producerRewards)
+                  .divide(burnedValue)
+                  .multiply(100)
+                  .subtract(100)
+                  .round(5)
+                  .done() as number)
+              : undefined,
           })
         );
       }
