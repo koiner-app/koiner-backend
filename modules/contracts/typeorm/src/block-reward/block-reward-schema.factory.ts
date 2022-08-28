@@ -7,6 +7,7 @@ import {
 import { KoinosAddressId } from '@koiner/domain';
 import { BlockReward, BlockRewardProps } from '@koiner/contracts/domain';
 import { BlockRewardSchema } from '.';
+import * as math from 'mathjs';
 
 export class BlockRewardSchemaFactory extends EntitySchemaFactory<
   BlockReward,
@@ -31,6 +32,7 @@ export class BlockRewardSchemaFactory extends EntitySchemaFactory<
       burnedValue: entitySchema.burned_value
         ? parseInt(entitySchema.burned_value)
         : undefined,
+      roi: entitySchema.roi ? math.evaluate(entitySchema.roi) : undefined,
     };
 
     return { id, props };
@@ -53,6 +55,7 @@ export class BlockRewardSchemaFactory extends EntitySchemaFactory<
       burned_value: props.burnedValue
         ? props.burnedValue.toString()
         : undefined,
+      roi: props.roi ? props.roi.toString().padStart(8, '0') : undefined,
     };
   }
 }

@@ -28,6 +28,9 @@ export class BlockRewardNode extends BaseNode {
   @Field({ nullable: true })
   burnedValue?: number;
 
+  @Field({ nullable: true })
+  roi?: number;
+
   constructor(blockReward: BlockReward) {
     super(blockReward);
 
@@ -43,5 +46,6 @@ export class BlockRewardNode extends BaseNode {
       ? blockReward.burnerId.value
       : undefined;
     this.burnedValue = blockReward.burnedValue;
+    this.roi = blockReward.roi;
   }
 }

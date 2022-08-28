@@ -41,4 +41,7 @@ export class BlockRewardSchema extends EntityBaseSchema {
 
   @Column({ length: 20, nullable: true })
   readonly burned_value?: string;
+
+  @Column({ length: 8, nullable: true })
+  readonly roi?: string;
 }

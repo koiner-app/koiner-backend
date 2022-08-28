@@ -8,6 +8,7 @@ export interface CreateBlockRewardProps {
   burnedContractId?: KoinosAddressId;
   burnerId?: KoinosAddressId;
   burnedValue?: number;
+  roi?: number;
 }
 
 export type BlockRewardProps = CreateBlockRewardProps;

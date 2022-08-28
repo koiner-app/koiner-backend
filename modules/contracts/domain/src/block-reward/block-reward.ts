@@ -28,6 +28,7 @@ export class BlockReward extends AggregateRoot<BlockRewardProps> {
           : undefined,
         burnerId: blockReward.burnerId ? blockReward.burnerId.value : undefined,
         burnedValue: blockReward.burnedValue,
+        roi: blockReward.roi,
       })
     );
 
@@ -60,6 +61,10 @@ export class BlockReward extends AggregateRoot<BlockRewardProps> {
 
   get burnedValue(): number | undefined {
     return this.props.burnedValue;
+  }
+
+  get roi(): number | undefined {
+    return this.props.roi;
   }
 
   validate(): void {

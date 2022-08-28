@@ -25,6 +25,9 @@ export class BlockRewardsFilter implements FilterType {
   @Field(() => NumericFilterInput, { nullable: true })
   burnedValue?: NumericFilterInput;
 
+  @Field(() => NumericFilterInput, { nullable: true })
+  roi?: NumericFilterInput;
+
   @Field(() => [BlockRewardsFilter], {
     nullable: true,
   })

@@ -14,4 +14,5 @@ export class CreateBlockRewardCommand extends Command {
   readonly burnedContractId?: string;
   readonly burnerId?: string;
   readonly burnedValue?: number;
+  readonly roi?: number;
 }

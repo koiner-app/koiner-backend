@@ -27,6 +27,7 @@ export class CreateBlockRewardHandler
           ? new KoinosAddressId(command.burnerId)
           : undefined,
         burnedValue: command.burnedValue,
+        roi: command.roi,
       },
       UUID.generate()
     );
