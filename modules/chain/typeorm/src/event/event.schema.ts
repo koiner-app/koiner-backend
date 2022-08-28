@@ -1,17 +1,15 @@
 import { EntityBaseSchema } from '@appvise/typeorm';
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import { EventParentType } from '@koiner/chain/domain';
 
 @Entity('chain_event')
 export class EventSchema extends EntityBaseSchema {
-  @PrimaryColumn()
   @Column({ length: 70 })
   readonly parent_id!: string;
 
   @Column({ type: 'enum', enum: EventParentType })
   readonly parent_type!: EventParentType;
 
-  @PrimaryColumn()
   @Column({ type: 'smallint', nullable: true })
   readonly sequence?: number;
 
