@@ -31,5 +31,6 @@ additionalResolvers:
   - !include ./resolvers/chain/system-contract-operation-contract.yaml
   - !include ./resolvers/chain/upload-contract-operation-contract.yaml
     # Contracts
+  - !include ./resolvers/contracts/block-reward-burner.yaml
   - !include ./resolvers/contracts/block-reward-producer.yaml
   - !include ./resolvers/contracts/contract-operation-contract.yaml

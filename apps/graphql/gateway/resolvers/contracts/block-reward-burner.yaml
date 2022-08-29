@@ -1,0 +1,7 @@
+sourceName: Chain
+sourceTypeName: Query
+targetTypeName: BlockReward
+targetFieldName: burner
+sourceFieldName: addressesBulk
+keyField: burnerId
+keysArg: ids
