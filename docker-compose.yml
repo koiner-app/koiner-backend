@@ -259,6 +259,8 @@ services:
     depends_on:
       - amqp
       - config
+      - chain-sync
+      - contracts-sync
     volumes:
       - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
@@ -270,6 +272,8 @@ services:
     depends_on:
       - amqp
       - config
+      - chain-sync
+      - contracts-sync
     volumes:
       - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
@@ -287,6 +291,10 @@ services:
         condition: service_started
       config:
         condition: service_started
+      chain-sync:
+        condition: service_healthy
+      contracts-sync:
+        condition: service_healthy
     volumes:
       - '${BASEDIR}:/koinos'
     command: --basedir=/koinos
@@ -304,6 +312,10 @@ services:
         condition: service_started
       config:
         condition: service_started
+      chain-sync:
+        condition: service_healthy
+      contracts-sync:
+        condition: service_healthy
     volumes:
       - '${BASEDIR}:/koinos'
     ports:
