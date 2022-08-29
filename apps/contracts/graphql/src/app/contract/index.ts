@@ -1,5 +1,8 @@
 import { ContractsLoader } from './dataloader';
 import {
+  ContractEventContractResolver,
+  ContractEventResolver,
+  ContractEventsResolver,
   ContractResolver,
   ContractsBulkResolver,
   ContractsResolver,
@@ -13,6 +16,11 @@ export const ContractGraphQLServices = [
   ContractResolver,
   ContractsResolver,
   ContractsBulkResolver,
+  ContractEventResolver,
+  ContractEventsResolver,
+
+  // FieldResolvers
+  ContractEventContractResolver,
 ];
 
 export * from './dataloader';

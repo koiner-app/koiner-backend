@@ -1,1 +1,1 @@
-export { ContractsLoader } from './contract.loader';
+export { ContractsLoader } from './contracts.loader';
