@@ -8,7 +8,7 @@ export class ContractEventContractResolver {
   constructor(private loader: ContractsLoader) {}
 
   @ResolveField('contract', () => ContractNode)
-  async contract(@Parent() balance: ContractEventNode): Promise<ContractNode> {
-    return this.loader.batch.load(balance.contractId);
+  async contract(@Parent() event: ContractEventNode): Promise<ContractNode> {
+    return this.loader.batch.load(event.contractId);
   }
 }

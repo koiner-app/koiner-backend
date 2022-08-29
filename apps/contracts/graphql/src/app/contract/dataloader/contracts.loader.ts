@@ -25,13 +25,13 @@ export class ContractsLoader {
       SearchResponse<Contract>
     >(new ContractsQuery(request, selectionSet));
 
-    const operationsMap = new Map(
+    const contractsMap = new Map(
       searchResponse.results.map((result) => [
         result.item.id.value,
         new ContractNode(result.item),
-      ]),
+      ])
     );
 
-    return contractIds.map((contractId) => operationsMap.get(contractId));
+    return contractIds.map((contractId) => contractsMap.get(contractId));
   });
 }
