@@ -1,6 +1,8 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { provideEventHandler } from '@koiner/nestjs-utils';
 import { RawBlocksService } from '@koinos/jsonrpc';
+import { SyncAddressOnContractsAddressCreated } from './sync-address-on-contracts-address-created';
+import { SyncAddressOnContractsAddressMarkedAsProducer } from './sync-address-on-contracts-address-marked-as-producer';
 import { SyncEventsForNewBlock } from './sync-events-for-new-block';
 import { SyncEventsForNewTransaction } from './sync-events-for-new-transaction';
 import { SyncOperationsForNewTransaction } from './sync-operations-for-new-transaction';
@@ -10,6 +12,11 @@ import { CreateSystemContractOperationForNewOperation } from './create-system-co
 import { CreateUploadOperationForNewOperation } from './create-upload-operation-for-new-operation';
 
 export const ChainSyncEventHandlers = [
+  // EventEmitter
+  SyncAddressOnContractsAddressCreated,
+  SyncAddressOnContractsAddressMarkedAsProducer,
+
+  // DomainEventHandlers
   provideEventHandler(SyncTransactionsForNewBlock),
 
   {

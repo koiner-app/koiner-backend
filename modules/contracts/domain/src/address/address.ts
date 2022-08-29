@@ -1,6 +1,11 @@
 import { AggregateRoot } from '@appvise/domain';
 import { KoinosAddressId } from '@koiner/domain';
-import { AddressCreated, AddressProps, CreateAddressProps } from '.';
+import {
+  AddressCreated,
+  AddressMarkedAsProducer,
+  AddressProps,
+  CreateAddressProps,
+} from '.';
 
 export class Address extends AggregateRoot<AddressProps> {
   protected readonly _id!: KoinosAddressId;
@@ -28,6 +33,12 @@ export class Address extends AggregateRoot<AddressProps> {
 
   markAsProducer(): void {
     this.props.isProducer = true;
+
+    this.addEvent(
+      new AddressMarkedAsProducer({
+        aggregateId: this.id.value,
+      })
+    );
   }
 
   validate(): void {

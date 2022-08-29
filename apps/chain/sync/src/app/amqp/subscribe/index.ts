@@ -1,5 +1,5 @@
 import { BlockAcceptedHandler } from './block-accepted.handler';
-import { CreateAddressOnContractsAddressCreated } from './create-address-on-contracts-address-created';
+import { EmitChainSyncQueueEvents } from './emit-contracts-sync-queue-events';
 
 const BlockAcceptedHandlerWrapper = [];
 
@@ -9,5 +9,5 @@ if (process.env.SYNC_MODE !== 'manual' ?? BlockAcceptedHandler) {
 
 export const ChainAmqpSubscribeHandlers = [
   ...BlockAcceptedHandlerWrapper,
-  CreateAddressOnContractsAddressCreated,
+  EmitChainSyncQueueEvents,
 ];
