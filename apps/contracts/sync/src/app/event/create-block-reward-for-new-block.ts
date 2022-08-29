@@ -25,7 +25,7 @@ export class CreateBlockRewardForNewBlock {
   @OnEvent(BlockCreatedMessage.routingKey, { async: false })
   async handle(event: BlockCreatedMessage): Promise<void> {
     const rawBlock = await this.rawBlocksService.getBlock(event.height);
-    //
+
     if (rawBlock.receipt.events) {
       const mintEvent = rawBlock.receipt.events.find(
         (event) => event.name === 'koin.mint'

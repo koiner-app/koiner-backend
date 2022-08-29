@@ -22,6 +22,7 @@ export class ContractEventSchemaFactory extends EntitySchemaFactory<
       parentType: entitySchema.parent_type,
       sequence: entitySchema.sequence,
       contractId: new KoinosAddressId(entitySchema.contract_id),
+      contractStandardType: entitySchema.contract_standard_type,
       name: entitySchema.name,
       data: (entitySchema.data as unknown as Uint8Array).toString(),
       impacted: entitySchema.impacted
@@ -42,6 +43,7 @@ export class ContractEventSchemaFactory extends EntitySchemaFactory<
       parent_type: props.parentType,
       sequence: props.sequence,
       contract_id: props.contractId.value,
+      contract_standard_type: props.contractStandardType,
       name: props.name,
       data: props.data,
       impacted: props.impacted

@@ -1,6 +1,9 @@
 import { EntityBaseSchema } from '@appvise/typeorm';
 import { Column, Entity } from 'typeorm';
-import { ContractEventParentType } from '@koiner/contracts/domain';
+import {
+  ContractEventParentType,
+  ContractStandardType,
+} from '@koiner/contracts/domain';
 
 @Entity('contracts_contract_event')
 export class ContractEventSchema extends EntityBaseSchema {
@@ -15,6 +18,9 @@ export class ContractEventSchema extends EntityBaseSchema {
 
   @Column({ length: 34 })
   readonly contract_id!: string;
+
+  @Column({ type: 'enum', enum: ContractStandardType, nullable: true })
+  readonly contract_standard_type?: ContractStandardType;
 
   @Column()
   readonly name!: string;
