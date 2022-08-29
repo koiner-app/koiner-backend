@@ -1,5 +1,3 @@
-import { TokenContractStatistics, UpdateTokenContractStatisticsProps } from '.';
-
 export interface CreateTokenContractProps {
   name: string;
   symbol: string;
@@ -8,10 +6,9 @@ export interface CreateTokenContractProps {
 
 export interface TokenContractProps extends CreateTokenContractProps {
   totalSupply: number;
-  stats: TokenContractStatistics;
 }
 
 export interface UpdateTokenContractProps {
   mintedTokens?: number;
-  stats?: UpdateTokenContractStatisticsProps;
+  burnedTokens?: number;
 }

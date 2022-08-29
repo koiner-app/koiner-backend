@@ -3,12 +3,10 @@ import { KoinosAddressId, KoinosId } from '@koiner/domain';
 import {
   CreateTokenContractProps,
   TokenContractCreated,
-  TokenContractStatsUpdated,
-  TokenContractTotalSupplyUpdated,
+  TokenTotalSupplyIncreased,
   TokenContractProps,
-  TokenContractStatistics,
   UpdateTokenContractProps,
-  UpdateTokenContractStatisticsProps,
+  TokenTotalSupplyDecreased,
 } from '.';
 
 export class TokenContract extends AggregateRoot<TokenContractProps> {
@@ -21,7 +19,6 @@ export class TokenContract extends AggregateRoot<TokenContractProps> {
     const props: TokenContractProps = {
       ...create,
       totalSupply: 0,
-      stats: TokenContractStatistics.create(),
     };
 
     const contract = new TokenContract({ id, props });
@@ -55,44 +52,44 @@ export class TokenContract extends AggregateRoot<TokenContractProps> {
     return this.props.totalSupply;
   }
 
-  get stats(): TokenContractStatistics {
-    return this.props.stats;
-  }
-
   update(props: UpdateTokenContractProps): void {
     if (props.mintedTokens) {
       this.updateTotalSupply(props.mintedTokens);
     }
 
-    if (props.stats) {
-      this.updateStats(props.stats);
+    if (props.burnedTokens) {
+      this.updateTotalSupply(-props.burnedTokens);
     }
   }
 
-  updateTotalSupply(mintedTokens: number): void {
-    this.props.totalSupply += mintedTokens;
+  updateTotalSupply(amountChanged: number): void {
+    this.props.totalSupply += amountChanged;
 
-    this.addEvent(
-      new TokenContractTotalSupplyUpdated({
-        aggregateId: this.id.value,
-        totalSupply: this.props.totalSupply,
-        mintedTokens,
-      })
-    );
-  }
+    if (amountChanged > 0) {
+      this.addEvent(
+        new TokenTotalSupplyIncreased({
+          aggregateId: this.id.value,
+          name: this.name,
+          symbol: this.symbol,
+          decimals: this.decimals,
+          totalSupply: this.totalSupply,
+          amountChanged,
+        })
+      );
+    }
 
-  updateStats(props: UpdateTokenContractStatisticsProps): void {
-    this.props.stats.update(props);
-
-    this.addEvent(
-      new TokenContractStatsUpdated({
-        aggregateId: this.id.value,
-        holderCount: this.props.stats.holderCount,
-        operationCount: this.props.stats.operationCount,
-        mintCount: this.props.stats.mintCount,
-        transferCount: this.props.stats.transferCount,
-      })
-    );
+    if (amountChanged < 1) {
+      this.addEvent(
+        new TokenTotalSupplyDecreased({
+          aggregateId: this.id.value,
+          name: this.name,
+          symbol: this.symbol,
+          decimals: this.decimals,
+          totalSupply: this.totalSupply,
+          amountChanged,
+        })
+      );
+    }
   }
 
   validate(): void {

@@ -17,7 +17,7 @@ export class CreateContractEventForNewEvent {
 
   @OnEvent(EventCreatedMessage.routingKey, { async: false })
   async handle(event: EventCreatedMessage): Promise<void> {
-    if (event.contractId) {
+    if (event.contractId && event.data) {
       let contractStandardType = undefined;
 
       try {

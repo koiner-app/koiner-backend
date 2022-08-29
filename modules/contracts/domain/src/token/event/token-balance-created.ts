@@ -10,5 +10,4 @@ export class TokenBalanceCreated extends DomainEvent {
   readonly addressId!: string;
   readonly contractId!: string;
   readonly balance!: number;
-  readonly tokensOrigin!: string;
 }

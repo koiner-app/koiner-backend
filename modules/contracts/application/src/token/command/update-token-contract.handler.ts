@@ -10,12 +10,12 @@ export class UpdateTokenContractHandler
 
   async execute(command: UpdateTokenContractCommand): Promise<void> {
     const tokenContract = await this.writeRepository.findOneByIdOrThrow(
-      command.contractId,
+      command.contractId
     );
 
     tokenContract.update({
       mintedTokens: command.mintedTokens,
-      stats: command.stats,
+      burnedTokens: command.burnedTokens,
     });
 
     await this.writeRepository.save(tokenContract);

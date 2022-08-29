@@ -4,11 +4,7 @@ import {
   EntitySchemaProps,
 } from '@appvise/typeorm';
 import { KoinosAddressId } from '@koiner/domain';
-import {
-  TokenContract,
-  TokenContractProps,
-  TokenContractStatistics,
-} from '@koiner/contracts/domain';
+import { TokenContract, TokenContractProps } from '@koiner/contracts/domain';
 import { TokenContractSchema } from '.';
 
 export class TokenContractSchemaFactory extends EntitySchemaFactory<
@@ -25,12 +21,6 @@ export class TokenContractSchemaFactory extends EntitySchemaFactory<
       symbol: entitySchema.symbol,
       decimals: entitySchema.decimals,
       totalSupply: parseInt(entitySchema.total_supply),
-      stats: new TokenContractStatistics({
-        holderCount: parseInt(entitySchema.holder_count),
-        operationCount: parseInt(entitySchema.operation_count),
-        mintCount: parseInt(entitySchema.mint_count),
-        transferCount: parseInt(entitySchema.transfer_count),
-      }),
     };
 
     return { id, props };
@@ -46,10 +36,6 @@ export class TokenContractSchemaFactory extends EntitySchemaFactory<
       symbol: props.symbol,
       decimals: props.decimals,
       total_supply: String(props.totalSupply).padStart(20, '0'),
-      holder_count: String(props.stats.holderCount).padStart(20, '0'),
-      operation_count: String(props.stats.operationCount).padStart(20, '0'),
-      mint_count: String(props.stats.mintCount).padStart(20, '0'),
-      transfer_count: String(props.stats.transferCount).padStart(20, '0'),
     };
   }
 }

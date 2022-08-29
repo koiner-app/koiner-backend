@@ -24,16 +24,4 @@ export class TokenContractSchema extends EntityBaseSchema {
 
   @Column({ length: 20 })
   readonly total_supply!: string;
-
-  @Column({ length: 20 })
-  readonly holder_count!: string;
-
-  @Column({ length: 20 })
-  readonly operation_count!: string;
-
-  @Column({ length: 20 })
-  readonly mint_count!: string;
-
-  @Column({ length: 20 })
-  readonly transfer_count!: string;
 }

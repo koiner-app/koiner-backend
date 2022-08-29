@@ -5,18 +5,13 @@ import {
   TokenBalanceCreated,
   TokenBalanceProps,
   TokenBalanceUpdated,
-  TokensOrigin,
   UpdateTokenBalanceProps,
 } from '.';
 
 export class TokenBalance extends AggregateRoot<TokenBalanceProps> {
   protected readonly _id!: KoinosAddressId;
 
-  static create(
-    create: CreateTokenBalanceProps,
-    tokensOrigin: TokensOrigin,
-    id: UUID
-  ): TokenBalance {
+  static create(create: CreateTokenBalanceProps, id: UUID): TokenBalance {
     const props: TokenBalanceProps = {
       ...create,
     };
@@ -29,7 +24,6 @@ export class TokenBalance extends AggregateRoot<TokenBalanceProps> {
         addressId: props.addressId.value,
         contractId: props.contractId.value,
         balance: props.balance,
-        tokensOrigin: tokensOrigin,
       })
     );
 
@@ -63,7 +57,6 @@ export class TokenBalance extends AggregateRoot<TokenBalanceProps> {
         contractId: this.contractId.value,
         balance: this.balance,
         amountChanged: props.amountChanged,
-        tokensOrigin: props.tokensOrigin,
       })
     );
 
