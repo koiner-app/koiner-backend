@@ -35,7 +35,7 @@ services:
       context: .
       dockerfile: 'apps/graphql/gateway/Dockerfile'
       target: development
-    profiles: [ 'koiner-graphql', 'all' ]
+    profiles: ['koiner', 'koiner-graphql', 'all']
     command: npm run start-dev:graphql-gateway
     env_file:
       - 'apps/graphql/gateway/.env'
@@ -74,7 +74,7 @@ services:
       context: .
       dockerfile: 'apps/chain/graphql/Dockerfile'
       target: development
-    profiles: [ 'koiner-graphql', 'all' ]
+    profiles: ['koiner', 'koiner-graphql', 'all']
     command: npm run start:chain-graphql
     env_file:
       - 'apps/chain/graphql/.env'
@@ -106,7 +106,7 @@ services:
       context: .
       dockerfile: 'apps/chain/sync/Dockerfile'
       target: development
-    profiles: [ 'koiner-sync', 'all' ]
+    profiles: ['koiner', 'koiner-sync', 'all']
     command: npm run start:chain-sync
     env_file:
       - 'apps/chain/sync/.env'
@@ -135,7 +135,7 @@ services:
   chain-postgres:
     container_name: koiner-chain-postgres
     image: postgres
-    profiles: [ 'koiner-graphql', 'koiner-sync', 'all' ]
+    profiles: ['koiner', 'koiner-graphql', 'koiner-sync', 'all']
     restart: always
     networks:
       - webproxy
@@ -161,7 +161,7 @@ services:
       context: .
       dockerfile: 'apps/contracts/graphql/Dockerfile'
       target: development
-    profiles: [ 'koiner-graphql', 'all' ]
+    profiles: ['koiner', 'koiner-graphql', 'all']
     command: npm run start:contracts-graphql
     env_file:
       - 'apps/contracts/graphql/.env'
@@ -193,7 +193,7 @@ services:
       context: .
       dockerfile: 'apps/contracts/sync/Dockerfile'
       target: development
-    profiles: [ 'koiner-sync', 'all' ]
+    profiles: ['koiner', 'koiner-sync', 'all']
     command: npm run start:contracts-sync
     env_file:
       - 'apps/contracts/sync/.env'
@@ -222,7 +222,7 @@ services:
   contracts-postgres:
     container_name: koiner-contracts-postgres
     image: postgres
-    profiles: [ 'koiner-graphql', 'koiner-sync', 'all' ]
+    profiles: ['koiner', 'koiner-graphql', 'koiner-sync', 'all']
     restart: always
     networks:
       - webproxy
