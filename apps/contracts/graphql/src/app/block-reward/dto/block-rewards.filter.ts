@@ -20,7 +20,7 @@ export class BlockRewardsFilter implements FilterType {
   burnedContractId?: StringFilterInput;
 
   @Field(() => StringFilterInput, { nullable: true })
-  burner?: StringFilterInput;
+  burnerId?: StringFilterInput;
 
   @Field(() => NumericFilterInput, { nullable: true })
   burnedValue?: NumericFilterInput;
