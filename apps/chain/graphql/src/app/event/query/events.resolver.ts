@@ -13,18 +13,26 @@ export class EventsResolver {
   @Query(() => EventsConnection, { name: 'events' })
   async execute(
     @Args() request: EventsRequest,
-    @SelectionSet() selectionSet,
+    @SelectionSet() selectionSet
   ): Promise<EventsConnection> {
     const searchResponse = await this.queryBus.execute<
       EventsQuery,
       SearchResponse<Event>
-    >(new EventsQuery(request, selectionSet));
+    >(
+      new EventsQuery(request, selectionSet, [
+        'id',
+        'parentId',
+        'contractId',
+        'name',
+        'impacted',
+      ])
+    );
 
     return ConnectionFactory.fromSearchResponse(
       EventsConnection,
       EventNode,
       searchResponse,
-      selectionSet,
+      selectionSet
     );
   }
 }

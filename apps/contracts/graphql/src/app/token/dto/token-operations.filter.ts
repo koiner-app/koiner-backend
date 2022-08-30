@@ -5,6 +5,15 @@ import { StringFilterInput } from '@appvise/graphql';
 @InputType()
 export class TokenOperationsFilter implements FilterType {
   @Field(() => StringFilterInput, { nullable: true })
+  search?: StringFilterInput;
+
+  @Field(() => StringFilterInput, { nullable: true })
+  id?: StringFilterInput;
+
+  @Field(() => StringFilterInput, { nullable: true })
+  transactionId?: StringFilterInput;
+
+  @Field(() => StringFilterInput, { nullable: true })
   contractId?: StringFilterInput;
 
   @Field(() => StringFilterInput, { nullable: true })

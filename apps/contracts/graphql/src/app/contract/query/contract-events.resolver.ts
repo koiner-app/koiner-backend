@@ -22,7 +22,15 @@ export class ContractEventsResolver {
     const searchResponse = await this.queryBus.execute<
       ContractEventsQuery,
       SearchResponse<ContractEvent>
-    >(new ContractEventsQuery(request, selectionSet));
+    >(
+      new ContractEventsQuery(request, selectionSet, [
+        'id',
+        'parentId',
+        'contractId',
+        'name',
+        'impacted',
+      ])
+    );
 
     return ConnectionFactory.fromSearchResponse(
       ContractEventsConnection,

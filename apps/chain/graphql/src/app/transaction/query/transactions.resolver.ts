@@ -17,18 +17,18 @@ export class TransactionsResolver {
   @Query(() => TransactionsConnection, { name: 'transactions' })
   async execute(
     @Args() request: TransactionsRequest,
-    @SelectionSet() selectionSet,
+    @SelectionSet() selectionSet
   ): Promise<TransactionsConnection> {
     const searchResponse = await this.queryBus.execute<
       TransactionsQuery,
       SearchResponse<Transaction>
-    >(new TransactionsQuery(request, selectionSet));
+    >(new TransactionsQuery(request, selectionSet, ['id', 'payer']));
 
     return ConnectionFactory.fromSearchResponse(
       TransactionsConnection,
       TransactionNode,
       searchResponse,
-      selectionSet,
+      selectionSet
     );
   }
 }

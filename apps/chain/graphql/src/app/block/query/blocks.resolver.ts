@@ -13,18 +13,18 @@ export class BlocksResolver {
   @Query(() => BlocksConnection, { name: 'blocks' })
   async execute(
     @Args() request: BlocksRequest,
-    @SelectionSet() selectionSet,
+    @SelectionSet() selectionSet
   ): Promise<BlocksConnection> {
     const searchResponse = await this.queryBus.execute<
       BlocksQuery,
       SearchResponse<Block>
-    >(new BlocksQuery(request, selectionSet));
+    >(new BlocksQuery(request, selectionSet, ['id', 'signer']));
 
     return ConnectionFactory.fromSearchResponse(
       BlocksConnection,
       BlockNode,
       searchResponse,
-      selectionSet,
+      selectionSet
     );
   }
 }

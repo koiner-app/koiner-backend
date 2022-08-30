@@ -22,7 +22,15 @@ export class TokenEventsResolver {
     const searchResponse = await this.queryBus.execute<
       TokenEventsQuery,
       SearchResponse<TokenEvent>
-    >(new TokenEventsQuery(request, selectionSet));
+    >(
+      new TokenEventsQuery(request, selectionSet, [
+        'id',
+        'contractId',
+        'name',
+        'from',
+        'to',
+      ])
+    );
 
     return ConnectionFactory.fromSearchResponse(
       TokenEventsConnection,

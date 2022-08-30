@@ -5,6 +5,9 @@ import { NumericFilterInput, StringFilterInput } from '@appvise/graphql';
 @InputType()
 export class BlockRewardBalancesFilter implements FilterType {
   @Field(() => StringFilterInput, { nullable: true })
+  search?: StringFilterInput;
+
+  @Field(() => StringFilterInput, { nullable: true })
   addressId?: StringFilterInput;
 
   @Field(() => StringFilterInput, { nullable: true })

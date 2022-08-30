@@ -13,18 +13,18 @@ export class ContractsResolver {
   @Query(() => ContractsConnection, { name: 'contracts' })
   async execute(
     @Args() request: ContractsRequest,
-    @SelectionSet() selectionSet,
+    @SelectionSet() selectionSet
   ): Promise<ContractsConnection> {
     const searchResponse = await this.queryBus.execute<
       ContractsQuery,
       SearchResponse<Contract>
-    >(new ContractsQuery(request, selectionSet));
+    >(new ContractsQuery(request, selectionSet, ['id']));
 
     return ConnectionFactory.fromSearchResponse(
       ContractsConnection,
       ContractNode,
       searchResponse,
-      selectionSet,
+      selectionSet
     );
   }
 }

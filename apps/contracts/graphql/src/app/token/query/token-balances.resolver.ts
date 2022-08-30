@@ -17,18 +17,20 @@ export class TokenBalancesResolver {
   @Query(() => TokenBalancesConnection, { name: 'tokenBalances' })
   async execute(
     @Args() request: TokenBalancesRequest,
-    @SelectionSet() selectionSet,
+    @SelectionSet() selectionSet
   ): Promise<TokenBalancesConnection> {
     const searchResponse = await this.queryBus.execute<
       TokenBalancesQuery,
       SearchResponse<TokenBalance>
-    >(new TokenBalancesQuery(request, selectionSet));
+    >(
+      new TokenBalancesQuery(request, selectionSet, ['addressId', 'contractId'])
+    );
 
     return ConnectionFactory.fromSearchResponse(
       TokenBalancesConnection,
       TokenBalanceNode,
       searchResponse,
-      selectionSet,
+      selectionSet
     );
   }
 }

@@ -13,18 +13,18 @@ export class AddressesResolver {
   @Query(() => AddressesConnection, { name: 'addresses' })
   async execute(
     @Args() request: AddressesRequest,
-    @SelectionSet() selectionSet,
+    @SelectionSet() selectionSet
   ): Promise<AddressesConnection> {
     const searchResponse = await this.queryBus.execute<
       AddressesQuery,
       SearchResponse<Address>
-    >(new AddressesQuery(request, selectionSet));
+    >(new AddressesQuery(request, selectionSet, ['id']));
 
     return ConnectionFactory.fromSearchResponse(
       AddressesConnection,
       AddressNode,
       searchResponse,
-      selectionSet,
+      selectionSet
     );
   }
 }

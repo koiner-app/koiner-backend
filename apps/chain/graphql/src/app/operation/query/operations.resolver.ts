@@ -13,18 +13,18 @@ export class OperationsResolver {
   @Query(() => OperationsConnection, { name: 'operations' })
   async execute(
     @Args() request: OperationsRequest,
-    @SelectionSet() selectionSet,
+    @SelectionSet() selectionSet
   ): Promise<OperationsConnection> {
     const searchResponse = await this.queryBus.execute<
       OperationsQuery,
       SearchResponse<Operation>
-    >(new OperationsQuery(request, selectionSet));
+    >(new OperationsQuery(request, selectionSet, ['id', 'transactionId']));
 
     return ConnectionFactory.fromSearchResponse(
       OperationsConnection,
       OperationNode,
       searchResponse,
-      selectionSet,
+      selectionSet
     );
   }
 }

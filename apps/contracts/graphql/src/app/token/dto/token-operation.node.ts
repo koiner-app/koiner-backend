@@ -8,6 +8,9 @@ export class TokenOperationNode extends BaseNode {
   transactionId: string;
 
   @Field()
+  contractId: string;
+
+  @Field()
   name: string;
 
   @Field({ nullable: true })
@@ -26,6 +29,7 @@ export class TokenOperationNode extends BaseNode {
     super(tokenOperation);
 
     this.transactionId = tokenOperation.transactionId.value;
+    this.contractId = tokenOperation.contractId.value;
     this.name = tokenOperation.name;
     this.from = tokenOperation.from ? tokenOperation.from.value : undefined;
     this.to = tokenOperation.to ? tokenOperation.to.value : undefined;

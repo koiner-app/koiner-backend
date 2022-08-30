@@ -17,18 +17,25 @@ export class BlockRewardsResolver {
   @Query(() => BlockRewardsConnection, { name: 'blockRewards' })
   async execute(
     @Args() request: BlockRewardsRequest,
-    @SelectionSet() selectionSet,
+    @SelectionSet() selectionSet
   ): Promise<BlockRewardsConnection> {
     const searchResponse = await this.queryBus.execute<
       BlockRewardsQuery,
       SearchResponse<BlockReward>
-    >(new BlockRewardsQuery(request, selectionSet));
+    >(
+      new BlockRewardsQuery(request, selectionSet, [
+        'blockHeight',
+        'producerId',
+        'contractId',
+        'burnedContractId',
+      ])
+    );
 
     return ConnectionFactory.fromSearchResponse(
       BlockRewardsConnection,
       BlockRewardNode,
       searchResponse,
-      selectionSet,
+      selectionSet
     );
   }
 }

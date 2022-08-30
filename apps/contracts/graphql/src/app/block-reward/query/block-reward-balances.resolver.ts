@@ -22,7 +22,12 @@ export class BlockRewardBalancesResolver {
     const searchResponse = await this.queryBus.execute<
       BlockRewardBalancesQuery,
       SearchResponse<BlockRewardBalance>
-    >(new BlockRewardBalancesQuery(request, selectionSet));
+    >(
+      new BlockRewardBalancesQuery(request, selectionSet, [
+        'addressId',
+        'contractId',
+      ])
+    );
 
     return ConnectionFactory.fromSearchResponse(
       BlockRewardBalancesConnection,

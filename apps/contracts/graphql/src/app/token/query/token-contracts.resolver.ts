@@ -17,18 +17,18 @@ export class TokenContractsResolver {
   @Query(() => TokenContractsConnection, { name: 'tokenContracts' })
   async execute(
     @Args() request: TokenContractsRequest,
-    @SelectionSet() selectionSet,
+    @SelectionSet() selectionSet
   ): Promise<TokenContractsConnection> {
     const searchResponse = await this.queryBus.execute<
       TokenContractsQuery,
       SearchResponse<TokenContract>
-    >(new TokenContractsQuery(request, selectionSet));
+    >(new TokenContractsQuery(request, selectionSet, ['id', 'name', 'symbol']));
 
     return ConnectionFactory.fromSearchResponse(
       TokenContractsConnection,
       TokenContractNode,
       searchResponse,
-      selectionSet,
+      selectionSet
     );
   }
 }
