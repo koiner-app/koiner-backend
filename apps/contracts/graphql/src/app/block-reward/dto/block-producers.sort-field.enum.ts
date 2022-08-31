@@ -2,6 +2,7 @@ import { registerEnumType } from '@nestjs/graphql';
 
 export enum BlockProducersSortFieldEnum {
   balance = 'balance',
+  blocksProduced = 'blocksProduced',
   createdAt = 'createdAt',
 }
 
