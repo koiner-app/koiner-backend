@@ -11,4 +11,5 @@ export class CreateTokenContractCommand extends Command {
   readonly name!: string;
   readonly symbol!: string;
   readonly decimals!: number;
+  readonly timestamp!: number;
 }

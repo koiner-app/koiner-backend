@@ -28,6 +28,7 @@ export class CreateBlockRewardHandler
           : undefined,
         burnedValue: command.burnedValue,
         roi: command.roi,
+        timestamp: command.timestamp,
       },
       UUID.generate()
     );

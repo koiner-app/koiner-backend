@@ -10,4 +10,5 @@ export class TokensMinted extends DomainEvent {
   readonly contractId!: string;
   readonly to!: string;
   readonly value!: number;
+  readonly timestamp!: number;
 }

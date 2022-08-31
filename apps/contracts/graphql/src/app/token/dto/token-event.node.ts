@@ -19,6 +19,9 @@ export class TokenEventNode extends BaseNode {
   @Field()
   value: number;
 
+  @Field()
+  timestamp: number;
+
   constructor(event: TokenEvent) {
     super(event);
 
@@ -27,5 +30,6 @@ export class TokenEventNode extends BaseNode {
     this.from = event.from ? event.from.value : undefined;
     this.to = event.to ? event.to.value : undefined;
     this.value = event.value;
+    this.timestamp = event.timestamp;
   }
 }

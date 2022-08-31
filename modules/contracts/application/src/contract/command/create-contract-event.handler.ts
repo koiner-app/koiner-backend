@@ -27,6 +27,7 @@ export class CreateContractEventHandler
         impacted: command.impacted
           ? command.impacted.map((impacted) => new KoinosAddressId(impacted))
           : undefined,
+        timestamp: command.timestamp,
       },
       new UUID(command.id)
     );

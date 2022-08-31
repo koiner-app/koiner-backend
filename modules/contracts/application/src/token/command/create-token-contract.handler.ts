@@ -18,8 +18,9 @@ export class CreateTokenContractHandler
         name: command.name,
         symbol: command.symbol,
         decimals: command.decimals,
+        timestamp: command.timestamp,
       },
-      new KoinosAddressId(command.id),
+      new KoinosAddressId(command.id)
     );
 
     await this.writeRepository.save(contract);

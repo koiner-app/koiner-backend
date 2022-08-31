@@ -15,8 +15,9 @@ export class CreateContractHandler
         bytecode: command.bytecode,
         abi: command.abi,
         contractStandardType: command.contractStandardType,
+        timestamp: command.timestamp,
       },
-      new KoinosAddressId(command.id),
+      new KoinosAddressId(command.id)
     );
 
     await this.writeRepository.save(contract);

@@ -15,6 +15,7 @@ export class PublishOperationCreatedEvent extends DomainEventHandler {
       transactionId: event.transactionId,
       operationIndex: event.operationIndex,
       type: event.type,
+      timestamp: event.timestamp,
     });
 
     await this.amqpConnection.publish(

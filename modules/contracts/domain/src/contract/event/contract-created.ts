@@ -8,4 +8,5 @@ export class ContractCreated extends DomainEvent {
   }
 
   readonly contractStandardType?: string;
+  readonly timestamp!: number;
 }

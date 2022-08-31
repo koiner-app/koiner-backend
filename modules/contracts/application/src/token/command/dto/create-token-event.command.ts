@@ -13,4 +13,5 @@ export class CreateTokenEventCommand extends Command {
   readonly from?: string;
   readonly to?: string;
   readonly value!: number;
+  readonly timestamp!: number;
 }

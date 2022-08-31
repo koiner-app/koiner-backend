@@ -13,4 +13,5 @@ export class CreateContractOperationCommand extends Command {
   readonly entryPoint!: number;
   readonly args!: string;
   readonly contractStandardType?: string;
+  readonly timestamp!: number;
 }

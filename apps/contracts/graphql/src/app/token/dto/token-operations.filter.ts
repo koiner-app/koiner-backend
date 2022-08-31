@@ -1,6 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { FilterType } from '@appvise/domain';
-import { StringFilterInput } from '@appvise/graphql';
+import { NumericFilterInput, StringFilterInput } from '@appvise/graphql';
 
 @InputType()
 export class TokenOperationsFilter implements FilterType {
@@ -27,6 +27,9 @@ export class TokenOperationsFilter implements FilterType {
 
   @Field(() => StringFilterInput, { nullable: true })
   value?: StringFilterInput;
+
+  @Field(() => NumericFilterInput, { nullable: true })
+  timestamp?: NumericFilterInput;
 
   @Field(() => [TokenOperationsFilter], {
     nullable: true,

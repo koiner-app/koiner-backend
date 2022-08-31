@@ -10,6 +10,7 @@ export class OperationCreatedMessage {
   readonly transactionId!: string;
   readonly operationIndex!: number;
   readonly type!: string;
+  readonly timestamp!: number;
 
   public toString(): string {
     return JSON.stringify(this);

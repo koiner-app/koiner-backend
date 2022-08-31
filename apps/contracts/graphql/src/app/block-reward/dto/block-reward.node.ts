@@ -31,6 +31,9 @@ export class BlockRewardNode extends BaseNode {
   @Field({ nullable: true })
   roi?: number;
 
+  @Field()
+  timestamp: number;
+
   constructor(blockReward: BlockReward) {
     super(blockReward);
 
@@ -47,5 +50,6 @@ export class BlockRewardNode extends BaseNode {
       : undefined;
     this.burnedValue = blockReward.burnedValue;
     this.roi = blockReward.roi;
+    this.timestamp = blockReward.timestamp;
   }
 }

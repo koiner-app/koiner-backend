@@ -12,7 +12,7 @@ export class CreateContractOperationHandler
   implements ICommandHandler<CreateContractOperationCommand>
 {
   constructor(
-    private readonly writeRepository: ContractOperationWriteRepository,
+    private readonly writeRepository: ContractOperationWriteRepository
   ) {}
 
   async execute(command: CreateContractOperationCommand): Promise<void> {
@@ -23,8 +23,9 @@ export class CreateContractOperationHandler
         entryPoint: command.entryPoint,
         args: command.args,
         contractStandardType: command.contractStandardType,
+        timestamp: command.timestamp,
       },
-      new UUID(command.id),
+      new UUID(command.id)
     );
 
     await this.writeRepository.save(operation);

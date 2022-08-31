@@ -15,7 +15,7 @@ export class ContractEventsRequest extends SearchRequestArgs {
     nullable: true,
     defaultValue: [
       {
-        field: ContractEventsSortFieldEnum.createdAt,
+        field: ContractEventsSortFieldEnum.timestamp,
         direction: SortDirection.desc,
       } as ContractEventsSortInput,
     ],

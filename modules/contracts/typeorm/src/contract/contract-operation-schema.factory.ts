@@ -17,7 +17,7 @@ export class ContractOperationSchemaFactory extends EntitySchemaFactory<
   ContractOperationSchema
 > {
   protected toDomainProps(
-    entitySchema: ContractOperationSchema,
+    entitySchema: ContractOperationSchema
   ): EntityProps<ContractOperationProps> {
     const id = new UUID(entitySchema.id);
 
@@ -27,13 +27,14 @@ export class ContractOperationSchemaFactory extends EntitySchemaFactory<
       entryPoint: entitySchema.entry_point,
       args: entitySchema.args,
       contractStandardType: entitySchema.contract_standard_type,
+      timestamp: entitySchema.timestamp,
     };
 
     return { id, props };
   }
 
   protected toSchemaProps(
-    entity: ContractOperation,
+    entity: ContractOperation
   ): EntitySchemaProps<ContractOperationSchema> {
     const props = entity.getPropsCopy();
 
@@ -44,6 +45,7 @@ export class ContractOperationSchemaFactory extends EntitySchemaFactory<
       args: props.args,
       contract_standard_type:
         props.contractStandardType as ContractStandardType,
+      timestamp: props.timestamp,
     };
   }
 }

@@ -23,6 +23,9 @@ export class ContractOperationNode extends BaseNode {
   @Field(() => ContractStandardType, { nullable: true })
   contractStandardType: ContractStandardType;
 
+  @Field()
+  timestamp: number;
+
   @Field(() => ContractOperationDetailsUnion, { nullable: true })
   details: typeof ContractOperationDetailsUnion;
 
@@ -38,5 +41,6 @@ export class ContractOperationNode extends BaseNode {
     this.args = operation.args;
     this.contractStandardType =
       operation.contractStandardType as ContractStandardType;
+    this.timestamp = operation.timestamp;
   }
 }

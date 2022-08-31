@@ -9,6 +9,7 @@ export interface CreateBlockRewardProps {
   burnerId?: KoinosAddressId;
   burnedValue?: number;
   roi?: number;
+  timestamp: number;
 }
 
 export type BlockRewardProps = CreateBlockRewardProps;

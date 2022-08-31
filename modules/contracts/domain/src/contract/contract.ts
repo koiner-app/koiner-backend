@@ -17,6 +17,7 @@ export class Contract extends AggregateRoot<ContractProps> {
       new ContractCreated({
         aggregateId: id.value,
         contractStandardType: props.contractStandardType,
+        timestamp: props.timestamp,
       })
     );
 
@@ -33,6 +34,10 @@ export class Contract extends AggregateRoot<ContractProps> {
 
   get contractStandardType(): ContractStandardType | undefined {
     return this.props.contractStandardType;
+  }
+
+  get timestamp(): number {
+    return this.props.timestamp;
   }
 
   validate(): void {

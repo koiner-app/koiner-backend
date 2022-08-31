@@ -12,4 +12,5 @@ export class CreateContractCommand extends Command {
   readonly bytecode!: string;
   readonly abi?: string;
   readonly contractStandardType?: ContractStandardType;
+  readonly timestamp!: number;
 }

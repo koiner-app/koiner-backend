@@ -15,7 +15,7 @@ export class TokenEventsRequest extends SearchRequestArgs {
     nullable: true,
     defaultValue: [
       {
-        field: TokenEventsSortFieldEnum.createdAt,
+        field: TokenEventsSortFieldEnum.timestamp,
         direction: SortDirection.desc,
       } as TokenEventsSortInput,
     ],

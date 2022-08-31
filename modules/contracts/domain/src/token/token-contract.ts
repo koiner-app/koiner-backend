@@ -30,6 +30,7 @@ export class TokenContract extends AggregateRoot<TokenContractProps> {
         symbol: props.symbol,
         decimals: props.decimals,
         totalSupply: props.totalSupply,
+        timestamp: props.timestamp,
       })
     );
 
@@ -50,6 +51,10 @@ export class TokenContract extends AggregateRoot<TokenContractProps> {
 
   get totalSupply(): number {
     return this.props.totalSupply;
+  }
+
+  get timestamp(): number {
+    return this.props.timestamp;
   }
 
   update(props: UpdateTokenContractProps): void {

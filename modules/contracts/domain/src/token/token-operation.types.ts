@@ -7,6 +7,7 @@ export interface CreateTokenOperationProps {
   from?: KoinosAddressId;
   to?: KoinosAddressId;
   value: number;
+  timestamp: number;
 }
 
 export type TokenOperationProps = CreateTokenOperationProps;

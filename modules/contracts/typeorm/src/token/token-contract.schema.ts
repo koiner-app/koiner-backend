@@ -5,7 +5,7 @@ import { ContractSchema } from '..';
 @Entity('contracts_token_contract')
 export class TokenContractSchema extends EntityBaseSchema {
   @PrimaryColumn()
-  @Column({ length: 34 })
+  @Column({ length: 35 })
   override readonly id!: string;
 
   // Add foreign key without the need to always use the relation
@@ -24,4 +24,7 @@ export class TokenContractSchema extends EntityBaseSchema {
 
   @Column({ length: 20 })
   readonly total_supply!: string;
+
+  @Column({ type: 'bigint' })
+  readonly timestamp!: number;
 }

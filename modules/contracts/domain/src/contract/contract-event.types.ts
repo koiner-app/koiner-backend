@@ -15,6 +15,7 @@ export interface CreateContractEventProps {
   name: string;
   data: string;
   impacted?: KoinosAddressId[];
+  timestamp: number;
 }
 
 export type ContractEventProps = CreateContractEventProps;

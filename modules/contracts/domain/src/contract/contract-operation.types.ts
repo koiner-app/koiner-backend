@@ -6,6 +6,7 @@ export interface CreateContractOperationProps {
   entryPoint: number;
   args: string;
   contractStandardType?: string;
+  timestamp: number;
 }
 
 export type ContractOperationProps = CreateContractOperationProps;

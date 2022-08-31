@@ -46,6 +46,7 @@ export class CreateTokenEventOnContractEventCreated extends DomainEventHandler {
           from: <string>decodedEvent.args.from,
           to: <string>decodedEvent.args.to,
           value: parseInt(<string>decodedEvent.args.value),
+          timestamp: event.timestamp,
         })
       );
     } catch (error) {

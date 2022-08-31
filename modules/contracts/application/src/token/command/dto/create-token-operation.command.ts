@@ -11,7 +11,8 @@ export class CreateTokenOperationCommand extends Command {
   readonly contractId!: string;
   readonly transactionId!: string;
   readonly name!: string;
-  readonly to!: string;
-  readonly value!: number;
   readonly from?: string;
+  readonly to?: string;
+  readonly value!: number;
+  readonly timestamp!: number;
 }

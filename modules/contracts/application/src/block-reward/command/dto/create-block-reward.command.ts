@@ -15,4 +15,5 @@ export class CreateBlockRewardCommand extends Command {
   readonly burnerId?: string;
   readonly burnedValue?: number;
   readonly roi?: number;
+  readonly timestamp!: number;
 }

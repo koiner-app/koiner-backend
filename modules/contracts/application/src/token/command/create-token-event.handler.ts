@@ -41,6 +41,7 @@ export class CreateTokenEventHandler
         from: command.from ? new KoinosAddressId(command.from) : undefined,
         to: command.to ? new KoinosAddressId(command.to) : undefined,
         value: command.value,
+        timestamp: command.timestamp,
       },
       new UUID(command.id)
     );

@@ -34,13 +34,14 @@ export class CreateTokenOperationOnOperationCreated extends DomainEventHandler {
           contractId: event.contractId,
           transactionId: event.transactionId,
           name: decodedOperation.name,
+          from: <string>decodedOperation.args.from,
           to: <string>decodedOperation.args.to,
           value: parseInt(<string>decodedOperation.args.value),
-          from: <string>decodedOperation.args.from,
+          timestamp: event.timestamp,
         })
       );
     } catch (error) {
-      console.log('Token operation error', error);
+      console.log('CreateTokenOperation error', error);
     }
   }
 }

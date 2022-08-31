@@ -28,6 +28,7 @@ export class TokenEvent extends AggregateRoot<TokenEventProps> {
         from: props.from ? props.from.value : undefined,
         to: props.to ? props.to.value : undefined,
         value: props.value,
+        timestamp: props.timestamp,
       })
     );
 
@@ -38,6 +39,7 @@ export class TokenEvent extends AggregateRoot<TokenEventProps> {
           contractId: props.contractId.value,
           from: props.from.value,
           value: props.value,
+          timestamp: props.timestamp,
         })
       );
     }
@@ -49,6 +51,7 @@ export class TokenEvent extends AggregateRoot<TokenEventProps> {
           contractId: props.contractId.value,
           to: props.to.value,
           value: props.value,
+          timestamp: props.timestamp,
         })
       );
     }
@@ -61,6 +64,7 @@ export class TokenEvent extends AggregateRoot<TokenEventProps> {
           from: props.from.value,
           to: props.to.value,
           value: props.value,
+          timestamp: props.timestamp,
         })
       );
     }
@@ -86,6 +90,10 @@ export class TokenEvent extends AggregateRoot<TokenEventProps> {
 
   get value(): number {
     return this.props.value;
+  }
+
+  get timestamp(): number {
+    return this.props.timestamp;
   }
 
   validate(): void {

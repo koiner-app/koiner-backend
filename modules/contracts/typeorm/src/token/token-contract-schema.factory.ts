@@ -21,6 +21,7 @@ export class TokenContractSchemaFactory extends EntitySchemaFactory<
       symbol: entitySchema.symbol,
       decimals: entitySchema.decimals,
       totalSupply: parseInt(entitySchema.total_supply),
+      timestamp: entitySchema.timestamp,
     };
 
     return { id, props };
@@ -36,6 +37,7 @@ export class TokenContractSchemaFactory extends EntitySchemaFactory<
       symbol: props.symbol,
       decimals: props.decimals,
       total_supply: String(props.totalSupply).padStart(20, '0'),
+      timestamp: props.timestamp,
     };
   }
 }

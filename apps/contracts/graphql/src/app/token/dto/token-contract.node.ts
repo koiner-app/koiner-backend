@@ -16,6 +16,9 @@ export class TokenContractNode extends BaseNode {
   @Field()
   totalSupply: number;
 
+  @Field()
+  timestamp: number;
+
   constructor(tokenContract: TokenContract) {
     super(tokenContract);
 
@@ -23,5 +26,6 @@ export class TokenContractNode extends BaseNode {
     this.symbol = tokenContract.symbol;
     this.decimals = tokenContract.decimals;
     this.totalSupply = tokenContract.totalSupply;
+    this.timestamp = tokenContract.timestamp;
   }
 }

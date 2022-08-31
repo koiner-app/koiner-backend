@@ -28,6 +28,7 @@ export class ContractEventSchemaFactory extends EntitySchemaFactory<
       impacted: entitySchema.impacted
         ? entitySchema.impacted.map((impacted) => new KoinosAddressId(impacted))
         : undefined,
+      timestamp: entitySchema.timestamp,
     };
 
     return { id, props };
@@ -49,6 +50,7 @@ export class ContractEventSchemaFactory extends EntitySchemaFactory<
       impacted: props.impacted
         ? props.impacted.map((impacted) => impacted.value)
         : undefined,
+      timestamp: props.timestamp,
     };
   }
 }

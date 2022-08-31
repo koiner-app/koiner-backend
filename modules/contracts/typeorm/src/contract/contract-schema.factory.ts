@@ -16,7 +16,7 @@ export class ContractSchemaFactory extends EntitySchemaFactory<
   ContractSchema
 > {
   protected toDomainProps(
-    entitySchema: ContractSchema,
+    entitySchema: ContractSchema
   ): EntityProps<ContractProps> {
     const id = new KoinosAddressId(entitySchema.id);
 
@@ -24,6 +24,7 @@ export class ContractSchemaFactory extends EntitySchemaFactory<
       bytecode: entitySchema.bytecode,
       abi: entitySchema.abi,
       contractStandardType: entitySchema.contract_standard_type,
+      timestamp: entitySchema.timestamp,
     };
 
     return { id, props };
@@ -37,6 +38,7 @@ export class ContractSchemaFactory extends EntitySchemaFactory<
       abi: props.abi,
       contract_standard_type:
         props.contractStandardType as ContractStandardType,
+      timestamp: props.timestamp,
     };
   }
 }

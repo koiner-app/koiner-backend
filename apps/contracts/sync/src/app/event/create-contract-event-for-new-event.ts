@@ -40,6 +40,7 @@ export class CreateContractEventForNewEvent {
           name: event.name,
           data: event.data,
           impacted: event.impacted,
+          timestamp: event.timestamp,
         })
       );
     }

@@ -5,10 +5,10 @@ import { TokenContractSchema } from '.';
 @Entity('contracts_token_operation')
 export class TokenOperationSchema extends EntityBaseSchema {
   @PrimaryColumn()
-  @Column({ length: 34 })
+  @Column({ length: 35 })
   override readonly id!: string;
 
-  @Column({ length: 34 })
+  @Column({ length: 35 })
   readonly contract_id!: string;
 
   // Add foreign key without the need to always use the relation
@@ -22,12 +22,15 @@ export class TokenOperationSchema extends EntityBaseSchema {
   @Column({ length: 8 })
   readonly name!: string;
 
-  @Column({ length: 34, nullable: true })
+  @Column({ length: 35, nullable: true })
   readonly from?: string;
 
-  @Column({ length: 34, nullable: true })
+  @Column({ length: 35, nullable: true })
   readonly to?: string;
 
   @Column({ length: 20 })
   readonly value!: string;
+
+  @Column({ type: 'bigint' })
+  readonly timestamp!: number;
 }

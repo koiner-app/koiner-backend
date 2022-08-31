@@ -35,6 +35,7 @@ export class CreateContractForUploadedContract {
         contractStandardType: contractStandardWithValues
           ? contractStandardWithValues.contractStandard.type
           : undefined,
+        timestamp: event.timestamp,
       })
     );
   }

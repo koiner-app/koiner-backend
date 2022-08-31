@@ -9,10 +9,10 @@ export class BlockRewardSchema extends EntityBaseSchema {
   @Column({ type: 'bigint' })
   readonly block_height!: number;
 
-  @Column({ length: 34 })
+  @Column({ length: 35 })
   readonly producer_id!: string;
 
-  @Column({ length: 34 })
+  @Column({ length: 35 })
   readonly contract_id!: string;
 
   // Add foreign key without the need to always use the relation
@@ -23,7 +23,7 @@ export class BlockRewardSchema extends EntityBaseSchema {
   @Column({ length: 20 })
   readonly value!: string;
 
-  @Column({ length: 34, nullable: true })
+  @Column({ length: 35, nullable: true })
   readonly burned_contract_id?: string;
 
   // Add foreign key without the need to always use the relation
@@ -31,7 +31,7 @@ export class BlockRewardSchema extends EntityBaseSchema {
   @JoinColumn({ name: 'burned_contract_id', referencedColumnName: 'id' })
   private _burned_contract_id_fg?: never;
 
-  @Column({ length: 34, nullable: true })
+  @Column({ length: 35, nullable: true })
   readonly burner_id?: string;
 
   // Add foreign key without the need to always use the relation
@@ -44,4 +44,7 @@ export class BlockRewardSchema extends EntityBaseSchema {
 
   @Column({ length: 8, nullable: true })
   readonly roi?: string;
+
+  @Column({ type: 'bigint' })
+  readonly timestamp!: number;
 }

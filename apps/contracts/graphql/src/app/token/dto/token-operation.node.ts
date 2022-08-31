@@ -22,6 +22,9 @@ export class TokenOperationNode extends BaseNode {
   @Field()
   value: number;
 
+  @Field()
+  timestamp: number;
+
   // Used by UnionTypeResolver
   contractStandardType: ContractStandardType = ContractStandardType.token;
 
@@ -34,5 +37,6 @@ export class TokenOperationNode extends BaseNode {
     this.from = tokenOperation.from ? tokenOperation.from.value : undefined;
     this.to = tokenOperation.to ? tokenOperation.to.value : undefined;
     this.value = tokenOperation.value;
+    this.timestamp = tokenOperation.timestamp;
   }
 }

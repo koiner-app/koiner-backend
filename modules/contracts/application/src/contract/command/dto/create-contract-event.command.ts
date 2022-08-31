@@ -17,4 +17,5 @@ export class CreateContractEventCommand extends Command {
   readonly name!: string;
   readonly data!: string;
   readonly impacted?: string[];
+  readonly timestamp!: number;
 }

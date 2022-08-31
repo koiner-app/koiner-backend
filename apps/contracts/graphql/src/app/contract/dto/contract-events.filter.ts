@@ -31,6 +31,9 @@ export class ContractEventsFilter implements FilterType {
   @Field(() => StringFilterInput, { nullable: true })
   impacted?: StringFilterInput;
 
+  @Field(() => NumericFilterInput, { nullable: true })
+  timestamp?: NumericFilterInput;
+
   @Field(() => [ContractEventsFilter], {
     nullable: true,
   })

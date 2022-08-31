@@ -10,10 +10,14 @@ export class ContractNode extends BaseNode {
   @Field(() => ContractStandardType, { nullable: true })
   contractStandardType: ContractStandardType;
 
+  @Field()
+  timestamp: number;
+
   constructor(contract: Contract) {
     super(contract);
 
     this.abi = contract.abi;
     this.contractStandardType = contract.contractStandardType;
+    this.timestamp = contract.timestamp;
   }
 }

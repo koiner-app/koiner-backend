@@ -91,6 +91,7 @@ export class CreateBlockRewardForNewBlock {
                   .round(5)
                   .done() as number)
               : undefined,
+            timestamp: event.timestamp,
           })
         );
       }

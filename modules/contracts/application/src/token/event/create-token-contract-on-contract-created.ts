@@ -45,6 +45,7 @@ export class CreateTokenContractOnContractCreated extends DomainEventHandler {
             name: <string>contractValues['name'],
             symbol: <string>contractValues['symbol'],
             decimals: <number>contractValues['decimals'],
+            timestamp: event.timestamp,
           })
         );
 

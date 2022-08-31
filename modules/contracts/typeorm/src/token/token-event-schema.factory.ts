@@ -25,6 +25,7 @@ export class TokenEventSchemaFactory extends EntitySchemaFactory<
         : undefined,
       to: entitySchema.to ? new KoinosAddressId(entitySchema.to) : undefined,
       value: parseInt(entitySchema.value),
+      timestamp: entitySchema.timestamp,
     };
 
     return { id, props };
@@ -41,6 +42,7 @@ export class TokenEventSchemaFactory extends EntitySchemaFactory<
       from: props.from ? props.from.value : undefined,
       to: props.to ? props.to.value : undefined,
       value: String(props.value).padStart(20, '0'),
+      timestamp: props.timestamp,
     };
   }
 }

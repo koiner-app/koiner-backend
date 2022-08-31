@@ -48,6 +48,7 @@ export class CreateContractOperationForNewOperation {
           entryPoint: rawOperation.call_contract.entry_point,
           args: rawOperation.call_contract.args,
           contractStandardType,
+          timestamp: event.timestamp,
         })
       );
     }

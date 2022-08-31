@@ -32,6 +32,7 @@ export class ContractEvent extends AggregateRoot<ContractEventProps> {
         impacted: props.impacted
           ? props.impacted.map((impactedAddress) => impactedAddress.value)
           : undefined,
+        timestamp: props.timestamp,
       })
     );
 
@@ -68,6 +69,10 @@ export class ContractEvent extends AggregateRoot<ContractEventProps> {
 
   get impacted(): KoinosAddressId[] | undefined {
     return this.props.impacted;
+  }
+
+  get timestamp(): number {
+    return this.props.timestamp;
   }
 
   validate(): void {

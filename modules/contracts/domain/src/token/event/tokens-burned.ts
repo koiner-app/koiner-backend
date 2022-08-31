@@ -10,4 +10,5 @@ export class TokensBurned extends DomainEvent {
   readonly contractId!: string;
   readonly from!: string;
   readonly value!: number;
+  readonly timestamp!: number;
 }

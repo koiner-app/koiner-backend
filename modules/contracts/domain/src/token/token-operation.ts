@@ -24,6 +24,7 @@ export class TokenOperation extends AggregateRoot<TokenOperationProps> {
         from: props.from ? props.from.value : undefined,
         to: props.to ? props.to.value : undefined,
         value: props.value,
+        timestamp: props.timestamp,
       })
     );
 
@@ -52,6 +53,10 @@ export class TokenOperation extends AggregateRoot<TokenOperationProps> {
 
   get value(): number {
     return this.props.value;
+  }
+
+  get timestamp(): number {
+    return this.props.timestamp;
   }
 
   validate(): void {

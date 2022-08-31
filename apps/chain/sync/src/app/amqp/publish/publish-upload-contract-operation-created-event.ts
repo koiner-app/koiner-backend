@@ -13,6 +13,7 @@ export class PublishUploadContractOperationCreatedEvent extends DomainEventHandl
       contractId: event.contractId,
       bytecode: event.bytecode,
       abi: event.abi,
+      timestamp: event.timestamp,
     });
 
     await this.amqpConnection.publish(

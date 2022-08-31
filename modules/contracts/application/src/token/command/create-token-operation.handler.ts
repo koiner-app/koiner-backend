@@ -18,16 +18,18 @@ export class CreateTokenOperationHandler
   ) {}
 
   async execute(command: CreateTokenOperationCommand): Promise<void> {
-    await this.commandBus.execute(
-      new CreateOrUpdateAddressCommand({
-        id: command.to,
-      })
-    );
-
     if (command.from) {
       await this.commandBus.execute(
         new CreateOrUpdateAddressCommand({
           id: command.from,
+        })
+      );
+    }
+
+    if (command.to) {
+      await this.commandBus.execute(
+        new CreateOrUpdateAddressCommand({
+          id: command.to,
         })
       );
     }
@@ -37,9 +39,10 @@ export class CreateTokenOperationHandler
         contractId: new KoinosAddressId(command.contractId),
         transactionId: new KoinosId(command.transactionId),
         name: command.name,
-        to: new KoinosAddressId(command.to),
-        value: command.value,
         from: command.from ? new KoinosAddressId(command.from) : undefined,
+        to: command.to ? new KoinosAddressId(command.to) : undefined,
+        value: command.value,
+        timestamp: command.timestamp,
       },
       new UUID(command.id)
     );

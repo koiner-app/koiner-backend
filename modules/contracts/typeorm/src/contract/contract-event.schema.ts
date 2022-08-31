@@ -16,7 +16,7 @@ export class ContractEventSchema extends EntityBaseSchema {
   @Column({ type: 'smallint', nullable: true })
   readonly sequence?: number;
 
-  @Column({ length: 34 })
+  @Column({ length: 35 })
   readonly contract_id!: string;
 
   @Column({ type: 'enum', enum: ContractStandardType, nullable: true })
@@ -30,4 +30,7 @@ export class ContractEventSchema extends EntityBaseSchema {
 
   @Column({ type: 'simple-array', nullable: true })
   readonly impacted?: string[];
+
+  @Column({ type: 'bigint' })
+  readonly timestamp!: number;
 }

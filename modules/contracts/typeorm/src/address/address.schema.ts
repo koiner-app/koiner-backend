@@ -4,7 +4,7 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 @Entity('contracts_address')
 export class AddressSchema extends EntityBaseSchema {
   @PrimaryColumn()
-  @Column({ length: 34 })
+  @Column({ length: 35 })
   override readonly id!: string;
 
   @Column()

@@ -5,7 +5,7 @@ import { AddressSchema } from '..';
 
 @Entity('contracts_token_holder')
 export class TokenHolderSchema extends EntityBaseSchema {
-  @Column({ length: 34 })
+  @Column({ length: 35 })
   readonly contract_id!: string;
 
   // Add foreign key without the need to always use the relation
@@ -13,7 +13,7 @@ export class TokenHolderSchema extends EntityBaseSchema {
   @JoinColumn({ name: 'contract_id', referencedColumnName: 'id' })
   private _contract_id_fg!: never;
 
-  @Column({ length: 34 })
+  @Column({ length: 35 })
   readonly address_id!: string;
 
   // Add foreign key without the need to always use the relation

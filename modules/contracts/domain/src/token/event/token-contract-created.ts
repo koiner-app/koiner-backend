@@ -11,4 +11,5 @@ export class TokenContractCreated extends DomainEvent {
   readonly symbol!: string;
   readonly decimals!: number;
   readonly totalSupply!: number;
+  readonly timestamp!: number;
 }

@@ -19,6 +19,9 @@ export class TokenContractsFilter implements FilterType {
   @Field(() => NumericFilterInput, { nullable: true })
   totalSupply?: NumericFilterInput;
 
+  @Field(() => NumericFilterInput, { nullable: true })
+  timestamp?: NumericFilterInput;
+
   @Field(() => [TokenContractsFilter], {
     nullable: true,
   })

@@ -5,10 +5,10 @@ import { ContractStandardType } from '@koiner/contracts/domain';
 @Entity('contracts_contract_operation')
 export class ContractOperationSchema extends EntityBaseSchema {
   @PrimaryColumn()
-  @Column({ length: 34 })
+  @Column({ length: 35 })
   override readonly id!: string;
 
-  @Column({ length: 34 })
+  @Column({ length: 35 })
   readonly contract_id!: string;
 
   @Column({ length: 70 })
@@ -22,4 +22,7 @@ export class ContractOperationSchema extends EntityBaseSchema {
 
   @Column({ type: 'enum', enum: ContractStandardType, nullable: true })
   readonly contract_standard_type?: ContractStandardType;
+
+  @Column({ type: 'bigint' })
+  readonly timestamp!: number;
 }

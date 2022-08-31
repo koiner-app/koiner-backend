@@ -29,6 +29,7 @@ export class BlockReward extends AggregateRoot<BlockRewardProps> {
         burnerId: blockReward.burnerId ? blockReward.burnerId.value : undefined,
         burnedValue: blockReward.burnedValue,
         roi: blockReward.roi,
+        timestamp: props.timestamp,
       })
     );
 
@@ -65,6 +66,10 @@ export class BlockReward extends AggregateRoot<BlockRewardProps> {
 
   get roi(): number | undefined {
     return this.props.roi;
+  }
+
+  get timestamp(): number {
+    return this.props.timestamp;
   }
 
   validate(): void {

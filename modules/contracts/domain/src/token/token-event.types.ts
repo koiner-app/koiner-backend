@@ -6,6 +6,7 @@ export interface CreateTokenEventProps {
   from?: KoinosAddressId;
   to?: KoinosAddressId;
   value: number;
+  timestamp: number;
 }
 
 export type TokenEventProps = CreateTokenEventProps;
