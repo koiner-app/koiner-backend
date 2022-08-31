@@ -21,9 +21,9 @@
   },
   "private": true,
   "dependencies": {
-    "@appvise/domain": "^1.0.9",
-    "@appvise/graphql": "^1.0.6",
-    "@appvise/typeorm": "^1.0.10",
+    "@appvise/domain": "^1.0.10",
+    "@appvise/graphql": "^1.0.7",
+    "@appvise/typeorm": "^1.0.11",
     "@envelop/depth-limit": "^1.5.3",
     "@golevelup/nestjs-rabbitmq": "^2.3.0",
     "@graphql-mesh/cli": "^0.73.2",
