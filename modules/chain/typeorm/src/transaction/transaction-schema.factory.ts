@@ -19,7 +19,7 @@ export class TransactionSchemaFactory extends EntitySchemaFactory<
   TransactionSchema
 > {
   protected toDomainProps(
-    entitySchema: TransactionSchema,
+    entitySchema: TransactionSchema
   ): EntityProps<TransactionProps> {
     const id = new KoinosId(entitySchema.id);
 
@@ -42,18 +42,20 @@ export class TransactionSchemaFactory extends EntitySchemaFactory<
                 transactionId: new KoinosId(operationSchema.transaction_id),
                 operationIndex: operationSchema.operation_index,
                 type: operationSchema.type,
+                timestamp: operationSchema.timestamp,
               },
             });
           })
         : [],
       operationCount: entitySchema.operation_count,
+      timestamp: entitySchema.timestamp,
     };
 
     return { id, props };
   }
 
   protected toSchemaProps(
-    entity: Transaction,
+    entity: Transaction
   ): EntitySchemaProps<TransactionSchema> {
     const props = entity.getPropsCopy();
 
@@ -72,9 +74,11 @@ export class TransactionSchemaFactory extends EntitySchemaFactory<
           transaction_id: operation.transactionId.value,
           operation_index: operation.operationIndex,
           type: operation.type,
+          timestamp: operation.timestamp,
         });
       }),
       operation_count: props.operationCount,
+      timestamp: props.timestamp,
     };
   }
 }

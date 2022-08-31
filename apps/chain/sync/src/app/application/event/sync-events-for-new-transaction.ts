@@ -39,6 +39,7 @@ export class SyncEventsForNewTransaction extends DomainEventHandler {
                   (impactedItem) => impactedItem !== '' // Filter out empty items
                 )
               : [],
+            timestamp: event.timestamp,
           })
         );
       }

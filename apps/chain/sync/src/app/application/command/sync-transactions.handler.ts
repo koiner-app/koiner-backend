@@ -51,6 +51,7 @@ export class SyncTransactionsHandler
             : 0,
           nonce: <string>transactionJson.header.nonce,
           operationMerkleRoot: transactionJson.header.operation_merkle_root,
+          timestamp: parseInt(rawBlock.block.header.timestamp),
         })
       );
     }

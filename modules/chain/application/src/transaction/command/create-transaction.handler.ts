@@ -26,6 +26,7 @@ export class CreateTransactionHandler
         operationCount: command.operationCount,
         signature: command.signature,
         transactionIndex: command.transactionIndex,
+        timestamp: command.timestamp,
       },
       new KoinosId(command.id)
     );

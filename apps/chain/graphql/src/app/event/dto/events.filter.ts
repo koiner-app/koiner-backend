@@ -28,6 +28,9 @@ export class EventsFilter implements FilterType {
   @Field(() => StringFilterInput, { nullable: true })
   impacted?: StringFilterInput;
 
+  @Field(() => NumericFilterInput, { nullable: true })
+  timestamp?: NumericFilterInput;
+
   @Field(() => [EventsFilter], {
     nullable: true,
   })

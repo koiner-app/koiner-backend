@@ -28,6 +28,9 @@ export class TransactionsFilter implements FilterType {
   @Field(() => NumericFilterInput, { nullable: true })
   operationCount?: NumericFilterInput;
 
+  @Field(() => NumericFilterInput, { nullable: true })
+  timestamp?: NumericFilterInput;
+
   @Field(() => [TransactionsFilter], {
     nullable: true,
   })

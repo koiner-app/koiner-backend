@@ -10,4 +10,5 @@ export class UploadContractOperationCreated extends DomainEvent {
   readonly contractId!: string;
   readonly bytecode!: string;
   readonly abi?: string;
+  readonly timestamp!: number;
 }

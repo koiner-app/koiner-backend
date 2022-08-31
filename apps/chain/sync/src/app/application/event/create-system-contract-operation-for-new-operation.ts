@@ -25,6 +25,7 @@ export class CreateSystemContractOperationForNewOperation extends DomainEventHan
           id: event.aggregateId,
           contractId: rawOperation.set_system_contract.contract_id,
           systemContract: rawOperation.set_system_contract.system_contract,
+          timestamp: event.timestamp,
         })
       );
     }

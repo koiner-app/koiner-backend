@@ -49,6 +49,7 @@ export class SyncOperationsForNewTransaction extends DomainEventHandler {
             transactionId: event.aggregateId,
             operationIndex: operationIndex,
             type: operationType,
+            timestamp: event.timestamp,
           })
         );
       }

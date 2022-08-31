@@ -1,8 +1,7 @@
 import { registerEnumType } from '@nestjs/graphql';
 
 export enum OperationsSortFieldEnum {
-  id = 'id',
-  createdAt = 'createdAt',
+  timestamp = 'timestamp',
 }
 
 registerEnumType(OperationsSortFieldEnum, {

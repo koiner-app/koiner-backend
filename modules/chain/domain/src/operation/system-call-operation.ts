@@ -11,7 +11,8 @@ export class SystemCallOperation extends AggregateRoot<SystemCallOperationProps>
 
   static create(
     create: CreateSystemCallOperationProps,
-    id: UUID
+    id: UUID,
+    timestamp: number // Only used for dispatching event
   ): SystemCallOperation {
     const props: SystemCallOperationProps = {
       ...create,
@@ -24,6 +25,7 @@ export class SystemCallOperation extends AggregateRoot<SystemCallOperationProps>
         aggregateId: id.value,
         contractId: props.contractId.value,
         callId: props.callId,
+        timestamp,
       })
     );
 

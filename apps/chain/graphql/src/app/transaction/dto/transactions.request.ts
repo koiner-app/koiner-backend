@@ -15,7 +15,7 @@ export class TransactionsRequest extends SearchRequestArgs {
     nullable: true,
     defaultValue: [
       {
-        field: TransactionsSortFieldEnum.createdAt,
+        field: TransactionsSortFieldEnum.timestamp,
         direction: SortDirection.desc,
       } as TransactionsSortInput,
     ],

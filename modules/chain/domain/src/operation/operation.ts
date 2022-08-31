@@ -25,6 +25,7 @@ export class Operation extends AggregateRoot<OperationProps> {
         transactionId: props.transactionId.value,
         operationIndex: props.operationIndex,
         type: props.type,
+        timestamp: props.timestamp,
       })
     );
 
@@ -45,6 +46,10 @@ export class Operation extends AggregateRoot<OperationProps> {
 
   get type(): OperationType {
     return this.props.type;
+  }
+
+  get timestamp(): number {
+    return this.props.timestamp;
   }
 
   validate(): void {

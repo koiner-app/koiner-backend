@@ -17,6 +17,9 @@ export class OperationNode extends BaseNode {
   @Field()
   transactionId: string;
 
+  @Field()
+  timestamp: number;
+
   @Field(() => OperationDetailsUnion, { nullable: true })
   details: typeof OperationDetailsUnion;
 
@@ -27,5 +30,6 @@ export class OperationNode extends BaseNode {
     this.type = operation.type;
     this.blockHeight = operation.blockHeight;
     this.transactionId = operation.transactionId.value;
+    this.timestamp = operation.timestamp;
   }
 }

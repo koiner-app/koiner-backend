@@ -19,6 +19,7 @@ export class ContractOperationNode extends BaseNode {
       transactionId: new KoinosId(operation.transactionId),
       operationIndex: operation.index,
       type: operation.type,
+      timestamp: operation.timestamp,
     };
 
     const _operation = new Operation({ id, props });

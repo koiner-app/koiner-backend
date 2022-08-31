@@ -22,6 +22,9 @@ export class OperationsFilter implements FilterType {
   @Field(() => StringFilterInput, { nullable: true })
   type?: StringFilterInput;
 
+  @Field(() => NumericFilterInput, { nullable: true })
+  timestamp?: NumericFilterInput;
+
   @Field(() => [OperationsFilter], {
     nullable: true,
   })

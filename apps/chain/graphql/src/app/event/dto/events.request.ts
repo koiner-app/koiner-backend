@@ -15,7 +15,7 @@ export class EventsRequest extends SearchRequestArgs {
     nullable: true,
     defaultValue: [
       {
-        field: EventsSortFieldEnum.createdAt,
+        field: EventsSortFieldEnum.timestamp,
         direction: SortDirection.desc,
       } as EventsSortInput,
     ],

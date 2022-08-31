@@ -9,4 +9,5 @@ export class SystemContractOperationCreated extends DomainEvent {
 
   readonly contractId!: string;
   readonly systemContract!: boolean;
+  readonly timestamp!: number;
 }

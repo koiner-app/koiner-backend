@@ -11,4 +11,5 @@ export class OperationCreated extends DomainEvent {
   readonly transactionId!: string;
   readonly operationIndex!: number;
   readonly type!: string;
+  readonly timestamp!: number;
 }

@@ -26,6 +26,7 @@ export class CreateEventHandler implements ICommandHandler<CreateEventCommand> {
         impacted: command.impacted
           ? command.impacted.map((impacted) => new KoinosAddressId(impacted))
           : undefined,
+        timestamp: command.timestamp,
       },
       UUID.generate()
     );

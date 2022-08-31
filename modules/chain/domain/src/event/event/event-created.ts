@@ -14,4 +14,5 @@ export class EventCreated extends DomainEvent {
   readonly name!: string;
   readonly data?: string;
   readonly impacted?: string[];
+  readonly timestamp!: number;
 }

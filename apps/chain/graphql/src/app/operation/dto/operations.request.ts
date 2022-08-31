@@ -15,7 +15,7 @@ export class OperationsRequest extends SearchRequestArgs {
     nullable: true,
     defaultValue: [
       {
-        field: OperationsSortFieldEnum.createdAt,
+        field: OperationsSortFieldEnum.timestamp,
         direction: SortDirection.desc,
       } as OperationsSortInput,
     ],

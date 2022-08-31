@@ -13,6 +13,7 @@ export interface CreateEventProps {
   name: string;
   data?: string;
   impacted?: KoinosAddressId[];
+  timestamp: number;
 }
 
 export type EventProps = CreateEventProps;

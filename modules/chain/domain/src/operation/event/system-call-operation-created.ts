@@ -9,4 +9,5 @@ export class SystemCallOperationCreated extends DomainEvent {
 
   readonly contractId!: string;
   readonly callId!: number;
+  readonly timestamp!: number;
 }

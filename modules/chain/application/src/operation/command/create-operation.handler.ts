@@ -17,6 +17,7 @@ export class CreateOperationHandler
         transactionId: new KoinosId(command.transactionId),
         operationIndex: command.operationIndex,
         type: command.type,
+        timestamp: command.timestamp,
       },
       UUID.generate()
     );

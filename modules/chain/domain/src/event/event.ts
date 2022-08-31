@@ -25,6 +25,7 @@ export class Event extends AggregateRoot<EventProps> {
         impacted: props.impacted
           ? props.impacted.map((impactedAddress) => impactedAddress.value)
           : undefined,
+        timestamp: props.timestamp,
       })
     );
 
@@ -57,6 +58,10 @@ export class Event extends AggregateRoot<EventProps> {
 
   get impacted(): KoinosAddressId[] | undefined {
     return this.props.impacted;
+  }
+
+  get timestamp(): number {
+    return this.props.timestamp;
   }
 
   validate(): void {

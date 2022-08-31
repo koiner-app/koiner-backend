@@ -24,4 +24,7 @@ export class EventSchema extends EntityBaseSchema {
 
   @Column({ type: 'simple-array', nullable: true })
   readonly impacted?: string[];
+
+  @Column({ type: 'bigint' })
+  readonly timestamp!: number;
 }

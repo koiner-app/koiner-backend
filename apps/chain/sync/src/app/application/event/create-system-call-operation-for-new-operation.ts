@@ -26,6 +26,7 @@ export class CreateSystemCallOperationForNewOperation extends DomainEventHandler
           contractId:
             rawOperation.set_system_call.target.system_call_bundle.contract_id,
           callId: rawOperation.set_system_call.call_id,
+          timestamp: event.timestamp,
         })
       );
     }

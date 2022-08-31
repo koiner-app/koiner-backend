@@ -10,4 +10,5 @@ export class CreateSystemContractOperationCommand extends Command {
   readonly id!: string;
   readonly contractId!: string;
   readonly systemContract!: boolean;
+  readonly timestamp!: number;
 }

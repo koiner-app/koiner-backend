@@ -22,6 +22,7 @@ export class OperationSchemaFactory extends EntitySchemaFactory<
       transactionId: new KoinosId(entitySchema.transaction_id),
       operationIndex: entitySchema.operation_index,
       type: entitySchema.type,
+      timestamp: entitySchema.timestamp,
     };
 
     return { id, props };
@@ -41,6 +42,7 @@ export class OperationSchemaFactory extends EntitySchemaFactory<
       transaction: null,
       operation_index: props.operationIndex,
       type: props.type,
+      timestamp: props.timestamp,
     };
   }
 }

@@ -11,4 +11,5 @@ export class CreateUploadContractOperationCommand extends Command {
   readonly contractId!: string;
   readonly bytecode!: string;
   readonly abi?: string;
+  readonly timestamp!: number;
 }

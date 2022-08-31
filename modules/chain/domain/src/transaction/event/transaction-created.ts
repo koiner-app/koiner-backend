@@ -10,4 +10,5 @@ export class TransactionCreated extends DomainEvent {
   readonly blockHeight!: number;
   readonly payer!: string;
   readonly operationCount!: number;
+  readonly timestamp!: number;
 }

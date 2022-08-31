@@ -11,7 +11,8 @@ export class SystemContractOperation extends AggregateRoot<SystemContractOperati
 
   static create(
     create: CreateSystemContractOperationProps,
-    id: UUID
+    id: UUID,
+    timestamp: number // Only used for dispatching event
   ): SystemContractOperation {
     const props: SystemContractOperationProps = {
       ...create,
@@ -24,6 +25,7 @@ export class SystemContractOperation extends AggregateRoot<SystemContractOperati
         aggregateId: id.value,
         contractId: props.contractId.value,
         systemContract: props.systemContract,
+        timestamp,
       })
     );
 

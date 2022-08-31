@@ -21,7 +21,8 @@ export class CreateSystemCallOperationHandler
         contractId: new KoinosAddressId(command.contractId),
         callId: command.callId,
       },
-      new UUID(command.id)
+      new UUID(command.id),
+      command.timestamp
     );
 
     await this.writeRepository.save(operation);

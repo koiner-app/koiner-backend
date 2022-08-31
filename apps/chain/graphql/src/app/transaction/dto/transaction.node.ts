@@ -24,6 +24,9 @@ export class TransactionNode extends BaseNode {
   @Field()
   index: number;
 
+  @Field()
+  timestamp: number;
+
   constructor(transaction: Transaction) {
     super(transaction);
 
@@ -35,5 +38,6 @@ export class TransactionNode extends BaseNode {
       : [];
     this.operationCount = transaction.operationCount;
     this.index = transaction.index;
+    this.timestamp = transaction.timestamp;
   }
 }

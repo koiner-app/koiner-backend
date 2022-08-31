@@ -16,4 +16,5 @@ export class CreateTransactionCommand extends Command {
   readonly operationCount!: number;
   readonly nonce?: string;
   readonly operationMerkleRoot?: string;
+  readonly timestamp!: number;
 }

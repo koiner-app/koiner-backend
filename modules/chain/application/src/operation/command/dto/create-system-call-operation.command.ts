@@ -10,4 +10,5 @@ export class CreateSystemCallOperationCommand extends Command {
   readonly id!: string;
   readonly contractId!: string;
   readonly callId!: number;
+  readonly timestamp!: number;
 }

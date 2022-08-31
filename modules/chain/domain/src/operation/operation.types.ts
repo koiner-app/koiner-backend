@@ -12,6 +12,7 @@ export interface CreateOperationProps {
   transactionId: KoinosId;
   operationIndex: number;
   type: OperationType;
+  timestamp: number;
 }
 
 export type OperationProps = CreateOperationProps;

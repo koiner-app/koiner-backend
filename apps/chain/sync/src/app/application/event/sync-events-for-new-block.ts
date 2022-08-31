@@ -36,6 +36,7 @@ export class SyncEventsForNewBlock extends DomainEventHandler {
                   (impactedItem) => impactedItem !== '' // Filter out empty items
                 )
               : [],
+            timestamp: event.timestamp,
           })
         );
       }

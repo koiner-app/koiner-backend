@@ -38,6 +38,7 @@ export class CreateUploadOperationForNewOperation extends DomainEventHandler {
           contractId,
           bytecode: rawOperation.upload_contract.bytecode,
           abi: rawOperation.upload_contract.abi,
+          timestamp: event.timestamp,
         })
       );
     }

@@ -21,4 +21,7 @@ export class OperationSchema extends EntityBaseSchema {
 
   @Column({ type: 'enum', enum: OperationType })
   readonly type!: OperationType;
+
+  @Column({ type: 'bigint' })
+  readonly timestamp!: number;
 }

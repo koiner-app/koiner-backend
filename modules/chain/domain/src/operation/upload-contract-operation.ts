@@ -11,7 +11,8 @@ export class UploadContractOperation extends AggregateRoot<UploadContractOperati
 
   static create(
     create: CreateUploadContractOperationProps,
-    id: UUID
+    id: UUID,
+    timestamp: number // Only used for dispatching event
   ): UploadContractOperation {
     const props: UploadContractOperationProps = {
       ...create,
@@ -25,6 +26,7 @@ export class UploadContractOperation extends AggregateRoot<UploadContractOperati
         contractId: props.contractId.value,
         bytecode: props.bytecode,
         abi: props.abi,
+        timestamp,
       })
     );
 

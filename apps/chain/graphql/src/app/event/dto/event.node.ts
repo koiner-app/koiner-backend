@@ -25,6 +25,9 @@ export class EventNode extends BaseNode {
   @Field(() => [String], { nullable: true })
   impacted?: string[];
 
+  @Field()
+  timestamp: number;
+
   constructor(event: Event) {
     super(event);
 
@@ -37,5 +40,6 @@ export class EventNode extends BaseNode {
     this.impacted = event.impacted
       ? event.impacted.map((address) => address.value)
       : undefined;
+    this.timestamp = event.timestamp;
   }
 }

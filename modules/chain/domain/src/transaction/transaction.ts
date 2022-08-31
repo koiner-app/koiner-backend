@@ -29,6 +29,7 @@ export class Transaction extends AggregateRoot<TransactionProps> {
         blockHeight: props.blockHeight,
         payer: props.header.payer,
         operationCount: props.operationCount,
+        timestamp: props.timestamp,
       })
     );
 
@@ -57,6 +58,10 @@ export class Transaction extends AggregateRoot<TransactionProps> {
 
   get index(): number {
     return this.props.transactionIndex;
+  }
+
+  get timestamp(): number {
+    return this.props.timestamp;
   }
 
   validate(): void {

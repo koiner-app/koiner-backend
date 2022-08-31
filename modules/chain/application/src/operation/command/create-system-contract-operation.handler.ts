@@ -21,7 +21,8 @@ export class CreateSystemContractOperationHandler
         contractId: new KoinosAddressId(command.contractId),
         systemContract: command.systemContract,
       },
-      new UUID(command.id)
+      new UUID(command.id),
+      command.timestamp
     );
 
     await this.writeRepository.save(operation);

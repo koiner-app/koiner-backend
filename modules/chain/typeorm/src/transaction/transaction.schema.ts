@@ -57,4 +57,7 @@ export class TransactionSchema extends EntityBaseSchema {
 
   @Column({ type: 'smallint' })
   readonly operation_count!: number;
+
+  @Column({ type: 'bigint' })
+  readonly timestamp!: number;
 }
