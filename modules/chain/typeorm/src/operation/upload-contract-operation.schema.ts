@@ -5,7 +5,7 @@ import { OperationSchema } from '..';
 @Entity('chain_upload_contract_operation')
 export class UploadContractOperationSchema extends EntityBaseSchema {
   @PrimaryColumn()
-  @Column({ length: 34 })
+  @Column({ length: 35 })
   override readonly id!: string;
 
   // Add foreign key without the need to always use the relation
@@ -13,7 +13,7 @@ export class UploadContractOperationSchema extends EntityBaseSchema {
   @JoinColumn({ name: 'id', referencedColumnName: 'id' })
   private _operation_id_fg!: never;
 
-  @Column({ length: 34 })
+  @Column({ length: 35 })
   readonly contract_id!: string;
 
   @Column({ type: 'bytea' })

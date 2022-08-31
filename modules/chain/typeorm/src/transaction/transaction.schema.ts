@@ -35,7 +35,7 @@ export class TransactionSchema extends EntityBaseSchema {
   @Column({ length: 48, nullable: true })
   readonly operation_merkle_root?: string;
 
-  @Column({ length: 34 })
+  @Column({ length: 35 })
   readonly payer!: string;
 
   // Add foreign key without the need to persist the object

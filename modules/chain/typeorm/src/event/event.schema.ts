@@ -13,7 +13,7 @@ export class EventSchema extends EntityBaseSchema {
   @Column({ type: 'smallint', nullable: true })
   readonly sequence?: number;
 
-  @Column({ length: 34, nullable: true })
+  @Column({ length: 35, nullable: true })
   readonly contract_id?: string;
 
   @Column()
