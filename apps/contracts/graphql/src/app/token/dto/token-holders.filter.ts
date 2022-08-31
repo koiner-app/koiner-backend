@@ -3,7 +3,7 @@ import { FilterType } from '@appvise/domain';
 import { NumericFilterInput, StringFilterInput } from '@appvise/graphql';
 
 @InputType()
-export class TokenBalancesFilter implements FilterType {
+export class TokenHoldersFilter implements FilterType {
   @Field(() => StringFilterInput, { nullable: true })
   search?: StringFilterInput;
 
@@ -16,13 +16,13 @@ export class TokenBalancesFilter implements FilterType {
   @Field(() => StringFilterInput, { nullable: true })
   balance?: NumericFilterInput;
 
-  @Field(() => [TokenBalancesFilter], {
+  @Field(() => [TokenHoldersFilter], {
     nullable: true,
   })
-  AND?: TokenBalancesFilter[];
+  AND?: TokenHoldersFilter[];
 
-  @Field(() => [TokenBalancesFilter], {
+  @Field(() => [TokenHoldersFilter], {
     nullable: true,
   })
-  OR?: TokenBalancesFilter[];
+  OR?: TokenHoldersFilter[];
 }

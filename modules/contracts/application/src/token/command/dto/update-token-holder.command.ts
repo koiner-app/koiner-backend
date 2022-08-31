@@ -1,7 +1,7 @@
 import { Command, CommandProps } from '@appvise/domain';
 
-export class UpdateTokenBalanceCommand extends Command {
-  constructor(props: CommandProps<UpdateTokenBalanceCommand>) {
+export class UpdateTokenHolderCommand extends Command {
+  constructor(props: CommandProps<UpdateTokenHolderCommand>) {
     super(props);
 
     Object.assign(this, props);

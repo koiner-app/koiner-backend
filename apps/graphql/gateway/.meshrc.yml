@@ -22,7 +22,7 @@ additionalResolvers:
   # Chain
   - !include ./resolvers/chain/address-block-producers.yaml
   - !include ./resolvers/chain/address-block-rewards.yaml
-  - !include ./resolvers/chain/address-token-balances.yaml
+  - !include ./resolvers/chain/address-token-holders.yaml
   - !include ./resolvers/chain/address-token-operations.yaml
   - !include ./resolvers/chain/block-reward.yaml
   - !include ./resolvers/chain/operation-contract-operation.yaml

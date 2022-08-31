@@ -1,8 +1,8 @@
 targetTypeName: Address
-targetFieldName: tokenBalances
+targetFieldName: tokens
 sourceName: Contracts
 sourceTypeName: Query
-sourceFieldName: tokenBalances
+sourceFieldName: tokenHolders
 requiredSelectionSet: |
   {
     id

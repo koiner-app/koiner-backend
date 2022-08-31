@@ -1,11 +1,11 @@
 import { registerEnumType } from '@nestjs/graphql';
 
-export enum TokenBalancesSortFieldEnum {
+export enum TokenHoldersSortFieldEnum {
   balance = 'balance',
   createdAt = 'createdAt',
 }
 
-registerEnumType(TokenBalancesSortFieldEnum, {
-  name: 'TokenBalancesSortField',
+registerEnumType(TokenHoldersSortFieldEnum, {
+  name: 'TokenHoldersSortField',
   description: 'Sort field',
 });

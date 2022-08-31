@@ -1,9 +1,9 @@
 import { CreateTokenContractOnContractCreated } from './create-token-contract-on-contract-created';
 import { CreateTokenEventOnContractEventCreated } from './create-token-event-on-contract-event-created';
 import { CreateTokenOperationOnOperationCreated } from './create-token-operation-on-operation-created';
-import { UpdateTokenBalanceOnTokensBurned } from './update-token-balance-on-tokens-burned';
-import { UpdateTokenBalanceOnTokensMinted } from './update-token-balance-on-tokens-minted';
-import { UpdateTokenBalancesOnTokensTransfered } from './update-token-balances-on-tokens-transfered';
+import { UpdateTokenHolderOnTokensBurned } from './update-token-holder-on-tokens-burned';
+import { UpdateTokenHolderOnTokensMinted } from './update-token-holder-on-tokens-minted';
+import { UpdateTokenHoldersOnTokensTransfered } from './update-token-holders-on-tokens-transfered';
 import { UpdateTokenSupplyOnTokensMinted } from './update-token-supply-on-tokens-minted';
 import { UpdateTokenSupplyOnTokensBurned } from './update-token-supply-on-tokens-burned';
 import { provideEventHandlers } from '@koiner/nestjs-utils';
@@ -13,9 +13,9 @@ import { ContractStandardService } from '../../contract-standard/service/contrac
 
 export const TokenEventHandlers = [
   ...provideEventHandlers([
-    UpdateTokenBalanceOnTokensBurned,
-    UpdateTokenBalanceOnTokensMinted,
-    UpdateTokenBalancesOnTokensTransfered,
+    UpdateTokenHolderOnTokensBurned,
+    UpdateTokenHolderOnTokensMinted,
+    UpdateTokenHoldersOnTokensTransfered,
 
     UpdateTokenSupplyOnTokensMinted,
     UpdateTokenSupplyOnTokensBurned,

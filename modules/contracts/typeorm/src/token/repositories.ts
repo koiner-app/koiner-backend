@@ -1,37 +1,32 @@
 import { TypeormRepositoryProvider } from '@appvise/typeorm';
 import { Provider } from '@nestjs/common';
 import {
-  TokenBalance,
-  TokenBalanceReadRepository,
-  TokenBalanceWriteRepository,
   TokenContract,
   TokenContractReadRepository,
   TokenContractWriteRepository,
   TokenEvent,
   TokenEventReadRepository,
   TokenEventWriteRepository,
+  TokenHolder,
+  TokenHolderReadRepository,
+  TokenHolderWriteRepository,
   TokenOperation,
   TokenOperationReadRepository,
   TokenOperationWriteRepository,
 } from '@koiner/contracts/domain';
 import {
-  TokenBalanceSchema,
-  TokenBalanceSchemaFactory,
-  TokenBalanceWriteTypeormRepository,
   TokenContractSchema,
   TokenContractSchemaFactory,
   TokenEventSchema,
   TokenEventSchemaFactory,
+  TokenHolderSchema,
+  TokenHolderSchemaFactory,
+  TokenHolderWriteTypeormRepository,
   TokenOperationSchema,
   TokenOperationSchemaFactory,
 } from '.';
 
 // Factories
-const tokenBalanceSchemaFactory = new TokenBalanceSchemaFactory(
-  TokenBalance,
-  TokenBalanceSchema
-);
-
 const tokenContractSchemaFactory = new TokenContractSchemaFactory(
   TokenContract,
   TokenContractSchema
@@ -42,23 +37,17 @@ const tokenEventSchemaFactory = new TokenEventSchemaFactory(
   TokenEventSchema
 );
 
+const tokenHolderSchemaFactory = new TokenHolderSchemaFactory(
+  TokenHolder,
+  TokenHolderSchema
+);
+
 const tokenOperationSchemaFactory = new TokenOperationSchemaFactory(
   TokenOperation,
   TokenOperationSchema
 );
 
 export const TokenRepositories: Provider[] = [
-  // TokenBalance
-  TypeormRepositoryProvider.provide(
-    TokenBalanceReadRepository,
-    TokenBalanceSchema,
-    tokenBalanceSchemaFactory
-  ),
-  {
-    provide: TokenBalanceWriteRepository,
-    useClass: TokenBalanceWriteTypeormRepository,
-  },
-
   // TokenContract
   TypeormRepositoryProvider.provide(
     TokenContractReadRepository,
@@ -84,6 +73,17 @@ export const TokenRepositories: Provider[] = [
     tokenEventSchemaFactory,
     false
   ),
+
+  // TokenHolder
+  TypeormRepositoryProvider.provide(
+    TokenHolderReadRepository,
+    TokenHolderSchema,
+    tokenHolderSchemaFactory
+  ),
+  {
+    provide: TokenHolderWriteRepository,
+    useClass: TokenHolderWriteTypeormRepository,
+  },
 
   // TokenOperation
   TypeormRepositoryProvider.provide(

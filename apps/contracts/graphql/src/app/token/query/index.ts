@@ -1,24 +1,17 @@
 import { Resolver } from '@nestjs/graphql';
 import { NodeQuery } from '@appvise/graphql';
 import {
-  TokenBalanceQuery,
   TokenContractQuery,
   TokenEventQuery,
+  TokenHolderQuery,
   TokenOperationQuery,
 } from '@koiner/contracts/application';
 import {
-  TokenBalanceNode,
   TokenContractNode,
   TokenEventNode,
+  TokenHolderNode,
   TokenOperationNode,
 } from '../dto';
-
-@Resolver(() => TokenBalanceNode)
-export class TokenBalanceResolver extends NodeQuery(
-  TokenBalanceNode,
-  TokenBalanceQuery,
-  'tokenBalance'
-) {}
 
 @Resolver(() => TokenContractNode)
 export class TokenContractResolver extends NodeQuery(
@@ -34,6 +27,13 @@ export class TokenEventResolver extends NodeQuery(
   'tokenEvent'
 ) {}
 
+@Resolver(() => TokenHolderNode)
+export class TokenHolderResolver extends NodeQuery(
+  TokenHolderNode,
+  TokenHolderQuery,
+  'tokenHolder'
+) {}
+
 @Resolver(() => TokenOperationNode)
 export class TokenOperationResolver extends NodeQuery(
   TokenOperationNode,
@@ -41,13 +41,13 @@ export class TokenOperationResolver extends NodeQuery(
   'tokenOperation'
 ) {}
 
-export * from './token-balances.resolver';
-export * from './token-balance-contract.resolver';
-export * from './token-contract-balances.resolver';
+export * from './token-contract-holders.resolver';
 export * from './token-contract-operations.resolver';
 export * from './token-contracts.resolver';
 export * from './token-event-contract.resolver';
 export * from './token-event-contract-event.resolver';
 export * from './token-events.resolver';
+export * from './token-holders.resolver';
+export * from './token-holder-contract.resolver';
 export * from './token-operation-contract.resolver';
 export * from './token-operations.resolver';

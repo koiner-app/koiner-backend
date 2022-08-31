@@ -1,25 +1,25 @@
 import { AggregateRoot, UUID } from '@appvise/domain';
 import { KoinosAddressId } from '@koiner/domain';
 import {
-  CreateTokenBalanceProps,
-  TokenBalanceCreated,
-  TokenBalanceProps,
-  TokenBalanceUpdated,
-  UpdateTokenBalanceProps,
+  CreateTokenHolderProps,
+  TokenHolderCreated,
+  TokenHolderProps,
+  TokenHolderUpdated,
+  UpdateTokenHolderProps,
 } from '.';
 
-export class TokenBalance extends AggregateRoot<TokenBalanceProps> {
+export class TokenHolder extends AggregateRoot<TokenHolderProps> {
   protected readonly _id!: KoinosAddressId;
 
-  static create(create: CreateTokenBalanceProps, id: UUID): TokenBalance {
-    const props: TokenBalanceProps = {
+  static create(create: CreateTokenHolderProps, id: UUID): TokenHolder {
+    const props: TokenHolderProps = {
       ...create,
     };
 
-    const tokenBalance = new TokenBalance({ id, props });
+    const tokenHolder = new TokenHolder({ id, props });
 
-    tokenBalance.addEvent(
-      new TokenBalanceCreated({
+    tokenHolder.addEvent(
+      new TokenHolderCreated({
         aggregateId: id.value,
         addressId: props.addressId.value,
         contractId: props.contractId.value,
@@ -27,7 +27,7 @@ export class TokenBalance extends AggregateRoot<TokenBalanceProps> {
       })
     );
 
-    return tokenBalance;
+    return tokenHolder;
   }
 
   get addressId(): KoinosAddressId {
@@ -42,7 +42,7 @@ export class TokenBalance extends AggregateRoot<TokenBalanceProps> {
     return this.props.balance;
   }
 
-  update(props: UpdateTokenBalanceProps): number {
+  update(props: UpdateTokenHolderProps): number {
     this.props.balance += props.amountChanged;
 
     if (this.props.balance < 0) {
@@ -51,7 +51,7 @@ export class TokenBalance extends AggregateRoot<TokenBalanceProps> {
     }
 
     this.addEvent(
-      new TokenBalanceUpdated({
+      new TokenHolderUpdated({
         aggregateId: this.id.value,
         addressId: this.addressId.value,
         contractId: this.contractId.value,

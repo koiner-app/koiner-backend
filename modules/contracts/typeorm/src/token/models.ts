@@ -1,13 +1,13 @@
 import {
-  TokenBalanceSchema,
   TokenContractSchema,
   TokenEventSchema,
+  TokenHolderSchema,
   TokenOperationSchema,
 } from '.';
 
 export const TokenModels = [
-  TokenBalanceSchema,
   TokenContractSchema,
   TokenEventSchema,
+  TokenHolderSchema,
   TokenOperationSchema,
 ];

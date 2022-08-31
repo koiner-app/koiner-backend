@@ -5,19 +5,19 @@ import {
   EntitySchemaProps,
 } from '@appvise/typeorm';
 import { KoinosAddressId } from '@koiner/domain';
-import { TokenBalance, TokenBalanceProps } from '@koiner/contracts/domain';
-import { TokenBalanceSchema } from '.';
+import { TokenHolder, TokenHolderProps } from '@koiner/contracts/domain';
+import { TokenHolderSchema } from '.';
 
-export class TokenBalanceSchemaFactory extends EntitySchemaFactory<
-  TokenBalance,
-  TokenBalanceSchema
+export class TokenHolderSchemaFactory extends EntitySchemaFactory<
+  TokenHolder,
+  TokenHolderSchema
 > {
   protected toDomainProps(
-    entitySchema: TokenBalanceSchema,
-  ): EntityProps<TokenBalanceProps> {
+    entitySchema: TokenHolderSchema
+  ): EntityProps<TokenHolderProps> {
     const id = new UUID(entitySchema.id);
 
-    const props: TokenBalanceProps = {
+    const props: TokenHolderProps = {
       contractId: new KoinosAddressId(entitySchema.contract_id),
       addressId: new KoinosAddressId(entitySchema.address_id),
       balance: parseInt(entitySchema.balance),
@@ -27,8 +27,8 @@ export class TokenBalanceSchemaFactory extends EntitySchemaFactory<
   }
 
   protected toSchemaProps(
-    entity: TokenBalance,
-  ): EntitySchemaProps<TokenBalanceSchema> {
+    entity: TokenHolder
+  ): EntitySchemaProps<TokenHolderSchema> {
     const props = entity.getPropsCopy();
 
     return {

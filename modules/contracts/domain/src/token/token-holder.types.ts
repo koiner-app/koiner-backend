@@ -1,13 +1,13 @@
 import { KoinosAddressId } from '@koiner/domain';
 
-export interface CreateTokenBalanceProps {
+export interface CreateTokenHolderProps {
   addressId: KoinosAddressId;
   contractId: KoinosAddressId;
   balance: number;
 }
 
-export interface UpdateTokenBalanceProps {
+export interface UpdateTokenHolderProps {
   amountChanged: number;
 }
 
-export type TokenBalanceProps = CreateTokenBalanceProps;
+export type TokenHolderProps = CreateTokenHolderProps;

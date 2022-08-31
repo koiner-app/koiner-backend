@@ -3,8 +3,8 @@ import { EntityBaseSchema } from '@appvise/typeorm';
 import { TokenContractSchema } from '.';
 import { AddressSchema } from '..';
 
-@Entity('contracts_token_balance')
-export class TokenBalanceSchema extends EntityBaseSchema {
+@Entity('contracts_token_holder')
+export class TokenHolderSchema extends EntityBaseSchema {
   @Column({ length: 34 })
   readonly contract_id!: string;
 

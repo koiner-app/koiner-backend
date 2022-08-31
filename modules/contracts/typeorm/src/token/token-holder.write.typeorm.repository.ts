@@ -4,25 +4,25 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { snakeToCamelCase, TypeormWriteRepository } from '@appvise/typeorm';
 import { Logger, SelectionSet } from '@appvise/domain';
 import {
-  TokenBalance,
-  TokenBalanceWriteRepository,
+  TokenHolder,
+  TokenHolderWriteRepository,
 } from '@koiner/contracts/domain';
-import { TokenBalanceSchema, TokenBalanceSchemaFactory } from '.';
+import { TokenHolderSchema, TokenHolderSchemaFactory } from '.';
 
 @Injectable()
-export class TokenBalanceWriteTypeormRepository
-  extends TypeormWriteRepository<TokenBalance, TokenBalanceSchema>
-  implements TokenBalanceWriteRepository
+export class TokenHolderWriteTypeormRepository
+  extends TypeormWriteRepository<TokenHolder, TokenHolderSchema>
+  implements TokenHolderWriteRepository
 {
   constructor(
-    @InjectRepository(TokenBalanceSchema)
-    override readonly entityModel: Repository<TokenBalanceSchema>,
+    @InjectRepository(TokenHolderSchema)
+    override readonly entityModel: Repository<TokenHolderSchema>,
     override readonly logger: Logger
   ) {
     super(
       entityModel,
-      new TokenBalanceSchemaFactory(TokenBalance, TokenBalanceSchema),
-      TokenBalanceSchema,
+      new TokenHolderSchemaFactory(TokenHolder, TokenHolderSchema),
+      TokenHolderSchema,
       logger,
       false
     );
@@ -32,7 +32,7 @@ export class TokenBalanceWriteTypeormRepository
     addressId: string,
     contractId: string,
     selectionSet?: SelectionSet
-  ): Promise<TokenBalance | undefined> {
+  ): Promise<TokenHolder | undefined> {
     // Create QueryBuilder
     const queryBuilder = this.entityModel.createQueryBuilder(
       this.entityType.name

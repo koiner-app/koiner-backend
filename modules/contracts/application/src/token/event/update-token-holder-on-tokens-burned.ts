@@ -1,16 +1,16 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { DomainEventHandler } from '@appvise/domain';
 import { TokensBurned } from '@koiner/contracts/domain';
-import { UpdateTokenBalanceCommand } from '../command';
+import { UpdateTokenHolderCommand } from '../command';
 
-export class UpdateTokenBalanceOnTokensBurned extends DomainEventHandler {
+export class UpdateTokenHolderOnTokensBurned extends DomainEventHandler {
   constructor(private readonly commandBus: CommandBus) {
     super(TokensBurned);
   }
 
   async handle(event: TokensBurned): Promise<void> {
     await this.commandBus.execute(
-      new UpdateTokenBalanceCommand({
+      new UpdateTokenHolderCommand({
         addressId: event.from,
         contractId: event.contractId,
         amountChanged: -event.value,

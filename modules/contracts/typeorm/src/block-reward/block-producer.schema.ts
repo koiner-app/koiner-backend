@@ -3,7 +3,7 @@ import { EntityBaseSchema } from '@appvise/typeorm';
 import { TokenContractSchema } from '../token';
 import { AddressSchema } from '..';
 
-@Entity('contracts_block_reward_balance')
+@Entity('contracts_block_producer')
 export class BlockProducerSchema extends EntityBaseSchema {
   @Column({ length: 34 })
   readonly contract_id!: string;

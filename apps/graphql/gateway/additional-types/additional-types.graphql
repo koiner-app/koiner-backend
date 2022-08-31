@@ -2,7 +2,7 @@
 extend type Address {
   blockRewards(first: Int = 30, before: String, after: String, filter: BlockRewardsFilter, sort: [BlockRewardsSortInput!] = [{direction: desc, field: blockHeight}]): BlockRewardsConnection!
   blockProducers(first: Int = 30, before: String, after: String, filter: BlockProducersFilter, sort: [BlockProducersSortInput!] = [{direction: desc, field: balance}]): BlockProducersConnection!
-  tokenBalances(first: Int = 30, before: String, after: String, filter: TokenBalancesFilter, sort: [TokenBalancesSortInput!] = [{direction: desc, field: balance}]): TokenBalancesConnection!
+  tokens(first: Int = 30, before: String, after: String, filter: TokenHoldersFilter, sort: [TokenHoldersSortInput!] = [{direction: desc, field: balance}]): TokenHoldersConnection!
   tokenOperations(first: Int = 30, before: String, after: String, filter: TokenOperationsFilter, sort: [TokenOperationsSortInput!] = [{direction: desc, field: createdAt}]): TokenOperationsConnection!
 }
 
