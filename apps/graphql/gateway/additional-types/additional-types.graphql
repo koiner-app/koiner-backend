@@ -33,6 +33,7 @@ extend type UploadContractOperation {
 # Contracts
 extend type BlockReward {
   burner: Address
+  producerAddress: Address
 }
 
 extend type BlockProducer {

@@ -33,4 +33,5 @@ additionalResolvers:
     # Contracts
   - !include ./resolvers/contracts/block-producer-address.yaml
   - !include ./resolvers/contracts/block-reward-burner.yaml
+  - !include ./resolvers/contracts/block-reward-producer-address.yaml
   - !include ./resolvers/contracts/contract-operation-contract.yaml
