@@ -20,7 +20,7 @@ serve:
 additionalTypeDefs: ./additional-types/additional-types.graphql
 additionalResolvers:
   # Chain
-  - !include ./resolvers/chain/address-block-reward-balances.yaml
+  - !include ./resolvers/chain/address-block-producers.yaml
   - !include ./resolvers/chain/address-block-rewards.yaml
   - !include ./resolvers/chain/address-token-balances.yaml
   - !include ./resolvers/chain/address-token-operations.yaml
@@ -31,6 +31,6 @@ additionalResolvers:
   - !include ./resolvers/chain/system-contract-operation-contract.yaml
   - !include ./resolvers/chain/upload-contract-operation-contract.yaml
     # Contracts
+  - !include ./resolvers/contracts/block-producer-address.yaml
   - !include ./resolvers/contracts/block-reward-burner.yaml
-  - !include ./resolvers/contracts/block-reward-producer.yaml
   - !include ./resolvers/contracts/contract-operation-contract.yaml
