@@ -1,27 +1,24 @@
 import { AggregateRoot, ConflictException, UUID } from '@appvise/domain';
 import { KoinosAddressId } from '@koiner/domain';
 import {
-  BlockRewardBalanceCreated,
-  BlockRewardBalanceProps,
+  BlockProducerCreated,
+  BlockProducerProps,
   BlockRewardsReceived,
-  CreateBlockRewardBalanceProps,
+  CreateBlockProducerProps,
 } from '.';
 
-export class BlockRewardBalance extends AggregateRoot<BlockRewardBalanceProps> {
+export class BlockProducer extends AggregateRoot<BlockProducerProps> {
   protected readonly _id!: KoinosAddressId;
 
-  static create(
-    create: CreateBlockRewardBalanceProps,
-    id: UUID
-  ): BlockRewardBalance {
-    const props: BlockRewardBalanceProps = {
+  static create(create: CreateBlockProducerProps, id: UUID): BlockProducer {
+    const props: BlockProducerProps = {
       ...create,
     };
 
-    const blockRewardBalance = new BlockRewardBalance({ id, props });
+    const blockProducer = new BlockProducer({ id, props });
 
-    blockRewardBalance.addEvent(
-      new BlockRewardBalanceCreated({
+    blockProducer.addEvent(
+      new BlockProducerCreated({
         aggregateId: id.value,
         addressId: props.addressId.value,
         contractId: props.contractId.value,
@@ -29,7 +26,7 @@ export class BlockRewardBalance extends AggregateRoot<BlockRewardBalanceProps> {
       })
     );
 
-    blockRewardBalance.addEvent(
+    blockProducer.addEvent(
       new BlockRewardsReceived({
         aggregateId: id.value,
         addressId: props.addressId.value,
@@ -39,7 +36,7 @@ export class BlockRewardBalance extends AggregateRoot<BlockRewardBalanceProps> {
       })
     );
 
-    return blockRewardBalance;
+    return blockProducer;
   }
 
   get addressId(): KoinosAddressId {

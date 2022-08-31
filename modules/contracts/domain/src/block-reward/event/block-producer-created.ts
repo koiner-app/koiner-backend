@@ -1,7 +1,7 @@
 import { DomainEvent, DomainEventProps } from '@appvise/domain';
 
-export class BlockRewardBalanceUpdated extends DomainEvent {
-  constructor(props: DomainEventProps<BlockRewardBalanceUpdated>) {
+export class BlockProducerCreated extends DomainEvent {
+  constructor(props: DomainEventProps<BlockProducerCreated>) {
     super(props);
 
     Object.assign(this, props);
@@ -10,5 +10,4 @@ export class BlockRewardBalanceUpdated extends DomainEvent {
   readonly addressId!: string;
   readonly contractId!: string;
   readonly balance!: number;
-  readonly amountChanged!: number;
 }

@@ -1,9 +1,9 @@
 import { KoinosAddressId } from '@koiner/domain';
 
-export interface CreateBlockRewardBalanceProps {
+export interface CreateBlockProducerProps {
   addressId: KoinosAddressId;
   contractId: KoinosAddressId;
   balance: number;
 }
 
-export type BlockRewardBalanceProps = CreateBlockRewardBalanceProps;
+export type BlockProducerProps = CreateBlockProducerProps;

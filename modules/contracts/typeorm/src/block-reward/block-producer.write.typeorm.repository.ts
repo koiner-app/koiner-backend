@@ -4,28 +4,25 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { snakeToCamelCase, TypeormWriteRepository } from '@appvise/typeorm';
 import { Logger, SelectionSet } from '@appvise/domain';
 import {
-  BlockRewardBalance,
-  BlockRewardBalanceWriteRepository,
+  BlockProducer,
+  BlockProducerWriteRepository,
 } from '@koiner/contracts/domain';
-import { BlockRewardBalanceSchema, BlockRewardBalanceSchemaFactory } from '.';
+import { BlockProducerSchema, BlockProducerSchemaFactory } from '.';
 
 @Injectable()
-export class BlockRewardBalanceWriteTypeormRepository
-  extends TypeormWriteRepository<BlockRewardBalance, BlockRewardBalanceSchema>
-  implements BlockRewardBalanceWriteRepository
+export class BlockProducerWriteTypeormRepository
+  extends TypeormWriteRepository<BlockProducer, BlockProducerSchema>
+  implements BlockProducerWriteRepository
 {
   constructor(
-    @InjectRepository(BlockRewardBalanceSchema)
-    override readonly entityModel: Repository<BlockRewardBalanceSchema>,
+    @InjectRepository(BlockProducerSchema)
+    override readonly entityModel: Repository<BlockProducerSchema>,
     override readonly logger: Logger
   ) {
     super(
       entityModel,
-      new BlockRewardBalanceSchemaFactory(
-        BlockRewardBalance,
-        BlockRewardBalanceSchema
-      ),
-      BlockRewardBalanceSchema,
+      new BlockProducerSchemaFactory(BlockProducer, BlockProducerSchema),
+      BlockProducerSchema,
       logger,
       false
     );
@@ -35,7 +32,7 @@ export class BlockRewardBalanceWriteTypeormRepository
     addressId: string,
     contractId: string,
     selectionSet?: SelectionSet
-  ): Promise<BlockRewardBalance | undefined> {
+  ): Promise<BlockProducer | undefined> {
     // Create QueryBuilder
     const queryBuilder = this.entityModel.createQueryBuilder(
       this.entityType.name

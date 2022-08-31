@@ -1,20 +1,20 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { DomainEventHandler } from '@appvise/domain';
 import { BlockRewardCreated } from '@koiner/contracts/domain';
-import { UpdateBlockRewardBalanceCommand } from '../command';
+import { UpdateBlockProducerCommand } from '../command';
 
-export class UpdateBlockRewardBalanceOnBlockRewardCreated extends DomainEventHandler {
+export class UpdateBlockProducerOnBlockRewardCreated extends DomainEventHandler {
   constructor(private readonly commandBus: CommandBus) {
     super(BlockRewardCreated);
   }
 
   async handle(event: BlockRewardCreated): Promise<void> {
     await this.commandBus.execute(
-      new UpdateBlockRewardBalanceCommand({
+      new UpdateBlockProducerCommand({
         addressId: event.producerId,
         contractId: event.contractId,
         amountChanged: event.value,
-      }),
+      })
     );
   }
 }

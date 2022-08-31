@@ -1,17 +1,17 @@
 import { Resolver } from '@nestjs/graphql';
 import { NodeQuery } from '@appvise/graphql';
-import { BlockRewardBalanceQuery } from '@koiner/contracts/application';
-import { BlockRewardBalanceNode } from '../dto';
+import { BlockProducerQuery } from '@koiner/contracts/application';
+import { BlockProducerNode } from '../dto';
 
-@Resolver(() => BlockRewardBalanceNode)
-export class BlockRewardBalanceResolver extends NodeQuery(
-  BlockRewardBalanceNode,
-  BlockRewardBalanceQuery,
-  'blockRewardBalance'
+@Resolver(() => BlockProducerNode)
+export class BlockProducerResolver extends NodeQuery(
+  BlockProducerNode,
+  BlockProducerQuery,
+  'blockProducer'
 ) {}
 
-export * from './block-reward-balances.resolver';
-export * from './block-reward-balance-contract.resolver';
+export * from './block-producers.resolver';
+export * from './block-producer-contract.resolver';
 export * from './block-reward.resolver';
 export * from './block-reward-contracts.resolver';
 export * from './block-rewards.resolver';

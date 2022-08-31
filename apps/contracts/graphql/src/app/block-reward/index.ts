@@ -1,8 +1,8 @@
 import { BlockRewardsLoader } from './dataloader';
 import {
-  BlockRewardBalanceContractResolver,
-  BlockRewardBalanceResolver,
-  BlockRewardBalancesResolver,
+  BlockProducerContractResolver,
+  BlockProducerResolver,
+  BlockProducersResolver,
   BlockRewardContractsResolver,
   BlockRewardResolver,
   BlockRewardsBulkResolver,
@@ -18,14 +18,14 @@ export const BlockRewardGraphQLServices = [
   BlockRewardsLoader,
 
   // Queries
-  BlockRewardBalanceResolver,
-  BlockRewardBalancesResolver,
+  BlockProducerResolver,
+  BlockProducersResolver,
   BlockRewardResolver,
   BlockRewardsResolver,
   BlockRewardsBulkResolver,
 
   // FieldResolvers
-  BlockRewardBalanceContractResolver,
+  BlockProducerContractResolver,
   BlockRewardContractsResolver,
 
   // Subscriptions

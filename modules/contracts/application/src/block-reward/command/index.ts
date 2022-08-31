@@ -1,10 +1,10 @@
 import { CreateBlockRewardHandler } from './create-block-reward.handler';
-import { UpdateBlockRewardBalanceHandler } from './update-block-reward-balance.handler';
+import { UpdateBlockProducerHandler } from './update-block-producer.handler';
 
 export { CreateBlockRewardCommand } from './dto/create-block-reward.command';
-export { UpdateBlockRewardBalanceCommand } from './dto/update-block-reward-balance.command';
+export { UpdateBlockProducerCommand } from './dto/update-block-producer.command';
 
 export const BlockRewardCommandHandlers = [
   CreateBlockRewardHandler,
-  UpdateBlockRewardBalanceHandler,
+  UpdateBlockProducerHandler,
 ];

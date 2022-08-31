@@ -3,7 +3,7 @@ import { FilterType } from '@appvise/domain';
 import { NumericFilterInput, StringFilterInput } from '@appvise/graphql';
 
 @InputType()
-export class BlockRewardBalancesFilter implements FilterType {
+export class BlockProducersFilter implements FilterType {
   @Field(() => StringFilterInput, { nullable: true })
   search?: StringFilterInput;
 
@@ -16,13 +16,13 @@ export class BlockRewardBalancesFilter implements FilterType {
   @Field(() => StringFilterInput, { nullable: true })
   balance?: NumericFilterInput;
 
-  @Field(() => [BlockRewardBalancesFilter], {
+  @Field(() => [BlockProducersFilter], {
     nullable: true,
   })
-  AND?: BlockRewardBalancesFilter[];
+  AND?: BlockProducersFilter[];
 
-  @Field(() => [BlockRewardBalancesFilter], {
+  @Field(() => [BlockProducersFilter], {
     nullable: true,
   })
-  OR?: BlockRewardBalancesFilter[];
+  OR?: BlockProducersFilter[];
 }

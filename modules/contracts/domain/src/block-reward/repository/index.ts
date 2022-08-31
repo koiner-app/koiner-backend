@@ -1,23 +1,23 @@
 import { ReadRepository, SelectionSet, WriteRepository } from '@appvise/domain';
-import { BlockReward, BlockRewardBalance } from '..';
+import { BlockReward, BlockProducer } from '..';
 
 export abstract class BlockRewardReadRepository extends ReadRepository<BlockReward> {
   abstract findOneByHeight(
     height: number,
-    selectionSet?: SelectionSet,
+    selectionSet?: SelectionSet
   ): Promise<BlockReward | undefined>;
 
   abstract findOneByHeightOrThrow(
     height: number,
-    selectionSet?: SelectionSet,
+    selectionSet?: SelectionSet
   ): Promise<BlockReward>;
 }
 export abstract class BlockRewardWriteRepository extends WriteRepository<BlockReward> {}
-export abstract class BlockRewardBalanceReadRepository extends ReadRepository<BlockRewardBalance> {}
-export abstract class BlockRewardBalanceWriteRepository extends WriteRepository<BlockRewardBalance> {
+export abstract class BlockProducerReadRepository extends ReadRepository<BlockProducer> {}
+export abstract class BlockProducerWriteRepository extends WriteRepository<BlockProducer> {
   abstract findOne(
     addressId: string,
     contractId: string,
-    selectionSet?: SelectionSet,
-  ): Promise<BlockRewardBalance | undefined>;
+    selectionSet?: SelectionSet
+  ): Promise<BlockProducer | undefined>;
 }

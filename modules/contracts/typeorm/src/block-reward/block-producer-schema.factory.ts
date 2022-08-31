@@ -5,22 +5,19 @@ import {
   EntitySchemaProps,
 } from '@appvise/typeorm';
 import { KoinosAddressId } from '@koiner/domain';
-import {
-  BlockRewardBalance,
-  BlockRewardBalanceProps,
-} from '@koiner/contracts/domain';
-import { BlockRewardBalanceSchema } from '.';
+import { BlockProducer, BlockProducerProps } from '@koiner/contracts/domain';
+import { BlockProducerSchema } from '.';
 
-export class BlockRewardBalanceSchemaFactory extends EntitySchemaFactory<
-  BlockRewardBalance,
-  BlockRewardBalanceSchema
+export class BlockProducerSchemaFactory extends EntitySchemaFactory<
+  BlockProducer,
+  BlockProducerSchema
 > {
   protected toDomainProps(
-    entitySchema: BlockRewardBalanceSchema,
-  ): EntityProps<BlockRewardBalanceProps> {
+    entitySchema: BlockProducerSchema
+  ): EntityProps<BlockProducerProps> {
     const id = new UUID(entitySchema.id);
 
-    const props: BlockRewardBalanceProps = {
+    const props: BlockProducerProps = {
       contractId: new KoinosAddressId(entitySchema.contract_id),
       addressId: new KoinosAddressId(entitySchema.address_id),
       balance: parseInt(entitySchema.balance),
@@ -30,8 +27,8 @@ export class BlockRewardBalanceSchemaFactory extends EntitySchemaFactory<
   }
 
   protected toSchemaProps(
-    entity: BlockRewardBalance,
-  ): EntitySchemaProps<BlockRewardBalanceSchema> {
+    entity: BlockProducer
+  ): EntitySchemaProps<BlockProducerSchema> {
     const props = entity.getPropsCopy();
 
     return {

@@ -4,7 +4,7 @@ import { TokenContractSchema } from '../token';
 import { AddressSchema } from '..';
 
 @Entity('contracts_block_reward_balance')
-export class BlockRewardBalanceSchema extends EntityBaseSchema {
+export class BlockProducerSchema extends EntityBaseSchema {
   @Column({ length: 34 })
   readonly contract_id!: string;
 

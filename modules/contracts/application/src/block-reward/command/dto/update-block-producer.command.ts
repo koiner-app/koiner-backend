@@ -1,7 +1,7 @@
 import { Command, CommandProps } from '@appvise/domain';
 
-export class UpdateBlockRewardBalanceCommand extends Command {
-  constructor(props: CommandProps<UpdateBlockRewardBalanceCommand>) {
+export class UpdateBlockProducerCommand extends Command {
+  constructor(props: CommandProps<UpdateBlockProducerCommand>) {
     super(props);
 
     Object.assign(this, props);
