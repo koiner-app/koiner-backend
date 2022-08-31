@@ -9,14 +9,15 @@ import {
   TokenBalancesResolver,
   TokenContractResolver,
   TokenContractsResolver,
-  TokenOperationResolver,
-  TokenOperationsResolver,
   TokenContractBalancesResolver,
   TokenContractOperationsResolver,
   TokenEventContractResolver,
   TokenEventResolver,
   TokenEventsResolver,
   TokenEventContractEventResolver,
+  TokenOperationResolver,
+  TokenOperationsResolver,
+  TokenOperationContractResolver,
 } from './query';
 
 export const TokenGraphQLServices = [
@@ -41,6 +42,7 @@ export const TokenGraphQLServices = [
   TokenContractOperationsResolver,
   TokenEventContractResolver,
   TokenEventContractEventResolver,
+  TokenOperationContractResolver,
 ];
 
 export * from './dataloader';

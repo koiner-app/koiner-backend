@@ -49,4 +49,5 @@ export * from './token-contracts.resolver';
 export * from './token-event-contract.resolver';
 export * from './token-event-contract-event.resolver';
 export * from './token-events.resolver';
+export * from './token-operation-contract.resolver';
 export * from './token-operations.resolver';
