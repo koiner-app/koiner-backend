@@ -1,3 +1,11 @@
-import { ContractSchema, ContractEventSchema } from '.';
+import {
+  ContractSchema,
+  ContractEventSchema,
+  ContractOperationSchema,
+} from '.';
 
-export const ContractModels = [ContractSchema, ContractEventSchema];
+export const ContractModels = [
+  ContractSchema,
+  ContractEventSchema,
+  ContractOperationSchema,
+];

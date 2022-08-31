@@ -7,12 +7,17 @@ import {
   ContractEvent,
   ContractEventReadRepository,
   ContractEventWriteRepository,
+  ContractOperation,
+  ContractOperationReadRepository,
+  ContractOperationWriteRepository,
 } from '@koiner/contracts/domain';
 import {
   ContractSchema,
   ContractEventSchema,
   ContractEventSchemaFactory,
   ContractSchemaFactory,
+  ContractOperationSchema,
+  ContractOperationSchemaFactory,
 } from '.';
 
 // Factories
@@ -24,6 +29,11 @@ const contractSchemaFactory = new ContractSchemaFactory(
 const contractEventSchemaFactory = new ContractEventSchemaFactory(
   ContractEvent,
   ContractEventSchema
+);
+
+const contractOperationSchemaFactory = new ContractOperationSchemaFactory(
+  ContractOperation,
+  ContractOperationSchema
 );
 
 export const ContractRepositories: Provider[] = [
@@ -50,6 +60,19 @@ export const ContractRepositories: Provider[] = [
     ContractEventWriteRepository,
     ContractEventSchema,
     contractEventSchemaFactory,
+    false
+  ),
+
+  // ContractOperation
+  TypeormRepositoryProvider.provide(
+    ContractOperationReadRepository,
+    ContractOperationSchema,
+    contractOperationSchemaFactory
+  ),
+  TypeormRepositoryProvider.provide(
+    ContractOperationWriteRepository,
+    ContractOperationSchema,
+    contractOperationSchemaFactory,
     false
   ),
 ];
