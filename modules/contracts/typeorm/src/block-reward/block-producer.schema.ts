@@ -23,4 +23,7 @@ export class BlockProducerSchema extends EntityBaseSchema {
 
   @Column({ length: 20 })
   readonly balance!: string;
+
+  @Column({ length: 20 })
+  readonly blocksProduced!: string;
 }

@@ -21,6 +21,7 @@ export class BlockProducerSchemaFactory extends EntitySchemaFactory<
       contractId: new KoinosAddressId(entitySchema.contract_id),
       addressId: new KoinosAddressId(entitySchema.address_id),
       balance: parseInt(entitySchema.balance),
+      blocksProduced: parseInt(entitySchema.blocksProduced),
     };
 
     return { id, props };
@@ -35,6 +36,7 @@ export class BlockProducerSchemaFactory extends EntitySchemaFactory<
       contract_id: props.contractId.value,
       address_id: props.addressId.value,
       balance: String(props.balance).padStart(20, '0'),
+      blocksProduced: String(props.blocksProduced).padStart(20, '0'),
     };
   }
 }

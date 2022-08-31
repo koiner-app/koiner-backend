@@ -6,4 +6,6 @@ export interface CreateBlockProducerProps {
   balance: number;
 }
 
-export type BlockProducerProps = CreateBlockProducerProps;
+export interface BlockProducerProps extends CreateBlockProducerProps {
+  blocksProduced: number;
+}

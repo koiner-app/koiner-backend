@@ -13,7 +13,7 @@ export class TokenHoldersFilter implements FilterType {
   @Field(() => StringFilterInput, { nullable: true })
   contractId?: StringFilterInput;
 
-  @Field(() => StringFilterInput, { nullable: true })
+  @Field(() => NumericFilterInput, { nullable: true })
   balance?: NumericFilterInput;
 
   @Field(() => [TokenHoldersFilter], {

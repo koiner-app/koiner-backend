@@ -13,6 +13,7 @@ export class BlockProducer extends AggregateRoot<BlockProducerProps> {
   static create(create: CreateBlockProducerProps, id: UUID): BlockProducer {
     const props: BlockProducerProps = {
       ...create,
+      blocksProduced: 1,
     };
 
     const blockProducer = new BlockProducer({ id, props });
@@ -51,6 +52,10 @@ export class BlockProducer extends AggregateRoot<BlockProducerProps> {
     return this.props.balance;
   }
 
+  get blocksProduced(): number {
+    return this.props.blocksProduced;
+  }
+
   addRewards(rewards: number): void {
     if (rewards < 0) {
       // TODO: Add custom exception
@@ -58,6 +63,7 @@ export class BlockProducer extends AggregateRoot<BlockProducerProps> {
     }
 
     this.props.balance += rewards;
+    this.props.blocksProduced += 1;
 
     this.addEvent(
       new BlockRewardsReceived({

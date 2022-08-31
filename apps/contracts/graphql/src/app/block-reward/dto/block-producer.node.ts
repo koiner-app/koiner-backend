@@ -13,11 +13,15 @@ export class BlockProducerNode extends BaseNode {
   @Field()
   balance: number;
 
+  @Field()
+  blocksProduced: number;
+
   constructor(blockProducer: BlockProducer) {
     super(blockProducer);
 
     this.addressId = blockProducer.addressId.value;
     this.contractId = blockProducer.contractId.value;
     this.balance = blockProducer.balance;
+    this.blocksProduced = blockProducer.blocksProduced;
   }
 }
