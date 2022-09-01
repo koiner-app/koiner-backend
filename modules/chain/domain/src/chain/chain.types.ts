@@ -5,10 +5,12 @@ export interface CreateChainProps {
   lastIrreversibleBlock: number;
   syncing: boolean;
   lastSyncedBlock: number;
+  initialSyncEndBlock: number;
 }
 
 export interface ChainProps extends CreateChainProps {
   stopped: boolean;
+  initialSyncCompleted: boolean;
 }
 
 export interface UpdateChainProps {

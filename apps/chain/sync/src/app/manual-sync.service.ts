@@ -3,7 +3,6 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Provider } from 'koilib';
 import { Block, Chain } from '@koiner/chain/domain';
 import {
-  DateVO,
   NotFoundException,
   SearchResponse,
   SortDirection,
@@ -11,6 +10,7 @@ import {
 import {
   BlocksQuery,
   ChainQuery,
+  CompleteInitialSyncCommand,
   CreateChainCommand,
   UpdateChainCommand,
 } from '@koiner/chain/application';
@@ -53,26 +53,63 @@ export class ManualSyncService {
             lastIrreversibleBlock: parseInt(headInfo.last_irreversible_block),
             lastSyncedBlock: 0,
             syncing: false,
+            initialSyncEndBlock: parseInt(headInfo.head_topology.height),
           })
         );
-
-        // TODO: Add first block
-        // Add 0/first block to match previous foreign key
       }
     }
 
     if (!chain || chain.syncing || chain.stopped) {
-      if (
-        chain.updatedAt.value.getTime() >
-        DateVO.now().subtract(0, 5).value.getTime()
-      ) {
-        // Only stop if we are still within timeout window
-        console.log('Do not sync');
+      console.log('Do not sync');
 
-        return;
-      }
+      return;
+    }
 
-      // TODO: Revert last block because it probably failed to be processed
+    if (chain.initialSyncCompleted && process.env.INIT_SYNC === 'active') {
+      this.logger.log('Do not sync. Already completed initial sync');
+
+      return;
+    }
+
+    if (
+      process.env.INIT_SYNC === 'active' &&
+      !chain.initialSyncCompleted &&
+      chain.initialSyncEndBlock !== chain.lastSyncedBlock &&
+      chain.initialSyncEndBlock - chain.lastSyncedBlock < batchSize
+    ) {
+      this.logger.log(`Initial sync almost completed!`);
+
+      this.logger.log(`BatchSize: ${batchSize}`);
+      this.logger.log(`initialSyncEndBlock: ${chain.initialSyncEndBlock}`);
+      this.logger.log(`lastSyncedBlock: ${chain.lastSyncedBlock}`);
+      this.logger.log(
+        `Calc: ${chain.initialSyncEndBlock - chain.lastSyncedBlock}`
+      );
+
+      // Blocks to go is smaller than batchSize. Only sync remaining blocks
+      batchSize = chain.initialSyncEndBlock - chain.lastSyncedBlock;
+
+      this.logger.log(
+        `Initial sync almost completed! Go sync last batch of ${batchSize} blocks.`
+      );
+    }
+
+    if (
+      process.env.INIT_SYNC === 'active' &&
+      !chain.initialSyncCompleted &&
+      chain.initialSyncEndBlock === chain.lastSyncedBlock
+    ) {
+      this.logger.log(
+        `Initial sync completed! Synced ${chain.lastSyncedBlock} blocks.`
+      );
+
+      await this.commandBus.execute(
+        new CompleteInitialSyncCommand({
+          id: koinos.chainId,
+        })
+      );
+
+      return;
     }
 
     if (!headInfo) {

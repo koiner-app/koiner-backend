@@ -24,6 +24,8 @@ export class ChainSchemaFactory extends EntitySchemaFactory<
       syncing: entitySchema.syncing,
       stopped: entitySchema.stopped,
       lastSyncedBlock: entitySchema.last_synced_block,
+      initialSyncEndBlock: entitySchema.initial_sync_end_block,
+      initialSyncCompleted: entitySchema.initial_sync_completed,
     };
 
     return { id, props };
@@ -40,6 +42,8 @@ export class ChainSchemaFactory extends EntitySchemaFactory<
       syncing: props.syncing,
       stopped: props.stopped,
       last_synced_block: props.lastSyncedBlock,
+      initial_sync_end_block: props.initialSyncEndBlock,
+      initial_sync_completed: props.initialSyncCompleted,
     };
   }
 }

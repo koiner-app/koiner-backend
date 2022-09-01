@@ -3,7 +3,9 @@ import { EmitChainSyncQueueEvents } from './emit-contracts-sync-queue-events';
 
 const BlockAcceptedHandlerWrapper = [];
 
-if (process.env.SYNC_MODE !== 'manual' ?? BlockAcceptedHandler) {
+console.log('process.env.SYNC_MODE');
+if (process.env.SYNC_MODE !== 'manual') {
+  console.log('LOAD IT!');
   BlockAcceptedHandlerWrapper.push(BlockAcceptedHandler);
 }
 

@@ -6,7 +6,17 @@ import { KoinosModule, RawBlocksService } from '@koinos/jsonrpc';
 import { ManualSyncService } from './manual-sync.service';
 import { ChainSyncApplicationHandlers } from './application';
 import { ChainAmqpHandlers } from './amqp';
-import { SyncController } from './sync.controller';
+import { ManualSyncController } from './manual-sync.controller';
+import { InitSyncController } from './init-sync.controller';
+
+const InitSyncControllerWrapper = [];
+
+console.log('process.env.INIT_SYNC', process.env.INIT_SYNC);
+// Deactivate initial sync be updating INIT_SYNC
+if (process.env.INIT_SYNC === 'active') {
+  console.log('LOAD IT INIT_SYNC!');
+  InitSyncControllerWrapper.push(InitSyncController);
+}
 
 @Module({
   imports: [AmqpModule, CqrsModule, ScheduleModule, KoinosModule],
@@ -17,6 +27,6 @@ import { SyncController } from './sync.controller';
     ...ChainSyncApplicationHandlers,
     ...ChainAmqpHandlers,
   ],
-  controllers: [SyncController],
+  controllers: [...InitSyncControllerWrapper, ManualSyncController],
 })
 export class ChainSyncModule {}

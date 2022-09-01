@@ -12,7 +12,7 @@ import { SyncBlockSetsCommand, SyncSet } from './application';
 import { koinos } from '../config';
 
 @Controller()
-export class SyncController {
+export class ManualSyncController {
   constructor(
     private readonly manualSyncService: ManualSyncService,
     private readonly commandBus: CommandBus
@@ -36,7 +36,6 @@ export class SyncController {
     @Body() input: { sets: SyncSet[] }
   ): Promise<void> {
     if (secret && koinos.syncSecret && secret === koinos.syncSecret) {
-      console.log(input.sets);
       await this.commandBus.execute(
         new SyncBlockSetsCommand({
           sets: input.sets,
@@ -45,10 +44,5 @@ export class SyncController {
     } else {
       throw new ForbiddenException();
     }
-  }
-
-  // @Cron(CronExpression.EVERY_30_SECONDS)
-  async cron(): Promise<void> {
-    await this.manualSyncService.sync(500);
   }
 }

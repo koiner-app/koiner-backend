@@ -23,7 +23,7 @@ export class SyncBlockHandler implements ICommandHandler<SyncBlockCommand> {
 
       const signer = <string>rawBlock.block.header.signer;
 
-      this.logger.log(`Height: ${command.blockHeight}`, 'SyncBlockHandler');
+      this.logger.debug(`Height: ${command.blockHeight}`, 'SyncBlockHandler');
 
       // Add address for signer
       await this.commandBus.execute(

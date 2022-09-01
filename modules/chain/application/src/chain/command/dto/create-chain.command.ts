@@ -16,4 +16,5 @@ export class CreateChainCommand extends Command {
   readonly lastIrreversibleBlock!: number;
   readonly lastSyncedBlock!: number;
   readonly syncing!: boolean;
+  readonly initialSyncEndBlock!: number;
 }

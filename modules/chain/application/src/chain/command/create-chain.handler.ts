@@ -8,23 +8,23 @@ export class CreateChainHandler implements ICommandHandler<CreateChainCommand> {
   constructor(private readonly writeRepository: ChainWriteRepository) {}
 
   async execute(command: CreateChainCommand): Promise<void> {
-    // TODO: Add exists check
-    // if (!(await this.writeRepository.exists(command.id))) {
-    const chain = Chain.create(
-      {
-        headTopology: new BlockTopology({
-          id: new KoinosId(command.headTopology.id),
-          height: command.headTopology.height,
-          previous: command.headTopology.previous,
-        }),
-        lastIrreversibleBlock: command.lastIrreversibleBlock,
-        lastSyncedBlock: command.lastSyncedBlock,
-        syncing: command.syncing,
-      },
-      new ChainId(command.id)
-    );
+    if (!(await this.writeRepository.existsById(command.id))) {
+      const chain = Chain.create(
+        {
+          headTopology: new BlockTopology({
+            id: new KoinosId(command.headTopology.id),
+            height: command.headTopology.height,
+            previous: command.headTopology.previous,
+          }),
+          lastIrreversibleBlock: command.lastIrreversibleBlock,
+          lastSyncedBlock: command.lastSyncedBlock,
+          syncing: command.syncing,
+          initialSyncEndBlock: command.initialSyncEndBlock,
+        },
+        new ChainId(command.id)
+      );
 
-    await this.writeRepository.save(chain);
-    // }
+      await this.writeRepository.save(chain);
+    }
   }
 }

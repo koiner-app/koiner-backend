@@ -6,6 +6,7 @@ import {
   ChainProps,
   ChainUpdated,
   CreateChainProps,
+  InitialChainSyncCompleted,
   UpdateChainProps,
 } from '.';
 
@@ -16,6 +17,7 @@ export class Chain extends AggregateRoot<ChainProps> {
     const props: ChainProps = {
       ...create,
       stopped: false,
+      initialSyncCompleted: false,
     };
 
     const chain = new Chain({ id, props });
@@ -23,6 +25,7 @@ export class Chain extends AggregateRoot<ChainProps> {
     chain.addEvent(
       new ChainCreated({
         aggregateId: id.value,
+        initialSyncEndBlock: props.initialSyncEndBlock,
       })
     );
 
@@ -49,6 +52,14 @@ export class Chain extends AggregateRoot<ChainProps> {
     return this.props.stopped;
   }
 
+  get initialSyncEndBlock(): number {
+    return this.props.initialSyncEndBlock;
+  }
+
+  get initialSyncCompleted(): boolean {
+    return this.props.initialSyncCompleted;
+  }
+
   update(props: UpdateChainProps): void {
     this.props.headTopology = new BlockTopology({
       id: props.headTopology.id,
@@ -67,6 +78,17 @@ export class Chain extends AggregateRoot<ChainProps> {
         previous: props.headTopology.previous,
         lastIrreversibleBlock: props.lastIrreversibleBlock,
         lastSyncedBlock: props.lastSyncedBlock,
+      })
+    );
+  }
+
+  completeInitialSync(): void {
+    this.props.initialSyncCompleted = true;
+
+    this.addEvent(
+      new InitialChainSyncCompleted({
+        aggregateId: this._id.value,
+        endBlock: this.initialSyncEndBlock,
       })
     );
   }

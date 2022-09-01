@@ -27,4 +27,10 @@ export class ChainSchema extends EntityBaseSchema {
 
   @Column({ type: 'bigint' })
   readonly last_synced_block!: number;
+
+  @Column({ type: 'bigint' })
+  readonly initial_sync_end_block!: number;
+
+  @Column()
+  readonly initial_sync_completed!: boolean;
 }

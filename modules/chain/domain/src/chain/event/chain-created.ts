@@ -6,4 +6,6 @@ export class ChainCreated extends DomainEvent {
 
     Object.assign(this, props);
   }
+
+  readonly initialSyncEndBlock!: number;
 }
