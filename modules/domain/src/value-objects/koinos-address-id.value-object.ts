@@ -7,7 +7,7 @@ import {
 
 export class KoinosAddressId extends ID {
   protected validate({ value }: DomainPrimitive<string>): void {
-    if (!Guard.lengthIsBetween(value, 33, 35)) {
+    if (!Guard.lengthIsBetween(value, 22, 35)) {
       throw new ArgumentOutOfRangeException('address id is out of range');
     }
   }
