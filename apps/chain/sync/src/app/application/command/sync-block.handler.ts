@@ -1,22 +1,45 @@
-import { CommandBus, CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import {
+  CommandBus,
+  CommandHandler,
+  ICommandHandler,
+  QueryBus,
+} from '@nestjs/cqrs';
 import { Logger } from '@appvise/domain';
 import { RawBlocksService } from '@koinos/jsonrpc';
 import {
   CreateOrUpdateAddressCommand,
   CreateBlockCommand,
+  BlockQuery,
 } from '@koiner/chain/application';
 import { SyncBlockCommand } from './dto/sync-block.command';
+import { Chain } from '@koiner/chain/domain';
 
 @CommandHandler(SyncBlockCommand)
 export class SyncBlockHandler implements ICommandHandler<SyncBlockCommand> {
   constructor(
     private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
     private readonly rawBlocksService: RawBlocksService,
     private readonly logger: Logger
   ) {}
 
   async execute(command: SyncBlockCommand): Promise<void> {
     try {
+      if (process.env.INIT_SYNC === 'active') {
+        // Check if block has already been processed
+        // We only need to prevent double submitting of blocks
+        // when initial sync is still active.
+        const block = await this.queryBus.execute<BlockQuery, Chain>(
+          new BlockQuery(command.blockHeight)
+        );
+
+        if (block) {
+          this.logger.warn(`Block ${command.blockHeight} already processed`);
+
+          return;
+        }
+      }
+
       const rawBlock = await this.rawBlocksService.getBlock(
         command.blockHeight
       );

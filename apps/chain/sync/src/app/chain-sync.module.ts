@@ -11,10 +11,8 @@ import { InitSyncController } from './init-sync.controller';
 
 const InitSyncControllerWrapper = [];
 
-console.log('process.env.INIT_SYNC', process.env.INIT_SYNC);
 // Deactivate initial sync be updating INIT_SYNC
 if (process.env.INIT_SYNC === 'active') {
-  console.log('LOAD IT INIT_SYNC!');
   InitSyncControllerWrapper.push(InitSyncController);
 }
 
