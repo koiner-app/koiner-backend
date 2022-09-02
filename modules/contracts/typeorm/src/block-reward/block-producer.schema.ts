@@ -25,5 +25,5 @@ export class BlockProducerSchema extends EntityBaseSchema {
   readonly balance!: string;
 
   @Column({ length: 20 })
-  readonly blocksProduced!: string;
+  readonly blocks_produced!: string;
 }
