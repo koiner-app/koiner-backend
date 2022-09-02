@@ -78,6 +78,8 @@ services:
     command: npm run start:chain-graphql
     env_file:
       - 'apps/chain/graphql/.env'
+    environment:
+      - JSONRPC_NODES=${JSONRPC_NODES}
     depends_on:
       - chain-postgres
     volumes:
@@ -110,6 +112,8 @@ services:
     command: npm run start:chain-sync
     env_file:
       - 'apps/chain/sync/.env'
+    environment:
+      - JSONRPC_NODES=${JSONRPC_NODES}
     depends_on:
       - chain-postgres
       - amqp
@@ -165,6 +169,8 @@ services:
     command: npm run start:contracts-graphql
     env_file:
       - 'apps/contracts/graphql/.env'
+    environment:
+      - JSONRPC_NODES=${JSONRPC_NODES}
     depends_on:
       - contracts-postgres
     volumes:
@@ -197,6 +203,8 @@ services:
     command: npm run start:contracts-sync
     env_file:
       - 'apps/contracts/sync/.env'
+    environment:
+      - JSONRPC_NODES=${JSONRPC_NODES}
     depends_on:
       - contracts-postgres
       - amqp
