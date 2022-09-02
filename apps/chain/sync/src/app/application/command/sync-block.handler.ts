@@ -29,9 +29,15 @@ export class SyncBlockHandler implements ICommandHandler<SyncBlockCommand> {
         // Check if block has already been processed
         // We only need to prevent double submitting of blocks
         // when initial sync is still active.
-        const block = await this.queryBus.execute<BlockQuery, Chain>(
-          new BlockQuery(command.blockHeight)
-        );
+        let block;
+
+        try {
+          block = await this.queryBus.execute<BlockQuery, Chain>(
+            new BlockQuery(command.blockHeight)
+          );
+        } catch {
+          // Block not found. Continue
+        }
 
         if (block) {
           this.logger.warn(`Block ${command.blockHeight} already processed`);
