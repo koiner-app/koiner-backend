@@ -9,6 +9,7 @@ export class UploadContractOperationCreatedMessage {
   readonly bytecode!: string;
   readonly abi?: string;
   readonly timestamp!: number;
+  readonly publishedAt!: number;
 
   public toString(): string {
     return JSON.stringify(this);

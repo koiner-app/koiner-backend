@@ -11,6 +11,7 @@ export class OperationCreatedMessage {
   readonly operationIndex!: number;
   readonly type!: string;
   readonly timestamp!: number;
+  readonly publishedAt!: number;
 
   public toString(): string {
     return JSON.stringify(this);

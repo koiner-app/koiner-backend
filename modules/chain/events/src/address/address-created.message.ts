@@ -7,6 +7,7 @@ export class AddressCreatedMessage {
 
   readonly id!: string;
   readonly isProducer!: boolean;
+  readonly publishedAt!: number;
 
   public toString(): string {
     return JSON.stringify(this);

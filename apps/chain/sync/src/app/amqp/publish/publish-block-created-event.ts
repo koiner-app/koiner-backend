@@ -13,10 +13,11 @@ export class PublishBlockCreatedEvent extends DomainEventHandler {
       height: event.height,
       timestamp: event.timestamp,
       transactionCount: event.transactionCount,
+      publishedAt: Date.now(),
     });
 
     await this.amqpConnection.publish(
-      'koiner.chain.sync',
+      'koiner.chain.sync_block',
       BlockCreatedMessage.routingKey,
       message.toString()
     );

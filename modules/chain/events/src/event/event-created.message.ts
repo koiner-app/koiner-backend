@@ -14,6 +14,7 @@ export class EventCreatedMessage {
   readonly data?: string;
   readonly impacted?: string[];
   readonly timestamp!: number;
+  readonly publishedAt!: number;
 
   public toString(): string {
     return JSON.stringify(this);

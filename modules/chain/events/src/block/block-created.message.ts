@@ -8,6 +8,7 @@ export class BlockCreatedMessage {
   readonly height!: number;
   readonly timestamp!: number;
   readonly transactionCount!: number;
+  readonly publishedAt!: number;
 
   public toString(): string {
     return JSON.stringify(this);
