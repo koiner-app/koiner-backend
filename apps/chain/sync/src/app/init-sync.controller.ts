@@ -6,7 +6,7 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 export class InitSyncController {
   constructor(private readonly manualSyncService: ManualSyncService) {}
 
-  @Cron(CronExpression.EVERY_30_SECONDS, { name: 'initSync' })
+  @Cron(CronExpression.EVERY_10_SECONDS, { name: 'initSync' })
   /**
    * Initial sync with koinos-chain by using cron job.
    * After initial sync the BlockAcceptedEvent listener will be used.
