@@ -13,11 +13,11 @@ export class CreateAddressOnChainAddressCreated {
   ) {}
   @RabbitSubscribe({
     queueOptions: {
-      channel: 'koiner.contracts.chain_events_channel',
+      channel: 'koiner.contracts.channel.address',
     },
-    exchange: 'koiner.chain.sync',
+    exchange: 'koiner.chain.event',
     routingKey: AddressCreatedMessage.routingKey,
-    queue: 'koiner.contracts.chain_events',
+    queue: 'koiner.contracts.queue.address',
   })
   async handle(message: any): Promise<void> {
     return new Promise((resolve, reject) => {

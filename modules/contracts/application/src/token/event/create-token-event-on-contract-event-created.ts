@@ -1,24 +1,22 @@
+import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { DomainEventHandler } from '@appvise/domain';
-import { ContractStandardService, CreateTokenEventCommand } from '../..';
-import {
-  ContractEventCreated,
-  ContractStandardType,
-} from '@koiner/contracts/domain';
+import { ContractStandardService } from '../../contract-standard/service/contract-standard-service';
+import { CreateTokenEventCommand } from '../..';
+import { ContractStandardType } from '@koiner/contracts/domain';
+import { OnEvent } from '@nestjs/event-emitter';
+import { ContractEventWithTokenTypeCreatedMessage } from '@koiner/contracts/events';
 
-export class CreateTokenEventOnContractEventCreated extends DomainEventHandler {
+@Injectable()
+export class CreateTokenEventOnContractEventCreated {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly contractStandardService: ContractStandardService
-  ) {
-    super(ContractEventCreated);
-  }
+  ) {}
 
-  async handle(event: ContractEventCreated): Promise<void> {
-    if (event.contractStandardType !== ContractStandardType.token) {
-      return;
-    }
-
+  @OnEvent(ContractEventWithTokenTypeCreatedMessage.routingKey, {
+    async: false,
+  })
+  async handle(event: ContractEventWithTokenTypeCreatedMessage): Promise<void> {
     try {
       let entryPoint = 0x27f576ca;
 
@@ -32,7 +30,7 @@ export class CreateTokenEventOnContractEventCreated extends DomainEventHandler {
       }
 
       const decodedEvent = await this.contractStandardService.decodeOperation(
-        event.contractStandardType,
+        ContractStandardType.token,
         event.contractId,
         entryPoint,
         event.data
@@ -40,7 +38,7 @@ export class CreateTokenEventOnContractEventCreated extends DomainEventHandler {
 
       await this.commandBus.execute(
         new CreateTokenEventCommand({
-          id: event.aggregateId,
+          id: event.eventId,
           contractId: event.contractId,
           name: decodedEvent.name,
           from: <string>decodedEvent.args.from,

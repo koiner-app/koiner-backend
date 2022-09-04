@@ -18,7 +18,7 @@ export class PublishUploadContractOperationCreatedEvent extends DomainEventHandl
     });
 
     await this.amqpConnection.publish(
-      'koiner.chain.sync',
+      'koiner.chain.event',
       UploadContractOperationCreatedMessage.routingKey,
       message.toString()
     );

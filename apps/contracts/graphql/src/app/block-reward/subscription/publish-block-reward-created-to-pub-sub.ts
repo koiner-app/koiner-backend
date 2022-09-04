@@ -16,11 +16,11 @@ export class PublishBlockRewardCreatedToPubSub {
   ) {}
   @RabbitSubscribe({
     queueOptions: {
-      channel: 'koiner.contracts.graphql.subscriptions_channel',
+      channel: 'koiner.contracts.channel.graphql.subscriptions',
     },
-    exchange: 'koiner.contracts.events',
+    exchange: 'koiner.contracts.event',
     routingKey: BlockRewardCreatedMessage.routingKey,
-    queue: 'koiner.contracts.graphql.subscriptions.publish',
+    queue: 'koiner.contracts.queue.graphql.subscriptions',
   })
   async handle(message: any, amqpMsg: ConsumeMessage): Promise<void> {
     return new Promise((resolve, reject) => {

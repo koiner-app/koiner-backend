@@ -1,28 +1,28 @@
+import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { DomainEventHandler } from '@appvise/domain';
-import {
-  ContractOperationCreated,
-  ContractStandardType,
-} from '@koiner/contracts/domain';
-import { ContractStandardService, CreateTokenOperationCommand } from '../..';
+import { ContractStandardType } from '@koiner/contracts/domain';
+import { ContractStandardService } from '../../contract-standard/service/contract-standard-service';
+import { CreateTokenOperationCommand } from '../..';
+import { OnEvent } from '@nestjs/event-emitter';
+import { ContractOperationWithTokenTypeCreatedMessage } from '@koiner/contracts/events';
 
-export class CreateTokenOperationOnOperationCreated extends DomainEventHandler {
+@Injectable()
+export class CreateTokenOperationOnOperationCreated {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly contractStandardService: ContractStandardService
-  ) {
-    super(ContractOperationCreated);
-  }
+  ) {}
 
-  async handle(event: ContractOperationCreated): Promise<void> {
-    if (event.contractStandardType !== ContractStandardType.token) {
-      return;
-    }
-
+  @OnEvent(ContractOperationWithTokenTypeCreatedMessage.routingKey, {
+    async: false,
+  })
+  async handle(
+    event: ContractOperationWithTokenTypeCreatedMessage
+  ): Promise<void> {
     try {
       const decodedOperation =
         await this.contractStandardService.decodeOperation(
-          event.contractStandardType,
+          ContractStandardType.token,
           event.contractId,
           event.entryPoint,
           event.args
@@ -30,7 +30,7 @@ export class CreateTokenOperationOnOperationCreated extends DomainEventHandler {
 
       await this.commandBus.execute(
         new CreateTokenOperationCommand({
-          id: event.aggregateId,
+          id: event.operationId,
           contractId: event.contractId,
           transactionId: event.transactionId,
           name: decodedOperation.name,

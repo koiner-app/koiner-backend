@@ -11,10 +11,11 @@ export class PublishAddressMarkedAsProducerEvent extends DomainEventHandler {
   async handle(event: AddressMarkedAsProducer): Promise<void> {
     const message = new AddressMarkedAsProducerMessage({
       id: event.aggregateId,
+      publishedAt: Date.now(),
     });
 
     await this.amqpConnection.publish(
-      'koiner.contracts.events',
+      'koiner.contracts.event',
       AddressMarkedAsProducerMessage.routingKey,
       message.toString()
     );

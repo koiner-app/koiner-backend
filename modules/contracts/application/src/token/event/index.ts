@@ -28,15 +28,11 @@ export const TokenEventHandlers = [
       logger: Logger,
       contractStandardService: ContractStandardService
     ): CreateTokenContractOnContractCreated => {
-      const eventHandler = new CreateTokenContractOnContractCreated(
+      return new CreateTokenContractOnContractCreated(
         commandBus,
         logger,
         contractStandardService
       );
-
-      eventHandler.listen();
-
-      return eventHandler;
     },
     inject: [CommandBus, Logger, ContractStandardService],
   },
@@ -47,14 +43,10 @@ export const TokenEventHandlers = [
       commandBus: CommandBus,
       contractStandardService: ContractStandardService
     ): CreateTokenEventOnContractEventCreated => {
-      const eventHandler = new CreateTokenEventOnContractEventCreated(
+      return new CreateTokenEventOnContractEventCreated(
         commandBus,
         contractStandardService
       );
-
-      eventHandler.listen();
-
-      return eventHandler;
     },
     inject: [CommandBus, ContractStandardService],
   },
@@ -65,14 +57,10 @@ export const TokenEventHandlers = [
       commandBus: CommandBus,
       contractStandardService: ContractStandardService
     ): CreateTokenOperationOnOperationCreated => {
-      const eventHandler = new CreateTokenOperationOnOperationCreated(
+      return new CreateTokenOperationOnOperationCreated(
         commandBus,
         contractStandardService
       );
-
-      eventHandler.listen();
-
-      return eventHandler;
     },
     inject: [CommandBus, ContractStandardService],
   },

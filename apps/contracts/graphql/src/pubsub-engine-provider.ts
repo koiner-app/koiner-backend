@@ -9,7 +9,7 @@ export const PubSubEngineProvider = {
     return new PubSubEngine({
       connection: amqpConnection.managedConnection.connection,
       exchange: {
-        name: 'koiner.graphql.subscriptions',
+        name: 'koiner.contracts.channel.graphql.subscriptions',
         type: 'topic',
         options: {
           durable: false,
@@ -17,7 +17,7 @@ export const PubSubEngineProvider = {
         },
       },
       queue: {
-        name: 'koiner.graphql.subscriptions.subscribe',
+        name: 'koiner.contracts.queue.graphql.subscriptions',
         options: {
           exclusive: true,
           durable: true,

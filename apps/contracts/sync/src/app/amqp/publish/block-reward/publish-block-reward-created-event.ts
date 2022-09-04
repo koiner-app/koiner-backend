@@ -14,10 +14,11 @@ export class PublishBlockRewardCreatedEvent extends DomainEventHandler {
       contractId: event.contractId,
       producerId: event.producerId,
       value: event.value,
+      publishedAt: Date.now(),
     });
 
     await this.amqpConnection.publish(
-      'koiner.contracts.events',
+      'koiner.contracts.event',
       BlockRewardCreatedMessage.routingKey,
       message.toString()
     );

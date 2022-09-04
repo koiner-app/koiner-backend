@@ -12,10 +12,11 @@ export class PublishAddressCreatedEvent extends DomainEventHandler {
     const message = new AddressCreatedMessage({
       id: event.aggregateId,
       isProducer: event.isProducer,
+      publishedAt: Date.now(),
     });
 
     await this.amqpConnection.publish(
-      'koiner.contracts.events',
+      'koiner.contracts.event',
       AddressCreatedMessage.routingKey,
       message.toString()
     );

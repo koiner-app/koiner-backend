@@ -6,32 +6,35 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
     RabbitMQModule.forRoot(RabbitMQModule, {
       exchanges: [
         {
-          // Events from chain that must be processed synchronously
-          name: 'koiner.chain.sync',
+          // Events from chain
+          name: 'koiner.chain.event',
           type: 'topic',
         },
         {
-          // Events from chain that can processed asynchronously
-          name: 'koiner.chain.events',
-          type: 'topic',
-        },
-        {
-          // Events from contracts that can processed asynchronously
-          name: 'koiner.contracts.events',
+          // Events from contracts
+          name: 'koiner.contracts.event',
           type: 'topic',
         },
       ],
+      // PrefetchCount = 1 will make sure max 1 event can be handled at once,
+      // thus making handling chain events synchronously.
       channels: {
-        // Channel for processing events from chain to contracts synchronously
-        'koiner.contracts.chain_sync_channel': {
-          // PrefetchCount = 1 will make sure max 1 event can be handled at once,
-          // thus making handling chain events synchronously.
+        // Default channel for processing events from chain to contracts
+        'koiner.contracts.channel.contract': {
           prefetchCount: 1,
           default: true,
         },
-        // Channel for processing events from chain to contracts asynchronously
-        'koiner.contracts.chain_events_channel': {
-          prefetchCount: 10,
+        // Channel for processing addresses
+        'koiner.contracts.channel.address': {
+          prefetchCount: 1,
+        },
+        // Channel for processing block rewards
+        'koiner.contracts.channel.block_reward': {
+          prefetchCount: 1,
+        },
+        // Channel for processing token contracts, events + operations
+        'koiner.contracts.channel.token': {
+          prefetchCount: 1,
         },
       },
       uri: `amqp://${process.env.RABBITMQ_USER}:${process.env.RABBITMQ_PASSWORD}@${process.env.RABBITMQ_HOST}`,

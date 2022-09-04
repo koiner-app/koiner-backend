@@ -15,11 +15,11 @@ export class BlockAcceptedHandler {
 
   @RabbitSubscribe({
     queueOptions: {
-      channel: 'koiner.chain.koinos_sync_channel',
+      channel: 'koiner.chain.channel.koinos',
     },
     exchange: 'koinos.event',
     routingKey: 'koinos.block.accept',
-    queue: 'koiner.block.accept',
+    queue: 'koiner.chain.queue.koinos.block_accepted',
     allowNonJsonMessages: true,
   })
   public async pubSubHandler(msg: any, amqpMsg: ConsumeMessage) {

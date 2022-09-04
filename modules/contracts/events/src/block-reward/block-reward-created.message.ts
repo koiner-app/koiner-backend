@@ -9,6 +9,7 @@ export class BlockRewardCreatedMessage {
   readonly producerId!: string;
   readonly value!: number;
   readonly contractId!: string;
+  readonly publishedAt!: number;
 
   public toString(): string {
     return JSON.stringify(this);

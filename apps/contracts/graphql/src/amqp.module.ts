@@ -6,7 +6,8 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
     RabbitMQModule.forRoot(RabbitMQModule, {
       exchanges: [
         {
-          name: 'koiner.contracts.events',
+          // Events from contracts
+          name: 'koiner.contracts.event',
           type: 'topic',
         },
         {
@@ -19,7 +20,7 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
         },
       ],
       channels: {
-        'koiner.contracts.graphql.subscriptions_channel': {
+        'koiner.contracts.channel.graphql.subscriptions': {
           prefetchCount: 10,
         },
       },

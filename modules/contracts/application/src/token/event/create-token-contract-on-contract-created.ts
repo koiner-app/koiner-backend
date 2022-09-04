@@ -1,34 +1,27 @@
+import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { DomainEventHandler, Logger } from '@appvise/domain';
-import {
-  ContractCreated,
-  ContractStandardType,
-} from '@koiner/contracts/domain';
-import { ContractStandardService, CreateTokenContractCommand } from '../..';
+import { Logger } from '@appvise/domain';
+import { ContractStandardType } from '@koiner/contracts/domain';
+import { ContractStandardService } from '../../contract-standard/service/contract-standard-service';
+import { CreateTokenContractCommand } from '../..';
 
-export class CreateTokenContractOnContractCreated extends DomainEventHandler {
+import { OnEvent } from '@nestjs/event-emitter';
+import { ContractWithTokenTypeCreatedMessage } from '@koiner/contracts/events';
+
+@Injectable()
+export class CreateTokenContractOnContractCreated {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly logger: Logger,
     private readonly contractStandardService: ContractStandardService
-  ) {
-    super(ContractCreated);
-  }
+  ) {}
 
-  async handle(event: ContractCreated): Promise<void> {
-    if (event.contractStandardType !== ContractStandardType.token) {
-      return;
-    }
-
-    this.logger.log(
-      `Create TokenContract ${event.aggregateId}`,
-      'CreateKrcContractOnContractCreated'
-    );
-
+  @OnEvent(ContractWithTokenTypeCreatedMessage.routingKey, { async: false })
+  async handle(event: ContractWithTokenTypeCreatedMessage): Promise<void> {
     const contractStandardWithValues =
       await this.contractStandardService.getForContract(
-        event.aggregateId,
-        event.contractStandardType
+        event.contractId,
+        ContractStandardType.token
       );
 
     if (contractStandardWithValues) {
@@ -41,17 +34,12 @@ export class CreateTokenContractOnContractCreated extends DomainEventHandler {
       ) {
         await this.commandBus.execute(
           new CreateTokenContractCommand({
-            id: event.aggregateId,
+            id: event.contractId,
             name: <string>contractValues['name'],
             symbol: <string>contractValues['symbol'],
             decimals: <number>contractValues['decimals'],
             timestamp: event.timestamp,
           })
-        );
-
-        this.logger.debug(
-          `Done creating TokenContract ${event.aggregateId}`,
-          'CreateKrcContractOnContractCreated'
         );
       }
     }

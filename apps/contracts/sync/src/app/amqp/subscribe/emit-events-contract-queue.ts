@@ -4,42 +4,38 @@ import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import { Logger } from '@appvise/domain';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import {
-  BlockCreatedMessage,
   EventCreatedMessage,
   OperationCreatedMessage,
   UploadContractOperationCreatedMessage,
 } from '@koiner/chain/events';
+import { CommandBus } from '@nestjs/cqrs';
 
 @Injectable()
-export class EmitChainSyncQueueEvents {
+export class EmitEventsContractQueue {
   constructor(
     private readonly logger: Logger,
-    private readonly eventEmitter: EventEmitter2
+    private readonly eventEmitter: EventEmitter2,
+    private readonly commandBus: CommandBus
   ) {}
+
   @RabbitSubscribe({
     queueOptions: {
-      channel: 'koiner.contracts.chain_sync_channel',
+      channel: 'koiner.contracts.channel.contract',
     },
-    exchange: 'koiner.chain.sync',
+    exchange: 'koiner.chain.event',
     routingKey: [
-      BlockCreatedMessage.routingKey,
       EventCreatedMessage.routingKey,
       OperationCreatedMessage.routingKey,
       UploadContractOperationCreatedMessage.routingKey,
     ],
-    queue: 'koiner.contracts.chain_sync',
+    queue: 'koiner.contracts.queue.contract',
   })
   async handle(message: any, amqpMsg: ConsumeMessage): Promise<void> {
     return new Promise((resolve, reject) => {
       let event:
-        | BlockCreatedMessage
         | EventCreatedMessage
         | OperationCreatedMessage
         | UploadContractOperationCreatedMessage;
-
-      if (amqpMsg.fields.routingKey === BlockCreatedMessage.routingKey) {
-        event = new BlockCreatedMessage(JSON.parse(message));
-      }
 
       if (amqpMsg.fields.routingKey === EventCreatedMessage.routingKey) {
         event = new EventCreatedMessage(JSON.parse(message));

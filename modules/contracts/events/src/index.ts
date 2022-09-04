@@ -1,3 +1,9 @@
 export { AddressCreatedMessage } from './address/address-created.message';
 export { AddressMarkedAsProducerMessage } from './address/address-marked-as-producer.message';
 export { BlockRewardCreatedMessage } from './block-reward/block-reward-created.message';
+export { ContractCreatedMessage } from './contract/contract-created.message';
+export { ContractEventCreatedMessage } from './contract/contract-event-created.message';
+export { ContractOperationCreatedMessage } from './contract/contract-operation-created.message';
+export { ContractEventWithTokenTypeCreatedMessage } from './token/contract-event-with-token-type-created.message';
+export { ContractOperationWithTokenTypeCreatedMessage } from './token/contract-operation-with-token-type-created.message';
+export { ContractWithTokenTypeCreatedMessage } from './token/contract-with-token-type-created.message';

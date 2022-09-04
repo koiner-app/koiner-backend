@@ -6,6 +6,7 @@ export class AddressMarkedAsProducerMessage {
   }
 
   readonly id!: string;
+  readonly publishedAt!: number;
 
   public toString(): string {
     return JSON.stringify(this);
