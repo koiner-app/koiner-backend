@@ -6,6 +6,7 @@ export enum EventParentType {
 }
 
 export interface CreateEventProps {
+  blockHeight: number;
   parentId: KoinosId;
   parentType: EventParentType;
   sequence?: number;

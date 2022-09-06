@@ -17,6 +17,7 @@ export class CreateContractEventHandler
   async execute(command: CreateContractEventCommand): Promise<void> {
     const event = ContractEvent.create(
       {
+        blockHeight: command.blockHeight,
         parentId: new KoinosId(command.parentId),
         parentType: command.parentType as ContractEventParentType,
         sequence: command.sequence,

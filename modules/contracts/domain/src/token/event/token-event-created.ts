@@ -13,4 +13,6 @@ export class TokenEventCreated extends DomainEvent {
   readonly to?: string;
   readonly value!: number;
   readonly timestamp!: number;
+  readonly parentId!: string;
+  readonly parentType!: string;
 }

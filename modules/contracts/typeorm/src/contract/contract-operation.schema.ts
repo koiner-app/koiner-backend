@@ -8,6 +8,9 @@ export class ContractOperationSchema extends EntityBaseSchema {
   @Column({ length: 35 })
   override readonly id!: string;
 
+  @Column({ type: 'bigint' })
+  readonly block_height!: number;
+
   @Column({ length: 35 })
   readonly contract_id!: string;
 

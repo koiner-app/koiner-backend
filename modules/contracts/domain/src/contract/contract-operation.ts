@@ -22,6 +22,7 @@ export class ContractOperation extends AggregateRoot<ContractOperationProps> {
     operation.addEvent(
       new ContractOperationCreated({
         aggregateId: id.value,
+        blockHeight: props.blockHeight,
         contractId: props.contractId.value,
         transactionId: props.transactionId.value,
         entryPoint: props.entryPoint,
@@ -32,6 +33,10 @@ export class ContractOperation extends AggregateRoot<ContractOperationProps> {
     );
 
     return operation;
+  }
+
+  get blockHeight(): number {
+    return this.props.blockHeight;
   }
 
   get contractId(): KoinosAddressId {

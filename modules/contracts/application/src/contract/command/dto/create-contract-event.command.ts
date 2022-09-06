@@ -9,6 +9,7 @@ export class CreateContractEventCommand extends Command {
   }
 
   readonly id!: string;
+  readonly blockHeight!: number;
   readonly parentId!: string;
   readonly parentType!: string;
   readonly sequence?: number;

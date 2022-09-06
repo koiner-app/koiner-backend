@@ -4,6 +4,9 @@ import { EventParentType } from '@koiner/chain/domain';
 
 @Entity('chain_event')
 export class EventSchema extends EntityBaseSchema {
+  @Column({ type: 'bigint' })
+  readonly block_height!: number;
+
   @Column({ length: 70 })
   readonly parent_id!: string;
 

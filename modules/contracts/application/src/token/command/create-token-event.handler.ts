@@ -2,6 +2,7 @@ import { CommandBus, CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UUID } from '@appvise/domain';
 import { KoinosAddressId } from '@koiner/domain';
 import {
+  ContractEventParentType,
   TokenEvent,
   TokenEventWriteRepository,
 } from '@koiner/contracts/domain';
@@ -43,6 +44,8 @@ export class CreateTokenEventHandler
         value: command.value,
         timestamp: command.timestamp,
       },
+      command.parentId,
+      command.parentType as ContractEventParentType,
       new UUID(command.id)
     );
 

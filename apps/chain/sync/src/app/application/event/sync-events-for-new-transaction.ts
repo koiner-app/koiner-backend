@@ -28,6 +28,7 @@ export class SyncEventsForNewTransaction extends DomainEventHandler {
 
         await this.commandBus.execute(
           new CreateEventCommand({
+            blockHeight: event.blockHeight,
             parentId: event.aggregateId,
             parentType: EventParentType.transaction,
             sequence: transactionEvent.sequence,

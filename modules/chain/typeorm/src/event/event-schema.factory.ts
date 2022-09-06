@@ -16,6 +16,7 @@ export class EventSchemaFactory extends EntitySchemaFactory<
     const id = new UUID(entitySchema.id);
 
     const props: EventProps = {
+      blockHeight: entitySchema.block_height,
       parentId: new KoinosId(entitySchema.parent_id),
       parentType: entitySchema.parent_type,
       sequence: entitySchema.sequence,
@@ -39,6 +40,7 @@ export class EventSchemaFactory extends EntitySchemaFactory<
     const props = entity.getPropsCopy();
 
     return {
+      block_height: props.blockHeight,
       parent_id: props.parentId.value,
       parent_type: props.parentType,
       sequence: props.sequence,

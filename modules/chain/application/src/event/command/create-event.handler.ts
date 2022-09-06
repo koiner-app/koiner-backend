@@ -15,6 +15,7 @@ export class CreateEventHandler implements ICommandHandler<CreateEventCommand> {
   async execute(command: CreateEventCommand): Promise<void> {
     const event = Event.create(
       {
+        blockHeight: command.blockHeight,
         parentId: new KoinosId(command.parentId),
         parentType: command.parentType as EventParentType,
         sequence: command.sequence,

@@ -16,6 +16,7 @@ export class Event extends AggregateRoot<EventProps> {
     event.addEvent(
       new EventCreated({
         aggregateId: id.value,
+        blockHeight: props.blockHeight,
         parentId: props.parentId.value,
         parentType: props.parentType,
         sequence: props.sequence,
@@ -30,6 +31,10 @@ export class Event extends AggregateRoot<EventProps> {
     );
 
     return event;
+  }
+
+  get blockHeight(): number {
+    return this.props.blockHeight;
   }
 
   get parentId(): KoinosId {

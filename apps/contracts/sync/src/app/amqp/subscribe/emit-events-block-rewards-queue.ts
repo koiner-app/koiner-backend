@@ -3,7 +3,7 @@ import { ConsumeMessage } from 'amqplib';
 import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import { Logger } from '@appvise/domain';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { BlockCreatedMessage } from '@koiner/chain/events';
+import { BlockRewardMintedEventCreatedMessage } from '@koiner/contracts/events';
 
 @Injectable()
 export class EmitEventsBlockRewardsQueue {
@@ -16,16 +16,19 @@ export class EmitEventsBlockRewardsQueue {
     queueOptions: {
       channel: 'koiner.contracts.channel.block_reward',
     },
-    exchange: 'koiner.chain.event',
-    routingKey: [BlockCreatedMessage.routingKey],
+    exchange: 'koiner.contracts.event',
+    routingKey: [BlockRewardMintedEventCreatedMessage.routingKey],
     queue: 'koiner.contracts.queue.block_reward',
   })
   async handle(message: any, amqpMsg: ConsumeMessage): Promise<void> {
     return new Promise((resolve, reject) => {
-      let event: BlockCreatedMessage;
+      let event: BlockRewardMintedEventCreatedMessage;
 
-      if (amqpMsg.fields.routingKey === BlockCreatedMessage.routingKey) {
-        event = new BlockCreatedMessage(JSON.parse(message));
+      if (
+        amqpMsg.fields.routingKey ===
+        BlockRewardMintedEventCreatedMessage.routingKey
+      ) {
+        event = new BlockRewardMintedEventCreatedMessage(JSON.parse(message));
       }
 
       this.eventEmitter
@@ -35,7 +38,7 @@ export class EmitEventsBlockRewardsQueue {
         })
         .catch((error) => {
           this.logger.error(
-            'Could not process chain.sync.block queue event',
+            'Could not process koiner.contracts.queue.block_reward queue event',
             error
           );
           reject();

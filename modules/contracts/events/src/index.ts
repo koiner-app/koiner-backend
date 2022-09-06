@@ -4,6 +4,7 @@ export { BlockRewardCreatedMessage } from './block-reward/block-reward-created.m
 export { ContractCreatedMessage } from './contract/contract-created.message';
 export { ContractEventCreatedMessage } from './contract/contract-event-created.message';
 export { ContractOperationCreatedMessage } from './contract/contract-operation-created.message';
+export { BlockRewardMintedEventCreatedMessage } from './token/block-reward-minted-event-created.message';
 export { ContractEventWithTokenTypeCreatedMessage } from './token/contract-event-with-token-type-created.message';
 export { ContractOperationWithTokenTypeCreatedMessage } from './token/contract-operation-with-token-type-created.message';
 export { ContractWithTokenTypeCreatedMessage } from './token/contract-with-token-type-created.message';

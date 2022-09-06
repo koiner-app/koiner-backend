@@ -7,6 +7,7 @@ export enum ContractEventParentType {
 }
 
 export interface CreateContractEventProps {
+  blockHeight: number;
   parentId: KoinosId;
   parentType: ContractEventParentType;
   sequence?: number;

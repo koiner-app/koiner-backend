@@ -13,6 +13,7 @@ export class PublishEventCreatedEvent extends DomainEventHandler {
     if (event.contractId) {
       const message = new EventCreatedMessage({
         id: event.aggregateId,
+        blockHeight: event.blockHeight,
         parentId: event.parentId,
         parentType: event.parentType,
         sequence: event.sequence,

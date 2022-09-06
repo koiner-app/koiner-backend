@@ -8,14 +8,12 @@ import {
   OperationCreatedMessage,
   UploadContractOperationCreatedMessage,
 } from '@koiner/chain/events';
-import { CommandBus } from '@nestjs/cqrs';
 
 @Injectable()
 export class EmitEventsContractQueue {
   constructor(
     private readonly logger: Logger,
-    private readonly eventEmitter: EventEmitter2,
-    private readonly commandBus: CommandBus
+    private readonly eventEmitter: EventEmitter2
   ) {}
 
   @RabbitSubscribe({
@@ -58,7 +56,10 @@ export class EmitEventsContractQueue {
           resolve();
         })
         .catch((error) => {
-          this.logger.error('Could not process chain.sync queue event', error);
+          this.logger.error(
+            'Could not process koiner.contracts.queue.contract queue event',
+            error
+          );
           reject();
         });
     });

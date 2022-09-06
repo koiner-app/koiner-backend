@@ -43,6 +43,7 @@ export class CreateContractOperationForNewOperation {
       await this.commandBus.execute(
         new CreateContractOperationCommand({
           id: event.operationId,
+          blockHeight: event.blockHeight,
           contractId,
           transactionId: event.transactionId,
           entryPoint: rawOperation.call_contract.entry_point,

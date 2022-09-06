@@ -7,6 +7,9 @@ import {
 
 @Entity('contracts_contract_event')
 export class ContractEventSchema extends EntityBaseSchema {
+  @Column({ type: 'bigint' })
+  readonly block_height!: number;
+
   @Column({ length: 70 })
   readonly parent_id!: string;
 

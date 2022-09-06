@@ -8,11 +8,17 @@ import {
   TokensMinted,
   TokensTransferred,
 } from '.';
+import { ContractEventParentType } from '../contract';
 
 export class TokenEvent extends AggregateRoot<TokenEventProps> {
   protected readonly _id!: KoinosId;
 
-  static create(create: CreateTokenEventProps, id?: UUID): TokenEvent {
+  static create(
+    create: CreateTokenEventProps,
+    parentId: string,
+    parentType: ContractEventParentType,
+    id?: UUID
+  ): TokenEvent {
     const props: TokenEventProps = {
       ...create,
     };
@@ -29,6 +35,10 @@ export class TokenEvent extends AggregateRoot<TokenEventProps> {
         to: props.to ? props.to.value : undefined,
         value: props.value,
         timestamp: props.timestamp,
+
+        // Included for PublishBlockRewardMintedEvent. No need to persist it
+        parentId,
+        parentType,
       })
     );
 

@@ -18,6 +18,7 @@ export class CreateContractOperationHandler
   async execute(command: CreateContractOperationCommand): Promise<void> {
     const operation = ContractOperation.create(
       {
+        blockHeight: command.blockHeight,
         contractId: new KoinosAddressId(command.contractId),
         transactionId: new KoinosId(command.transactionId),
         entryPoint: command.entryPoint,

@@ -45,6 +45,8 @@ export class CreateTokenEventOnContractEventCreated {
           to: <string>decodedEvent.args.to,
           value: parseInt(<string>decodedEvent.args.value),
           timestamp: event.timestamp,
+          parentId: event.parentId,
+          parentType: event.parentType,
         })
       );
     } catch (error) {

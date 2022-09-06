@@ -25,6 +25,7 @@ export class SyncEventsForNewBlock extends DomainEventHandler {
 
         await this.commandBus.execute(
           new CreateEventCommand({
+            blockHeight: event.height,
             parentId: event.aggregateId,
             parentType: EventParentType.block,
             sequence: blockEventEvent.sequence,

@@ -32,6 +32,7 @@ export class CreateContractEventForNewEvent {
       await this.commandBus.execute(
         new CreateContractEventCommand({
           id: event.id,
+          blockHeight: event.blockHeight,
           parentId: event.parentId,
           parentType: event.parentType,
           sequence: event.sequence,
