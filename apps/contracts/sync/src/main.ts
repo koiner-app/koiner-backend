@@ -9,7 +9,7 @@ async function bootstrap() {
   });
   const port = process.env.PORT || 3102;
   await app.listen(port);
-  Logger.log(`🚀 Application is running on: http://localhost:${port}`);
+  Logger.log(`🚀 Contracts Sync is running on: http://localhost:${port}`);
 }
 
 bootstrap();
