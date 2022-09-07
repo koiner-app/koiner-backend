@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import {
   ContractOperation,
@@ -8,6 +8,9 @@ import { ContractOperationDetailsUnion } from '../../contract/dto/contract-opera
 
 @ObjectType('ContractOperationWithDetails')
 export class ContractOperationNode extends BaseNode {
+  @Field(() => Int)
+  blockHeight: number;
+
   @Field()
   contractId: string;
 
@@ -35,6 +38,7 @@ export class ContractOperationNode extends BaseNode {
   constructor(operation: ContractOperation) {
     super(operation);
 
+    this.blockHeight = operation.blockHeight;
     this.contractId = operation.contractId.value;
     this.transactionId = operation.transactionId.value;
     this.entryPoint = operation.entryPoint;

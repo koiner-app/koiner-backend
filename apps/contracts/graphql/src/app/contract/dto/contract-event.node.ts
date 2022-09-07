@@ -1,9 +1,12 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import { ContractEvent, ContractStandardType } from '@koiner/contracts/domain';
 
 @ObjectType('ContractEvent')
 export class ContractEventNode extends BaseNode {
+  @Field(() => Int)
+  blockHeight: number;
+
   @Field()
   parentId: string;
 
@@ -34,6 +37,7 @@ export class ContractEventNode extends BaseNode {
   constructor(event: ContractEvent) {
     super(event);
 
+    this.blockHeight = event.blockHeight;
     this.parentId = event.parentId.value;
     this.parentType = event.parentType;
     this.sequence = event.sequence;

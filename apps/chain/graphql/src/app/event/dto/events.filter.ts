@@ -10,6 +10,9 @@ export class EventsFilter implements FilterType {
   @Field(() => StringFilterInput, { nullable: true })
   id?: StringFilterInput;
 
+  @Field(() => NumericFilterInput, { nullable: true })
+  blockHeight?: NumericFilterInput;
+
   @Field(() => StringFilterInput, { nullable: true })
   parentId?: StringFilterInput;
 
