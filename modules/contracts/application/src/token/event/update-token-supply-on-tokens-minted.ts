@@ -1,14 +1,17 @@
+import { Injectable } from '@nestjs/common';
+import { OnEvent } from '@nestjs/event-emitter';
 import { CommandBus } from '@nestjs/cqrs';
-import { DomainEventHandler } from '@appvise/domain';
-import { TokensMinted } from '@koiner/contracts/domain';
 import { UpdateTokenContractCommand } from '../command';
+import { TokensMintedEventMessage } from '@koiner/contracts/events';
 
-export class UpdateTokenSupplyOnTokensMinted extends DomainEventHandler {
-  constructor(private readonly commandBus: CommandBus) {
-    super(TokensMinted);
-  }
+@Injectable()
+export class UpdateTokenSupplyOnTokensMinted {
+  constructor(private readonly commandBus: CommandBus) {}
 
-  async handle(event: TokensMinted): Promise<void> {
+  @OnEvent(`${TokensMintedEventMessage.routingKey}.total_supply`, {
+    async: false,
+  })
+  async handle(event: TokensMintedEventMessage): Promise<void> {
     await this.commandBus.execute(
       new UpdateTokenContractCommand({
         contractId: event.contractId,

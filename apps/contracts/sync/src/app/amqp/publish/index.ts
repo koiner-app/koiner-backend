@@ -6,6 +6,7 @@ import { PublishContractCreatedEvent } from './contract/publish-contract-created
 import { PublishContractEventCreatedEvent } from './contract/publish-contract-event-created-event';
 import { PublishContractOperationCreatedEvent } from './contract/publish-contract-operation-created-event';
 import { PublishBlockRewardMintedEvent } from './token/publish-block-reward-minted-event';
+import { PublishTokenEvents } from './token/publish-token-events';
 
 export const ContractsAmqpPublishHandlers = [
   // Address
@@ -103,6 +104,17 @@ export const ContractsAmqpPublishHandlers = [
       amqpConnection: AmqpConnection
     ): PublishBlockRewardMintedEvent => {
       const eventHandler = new PublishBlockRewardMintedEvent(amqpConnection);
+
+      eventHandler.listen();
+
+      return eventHandler;
+    },
+    inject: [AmqpConnection],
+  },
+  {
+    provide: PublishTokenEvents,
+    useFactory: (amqpConnection: AmqpConnection): PublishTokenEvents => {
+      const eventHandler = new PublishTokenEvents(amqpConnection);
 
       eventHandler.listen();
 

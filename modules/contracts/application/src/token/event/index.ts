@@ -3,24 +3,24 @@ import { CreateTokenEventOnContractEventCreated } from './create-token-event-on-
 import { CreateTokenOperationOnOperationCreated } from './create-token-operation-on-operation-created';
 import { UpdateTokenHolderOnTokensBurned } from './update-token-holder-on-tokens-burned';
 import { UpdateTokenHolderOnTokensMinted } from './update-token-holder-on-tokens-minted';
-import { UpdateTokenHoldersOnTokensTransfered } from './update-token-holders-on-tokens-transfered';
+import { UpdateTokenHoldersOnTokensTransferred } from './update-token-holders-on-tokens-transferred';
 import { UpdateTokenSupplyOnTokensMinted } from './update-token-supply-on-tokens-minted';
 import { UpdateTokenSupplyOnTokensBurned } from './update-token-supply-on-tokens-burned';
-import { provideEventHandlers } from '@koiner/nestjs-utils';
 import { CommandBus } from '@nestjs/cqrs';
 import { Logger } from '@appvise/domain';
 import { ContractStandardService } from '../../contract-standard/service/contract-standard-service';
 
 export const TokenEventHandlers = [
-  ...provideEventHandlers([
-    UpdateTokenHolderOnTokensBurned,
-    UpdateTokenHolderOnTokensMinted,
-    UpdateTokenHoldersOnTokensTransfered,
+  // TokenHolder
+  UpdateTokenHolderOnTokensBurned,
+  UpdateTokenHolderOnTokensMinted,
+  UpdateTokenHoldersOnTokensTransferred,
 
-    UpdateTokenSupplyOnTokensMinted,
-    UpdateTokenSupplyOnTokensBurned,
-  ]),
+  // TokenContract.totalSupply
+  UpdateTokenSupplyOnTokensMinted,
+  UpdateTokenSupplyOnTokensBurned,
 
+  // TokenContract
   {
     provide: CreateTokenContractOnContractCreated,
     useFactory: (

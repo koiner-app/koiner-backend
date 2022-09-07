@@ -1,14 +1,17 @@
+import { Injectable } from '@nestjs/common';
+import { OnEvent } from '@nestjs/event-emitter';
 import { CommandBus } from '@nestjs/cqrs';
-import { DomainEventHandler } from '@appvise/domain';
-import { TokensTransferred } from '@koiner/contracts/domain';
 import { UpdateTokenHolderCommand } from '../command';
+import { TokensTransferredEventMessage } from '@koiner/contracts/events';
 
-export class UpdateTokenHoldersOnTokensTransfered extends DomainEventHandler {
-  constructor(private readonly commandBus: CommandBus) {
-    super(TokensTransferred);
-  }
+@Injectable()
+export class UpdateTokenHoldersOnTokensTransferred {
+  constructor(private readonly commandBus: CommandBus) {}
 
-  async handle(event: TokensTransferred): Promise<void> {
+  @OnEvent(`${TokensTransferredEventMessage.routingKey}.token_holder`, {
+    async: false,
+  })
+  async handle(event: TokensTransferredEventMessage): Promise<void> {
     await this.commandBus.execute(
       new UpdateTokenHolderCommand({
         addressId: event.to,

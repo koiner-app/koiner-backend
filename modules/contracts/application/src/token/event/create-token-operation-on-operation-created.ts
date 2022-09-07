@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { OnEvent } from '@nestjs/event-emitter';
 import { CommandBus } from '@nestjs/cqrs';
 import { ContractStandardType } from '@koiner/contracts/domain';
 import { ContractStandardService } from '../../contract-standard/service/contract-standard-service';
 import { CreateTokenOperationCommand } from '../..';
-import { OnEvent } from '@nestjs/event-emitter';
 import { ContractOperationWithTokenTypeCreatedMessage } from '@koiner/contracts/events';
 
 @Injectable()
