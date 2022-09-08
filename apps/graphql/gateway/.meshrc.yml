@@ -2,11 +2,11 @@ sources:
   - name: Chain
     handler:
       graphql:
-        endpoint: http://chain-graphql:3001/graphql
+        endpoint: '{env.CHAIN_GRAPHQL_URL}'
   - name: Contracts
     handler:
       graphql:
-        endpoint: http://contracts-graphql:3002/graphql
+        endpoint: '{env.CONTRACTS_GRAPHQL_URL}'
 
 additionalEnvelopPlugins: './envelop-plugins'
 
@@ -30,7 +30,7 @@ additionalResolvers:
   - !include ./resolvers/chain/system-call-operation-contract.yaml
   - !include ./resolvers/chain/system-contract-operation-contract.yaml
   - !include ./resolvers/chain/upload-contract-operation-contract.yaml
-    # Contracts
+  # Contracts
   - !include ./resolvers/contracts/block-producer-address.yaml
   - !include ./resolvers/contracts/block-reward-burner.yaml
   - !include ./resolvers/contracts/block-reward-producer-address.yaml
