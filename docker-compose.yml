@@ -20,6 +20,9 @@ services:
   amqp:
     container_name: koiner-amqp
     image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
     ports:
       - '${AMQP_INTERFACE:-127.0.0.1}:5672:5672'
       - '${AMQP_INTERFACE:-127.0.0.1}:15672:15672'
@@ -79,6 +82,9 @@ services:
     env_file:
       - 'apps/chain/graphql/.env'
     environment:
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
       - JSONRPC_NODES=${JSONRPC_NODES}
     depends_on:
       - chain-postgres
@@ -113,6 +119,9 @@ services:
     env_file:
       - 'apps/chain/sync/.env'
     environment:
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
       - JSONRPC_NODES=${JSONRPC_NODES}
     depends_on:
       - chain-postgres
@@ -170,6 +179,9 @@ services:
     env_file:
       - 'apps/contracts/graphql/.env'
     environment:
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
       - JSONRPC_NODES=${JSONRPC_NODES}
     depends_on:
       - contracts-postgres
@@ -204,6 +216,9 @@ services:
     env_file:
       - 'apps/contracts/sync/.env'
     environment:
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
       - JSONRPC_NODES=${JSONRPC_NODES}
     depends_on:
       - contracts-postgres
