@@ -16,6 +16,7 @@ import * as config from '../config';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: true,
+      introspection: true,
       subscriptions: {
         'graphql-ws': {
           path: '/graphql',
