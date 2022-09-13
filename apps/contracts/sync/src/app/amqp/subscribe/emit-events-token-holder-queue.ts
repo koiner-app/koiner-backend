@@ -46,7 +46,19 @@ export class EmitEventsTokenHolderQueue {
       if (
         amqpMsg.fields.routingKey === TokensTransferredEventMessage.routingKey
       ) {
-        event = new TokensTransferredEventMessage(JSON.parse(message));
+        const parsedMessage = JSON.parse(message);
+
+        if (!parsedMessage.to || parsedMessage.value === 0) {
+          this.logger.error(
+            `Could not process koiner.contracts.queue.token.token_holder event ${amqpMsg.fields.routingKey}. Empty to or value = 0.`,
+            parsedMessage
+          );
+
+          // Apparently transferred event can be published without a recipient and value of 0
+          resolve();
+          return;
+        }
+        event = new TokensTransferredEventMessage(parsedMessage);
       }
 
       this.eventEmitter
@@ -56,9 +68,10 @@ export class EmitEventsTokenHolderQueue {
         })
         .catch((error) => {
           this.logger.error(
-            'Could not process koiner.contracts.queue.token.token_holder event',
+            `Could not process koiner.contracts.queue.token.token_holder event ${amqpMsg.fields.routingKey}`,
             error
           );
+          console.log(event);
           reject();
         });
     });
