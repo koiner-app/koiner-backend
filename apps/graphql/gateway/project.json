@@ -8,7 +8,7 @@
       "options": {
         "commands": [
           {
-            "command": "mesh --dir apps/graphql/gateway build"
+            "command": "mesh --dir apps/graphql/gateway/mesh build"
           }
         ],
         "poll": 2000
@@ -19,7 +19,7 @@
       "options": {
         "commands": [
           {
-            "command": "mesh --dir apps/graphql/gateway start"
+            "command": "mesh --dir apps/graphql/gateway/mesh start"
           }
         ]
       }
@@ -29,7 +29,7 @@
       "options": {
         "commands": [
           {
-            "command": "mesh --dir apps/graphql/gateway dev"
+            "command": "mesh --dir apps/graphql/gateway/mesh dev"
           }
         ]
       }

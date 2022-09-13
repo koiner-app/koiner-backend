@@ -1,21 +1,21 @@
+serve:
+#  hostname: "{env.HOSTNAME}"
+  hostname: "graphql-gateway"
+  playground: true
+#  cors:
+#    origin: '*'
+
 sources:
   - name: Chain
     handler:
       graphql:
-        endpoint: '{env.CHAIN_GRAPHQL_URL}'
+        endpoint: "{env.CHAIN_GRAPHQL_URL}"
   - name: Contracts
     handler:
       graphql:
-        endpoint: '{env.CONTRACTS_GRAPHQL_URL}'
+        endpoint: "{env.CONTRACTS_GRAPHQL_URL}"
 
 additionalEnvelopPlugins: './envelop-plugins'
-
-serve:
-  hostname: graphql-gateway
-  port: 3000
-  playground: true
-  cors:
-    origin: '*'
 
 additionalTypeDefs: ./additional-types/additional-types.graphql
 additionalResolvers:
@@ -30,7 +30,7 @@ additionalResolvers:
   - !include ./resolvers/chain/system-call-operation-contract.yaml
   - !include ./resolvers/chain/system-contract-operation-contract.yaml
   - !include ./resolvers/chain/upload-contract-operation-contract.yaml
-  # Contracts
+    # Contracts
   - !include ./resolvers/contracts/block-producer-address.yaml
   - !include ./resolvers/contracts/block-reward-burner.yaml
   - !include ./resolvers/contracts/block-reward-producer-address.yaml
