@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: koiner-dapp
-          image: elimbatido/koiner-dapp:v0.1.2
+          image: elimbatido/koiner-dapp:v0.2.0
           env:
             - name: NODE_ENV
               value: "production"

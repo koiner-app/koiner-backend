@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: koiner-chain-sync
+  name: koiner-chain-sync
+  namespace: koiner
+spec:
+  ports:
+    - name: "8000"
+      protocol: TCP
+      port: 8000
+      targetPort: 3101
+  selector:
+    service: koiner-chain-sync

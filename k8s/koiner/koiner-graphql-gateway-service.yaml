@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: koiner-graphql-gateway
+  name: koiner-graphql-gateway
+  namespace: koiner
+spec:
+  ports:
+    - name: "8000"
+      protocol: TCP
+      port: 8000
+      targetPort: 3000
+  selector:
+    service: koiner-graphql-gateway

@@ -20,7 +20,7 @@ spec:
       containers:
         - args:
             - --basedir=/koinos
-          image: koinos/koinos-block-producer:v0.3.0
+          image: koinos/koinos-block-producer:v0.4.0
           name: block-producer
           volumeMounts:
             - mountPath: /koinos

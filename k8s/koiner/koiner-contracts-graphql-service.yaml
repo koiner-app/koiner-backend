@@ -2,15 +2,14 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    service: koiner-api
-  name: koiner-api
+    service: koiner-contracts-graphql
+  name: koiner-contracts-graphql
   namespace: koiner
 spec:
   ports:
     - name: "8000"
       protocol: TCP
       port: 8000
-      targetPort: 3000
+      targetPort: 3002
   selector:
-    service: koiner-api
-  type: LoadBalancer
+    service: koiner-contracts-graphql

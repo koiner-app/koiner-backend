@@ -16,53 +16,89 @@ kind: Ingress
 metadata:
   name: koiner-ingress
   namespace: koiner
-#  annotations:
-#    cert-manager.io/cluster-issuer: "cert-manager-webhook-dnsimple-production"
+  annotations:
+    cert-manager.io/cluster-issuer: "cert-manager-webhook-dnsimple-production"
 spec:
   ingressClassName: nginx
-#  tls:
-#    - hosts:
-#        - api.dev.koiner.app
-#      secretName: api-dev-koiner-tls
-#    - hosts:
-#        - dev.koiner.app
-#      secretName: dev-koiner-tls
+  tls:
+    - hosts:
+        - api.koiner.app
+      secretName: koiner-api-tls
+    - hosts:
+        - chain.api.koiner.app
+      secretName: koiner-chain-api-tls
+    - hosts:
+        - contracts.api.koiner.app
+      secretName: koiner-contracts-api-tls
+    - hosts:
+        - amqp.koiner.app
+      secretName: koiner-amqp-tls
 #    - hosts:
 #        - jsonrpc.dev.koiner.app
 #      secretName: jsonrpc-dev-koiner-tls
   defaultBackend:
     service:
-      name: koiner-api
+      name: koiner-graphql-gateway
       port:
-        number: 8000
+        number: 3000
   rules:
-    - # host: api.dev.koiner.app
+    - host: api.koiner.app
       http:
         paths:
           - pathType: Prefix
             path: "/"
             backend:
               service:
-                name: koiner-api
+                name: koiner-graphql-gateway
                 port:
-                  number: 8000
-    - # host: dev.koiner.app
+                  number: 3000
+    - host: chain.api.koiner.app
       http:
         paths:
           - pathType: Prefix
             path: "/"
             backend:
               service:
-                name: koiner-dapp
+                name: koiner-chain-graphql
                 port:
-                  number: 8000
-    - # host: jsonrpc.dev.koiner.app
+                  number: 3001
+    - host: contracts.api.koiner.app
       http:
         paths:
           - pathType: Prefix
             path: "/"
             backend:
               service:
-                name: jsonrpc-tcp
+                name: koiner-contracts-graphql
                 port:
-                  number: 80
+                  number: 3002
+    - host: amqp.koiner.app
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: amqp
+                port:
+                  number: 15672
+#    - # host: koiner.app
+#      http:
+#        paths:
+#          - pathType: Prefix
+#            path: "/"
+#            backend:
+#              service:
+#                name: koiner-dapp
+#                port:
+#                  number: 8000
+#    - # host: jsonrpc.koiner.app
+#      http:
+#        paths:
+#          - pathType: Prefix
+#            path: "/"
+#            backend:
+#              service:
+#                name: jsonrpc-tcp
+#                port:
+#                  number: 80

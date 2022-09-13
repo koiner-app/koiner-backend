@@ -20,7 +20,7 @@ spec:
       containers:
         - args:
             - --basedir=/koinos
-          image: koinos/koinos-chain:v0.3.1
+          image: koinos/koinos-chain:v0.4.0
           name: chain
           volumeMounts:
             - mountPath: /koinos

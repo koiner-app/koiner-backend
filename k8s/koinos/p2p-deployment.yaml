@@ -20,7 +20,7 @@ spec:
       containers:
         - args:
             - --basedir=/koinos
-          image: koinos/koinos-p2p:v0.3.0
+          image: koinos/koinos-p2p:v0.4.0
           name: p2p
           ports:
             - containerPort: 8888
