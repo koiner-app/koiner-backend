@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: koiner-contracts-sync
-          image: elimbatido/koiner-contracts-sync:v0.1.0
+          image: elimbatido/koiner-contracts-sync:v0.1.1
           env:
             - name: NODE_ENV
               value: "production"
