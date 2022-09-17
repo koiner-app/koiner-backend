@@ -1,5 +1,5 @@
 #! Development image
-FROM node:lts-alpine As development
+FROM node:lts-alpine as development
 RUN apk --no-cache add git
 
 WORKDIR /app

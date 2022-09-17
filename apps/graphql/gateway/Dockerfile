@@ -1,17 +1,17 @@
 #! Development image
-#FROM node:lts-alpine As development
-#
-#WORKDIR /app
-#COPY package*.json ./
-#
-#RUN npm install
-#
-#COPY ./apps/ ./apps/
-#COPY ./modules/ ./modules/
-#COPY ./nx.json .
-#COPY ./tsconfig.base.json .
-#COPY ./workspace.json .
-#
+FROM node:lts-alpine as development
+
+WORKDIR /app
+COPY package*.json ./
+
+RUN npm install
+
+COPY ./apps/ ./apps/
+COPY ./modules/ ./modules/
+COPY ./nx.json .
+COPY ./tsconfig.base.json .
+COPY ./workspace.json .
+
 ##! Production image
 #FROM node:lts-alpine as production
 FROM node:lts-alpine
