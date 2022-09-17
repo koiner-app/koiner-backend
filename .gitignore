@@ -43,3 +43,6 @@ Thumbs.db
 
 # GraphQL-mesh
 .mesh
+
+# Cloud
+.digitalocean
