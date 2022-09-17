@@ -20,8 +20,8 @@ export class ContractOperationNode extends BaseNode {
   @Field()
   entryPoint: number;
 
-  @Field()
-  args: string;
+  @Field({ nullable: true })
+  args?: string;
 
   @Field(() => ContractStandardType, { nullable: true })
   contractStandardType: ContractStandardType;
