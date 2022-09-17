@@ -51,7 +51,7 @@ export class ContractOperation extends AggregateRoot<ContractOperationProps> {
     return this.props.entryPoint;
   }
 
-  get args(): string {
+  get args(): string | undefined {
     return this.props.args;
   }
 

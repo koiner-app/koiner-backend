@@ -5,7 +5,7 @@ export interface CreateContractOperationProps {
   contractId: KoinosAddressId;
   transactionId: KoinosId;
   entryPoint: number;
-  args: string;
+  args?: string;
   contractStandardType?: string;
   timestamp: number;
 }

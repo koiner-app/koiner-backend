@@ -20,8 +20,8 @@ export class ContractOperationSchema extends EntityBaseSchema {
   @Column({ type: 'bigint' })
   readonly entry_point!: number;
 
-  @Column({ type: 'bytea' })
-  readonly args!: string;
+  @Column({ type: 'bytea', nullable: true })
+  readonly args?: string;
 
   @Column({ type: 'enum', enum: ContractStandardType, nullable: true })
   readonly contract_standard_type?: ContractStandardType;
