@@ -5,6 +5,7 @@ import { ContractModels, ContractRepositories } from './contract';
 import { TokenModels, TokenRepositories } from './token';
 
 export * from './address';
+export * from './block-reward';
 export * from './contract';
 export * from './token';
 
