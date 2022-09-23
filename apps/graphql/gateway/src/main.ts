@@ -24,10 +24,9 @@ server.route({
   method: ['GET', 'POST', 'OPTIONS'],
   async handler(req, reply) {
     // Second parameter adds Fastify's `req` and `reply` to the GraphQL Context
-    const response = await meshHttp.handleNodeRequest(req, {
-      req,
-      reply,
-    });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const response = await meshHttp.handleNodeRequest(req, { req, reply });
 
     response.headers.forEach((value, key) => {
       reply.header(key, value);
@@ -41,10 +40,13 @@ server.route({
   },
 });
 
-server.listen({ port: 3000, host: '0.0.0.0' }, (err, address) => {
+const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
+const host = process.env.HOST || '0.0.0.0';
+
+server.listen({ port, host }, (err, address) => {
   if (err) {
     console.error(err);
     process.exit(1);
   }
-  console.log(`Server listening at ${address}`);
+  console.log(`🚀 GraphQL Gateway is running on: ${address}:${port}`);
 });

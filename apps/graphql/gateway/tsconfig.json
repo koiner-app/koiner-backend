@@ -1,19 +1,14 @@
 {
-  "compilerOptions": {
-    "esModuleInterop": true,
-    "module": "CommonJS",
-    "moduleResolution": "Node",
-    "noImplicitAny": false,
-    "noEmitOnError": true,
-    "removeComments": false,
-    "sourceMap": true,
-    "skipLibCheck": true,
-    "target": "ES2017",
-    "outDir": "dist"
-  },
-  "include": [
-    "main.ts",
-    "mesh/**/*"
-  ],
-  "exclude": ["node_modules"]
+  "extends": "../../../tsconfig.base.json",
+  "files": [],
+  "exclude": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
 }

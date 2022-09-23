@@ -1,5 +1,7 @@
-#! Development image
-FROM node:lts-alpine as development
+#! Local development image
+FROM node:lts-alpine as local
+
+RUN apk --no-cache add git
 
 WORKDIR /app
 COPY package*.json ./
@@ -12,15 +14,13 @@ COPY ./nx.json .
 COPY ./tsconfig.base.json .
 COPY ./workspace.json .
 
-##! Production image
-#FROM node:lts-alpine as production
-FROM node:lts-alpine
+#! Development image
+FROM node:lts-alpine as development
 
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
+WORKDIR /app
 
-ARG HOSTNAME
-ENV HOSTNAME=${HOSTNAME}
+ARG MESH_HOSTNAME
+ENV MESH_HOSTNAME=${MESH_HOSTNAME}
 
 ARG CHAIN_GRAPHQL_URL
 ENV CHAIN_GRAPHQL_URL=${CHAIN_GRAPHQL_URL}
@@ -28,21 +28,25 @@ ENV CHAIN_GRAPHQL_URL=${CHAIN_GRAPHQL_URL}
 ARG CONTRACTS_GRAPHQL_URL
 ENV CONTRACTS_GRAPHQL_URL=${CONTRACTS_GRAPHQL_URL}
 
+COPY --from=local /app .
+
+# For local development it is required to start build after rapp-graphql has started.
+# Use docker-compose command for this.
+RUN npm run build:graphql-gateway
+
+#! Production image
+FROM node:lts-alpine as production
+
+ARG NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
+
 WORKDIR /app
 
-COPY ./apps/graphql/gateway/package*.json .
+COPY package*.json ./
 
-RUN npm install
+RUN npm ci --only=production
 
-COPY ./apps/graphql/gateway/mesh ./mesh
-COPY ./apps/graphql/gateway/main.ts .
-COPY ./apps/graphql/gateway/tsconfig.json .
-
-RUN npm run build:mesh \
-    && npm run build:fastify
-#    && npm prune --production \
-
+COPY --from=development /app/dist/apps/gateway .
 ENV PORT=3000
 EXPOSE ${PORT}
-
-CMD ["npm", "run", "fastify"]
+CMD ["node", "main"]

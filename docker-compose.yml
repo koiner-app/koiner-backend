@@ -37,9 +37,9 @@ services:
     build:
       context: .
       dockerfile: 'apps/graphql/gateway/Dockerfile'
-      target: development
+      target: local
     profiles: ['koiner', 'koiner-graphql', 'all']
-    command: npm run start-dev:graphql-gateway
+    command: npm run start:graphql-gateway
     env_file:
       - 'apps/graphql/gateway/.env'
     depends_on:
@@ -88,6 +88,7 @@ services:
       - JSONRPC_NODES=${JSONRPC_NODES}
     depends_on:
       - chain-postgres
+      - amqp
     volumes:
       - ./data/chain/graphql/logs:/var/logs
       - ./apps:/app/apps
@@ -185,6 +186,7 @@ services:
       - JSONRPC_NODES=${JSONRPC_NODES}
     depends_on:
       - contracts-postgres
+      - amqp
     volumes:
       - ./data/contracts/graphql/logs:/var/logs
       - ./apps:/app/apps

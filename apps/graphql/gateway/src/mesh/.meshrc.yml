@@ -1,9 +1,7 @@
 serve:
-#  hostname: "{env.HOSTNAME}"
-  hostname: "graphql-gateway"
+  hostname: '{env.MESH_HOSTNAME}'
+  port: '{env.PORT}'
   playground: true
-#  cors:
-#    origin: '*'
 
 sources:
   - name: Chain
@@ -30,7 +28,7 @@ additionalResolvers:
   - !include ./resolvers/chain/system-call-operation-contract.yaml
   - !include ./resolvers/chain/system-contract-operation-contract.yaml
   - !include ./resolvers/chain/upload-contract-operation-contract.yaml
-    # Contracts
+  # Contracts
   - !include ./resolvers/contracts/block-producer-address.yaml
   - !include ./resolvers/contracts/block-reward-burner.yaml
   - !include ./resolvers/contracts/block-reward-producer-address.yaml
