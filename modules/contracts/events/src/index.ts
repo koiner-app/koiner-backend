@@ -1,5 +1,3 @@
-export * from './address/address-created.message';
-export * from './address/address-marked-as-producer.message';
 export * from './block-reward/block-reward-created.message';
 export * from './contract/contract-created.message';
 export * from './contract/contract-event-created.message';

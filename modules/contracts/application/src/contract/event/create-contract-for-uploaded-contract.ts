@@ -2,10 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { CommandBus } from '@nestjs/cqrs';
 import { ContractStandardService } from '@koiner/contracts/standards';
-import {
-  CreateContractCommand,
-  CreateOrUpdateAddressCommand,
-} from '@koiner/contracts/application';
+import { CreateContractCommand } from '@koiner/contracts/application';
 import { UploadContractOperationCreatedMessage } from '@koiner/chain/events';
 
 @Injectable()
@@ -19,13 +16,6 @@ export class CreateContractForUploadedContract {
   async handle(event: UploadContractOperationCreatedMessage): Promise<void> {
     const contractStandardWithValues =
       await this.contractStandardService.getForContract(event.contractId);
-
-    // Create address for contract
-    await this.commandBus.execute(
-      new CreateOrUpdateAddressCommand({
-        id: event.contractId,
-      })
-    );
 
     await this.commandBus.execute(
       new CreateContractCommand({

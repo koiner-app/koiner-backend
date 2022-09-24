@@ -1,6 +1,5 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 import { EntityBaseSchema } from '@appvise/typeorm';
-import { AddressSchema } from '../address';
 
 @Entity('contracts_block_reward')
 export class BlockRewardSchema extends EntityBaseSchema {
@@ -22,11 +21,6 @@ export class BlockRewardSchema extends EntityBaseSchema {
 
   @Column({ length: 35, nullable: true })
   readonly burner_id?: string;
-
-  // Add foreign key without the need to always use the relation
-  @ManyToOne(() => AddressSchema, { nullable: true, persistence: false })
-  @JoinColumn({ name: 'burner_id', referencedColumnName: 'id' })
-  private _burner_id_fg?: never;
 
   @Column({ length: 20, nullable: true })
   readonly burned_value?: string;

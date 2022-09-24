@@ -6,7 +6,6 @@ import {
   ContractEventQuery,
   ContractEventsQuery,
   CreateBlockRewardCommand,
-  CreateOrUpdateAddressCommand,
 } from '@koiner/contracts/application';
 import { BlockRewardMintedEventCreatedMessage } from '@koiner/contracts/events';
 import { koinos } from '../../config';
@@ -66,14 +65,6 @@ export class CreateBlockRewardForNewBlock {
       const blockProducerId: string = mintEvent.to;
       const producerRewards: number = mintEvent.value;
       const burnedValue = burnEvent.value;
-
-      // Add address for block producer
-      await this.commandBus.execute(
-        new CreateOrUpdateAddressCommand({
-          id: blockProducerId,
-          isProducer: true,
-        })
-      );
 
       await this.commandBus.execute(
         new CreateBlockRewardCommand({
