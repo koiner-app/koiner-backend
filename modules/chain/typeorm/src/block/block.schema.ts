@@ -1,13 +1,5 @@
 import { EntityBaseSchema } from '@appvise/typeorm';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryColumn,
-  Unique,
-} from 'typeorm';
-import { AddressSchema } from '..';
+import { Column, Entity, PrimaryColumn, Unique } from 'typeorm';
 
 @Entity('chain_block')
 @Unique(['id', 'previous'])
@@ -33,11 +25,6 @@ export class BlockSchema extends EntityBaseSchema {
 
   @Column({ length: 38 })
   readonly signer!: string;
-
-  // Add foreign key without the need to always use the relation
-  @ManyToOne(() => AddressSchema, { nullable: false, persistence: false })
-  @JoinColumn({ name: 'signer', referencedColumnName: 'id' })
-  private _signer_fg?: never;
 
   @Column()
   readonly signature!: string;

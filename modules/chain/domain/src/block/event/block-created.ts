@@ -10,4 +10,5 @@ export class BlockCreated extends DomainEvent {
   readonly height!: number;
   readonly timestamp!: number;
   readonly transactionCount!: number;
+  readonly signer!: string;
 }

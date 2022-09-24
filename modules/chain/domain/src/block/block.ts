@@ -30,6 +30,7 @@ export class Block extends AggregateRoot<BlockProps> {
         height: props.header.height,
         timestamp: props.header.timestamp,
         transactionCount: props.transactionCount,
+        signer: props.header.signer,
       })
     );
 

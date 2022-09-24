@@ -1,10 +1,7 @@
 import { CommandBus, CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Logger } from '@appvise/domain';
 import { RawBlocksService } from '@koinos/jsonrpc';
-import {
-  CreateOrUpdateAddressCommand,
-  CreateTransactionCommand,
-} from '@koiner/chain/application';
+import { CreateTransactionCommand } from '@koiner/chain/application';
 import { SyncTransactionsCommand } from './dto/sync-transactions.command';
 
 @CommandHandler(SyncTransactionsCommand)
@@ -29,13 +26,6 @@ export class SyncTransactionsHandler
       const transactionJson: any = transactions[transactionIndex];
       const payer = transactionJson.header.payer;
       const transactionId = transactionJson.id;
-
-      // Create Address (if not already created)
-      await this.commandBus.execute(
-        new CreateOrUpdateAddressCommand({
-          id: payer,
-        })
-      );
 
       // Create Transaction
       await this.commandBus.execute(

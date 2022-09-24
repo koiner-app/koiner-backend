@@ -1,5 +1,7 @@
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 import { PublishAddressCreatedEvent } from './publish-address-created-event';
+import { PublishAddressUsedEventForBlockSigner } from './publish-address-used-event-for-block-signer';
+import { PublishAddressUsedEventForTransactionPayer } from './publish-address-used-event-for-transaction-payer';
 import { PublishBlockCreatedEvent } from './publish-block-created-event';
 import { PublishOperationCreatedEvent } from './publish-operation-created-event';
 import { PublishUploadContractOperationCreatedEvent } from './publish-upload-contract-operation-created-event';
@@ -19,6 +21,37 @@ export const ChainAmqpPublishHandlers = [
     },
     inject: [AmqpConnection],
   },
+  {
+    provide: PublishAddressUsedEventForBlockSigner,
+    useFactory: (
+      amqpConnection: AmqpConnection
+    ): PublishAddressUsedEventForBlockSigner => {
+      const eventHandler = new PublishAddressUsedEventForBlockSigner(
+        amqpConnection
+      );
+
+      eventHandler.listen();
+
+      return eventHandler;
+    },
+    inject: [AmqpConnection],
+  },
+  {
+    provide: PublishAddressUsedEventForTransactionPayer,
+    useFactory: (
+      amqpConnection: AmqpConnection
+    ): PublishAddressUsedEventForTransactionPayer => {
+      const eventHandler = new PublishAddressUsedEventForTransactionPayer(
+        amqpConnection
+      );
+
+      eventHandler.listen();
+
+      return eventHandler;
+    },
+    inject: [AmqpConnection],
+  },
+
   {
     provide: PublishBlockCreatedEvent,
     useFactory: (amqpConnection: AmqpConnection): PublishBlockCreatedEvent => {

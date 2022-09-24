@@ -8,7 +8,7 @@ import {
   OneToMany,
   PrimaryColumn,
 } from 'typeorm';
-import { AddressSchema, BlockSchema, OperationSchema } from '..';
+import { BlockSchema, OperationSchema } from '..';
 
 @Entity('chain_transaction')
 @Index(['id', 'block_height'])
@@ -37,11 +37,6 @@ export class TransactionSchema extends EntityBaseSchema {
 
   @Column({ length: 35 })
   readonly payer!: string;
-
-  // Add foreign key without the need to persist the object
-  @ManyToOne(() => AddressSchema, { nullable: false, persistence: false })
-  @JoinColumn({ name: 'payer', referencedColumnName: 'id' })
-  private readonly _payer_fg!: never;
 
   // TODO: What should be max length of signature?
   @Column({ length: 255 })
