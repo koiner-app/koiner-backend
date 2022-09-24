@@ -9,4 +9,6 @@ export class CreateOrUpdateAddressCommand extends Command {
 
   readonly id!: string;
   readonly isProducer?: boolean = false;
+  readonly isContract?: boolean = false;
+  readonly isTokenContract?: boolean = false;
 }

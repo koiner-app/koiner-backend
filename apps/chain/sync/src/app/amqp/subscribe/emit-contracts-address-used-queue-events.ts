@@ -1,0 +1,39 @@
+import { Injectable } from '@nestjs/common';
+import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
+import { Logger } from '@appvise/domain';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { AddressUsedMessage } from '@koiner/chain/events';
+
+@Injectable()
+export class EmitContractsAddressUsedQueueEvents {
+  constructor(
+    private readonly logger: Logger,
+    private readonly eventEmitter: EventEmitter2
+  ) {}
+  @RabbitSubscribe({
+    queueOptions: {
+      channel: 'koiner.chain.channel.address',
+    },
+    exchange: 'koiner.contracts.event',
+    routingKey: AddressUsedMessage.routingKey,
+    queue: 'koiner.chain.queue.address',
+  })
+  async handle(message: any): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const event = new AddressUsedMessage(JSON.parse(message));
+
+      this.eventEmitter
+        .emitAsync(AddressUsedMessage.routingKey, event)
+        .then(() => {
+          resolve();
+        })
+        .catch((error) => {
+          this.logger.error(
+            'Could not process koiner.chain.queue.address message (from contracts)',
+            error
+          );
+          reject();
+        });
+    });
+  }
+}

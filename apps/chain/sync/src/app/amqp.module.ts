@@ -20,6 +20,11 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
           name: 'koiner.contracts.event',
           type: 'topic',
         },
+        {
+          // Events from tokenize
+          name: 'koiner.tokenize.event',
+          type: 'topic',
+        },
       ],
       // PrefetchCount = 1 will make sure max 1 event can be handled at once,
       // thus making handling chain events synchronously.
@@ -29,10 +34,8 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
           prefetchCount: 1,
           default: true,
         },
-        // Default channel for processing events from contracts to chain
-        'koiner.chain.channel.contracts': {
-          prefetchCount: 1,
-        },
+        // Channel for processing addresses
+        'koiner.chain.channel.address': {},
       },
       uri: `amqp://${process.env.RABBITMQ_USER}:${process.env.RABBITMQ_PASSWORD}@${process.env.RABBITMQ_HOST}`,
     }),

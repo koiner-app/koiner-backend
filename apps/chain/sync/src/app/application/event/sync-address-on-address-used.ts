@@ -1,19 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { AddressMarkedAsProducerMessage } from '@koiner/contracts/events';
 import { CreateOrUpdateAddressCommand } from '@koiner/chain/application';
 import { OnEvent } from '@nestjs/event-emitter';
+import { AddressUsedMessage } from '@koiner/chain/events';
 
 @Injectable()
-export class SyncAddressOnContractsAddressMarkedAsProducer {
+export class SyncAddressOnAddressUsed {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @OnEvent(AddressMarkedAsProducerMessage.routingKey, { async: false })
-  async handle(event: AddressMarkedAsProducerMessage): Promise<void> {
+  @OnEvent(AddressUsedMessage.routingKey, { async: false })
+  async handle(event: AddressUsedMessage): Promise<void> {
     await this.commandBus.execute(
       new CreateOrUpdateAddressCommand({
         id: event.id,
-        isProducer: true,
+        isContract: event.isContract,
+        isProducer: event.isProducer,
+        isTokenContract: event.isTokenContract,
       })
     );
   }

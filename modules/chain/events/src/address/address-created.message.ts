@@ -7,6 +7,7 @@ export class AddressCreatedMessage {
 
   readonly id!: string;
   readonly isProducer!: boolean;
+  readonly isContract!: boolean;
   readonly publishedAt!: number;
 
   public toString(): string {

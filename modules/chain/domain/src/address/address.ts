@@ -16,6 +16,8 @@ export class Address extends AggregateRoot<AddressProps> {
       new AddressCreated({
         aggregateId: id.value,
         isProducer: props.isProducer,
+        isContract: props.isContract,
+        isTokenContract: props.isTokenContract,
       })
     );
 
@@ -26,8 +28,24 @@ export class Address extends AggregateRoot<AddressProps> {
     return this.props.isProducer;
   }
 
+  get isContract(): boolean {
+    return this.props.isContract;
+  }
+
+  get isTokenContract(): boolean {
+    return this.props.isTokenContract;
+  }
+
   markAsProducer(): void {
     this.props.isProducer = true;
+  }
+
+  markAsContract(): void {
+    this.props.isContract = true;
+  }
+
+  markAsTokenContract(): void {
+    this.props.isTokenContract = true;
   }
 
   validate(): void {

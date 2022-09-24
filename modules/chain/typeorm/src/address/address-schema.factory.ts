@@ -12,12 +12,14 @@ export class AddressSchemaFactory extends EntitySchemaFactory<
   AddressSchema
 > {
   protected toDomainProps(
-    entitySchema: AddressSchema,
+    entitySchema: AddressSchema
   ): EntityProps<AddressProps> {
     const id = new KoinosAddressId(entitySchema.id);
 
     const props: AddressProps = {
       isProducer: entitySchema.is_producer,
+      isContract: entitySchema.is_contract,
+      isTokenContract: entitySchema.is_token_contract,
     };
 
     return { id, props };
@@ -28,6 +30,8 @@ export class AddressSchemaFactory extends EntitySchemaFactory<
 
     return {
       is_producer: props.isProducer,
+      is_contract: props.isContract,
+      is_token_contract: props.isTokenContract,
     };
   }
 }

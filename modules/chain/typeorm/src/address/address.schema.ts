@@ -9,4 +9,10 @@ export class AddressSchema extends EntityBaseSchema {
 
   @Column()
   readonly is_producer!: boolean;
+
+  @Column()
+  readonly is_contract!: boolean;
+
+  @Column()
+  readonly is_token_contract!: boolean;
 }

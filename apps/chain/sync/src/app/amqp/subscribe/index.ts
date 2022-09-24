@@ -1,5 +1,6 @@
 import { BlockAcceptedHandler } from './block-accepted.handler';
-import { EmitChainSyncQueueEvents } from './emit-contracts-sync-queue-events';
+import { EmitContractsAddressUsedQueueEvents } from './emit-contracts-address-used-queue-events';
+import { EmitTokenizeAddressUsedQueueEvents } from './emit-tokenize-address-used-queue-events';
 
 const BlockAcceptedHandlerWrapper = [];
 
@@ -9,5 +10,6 @@ if (process.env.SYNC_MODE !== 'manual') {
 
 export const ChainAmqpSubscribeHandlers = [
   ...BlockAcceptedHandlerWrapper,
-  EmitChainSyncQueueEvents,
+  EmitContractsAddressUsedQueueEvents,
+  EmitTokenizeAddressUsedQueueEvents,
 ];

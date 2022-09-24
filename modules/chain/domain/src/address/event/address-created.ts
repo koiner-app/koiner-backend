@@ -8,4 +8,6 @@ export class AddressCreated extends DomainEvent {
   }
 
   readonly isProducer!: boolean;
+  readonly isContract!: boolean;
+  readonly isTokenContract!: boolean;
 }
