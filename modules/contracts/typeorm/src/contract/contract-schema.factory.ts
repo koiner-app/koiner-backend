@@ -4,11 +4,8 @@ import {
   EntitySchemaProps,
 } from '@appvise/typeorm';
 import { KoinosAddressId } from '@koiner/domain';
-import {
-  Contract,
-  ContractProps,
-  ContractStandardType,
-} from '@koiner/contracts/domain';
+import { ContractStandardType } from '@koiner/contracts/standards';
+import { Contract, ContractProps } from '@koiner/contracts/domain';
 import { ContractSchema } from '.';
 
 export class ContractSchemaFactory extends EntitySchemaFactory<

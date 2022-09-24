@@ -1,10 +1,7 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
-import {
-  ContractOperation,
-  ContractStandardType,
-} from '@koiner/contracts/domain';
-import { ContractOperationDetailsUnion } from '../../contract/dto/contract-operation.union';
+import { ContractStandardType } from '@koiner/contracts/standards';
+import { ContractOperation } from '@koiner/contracts/domain';
 
 @ObjectType('ContractOperationWithDetails')
 export class ContractOperationNode extends BaseNode {
@@ -28,12 +25,6 @@ export class ContractOperationNode extends BaseNode {
 
   @Field()
   timestamp: number;
-
-  @Field(() => ContractOperationDetailsUnion, { nullable: true })
-  details: typeof ContractOperationDetailsUnion;
-
-  // Used by UnionTypeResolver
-  type = 'contractOperation';
 
   constructor(operation: ContractOperation) {
     super(operation);

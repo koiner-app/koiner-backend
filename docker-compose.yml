@@ -27,6 +27,26 @@ services:
       - '${AMQP_INTERFACE:-127.0.0.1}:5672:5672'
       - '${AMQP_INTERFACE:-127.0.0.1}:15672:15672'
 
+  koiner-postgres:
+    container_name: koiner-postgres
+    image: postgres
+    profiles: ['koiner', 'koiner-graphql', 'koiner-sync', 'all']
+    restart: always
+    networks:
+      - webproxy
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_MULTIPLE_DATABASES=${DB_DATABASES}
+      - VIRTUAL_PORT=5432
+      - VIRTUAL_HOST=${DB_VIRTUAL_HOST}
+    volumes:
+      - ./postgres-init.sh:/docker-entrypoint-initdb.d/postgres-init.sh
+      - ./data/pgdata:/var/lib/postgresql/data
+
   #
   # GraphQL
   #
@@ -87,7 +107,7 @@ services:
       - RABBITMQ_HOST=${RABBITMQ_HOST}
       - JSONRPC_NODES=${JSONRPC_NODES}
     depends_on:
-      - chain-postgres
+      - koiner-postgres
       - amqp
     volumes:
       - ./data/chain/graphql/logs:/var/logs
@@ -125,7 +145,7 @@ services:
       - RABBITMQ_HOST=${RABBITMQ_HOST}
       - JSONRPC_NODES=${JSONRPC_NODES}
     depends_on:
-      - chain-postgres
+      - koiner-postgres
       - amqp
     volumes:
       - ./data/chain/sync/logs:/var/logs
@@ -145,24 +165,6 @@ services:
       retries: 5
       start_period: 20s
       timeout: 10s
-
-  chain-postgres:
-    container_name: koiner-chain-postgres
-    image: postgres
-    profiles: ['koiner', 'koiner-graphql', 'koiner-sync', 'all']
-    restart: always
-    networks:
-      - webproxy
-    ports:
-      - '5432:5432'
-    environment:
-      - POSTGRES_USER=${CHAIN_DB_USER}
-      - POSTGRES_PASSWORD=${CHAIN_DB_PASSWORD}
-      - POSTGRES_DB=${CHAIN_DB_NAME}
-      - VIRTUAL_PORT=5432
-      - VIRTUAL_HOST=${CHAIN_DB_VIRTUAL_HOST}
-    volumes:
-      - ./data/chain/pgdata:/var/lib/postgresql/data
 
   #
   # Koiner Contracts
@@ -185,7 +187,7 @@ services:
       - RABBITMQ_HOST=${RABBITMQ_HOST}
       - JSONRPC_NODES=${JSONRPC_NODES}
     depends_on:
-      - contracts-postgres
+      - koiner-postgres
       - amqp
     volumes:
       - ./data/contracts/graphql/logs:/var/logs
@@ -223,7 +225,7 @@ services:
       - RABBITMQ_HOST=${RABBITMQ_HOST}
       - JSONRPC_NODES=${JSONRPC_NODES}
     depends_on:
-      - contracts-postgres
+      - koiner-postgres
       - amqp
     volumes:
       - ./data/contracts/sync/logs:/var/logs
@@ -244,23 +246,85 @@ services:
       start_period: 20s
       timeout: 10s
 
-  contracts-postgres:
-    container_name: koiner-contracts-postgres
-    image: postgres
-    profiles: ['koiner', 'koiner-graphql', 'koiner-sync', 'all']
-    restart: always
+  #
+  # Koiner Contracts
+  #
+
+  tokenize-graphql:
+    container_name: koiner-tokenize-graphql
+    image: koiner/tokenize-graphql
+    build:
+      context: .
+      dockerfile: 'apps/tokenize/graphql/Dockerfile'
+      target: development
+    profiles: ['koiner', 'koiner-graphql', 'all']
+    command: npm run start:tokenize-graphql
+    env_file:
+      - 'apps/tokenize/graphql/.env'
+    environment:
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - JSONRPC_NODES=${JSONRPC_NODES}
+    depends_on:
+      - koiner-postgres
+      - amqp
+    volumes:
+      - ./data/tokenize/graphql/logs:/var/logs
+      - ./apps:/app/apps
+      - ./modules:/app/modules
+      - /app/node_modules
+    networks:
+      - default
+      - webproxy
+    dns:
+      - 8.8.8.8
+    ports:
+      - '3003:3003'
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:3003/health || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s
+
+  tokenize-sync:
+    container_name: koiner-tokenize-sync
+    image: koiner/tokenize-sync
+    build:
+      context: .
+      dockerfile: 'apps/tokenize/sync/Dockerfile'
+      target: development
+    profiles: ['koiner', 'koiner-sync', 'all']
+    command: npm run start:tokenize-sync
+    env_file:
+      - 'apps/tokenize/sync/.env'
+    environment:
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - JSONRPC_NODES=${JSONRPC_NODES}
+    depends_on:
+      - koiner-postgres
+      - amqp
+    volumes:
+      - ./data/tokenize/sync/logs:/var/logs
+      - ./apps:/app/apps
+      - ./modules:/app/modules
+      - /app/node_modules
     networks:
       - webproxy
+      - default
+    dns:
+      - 8.8.8.8
     ports:
-      - '5433:5432'
-    environment:
-      - POSTGRES_DB=${CONTRACTS_DB_NAME}
-      - POSTGRES_USER=${CONTRACTS_DB_USER}
-      - POSTGRES_PASSWORD=${CONTRACTS_DB_PASSWORD}
-      - VIRTUAL_PORT=5432
-      - VIRTUAL_HOST=${CONTRACTS_DB_VIRTUAL_HOST}
-    volumes:
-      - ./data/contracts/pgdata:/var/lib/postgresql/data
+      - '3103:3103'
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:3103/health || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s
 
   #
   # Koinos

@@ -1,4 +1,4 @@
-import { ContractStandardType } from '../contract-standard';
+import { ContractStandardType } from '@koiner/contracts/standards';
 
 export interface CreateContractProps {
   bytecode: string;

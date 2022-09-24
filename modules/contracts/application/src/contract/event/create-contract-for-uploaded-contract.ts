@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { CommandBus } from '@nestjs/cqrs';
+import { ContractStandardService } from '@koiner/contracts/standards';
 import {
-  ContractStandardService,
   CreateContractCommand,
   CreateOrUpdateAddressCommand,
 } from '@koiner/contracts/application';
@@ -12,13 +12,13 @@ import { UploadContractOperationCreatedMessage } from '@koiner/chain/events';
 export class CreateContractForUploadedContract {
   constructor(
     private readonly commandBus: CommandBus,
-    private readonly contractStandardRetriever: ContractStandardService
+    private readonly contractStandardService: ContractStandardService
   ) {}
 
   @OnEvent(UploadContractOperationCreatedMessage.routingKey, { async: false })
   async handle(event: UploadContractOperationCreatedMessage): Promise<void> {
     const contractStandardWithValues =
-      await this.contractStandardRetriever.getForContract(event.contractId);
+      await this.contractStandardService.getForContract(event.contractId);
 
     // Create address for contract
     await this.commandBus.execute(

@@ -4,11 +4,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { KoinosModule } from '@koinos/jsonrpc';
 import { ContractStandardKoilibService } from '@koiner/contracts/koilib'; // Must be imported before ContractStandardService
 import { ContractStandardImReadRepository } from '@koiner/contracts/koilib';
-import { ContractStandardReadRepository } from '@koiner/contracts/domain';
 import {
+  ContractStandardReadRepository,
   ContractStandardService,
-  ContractsModuleApplicationHandlers,
-} from '@koiner/contracts/application';
+} from '@koiner/contracts/standards';
+import { ContractsModuleApplicationHandlers } from '@koiner/contracts/application';
 import {
   ContractsModels,
   ContractsModuleRepositories,
@@ -37,10 +37,6 @@ database.entities.push(...ContractsModels);
       useClass: ContractStandardImReadRepository,
     },
   ],
-  exports: [
-    ContractStandardService,
-    // TODO: Fix
-    // ContractOperationTypeResolver,
-  ],
+  exports: [ContractStandardService],
 })
 export class ContractsModule {}

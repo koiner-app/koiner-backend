@@ -1,7 +1,7 @@
 import { registerEnumType } from '@nestjs/graphql';
-import { ContractStandardType } from '@koiner/contracts/domain';
+import { ContractStandardType } from '@koiner/contracts/standards';
 
 registerEnumType(ContractStandardType, {
   name: 'ContractStandardType',
-  description: 'Token Standard type',
+  description: 'Contract Standard type',
 });

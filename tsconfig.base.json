@@ -27,9 +27,18 @@
       "@koiner/contracts/events": ["modules/contracts/events/src/index.ts"],
       "@koiner/contracts/graphql": ["apps/contracts/graphql/src/app/index.ts"],
       "@koiner/contracts/koilib": ["modules/contracts/koilib/src/index.ts"],
+      "@koiner/contracts/standards": [
+        "modules/contracts/standards/src/index.ts"
+      ],
       "@koiner/contracts/typeorm": ["modules/contracts/typeorm/src/index.ts"],
       "@koiner/domain": ["modules/domain/src/index.ts"],
       "@koiner/nestjs-utils": ["modules/nestjs-utils/src/index.ts"],
+      "@koiner/tokenize/application": [
+        "modules/tokenize/application/src/index.ts"
+      ],
+      "@koiner/tokenize/domain": ["modules/tokenize/domain/src/index.ts"],
+      "@koiner/tokenize/events": ["modules/tokenize/events/src/index.ts"],
+      "@koiner/tokenize/typeorm": ["modules/tokenize/typeorm/src/index.ts"],
       "@koinos/config": ["modules/koinos/config/src/index.ts"],
       "@koinos/jsonrpc": ["modules/koinos/jsonrpc/src/index.ts"]
     }

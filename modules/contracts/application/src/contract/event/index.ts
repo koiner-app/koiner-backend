@@ -1,7 +1,7 @@
+import { CommandBus } from '@nestjs/cqrs';
+import { ContractStandardService } from '@koiner/contracts/standards';
 import { CreateContractEventForNewEvent } from './create-contract-event-for-new-event';
 import { CreateContractForUploadedContract } from './create-contract-for-uploaded-contract';
-import { CommandBus } from '@nestjs/cqrs';
-import { ContractStandardService } from '../../contract-standard';
 
 export const ContractEventHandlers = [
   CreateContractEventForNewEvent,

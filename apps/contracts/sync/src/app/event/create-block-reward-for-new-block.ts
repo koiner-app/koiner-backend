@@ -7,7 +7,6 @@ import {
   ContractEventsQuery,
   CreateBlockRewardCommand,
   CreateOrUpdateAddressCommand,
-  TokenEventQuery,
 } from '@koiner/contracts/application';
 import { BlockRewardMintedEventCreatedMessage } from '@koiner/contracts/events';
 import { koinos } from '../../config';
@@ -15,9 +14,10 @@ import * as math from 'mathjs';
 import {
   ContractEvent,
   ContractEventParentType,
-  ContractStandardType,
-  TokenEvent,
 } from '@koiner/contracts/domain';
+import { ContractStandardType } from '@koiner/contracts/standards';
+import { TokenEventQuery } from '@koiner/tokenize/application';
+import { TokenEvent } from '@koiner/tokenize/domain';
 
 @Injectable()
 export class CreateBlockRewardForNewBlock {

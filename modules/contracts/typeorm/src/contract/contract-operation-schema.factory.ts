@@ -5,10 +5,10 @@ import {
   EntitySchemaProps,
 } from '@appvise/typeorm';
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
+import { ContractStandardType } from '@koiner/contracts/standards';
 import {
   ContractOperation,
   ContractOperationProps,
-  ContractStandardType,
 } from '@koiner/contracts/domain';
 import { ContractOperationSchema } from '.';
 

@@ -8,7 +8,3 @@ export * from './token/block-reward-minted-event-created.message';
 export * from './token/contract-event-with-token-type-created.message';
 export * from './token/contract-operation-with-token-type-created.message';
 export * from './token/contract-with-token-type-created.message';
-export * from './token/tokens-burned-event.message';
-export * from './token/token-event-created.message';
-export * from './token/tokens-minted-event.message';
-export * from './token/tokens-transferred-event.message';

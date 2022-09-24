@@ -6,7 +6,7 @@ import {
   ContractEventParentType,
   ContractEventProps,
 } from '.';
-import { ContractStandardType } from '../contract-standard';
+import { ContractStandardType } from '@koiner/contracts/standards';
 
 export class ContractEvent extends AggregateRoot<ContractEventProps> {
   protected readonly _id!: KoinosId;

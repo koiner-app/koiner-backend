@@ -13,12 +13,19 @@
     "contracts-events": "modules/contracts/events",
     "contracts-graphql": "apps/contracts/graphql",
     "contracts-koilib": "modules/contracts/koilib",
+    "contracts-standards": "modules/contracts/standards",
     "contracts-sync": "apps/contracts/sync",
     "contracts-typeorm": "modules/contracts/typeorm",
     "graphql-gateway": "apps/graphql/gateway",
     "koiner-domain": "modules/domain",
     "koinos-config": "modules/koinos/config",
     "koinos-jsonrpc": "modules/koinos/jsonrpc",
-    "nestjs-utils": "modules/nestjs-utils"
+    "nestjs-utils": "modules/nestjs-utils",
+    "tokenize-application": "modules/tokenize/application",
+    "tokenize-domain": "modules/tokenize/domain",
+    "tokenize-events": "modules/tokenize/events",
+    "tokenize-graphql": "apps/tokenize/graphql",
+    "tokenize-sync": "apps/tokenize/sync",
+    "tokenize-typeorm": "modules/tokenize/typeorm"
   }
 }

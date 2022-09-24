@@ -1,9 +1,7 @@
 import { EntityBaseSchema } from '@appvise/typeorm';
 import { Column, Entity } from 'typeorm';
-import {
-  ContractEventParentType,
-  ContractStandardType,
-} from '@koiner/contracts/domain';
+import { ContractStandardType } from '@koiner/contracts/standards';
+import { ContractEventParentType } from '@koiner/contracts/domain';
 
 @Entity('contracts_contract_event')
 export class ContractEventSchema extends EntityBaseSchema {

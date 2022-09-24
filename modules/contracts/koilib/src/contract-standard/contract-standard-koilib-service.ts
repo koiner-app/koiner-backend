@@ -5,10 +5,10 @@ import { Abi } from 'koilib/lib/interface';
 import {
   ContractStandard,
   ContractStandardReadRepository,
+  ContractStandardService,
   ContractStandardType,
   ContractStandardWithValues,
-} from '@koiner/contracts/domain';
-import { ContractStandardService } from '@koiner/contracts/application';
+} from '@koiner/contracts/standards';
 import { promiseWithTimeout } from '../utils';
 
 /**

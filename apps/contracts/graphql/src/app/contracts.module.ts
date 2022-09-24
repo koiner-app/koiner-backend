@@ -4,23 +4,21 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { KoinosModule } from '@koinos/jsonrpc';
 import { PubSubEngineProvider } from '../pubsub-engine-provider';
 import { AmqpModule } from '../amqp.module';
-import { ContractStandardKoilibService } from '@koiner/contracts/koilib'; // Must be imported before ContractStandardService
-import { ContractStandardImReadRepository } from '@koiner/contracts/koilib';
-import { ContractStandardReadRepository } from '@koiner/contracts/domain';
 import {
+  ContractStandardReadRepository,
   ContractStandardService,
-  ContractsModuleApplicationHandlers,
-} from '@koiner/contracts/application';
+} from '@koiner/contracts/standards';
+import {
+  ContractStandardImReadRepository,
+  ContractStandardKoilibService,
+} from '@koiner/contracts/koilib';
+
+import { ContractsModuleApplicationHandlers } from '@koiner/contracts/application';
 import {
   ContractsModels,
   ContractsModuleRepositories,
 } from '@koiner/contracts/typeorm';
-import {
-  ContractsModuleGraphQLServices,
-  // TODO: Fix
-  // ContractOperationTypeResolver,
-  BlockRewardsLoader,
-} from './index';
+import { ContractsModuleGraphQLServices, BlockRewardsLoader } from './index';
 
 // Register our models with typeorm
 import { database } from '../config';
@@ -41,20 +39,15 @@ database.entities.push(...ContractsModels);
       provide: ContractStandardService,
       useClass: ContractStandardKoilibService,
     },
-
-    ...ContractsModuleApplicationHandlers,
-    ...ContractsModuleRepositories,
     {
       provide: ContractStandardReadRepository,
       useClass: ContractStandardImReadRepository,
     },
+
+    ...ContractsModuleApplicationHandlers,
+    ...ContractsModuleRepositories,
     ...ContractsModuleGraphQLServices,
   ],
-  exports: [
-    BlockRewardsLoader,
-    ContractStandardService,
-    // TODO: Fix
-    // ContractOperationTypeResolver,
-  ],
+  exports: [BlockRewardsLoader],
 })
 export class ContractsModule {}

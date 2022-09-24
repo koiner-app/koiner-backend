@@ -1,5 +1,5 @@
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
-import { ContractStandardType } from '../contract-standard';
+import { ContractStandardType } from '@koiner/contracts/standards';
 
 export enum ContractEventParentType {
   block = 'block',

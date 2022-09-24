@@ -2,7 +2,7 @@ import {
   ContractStandard,
   ContractStandardReadRepository,
   ContractStandardType,
-} from '@koiner/contracts/domain';
+} from '@koiner/contracts/standards';
 import { ContractStandards } from './contract-standards';
 import { Injectable } from '@nestjs/common';
 

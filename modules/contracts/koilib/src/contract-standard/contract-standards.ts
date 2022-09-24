@@ -1,7 +1,7 @@
 import {
   ContractStandard,
   ContractStandardType,
-} from '@koiner/contracts/domain';
+} from '@koiner/contracts/standards';
 import { utils } from 'koilib';
 
 export const ContractStandards: ContractStandard[] = [

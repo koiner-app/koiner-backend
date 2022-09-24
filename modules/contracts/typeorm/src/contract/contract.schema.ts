@@ -1,6 +1,6 @@
 import { EntityBaseSchema } from '@appvise/typeorm';
 import { Column, Entity } from 'typeorm';
-import { ContractStandardType } from '@koiner/contracts/domain';
+import { ContractStandardType } from '@koiner/contracts/standards';
 
 @Entity('contracts_contract')
 export class ContractSchema extends EntityBaseSchema {

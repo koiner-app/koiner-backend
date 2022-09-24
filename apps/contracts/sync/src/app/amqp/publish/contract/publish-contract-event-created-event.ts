@@ -1,9 +1,7 @@
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 import { DomainEventHandler } from '@appvise/domain';
-import {
-  ContractEventCreated,
-  ContractStandardType,
-} from '@koiner/contracts/domain';
+import { ContractEventCreated } from '@koiner/contracts/domain';
+import { ContractStandardType } from '@koiner/contracts/standards';
 import { ContractEventWithTokenTypeCreatedMessage } from '@koiner/contracts/events';
 
 export class PublishContractEventCreatedEvent extends DomainEventHandler {

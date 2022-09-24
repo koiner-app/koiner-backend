@@ -1,5 +1,5 @@
 import { Command, CommandProps } from '@appvise/domain';
-import { ContractStandardType } from '@koiner/contracts/domain';
+import { ContractStandardType } from '@koiner/contracts/standards';
 
 export class CreateContractEventCommand extends Command {
   constructor(props: CommandProps<CreateContractEventCommand>) {
