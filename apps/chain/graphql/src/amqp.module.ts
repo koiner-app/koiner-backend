@@ -11,11 +11,6 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
           type: 'topic',
         },
         {
-          // Events from contracts
-          name: 'koiner.contracts.event',
-          type: 'topic',
-        },
-        {
           name: 'koiner.chain.graphql.subscriptions',
           type: 'topic',
           options: {

@@ -6,7 +6,7 @@ import { PubSubEngine } from '@koiner/nestjs-utils';
 import { Block } from '@koiner/chain/domain';
 import { BlockQuery } from '@koiner/chain/application';
 import { BlockNode } from '@koiner/chain/graphql';
-import { BlockRewardCreatedMessage } from '@koiner/contracts/events';
+import { BlockCreatedMessage } from '@koiner/chain/events';
 
 @Injectable()
 export class PublishBlockCreatedToPubSub {
@@ -18,22 +18,22 @@ export class PublishBlockCreatedToPubSub {
     queueOptions: {
       channel: 'koiner.chain.channel.graphql.subscriptions',
     },
-    exchange: 'koiner.contracts.event',
-    routingKey: BlockRewardCreatedMessage.routingKey,
+    exchange: 'koiner.chain.event',
+    routingKey: BlockCreatedMessage.routingKey,
     queue: 'koiner.chain.queue.graphql.subscriptions',
   })
   async handle(message: any, amqpMsg: ConsumeMessage): Promise<void> {
     return new Promise((resolve, reject) => {
-      const event: BlockRewardCreatedMessage = new BlockRewardCreatedMessage(
+      const event: BlockCreatedMessage = new BlockCreatedMessage(
         JSON.parse(message)
       );
 
-      if (amqpMsg.fields.routingKey !== BlockRewardCreatedMessage.routingKey) {
+      if (amqpMsg.fields.routingKey !== BlockCreatedMessage.routingKey) {
         reject();
       }
 
       this.queryBus
-        .execute<BlockQuery, Block>(new BlockQuery(event.blockHeight))
+        .execute<BlockQuery, Block>(new BlockQuery(event.height))
         .then(async (block) => {
           await this.pubSub.publish('blockCreated', {
             blockCreated: new BlockNode(block),
