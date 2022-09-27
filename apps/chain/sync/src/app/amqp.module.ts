@@ -6,11 +6,6 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
     RabbitMQModule.forRoot(RabbitMQModule, {
       exchanges: [
         {
-          // Events from koinos chain
-          name: 'koinos.event',
-          type: 'topic',
-        },
-        {
           // Events from chain
           name: 'koiner.chain.event',
           type: 'topic',
@@ -29,11 +24,6 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
       // PrefetchCount = 1 will make sure max 1 event can be handled at once,
       // thus making handling chain events synchronously.
       channels: {
-        // Channel for processing events from koinos chain to koiner chain
-        'koiner.chain.channel.koinos': {
-          prefetchCount: 1,
-          default: true,
-        },
         // Channel for processing addresses
         'koiner.chain.channel.address': {},
       },

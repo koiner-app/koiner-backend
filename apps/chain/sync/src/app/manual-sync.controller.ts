@@ -7,14 +7,14 @@ import {
   Query,
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { ManualSyncService } from './manual-sync.service';
+import { SyncService } from './sync.service';
 import { SyncBlockSetsCommand, SyncSet } from './application';
 import { koinos } from '../config';
 
 @Controller()
 export class ManualSyncController {
   constructor(
-    private readonly manualSyncService: ManualSyncService,
+    private readonly syncService: SyncService,
     private readonly commandBus: CommandBus
   ) {}
 
@@ -24,7 +24,7 @@ export class ManualSyncController {
     @Query('batchSize') batchSize?: number
   ): Promise<void> {
     if (secret && koinos.syncSecret && secret === koinos.syncSecret) {
-      await this.manualSyncService.sync(batchSize);
+      await this.syncService.sync(batchSize);
     } else {
       throw new ForbiddenException();
     }

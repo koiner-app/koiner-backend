@@ -28,6 +28,6 @@ COPY package*.json ./
 RUN npm ci --only=production
 
 COPY --from=development /app/dist/apps/tokenize/sync .
-ENV PORT=3001
+ENV PORT=3104
 EXPOSE ${PORT}
 CMD ["node", "main"]

@@ -6,9 +6,8 @@ import {
 } from '@nestjs/cqrs';
 import { Logger } from '@appvise/domain';
 import { RawBlocksService } from '@koinos/jsonrpc';
-import { CreateBlockCommand, BlockQuery } from '@koiner/chain/application';
+import { CreateBlockCommand } from '@koiner/chain/application';
 import { SyncBlockCommand } from './dto/sync-block.command';
-import { Chain } from '@koiner/chain/domain';
 
 @CommandHandler(SyncBlockCommand)
 export class SyncBlockHandler implements ICommandHandler<SyncBlockCommand> {
@@ -21,27 +20,6 @@ export class SyncBlockHandler implements ICommandHandler<SyncBlockCommand> {
 
   async execute(command: SyncBlockCommand): Promise<void> {
     try {
-      if (process.env.INIT_SYNC === 'active') {
-        // Check if block has already been processed
-        // We only need to prevent double submitting of blocks
-        // when initial sync is still active.
-        let block;
-
-        try {
-          block = await this.queryBus.execute<BlockQuery, Chain>(
-            new BlockQuery(command.blockHeight)
-          );
-        } catch {
-          // Block not found. Continue
-        }
-
-        if (block) {
-          this.logger.warn(`Block ${command.blockHeight} already processed`);
-
-          return;
-        }
-      }
-
       const rawBlock = await this.rawBlocksService.getBlock(
         command.blockHeight
       );

@@ -28,6 +28,6 @@ COPY package*.json ./
 RUN npm ci --only=production
 
 COPY --from=development /app/dist/apps/tokenize/graphql .
-ENV PORT=3002
+ENV PORT=3004
 EXPOSE ${PORT}
 CMD ["node", "main"]

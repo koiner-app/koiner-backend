@@ -18,7 +18,7 @@ import {
   ContractsModels,
   ContractsModuleRepositories,
 } from '@koiner/contracts/typeorm';
-import { ContractsModuleGraphQLServices, BlockRewardsLoader } from './index';
+import { ContractsModuleGraphQLServices } from './index';
 
 // Register our models with typeorm
 import { database } from '../config';
@@ -48,6 +48,5 @@ database.entities.push(...ContractsModels);
     ...ContractsModuleRepositories,
     ...ContractsModuleGraphQLServices,
   ],
-  exports: [BlockRewardsLoader],
 })
 export class ContractsModule {}

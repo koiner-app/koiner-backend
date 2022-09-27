@@ -13,6 +13,13 @@ export interface RawBlock {
   block: BlockJson;
   receipt: {
     [x: string]: any;
+    events: {
+      sequence: number;
+      source: string;
+      name: string;
+      data: string;
+      impacted: string[];
+    }[];
     transaction_receipts: TransactionReceipt[];
   };
 }

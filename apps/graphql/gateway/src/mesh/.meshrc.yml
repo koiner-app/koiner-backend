@@ -12,6 +12,10 @@ sources:
     handler:
       graphql:
         endpoint: "{env.CONTRACTS_GRAPHQL_URL}"
+  - name: Network
+    handler:
+      graphql:
+        endpoint: "{env.NETWORK_GRAPHQL_URL}"
   - name: Tokenize
     handler:
       graphql:

@@ -247,7 +247,87 @@ services:
       timeout: 10s
 
   #
-  # Koiner Contracts
+  # Koiner Tokenize
+  #
+
+  network-graphql:
+    container_name: koiner-network-graphql
+    image: koiner/network-graphql
+    build:
+      context: .
+      dockerfile: 'apps/network/graphql/Dockerfile'
+      target: development
+    profiles: ['koiner', 'koiner-graphql', 'all']
+    command: npm run start:network-graphql
+    env_file:
+      - 'apps/network/graphql/.env'
+    environment:
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - JSONRPC_NODES=${JSONRPC_NODES}
+    depends_on:
+      - koiner-postgres
+      - amqp
+    volumes:
+      - ./data/network/graphql/logs:/var/logs
+      - ./apps:/app/apps
+      - ./modules:/app/modules
+      - /app/node_modules
+    networks:
+      - default
+      - webproxy
+    dns:
+      - 8.8.8.8
+    ports:
+      - '3003:3003'
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:3003/health || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s
+
+  network-sync:
+    container_name: koiner-network-sync
+    image: koiner/network-sync
+    build:
+      context: .
+      dockerfile: 'apps/network/sync/Dockerfile'
+      target: development
+    profiles: ['koiner', 'koiner-sync', 'all']
+    command: npm run start:network-sync
+    env_file:
+      - 'apps/network/sync/.env'
+    environment:
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - JSONRPC_NODES=${JSONRPC_NODES}
+    depends_on:
+      - koiner-postgres
+      - amqp
+    volumes:
+      - ./data/network/sync/logs:/var/logs
+      - ./apps:/app/apps
+      - ./modules:/app/modules
+      - /app/node_modules
+    networks:
+      - webproxy
+      - default
+    dns:
+      - 8.8.8.8
+    ports:
+      - '3103:3103'
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:3103/health || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s
+
+  #
+  # Koiner Tokenize
   #
 
   tokenize-graphql:
@@ -280,9 +360,9 @@ services:
     dns:
       - 8.8.8.8
     ports:
-      - '3003:3003'
+      - '3004:3004'
     healthcheck:
-      test: wget --no-verbose --tries=1 --spider http://localhost:3003/health || exit 1
+      test: wget --no-verbose --tries=1 --spider http://localhost:3004/health || exit 1
       interval: 60s
       retries: 5
       start_period: 20s
@@ -318,9 +398,9 @@ services:
     dns:
       - 8.8.8.8
     ports:
-      - '3103:3103'
+      - '3104:3104'
     healthcheck:
-      test: wget --no-verbose --tries=1 --spider http://localhost:3103/health || exit 1
+      test: wget --no-verbose --tries=1 --spider http://localhost:3104/health || exit 1
       interval: 60s
       retries: 5
       start_period: 20s

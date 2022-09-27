@@ -33,6 +33,15 @@
       "@koiner/contracts/typeorm": ["modules/contracts/typeorm/src/index.ts"],
       "@koiner/domain": ["modules/domain/src/index.ts"],
       "@koiner/nestjs-utils": ["modules/nestjs-utils/src/index.ts"],
+      "@koiner/network/application": [
+        "modules/network/application/src/index.ts"
+      ],
+      "@koiner/network/domain": ["modules/network/domain/src/index.ts"],
+      "@koiner/network/events": ["modules/network/events/src/index.ts"],
+      "@koiner/network/typeorm": ["modules/network/typeorm/src/index.ts"],
+      "@koiner/sync/application": ["modules/sync/application/src/index.ts"],
+      "@koiner/sync/domain": ["modules/sync/domain/src/index.ts"],
+      "@koiner/sync/typeorm": ["modules/sync/typeorm/src/index.ts"],
       "@koiner/tokenize/application": [
         "modules/tokenize/application/src/index.ts"
       ],
