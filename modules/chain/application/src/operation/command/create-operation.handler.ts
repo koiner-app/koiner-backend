@@ -19,6 +19,7 @@ export class CreateOperationHandler
         type: command.type,
         timestamp: command.timestamp,
       },
+      command.operationData,
       UUID.generate()
     );
 

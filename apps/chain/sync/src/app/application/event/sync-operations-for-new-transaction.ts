@@ -50,6 +50,7 @@ export class SyncOperationsForNewTransaction extends DomainEventHandler {
             operationIndex: operationIndex,
             type: operationType,
             timestamp: event.timestamp,
+            operationData: operation,
           })
         );
       }

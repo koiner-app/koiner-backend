@@ -13,4 +13,5 @@ export class CreateOperationCommand extends Command {
   readonly operationIndex!: number;
   readonly type!: OperationType;
   readonly timestamp!: number;
+  readonly operationData!: any;
 }

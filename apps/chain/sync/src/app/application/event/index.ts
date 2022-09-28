@@ -77,54 +77,46 @@ export const ChainSyncEventHandlers = [
   {
     provide: CreateSystemCallOperationForNewOperation,
     useFactory: (
-      commandBus: CommandBus,
-      rawBlocksService: RawBlocksService
+      commandBus: CommandBus
     ): CreateSystemCallOperationForNewOperation => {
       const eventHandler = new CreateSystemCallOperationForNewOperation(
-        commandBus,
-        rawBlocksService
+        commandBus
       );
 
       eventHandler.listen();
 
       return eventHandler;
     },
-    inject: [CommandBus, RawBlocksService],
+    inject: [CommandBus],
   },
 
   {
     provide: CreateSystemContractOperationForNewOperation,
     useFactory: (
-      commandBus: CommandBus,
-      rawBlocksService: RawBlocksService
+      commandBus: CommandBus
     ): CreateSystemContractOperationForNewOperation => {
       const eventHandler = new CreateSystemContractOperationForNewOperation(
-        commandBus,
-        rawBlocksService
+        commandBus
       );
 
       eventHandler.listen();
 
       return eventHandler;
     },
-    inject: [CommandBus, RawBlocksService],
+    inject: [CommandBus],
   },
 
   {
     provide: CreateUploadOperationForNewOperation,
     useFactory: (
-      commandBus: CommandBus,
-      rawBlocksService: RawBlocksService
+      commandBus: CommandBus
     ): CreateUploadOperationForNewOperation => {
-      const eventHandler = new CreateUploadOperationForNewOperation(
-        commandBus,
-        rawBlocksService
-      );
+      const eventHandler = new CreateUploadOperationForNewOperation(commandBus);
 
       eventHandler.listen();
 
       return eventHandler;
     },
-    inject: [CommandBus, RawBlocksService],
+    inject: [CommandBus],
   },
 ];

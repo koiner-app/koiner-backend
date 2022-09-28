@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { RawBlocksService } from '@koinos/jsonrpc';
 import { OperationType } from '@koiner/chain/domain';
 import { Contract } from '@koiner/contracts/domain';
 import {
@@ -9,25 +8,25 @@ import {
   CreateContractOperationCommand,
 } from '@koiner/contracts/application';
 import { OperationCreatedMessage } from '@koiner/chain/events';
+import { CallContractOperationJson } from 'koilib/lib/interface';
 
 @Injectable()
 export class CreateContractOperationForNewOperation {
   constructor(
     private readonly commandBus: CommandBus,
-    private readonly queryBus: QueryBus,
-    private readonly rawBlocksService: RawBlocksService
+    private readonly queryBus: QueryBus
   ) {}
 
   @OnEvent(OperationCreatedMessage.routingKey, { async: false })
   async handle(event: OperationCreatedMessage): Promise<void> {
-    if (event.type === OperationType.contractOperation) {
-      const rawOperation = await this.rawBlocksService.getOperation(
-        event.blockHeight,
-        event.transactionId,
-        event.operationIndex
-      );
+    if (
+      event.type === OperationType.contractOperation &&
+      event.operationData['call_contract']
+    ) {
+      const operationJson: CallContractOperationJson =
+        event.operationData['call_contract'];
 
-      const contractId = rawOperation.call_contract.contract_id;
+      const contractId = operationJson.contract_id;
       let contractStandardType = undefined;
 
       try {
@@ -46,8 +45,8 @@ export class CreateContractOperationForNewOperation {
           blockHeight: event.blockHeight,
           contractId,
           transactionId: event.transactionId,
-          entryPoint: rawOperation.call_contract.entry_point,
-          args: rawOperation.call_contract.args,
+          entryPoint: operationJson.entry_point,
+          args: operationJson.args,
           contractStandardType,
           timestamp: event.timestamp,
         })

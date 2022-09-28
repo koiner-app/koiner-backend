@@ -19,29 +19,13 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
       // PrefetchCount = 1 will make sure max 1 event can be handled at once,
       // thus making handling chain events synchronously.
       channels: {
-        // Default channel for processing events from chain to contracts
-        'koiner.contracts.channel.contract': {
+        // Channel for processing contract events
+        'koiner.contracts.channel.contract.events': {
           prefetchCount: 1,
           default: true,
         },
-        // Channel for processing addresses
-        'koiner.contracts.channel.address': {
-          prefetchCount: 1,
-        },
-        // Channel for processing block rewards
-        'koiner.contracts.channel.block_reward': {
-          prefetchCount: 1,
-        },
-        // Channel for processing token contracts, events + operations
-        'koiner.contracts.channel.token': {
-          prefetchCount: 1,
-        },
-        // Channel for processing updates to TokenHolder for token events (burned, minted, transferred)
-        'koiner.contracts.channel.token.token_holder': {
-          prefetchCount: 1,
-        },
-        // Channel for processing updates to Token.totalSupply for token events (burned, minted)
-        'koiner.contracts.channel.token.total_supply': {
+        // Channel for processing contract operations
+        'koiner.contracts.channel.contract.operations': {
           prefetchCount: 1,
         },
       },

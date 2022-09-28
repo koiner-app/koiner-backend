@@ -10,7 +10,16 @@ import {
 export class Operation extends AggregateRoot<OperationProps> {
   protected readonly _id!: KoinosId;
 
-  static create(create: CreateOperationProps, id?: UUID): Operation {
+  /**
+   * @param create
+   * @param operationData Send operationData along with OperationCreated to prevent extra calls to JSON RPC
+   * @param id
+   */
+  static create(
+    create: CreateOperationProps,
+    operationData: Record<string, unknown>,
+    id?: UUID
+  ): Operation {
     const props: OperationProps = {
       ...create,
     };
@@ -26,6 +35,7 @@ export class Operation extends AggregateRoot<OperationProps> {
         operationIndex: props.operationIndex,
         type: props.type,
         timestamp: props.timestamp,
+        operationData,
       })
     );
 

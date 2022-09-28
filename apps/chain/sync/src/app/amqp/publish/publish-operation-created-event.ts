@@ -18,6 +18,7 @@ export class PublishOperationCreatedEvent extends DomainEventHandler {
         operationIndex: event.operationIndex,
         type: event.type,
         timestamp: event.timestamp,
+        operationData: event.operationData,
         publishedAt: Date.now(),
       });
 

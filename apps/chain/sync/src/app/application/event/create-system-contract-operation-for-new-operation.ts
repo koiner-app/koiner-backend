@@ -1,30 +1,27 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { DomainEventHandler } from '@appvise/domain';
-import { RawBlocksService } from '@koinos/jsonrpc';
 import { OperationCreated, OperationType } from '@koiner/chain/domain';
 import { CreateSystemContractOperationCommand } from '@koiner/chain/application';
+import { SetSystemContractOperationJson } from 'koilib/lib/interface';
 
 export class CreateSystemContractOperationForNewOperation extends DomainEventHandler {
-  constructor(
-    private readonly commandBus: CommandBus,
-    private readonly rawBlocksService: RawBlocksService
-  ) {
+  constructor(private readonly commandBus: CommandBus) {
     super(OperationCreated);
   }
 
   async handle(event: OperationCreated): Promise<void> {
-    if (event.type === OperationType.systemContract) {
-      const rawOperation = await this.rawBlocksService.getOperation(
-        event.blockHeight,
-        event.transactionId,
-        event.operationIndex
-      );
+    if (
+      event.type === OperationType.systemContract &&
+      event.operationData.set_system_contract
+    ) {
+      const operationJson: SetSystemContractOperationJson =
+        event.operationData.set_system_contract;
 
       await this.commandBus.execute(
         new CreateSystemContractOperationCommand({
           id: event.aggregateId,
-          contractId: rawOperation.set_system_contract.contract_id,
-          systemContract: rawOperation.set_system_contract.system_contract,
+          contractId: operationJson.contract_id,
+          systemContract: operationJson.system_contract,
           timestamp: event.timestamp,
         })
       );
