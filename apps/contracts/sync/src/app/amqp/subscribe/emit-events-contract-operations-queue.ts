@@ -69,63 +69,17 @@ export class EmitEventsContractOperationsQueue {
         // contract events + operations.
         const contractId = event.contractId;
 
-        const wait = (ms) =>
-          new Promise<void>((resolve) => {
-            setTimeout(() => resolve(), ms);
-          });
-
-        const retryWithDelay = (
-          operation,
-          retries = 3,
-          delay = 2000,
-          finalErr = 'Retry failed'
-        ) => {
-          console.log('ATTEMPT', retries);
-          return new Promise((resolve, reject) => {
-            return operation.then(resolve).catch(() => {
-              // If retries are left
-              if (retries > 0) {
-                // Delay the next call
-                return (
-                  wait(delay)
-                    // Recursively call the same function to retry with max retries - 1
-                    .then(
-                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                      retryWithDelay.bind(
-                        null,
-                        operation,
-                        retries - 1,
-                        delay,
-                        finalErr
-                      )
-                    )
-                    .then(resolve)
-                    .catch(reject)
-                );
-              }
-
-              // Throw final error
-              return reject(finalErr);
-            });
-          });
-        };
-
-        console.log('Try fetching ' + contractId);
-
-        retryWithDelay(
-          this.queryBus.execute<ContractQuery, Contract>(
-            new ContractQuery(contractId)
-          ),
-          50,
-          5000
-        )
+        this.queryBus
+          .execute<ContractQuery, Contract>(new ContractQuery(contractId))
           .then(() => {
-            console.log(`Contract found ${contractId}`);
             resolve();
           })
-          .catch((error) => {
-            console.log(`Could not fetch contract ${contractId}`, error);
-            resolve();
+          .catch(() => {
+            // The contract has not yet been processed by the events queue.
+            // Reject this message and requeue it with a small delay
+            setTimeout(() => {
+              reject();
+            }, 1000);
           });
       }
     });
