@@ -25,10 +25,10 @@ export class PublishUploadContractOperationCreatedEvent extends DomainEventHandl
     );
 
     // Publish for contract operations queue
-    // await this.amqpConnection.publish(
-    //   'koiner.chain.event',
-    //   `${UploadContractOperationCreatedMessage.routingKey}.operations_queue`,
-    //   message.toString()
-    // );
+    await this.amqpConnection.publish(
+      'koiner.chain.event',
+      `${UploadContractOperationCreatedMessage.routingKey}.operations_queue`,
+      message.toString()
+    );
   }
 }
