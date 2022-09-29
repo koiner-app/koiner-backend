@@ -1,4 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { UUID } from '@appvise/domain';
 import { KoinosAddressId } from '@koiner/domain';
 import {
   TokenHolder,
@@ -27,10 +28,11 @@ export class UpdateTokenHolderHandler
     } else {
       tokenHolder = TokenHolder.create(
         {
+          addressId: new KoinosAddressId(command.addressId),
           contractId: new KoinosAddressId(command.contractId),
           balance: command.amountChanged,
         },
-        new KoinosAddressId(command.addressId)
+        UUID.generate()
       );
 
       await this.writeRepository.save(tokenHolder);

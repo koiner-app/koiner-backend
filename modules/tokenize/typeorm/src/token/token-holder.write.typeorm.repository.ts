@@ -57,7 +57,7 @@ export class TokenHolderWriteTypeormRepository
 
     const entityDocument = await queryBuilder
       .where(
-        `${queryBuilder.alias}.id = :addressId AND ${queryBuilder.alias}.contract_id = :contractId`,
+        `${queryBuilder.alias}.address_id = :addressId AND ${queryBuilder.alias}.contract_id = :contractId`,
         { addressId: `${addressId}`, contractId: `${contractId}` }
       )
       .getOne();

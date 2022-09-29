@@ -1,4 +1,4 @@
-import { AggregateRoot } from '@appvise/domain';
+import { AggregateRoot, UUID } from '@appvise/domain';
 import { KoinosAddressId } from '@koiner/domain';
 import {
   CreateTokenHolderProps,
@@ -9,12 +9,9 @@ import {
 } from '.';
 
 export class TokenHolder extends AggregateRoot<TokenHolderProps> {
-  protected readonly _id!: KoinosAddressId;
+  protected readonly _id!: UUID;
 
-  static create(
-    create: CreateTokenHolderProps,
-    id: KoinosAddressId
-  ): TokenHolder {
+  static create(create: CreateTokenHolderProps, id: UUID): TokenHolder {
     const props: TokenHolderProps = {
       ...create,
     };
@@ -24,7 +21,7 @@ export class TokenHolder extends AggregateRoot<TokenHolderProps> {
     tokenHolder.addEvent(
       new TokenHolderCreated({
         aggregateId: id.value,
-        addressId: id.value,
+        addressId: props.addressId.value,
         contractId: props.contractId.value,
         balance: props.balance,
       })
@@ -34,7 +31,7 @@ export class TokenHolder extends AggregateRoot<TokenHolderProps> {
   }
 
   get addressId(): KoinosAddressId {
-    return this._id;
+    return this.props.addressId;
   }
 
   get contractId(): KoinosAddressId {

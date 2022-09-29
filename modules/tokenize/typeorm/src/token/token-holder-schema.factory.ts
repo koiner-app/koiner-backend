@@ -1,3 +1,4 @@
+import { UUID } from '@appvise/domain';
 import {
   EntityProps,
   EntitySchemaFactory,
@@ -14,9 +15,10 @@ export class TokenHolderSchemaFactory extends EntitySchemaFactory<
   protected toDomainProps(
     entitySchema: TokenHolderSchema
   ): EntityProps<TokenHolderProps> {
-    const id = new KoinosAddressId(entitySchema.id);
+    const id = new UUID(entitySchema.id);
 
     const props: TokenHolderProps = {
+      addressId: new KoinosAddressId(entitySchema.address_id),
       contractId: new KoinosAddressId(entitySchema.contract_id),
       balance: parseInt(entitySchema.balance),
     };
@@ -30,6 +32,7 @@ export class TokenHolderSchemaFactory extends EntitySchemaFactory<
     const props = entity.getPropsCopy();
 
     return {
+      address_id: props.addressId.value,
       contract_id: props.contractId.value,
       balance: String(props.balance).padStart(20, '0'),
     };

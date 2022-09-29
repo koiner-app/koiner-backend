@@ -1,6 +1,7 @@
 import { KoinosAddressId } from '@koiner/domain';
 
 export interface CreateTokenHolderProps {
+  addressId: KoinosAddressId;
   contractId: KoinosAddressId;
   balance: number;
 }
