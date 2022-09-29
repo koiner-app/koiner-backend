@@ -1,4 +1,4 @@
-sourceName: Contracts
+sourceName: Network
 sourceTypeName: Query
 targetTypeName: Block
 targetFieldName: reward

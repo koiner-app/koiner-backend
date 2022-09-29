@@ -1,6 +1,6 @@
 targetTypeName: Address
 targetFieldName: blockRewards
-sourceName: Contracts
+sourceName: Network
 sourceTypeName: Query
 sourceFieldName: blockRewards
 requiredSelectionSet: |

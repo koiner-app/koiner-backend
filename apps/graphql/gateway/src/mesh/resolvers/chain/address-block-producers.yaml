@@ -1,6 +1,6 @@
 targetTypeName: Address
 targetFieldName: blockProducers
-sourceName: Contracts
+sourceName: Network
 sourceTypeName: Query
 sourceFieldName: blockProducers
 requiredSelectionSet: |

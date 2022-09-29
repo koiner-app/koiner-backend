@@ -1,6 +1,6 @@
 targetTypeName: Address
 targetFieldName: tokenOperations
-sourceName: Contracts
+sourceName: Tokenize
 sourceTypeName: Query
 sourceFieldName: tokenOperations
 requiredSelectionSet: |

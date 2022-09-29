@@ -67,6 +67,10 @@ services:
         condition: service_healthy
       contracts-graphql:
         condition: service_healthy
+      network-graphql:
+        condition: service_healthy
+      tokenize-graphql:
+        condition: service_healthy
     volumes:
       - ./data/graphql/gateway/logs:/var/logs
       - ./apps:/app/apps
