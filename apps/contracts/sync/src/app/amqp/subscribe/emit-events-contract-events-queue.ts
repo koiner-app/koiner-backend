@@ -17,7 +17,7 @@ export class EmitEventsContractEventsQueue {
 
   @RabbitSubscribe({
     queueOptions: {
-      channel: 'koiner.contracts.channel.contract',
+      channel: 'koiner.contracts.channel.contract.events',
     },
     exchange: 'koiner.chain.event',
     routingKey: [

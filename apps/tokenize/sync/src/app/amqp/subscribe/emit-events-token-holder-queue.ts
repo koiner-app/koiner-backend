@@ -71,7 +71,6 @@ export class EmitEventsTokenHolderQueue {
             `Could not process koiner.tokenize.queue.token.token_holder event ${amqpMsg.fields.routingKey}`,
             error
           );
-          console.log(event);
           reject();
         });
     });
