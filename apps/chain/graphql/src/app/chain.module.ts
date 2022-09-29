@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { KoinosModule } from '@koinos/jsonrpc';
-import { PubSubEngineProvider } from '../pubsub-engine-provider';
+import { PubSubEngineProvider } from '@koiner/nestjs-utils';
 import { AmqpModule } from '../amqp.module';
 import {
   SystemCallOperationTypeResolver,
@@ -28,7 +28,7 @@ database.entities.push(...ChainModuleModels);
     KoinosModule,
   ],
   providers: [
-    PubSubEngineProvider,
+    PubSubEngineProvider('koiner.chain'),
     ...ChainModuleApplicationHandlers,
     ...ChainModuleRepositories,
     ...ChainModuleGraphQLServices,

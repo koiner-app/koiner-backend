@@ -1,6 +1,6 @@
 import { Resolver, Subscription } from '@nestjs/graphql';
 import { PubSubEngine } from '@koiner/nestjs-utils';
-import { BlockNode } from '@koiner/chain/graphql';
+import { BlockNode } from '../dto';
 
 @Resolver(() => BlockNode)
 export class BlockCreatedSubscription {

@@ -2,8 +2,8 @@ import { ObjectType } from '@nestjs/graphql';
 import { UUID } from '@appvise/domain';
 import { BaseNode } from '@appvise/graphql';
 import { Operation, OperationProps, OperationType } from '@koiner/chain/domain';
-import { OperationNode } from '@koiner/chain/graphql';
 import { KoinosId } from '@koiner/domain';
+import { OperationNode } from '../dto';
 
 @ObjectType('ContractOperation')
 export class ContractOperationNode extends BaseNode {

@@ -1,9 +1,9 @@
 import { Logger, Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PubSubEngineProvider } from '../pubsub-engine-provider';
-import { AmqpModule } from '../amqp.module';
 import { KoinosModule } from '@koinos/jsonrpc';
+import { PubSubEngineProvider } from '@koiner/nestjs-utils';
+import { AmqpModule } from '../amqp.module';
 import {
   ContractStandardReadRepository,
   ContractStandardService,
@@ -33,7 +33,7 @@ database.entities.push(...TokenizeModels);
   ],
   providers: [
     Logger,
-    PubSubEngineProvider,
+    PubSubEngineProvider('koiner.tokenize'),
 
     {
       provide: ContractStandardService,
