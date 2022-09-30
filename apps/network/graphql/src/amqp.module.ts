@@ -6,6 +6,10 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
     RabbitMQModule.forRoot(RabbitMQModule, {
       exchanges: [
         {
+          name: 'koiner.network.event',
+          type: 'topic',
+        },
+        {
           name: 'koiner.network.graphql.subscriptions',
           type: 'topic',
           options: {
