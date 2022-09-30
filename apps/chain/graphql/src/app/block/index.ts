@@ -5,10 +5,10 @@ import {
   BlocksResolver,
   BlockTransactionsResolver,
 } from './query';
-import {
-  BlockCreatedSubscription,
-  PublishBlockCreatedToPubSub,
-} from './subscription';
+// import {
+//   BlockCreatedSubscription,
+//   PublishBlockCreatedToPubSub,
+// } from './subscription';
 
 export const BlockGraphQLServices = [
   // DataLoaders
@@ -21,8 +21,8 @@ export const BlockGraphQLServices = [
   BlockTransactionsResolver,
 
   // Subscriptions
-  BlockCreatedSubscription,
-  PublishBlockCreatedToPubSub,
+  // BlockCreatedSubscription,
+  // PublishBlockCreatedToPubSub,
 ];
 
 export * from './dataloader';
