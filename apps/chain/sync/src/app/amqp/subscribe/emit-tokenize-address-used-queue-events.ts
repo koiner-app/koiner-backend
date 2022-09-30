@@ -19,7 +19,7 @@ export class EmitTokenizeAddressUsedQueueEvents {
     queue: 'koiner.chain.queue.address',
   })
   async handle(message: any): Promise<void> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const event = new AddressUsedMessage(JSON.parse(message));
 
       this.eventEmitter
@@ -27,12 +27,11 @@ export class EmitTokenizeAddressUsedQueueEvents {
         .then(() => {
           resolve();
         })
-        .catch((error) => {
+        .catch(() => {
           this.logger.error(
-            'Could not process koiner.chain.queue.address message (from tokenize)',
-            error
+            'Could not process koiner.chain.queue.address message (from tokenize)'
           );
-          reject();
+          resolve();
         });
     });
   }
