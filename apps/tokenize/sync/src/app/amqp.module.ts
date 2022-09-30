@@ -20,15 +20,15 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
       // thus making handling chain events synchronously.
       channels: {
         // Channel for processing token contracts
-        'koiner.tokenize.channel.token.contracts': {
+        'koiner.tokenize.channel.token.contract': {
           prefetchCount: 1,
         },
         // Channel for processing token events + operations
-        'koiner.tokenize.channel.token.events': {
+        'koiner.tokenize.channel.token.event': {
           prefetchCount: 1,
         },
         // Channel for processing token operations
-        'koiner.tokenize.channel.token.operations': {
+        'koiner.tokenize.channel.token.operation': {
           prefetchCount: 1,
         },
         // Channel for processing updates to TokenHolder for token events (burned, minted, transferred)
