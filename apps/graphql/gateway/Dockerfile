@@ -28,6 +28,12 @@ ENV CHAIN_GRAPHQL_URL=${CHAIN_GRAPHQL_URL}
 ARG CONTRACTS_GRAPHQL_URL
 ENV CONTRACTS_GRAPHQL_URL=${CONTRACTS_GRAPHQL_URL}
 
+ARG NETWORK_GRAPHQL_URL
+ENV NETWORK_GRAPHQL_URL=${NETWORK_GRAPHQL_URL}
+
+ARG TOKENIZE_GRAPHQL_URL
+ENV TOKENIZE_GRAPHQL_URL=${TOKENIZE_GRAPHQL_URL}
+
 COPY --from=local /app .
 
 # For local development it is required to start build after rapp-graphql has started.
@@ -46,7 +52,7 @@ COPY package*.json ./
 
 RUN npm ci --only=production
 
-COPY --from=development /app/dist/apps/gateway .
+COPY --from=development /app/dist/apps/graphql/gateway .
 ENV PORT=3000
 EXPOSE ${PORT}
 CMD ["node", "main"]
