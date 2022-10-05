@@ -2,10 +2,11 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import { ContractStandardType } from '@koiner/contracts/standards';
 import { ContractEvent } from '@koiner/contracts/domain';
+import { GraphQLBigInt } from 'graphql-scalars';
 
 @ObjectType('ContractEvent')
 export class ContractEventNode extends BaseNode {
-  @Field(() => Int)
+  @Field(() => GraphQLBigInt)
   blockHeight: number;
 
   @Field()
@@ -14,7 +15,7 @@ export class ContractEventNode extends BaseNode {
   @Field()
   parentType: string;
 
-  @Field({ nullable: true })
+  @Field(() => Int, { nullable: true })
   sequence?: number;
 
   @Field({ nullable: true })
@@ -32,7 +33,7 @@ export class ContractEventNode extends BaseNode {
   @Field(() => [String], { nullable: true })
   impacted?: string[];
 
-  @Field()
+  @Field(() => GraphQLBigInt)
   timestamp: number;
 
   constructor(event: ContractEvent) {

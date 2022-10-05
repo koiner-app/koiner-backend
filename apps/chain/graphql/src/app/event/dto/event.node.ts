@@ -1,10 +1,11 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import { Event } from '@koiner/chain/domain';
+import { GraphQLBigInt } from 'graphql-scalars';
 
 @ObjectType('Event')
 export class EventNode extends BaseNode {
-  @Field(() => Int)
+  @Field(() => GraphQLBigInt)
   blockHeight: number;
 
   @Field()
@@ -28,7 +29,7 @@ export class EventNode extends BaseNode {
   @Field(() => [String], { nullable: true })
   impacted?: string[];
 
-  @Field(() => Int)
+  @Field(() => GraphQLBigInt)
   timestamp: number;
 
   constructor(event: Event) {

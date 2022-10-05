@@ -2,6 +2,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import { ContractStandardType } from '@koiner/contracts/standards';
 import { TokenOperation } from '@koiner/tokenize/domain';
+import { GraphQLBigInt } from 'graphql-scalars';
 
 @ObjectType('TokenOperation')
 export class TokenOperationNode extends BaseNode {
@@ -20,10 +21,10 @@ export class TokenOperationNode extends BaseNode {
   @Field({ nullable: true })
   to?: string;
 
-  @Field()
+  @Field(() => GraphQLBigInt)
   value: number;
 
-  @Field()
+  @Field(() => GraphQLBigInt)
   timestamp: number;
 
   // Used by UnionTypeResolver

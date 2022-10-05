@@ -1,6 +1,7 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import { Address } from '@koiner/chain/domain';
+import { GraphQLBigInt } from 'graphql-scalars';
 
 @ObjectType('Address')
 export class AddressNode extends BaseNode {
@@ -13,7 +14,7 @@ export class AddressNode extends BaseNode {
   @Field()
   isTokenContract: boolean;
 
-  @Field(() => Int)
+  @Field(() => GraphQLBigInt)
   timestamp: number;
 
   constructor(address: Address) {

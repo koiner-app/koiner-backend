@@ -3,10 +3,11 @@ import { BaseNode } from '@appvise/graphql';
 import { Transaction } from '@koiner/chain/domain';
 import { OperationNode } from '../..';
 import { TransactionHeaderField } from '.';
+import { GraphQLBigInt } from 'graphql-scalars';
 
 @ObjectType('Transaction')
 export class TransactionNode extends BaseNode {
-  @Field(() => Int)
+  @Field(() => GraphQLBigInt)
   blockHeight: number;
 
   @Field(() => TransactionHeaderField)
@@ -24,7 +25,7 @@ export class TransactionNode extends BaseNode {
   @Field(() => Int)
   index: number;
 
-  @Field(() => Int)
+  @Field(() => GraphQLBigInt)
   timestamp: number;
 
   constructor(transaction: Transaction) {

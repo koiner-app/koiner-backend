@@ -58,6 +58,7 @@
     "fastify": "^4.6.0",
     "graphql": "^16.5.0",
     "graphql-amqp-subscriptions": "^1.2.1",
+    "graphql-scalars": "^1.18.0",
     "graphql-subscriptions": "^2.0.0",
     "koilib": "^5.0.0",
     "mathjs": "^11.1.0",

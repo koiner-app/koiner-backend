@@ -1,13 +1,14 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Float, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import { BlockReward } from '@koiner/network/domain';
+import { GraphQLBigInt } from 'graphql-scalars';
 
 @ObjectType('BlockReward')
 export class BlockRewardNode extends BaseNode {
-  @Field()
+  @Field(() => GraphQLBigInt)
   blockHeight: number;
 
-  @Field()
+  @Field(() => GraphQLBigInt)
   height: number;
 
   @Field()
@@ -16,7 +17,7 @@ export class BlockRewardNode extends BaseNode {
   @Field()
   contractId: string;
 
-  @Field()
+  @Field(() => GraphQLBigInt)
   value: number;
 
   @Field({ nullable: true })
@@ -25,13 +26,13 @@ export class BlockRewardNode extends BaseNode {
   @Field({ nullable: true })
   burnerId?: string;
 
-  @Field({ nullable: true })
+  @Field(() => GraphQLBigInt, { nullable: true })
   burnedValue?: number;
 
-  @Field({ nullable: true })
+  @Field(() => Float, { nullable: true })
   roi?: number;
 
-  @Field()
+  @Field(() => GraphQLBigInt)
   timestamp: number;
 
   constructor(blockReward: BlockReward) {

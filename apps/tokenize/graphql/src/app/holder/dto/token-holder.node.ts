@@ -1,6 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import { TokenHolder } from '@koiner/tokenize/domain';
+import { GraphQLBigInt } from 'graphql-scalars';
 
 @ObjectType('TokenHolder')
 export class TokenHolderNode extends BaseNode {
@@ -10,7 +11,7 @@ export class TokenHolderNode extends BaseNode {
   @Field()
   contractId: string;
 
-  @Field()
+  @Field(() => GraphQLBigInt)
   balance: number;
 
   constructor(tokenHolder: TokenHolder) {

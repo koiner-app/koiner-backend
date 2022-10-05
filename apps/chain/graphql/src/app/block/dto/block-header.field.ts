@@ -1,15 +1,16 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BlockHeader } from '@koiner/chain/domain';
+import { GraphQLBigInt } from 'graphql-scalars';
 
 @ObjectType('BlockHeader')
 export class BlockHeaderField {
   @Field()
   previous: string;
 
-  @Field(() => Int)
+  @Field(() => GraphQLBigInt)
   height: number;
 
-  @Field(() => Int)
+  @Field(() => GraphQLBigInt)
   timestamp: number;
 
   @Field({ nullable: true })

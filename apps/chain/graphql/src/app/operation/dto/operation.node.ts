@@ -2,6 +2,7 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import { Operation, OperationType } from '@koiner/chain/domain';
 import { OperationDetailsUnion } from '.';
+import { GraphQLBigInt } from 'graphql-scalars';
 
 @ObjectType('Operation')
 export class OperationNode extends BaseNode {
@@ -11,13 +12,13 @@ export class OperationNode extends BaseNode {
   @Field(() => OperationType)
   type: OperationType;
 
-  @Field(() => Int)
+  @Field(() => GraphQLBigInt)
   blockHeight: number;
 
   @Field()
   transactionId: string;
 
-  @Field(() => Int)
+  @Field(() => GraphQLBigInt)
   timestamp: number;
 
   @Field(() => OperationDetailsUnion, { nullable: true })

@@ -1,6 +1,7 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import { BlockProducer } from '@koiner/network/domain';
+import { GraphQLBigInt } from 'graphql-scalars';
 
 @ObjectType('BlockProducer')
 export class BlockProducerNode extends BaseNode {
@@ -10,10 +11,10 @@ export class BlockProducerNode extends BaseNode {
   @Field()
   contractId: string;
 
-  @Field()
+  @Field(() => GraphQLBigInt)
   balance: number;
 
-  @Field()
+  @Field(() => Int)
   blocksProduced: number;
 
   constructor(blockProducer: BlockProducer) {

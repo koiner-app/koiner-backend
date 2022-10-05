@@ -1,15 +1,16 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BlockReceipt } from '@koiner/chain/domain';
+import { GraphQLBigInt } from 'graphql-scalars';
 
 @ObjectType('BlockReceipt')
 export class BlockReceiptField {
-  @Field(() => Int)
+  @Field(() => GraphQLBigInt)
   diskStorageUsed: number;
 
-  @Field(() => Int)
+  @Field(() => GraphQLBigInt)
   networkBandwidthUsed: number;
 
-  @Field(() => Int)
+  @Field(() => GraphQLBigInt)
   computeBandwidthUsed: number;
 
   @Field(() => Int)

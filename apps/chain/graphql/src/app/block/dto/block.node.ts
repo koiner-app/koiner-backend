@@ -2,13 +2,14 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import { Block } from '@koiner/chain/domain';
 import { BlockHeaderField, BlockReceiptField } from '.';
+import {GraphQLBigInt} from "graphql-scalars";
 
 @ObjectType('Block')
 export class BlockNode extends BaseNode {
   @Field()
   id: string;
 
-  @Field(() => Int)
+  @Field(() => GraphQLBigInt)
   height: number;
 
   @Field(() => BlockHeaderField)

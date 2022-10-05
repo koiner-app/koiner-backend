@@ -2,6 +2,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import { ContractStandardType } from '@koiner/contracts/standards';
 import { Contract } from '@koiner/contracts/domain';
+import { GraphQLBigInt } from 'graphql-scalars';
 
 @ObjectType('Contract')
 export class ContractNode extends BaseNode {
@@ -11,7 +12,7 @@ export class ContractNode extends BaseNode {
   @Field(() => ContractStandardType, { nullable: true })
   contractStandardType: ContractStandardType;
 
-  @Field()
+  @Field(() => GraphQLBigInt)
   timestamp: number;
 
   constructor(contract: Contract) {

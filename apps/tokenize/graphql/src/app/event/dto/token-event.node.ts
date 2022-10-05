@@ -1,6 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import { TokenEvent } from '@koiner/tokenize/domain';
+import { GraphQLBigInt } from 'graphql-scalars';
 
 @ObjectType('TokenEvent')
 export class TokenEventNode extends BaseNode {
@@ -16,10 +17,10 @@ export class TokenEventNode extends BaseNode {
   @Field({ nullable: true })
   to?: string;
 
-  @Field()
+  @Field(() => GraphQLBigInt)
   value: number;
 
-  @Field()
+  @Field(() => GraphQLBigInt)
   timestamp: number;
 
   constructor(event: TokenEvent) {
