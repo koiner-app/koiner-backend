@@ -1,5 +1,12 @@
 import { EntityBaseSchema } from '@appvise/typeorm';
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  OneToOne,
+  PrimaryColumn,
+} from 'typeorm';
 import { OperationSchema } from '..';
 
 @Entity('chain_system_contract_operation')
@@ -13,6 +20,7 @@ export class SystemContractOperationSchema extends EntityBaseSchema {
   @JoinColumn({ name: 'id', referencedColumnName: 'id' })
   private _operation_id_fg!: never;
 
+  @Index()
   @Column({ length: 35 })
   readonly contract_id!: string;
 

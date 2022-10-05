@@ -1,5 +1,5 @@
 import { EntityBaseSchema } from '@appvise/typeorm';
-import { Column, Entity, PrimaryColumn, Unique } from 'typeorm';
+import { Column, Entity, Index, PrimaryColumn, Unique } from 'typeorm';
 
 @Entity('chain_block')
 @Unique(['id', 'previous'])
@@ -14,6 +14,7 @@ export class BlockSchema extends EntityBaseSchema {
   @Column({ type: 'bigint', unique: true })
   readonly height!: number;
 
+  @Index()
   @Column({ type: 'bigint' })
   readonly timestamp!: number;
 
@@ -23,23 +24,28 @@ export class BlockSchema extends EntityBaseSchema {
   @Column({ length: 48, nullable: true })
   readonly transaction_merkle_root?: string;
 
+  @Index()
   @Column({ length: 38 })
   readonly signer!: string;
 
   @Column()
   readonly signature!: string;
 
+  @Index()
   @Column({ type: 'smallint' })
   readonly transaction_count!: number;
 
   /** Receipt */
 
+  @Index()
   @Column({ type: 'bigint' })
   readonly disk_storage_used!: number;
 
+  @Index()
   @Column({ type: 'bigint' })
   readonly network_bandwidth_used!: number;
 
+  @Index()
   @Column({ type: 'bigint' })
   readonly compute_bandwidth_used!: number;
 

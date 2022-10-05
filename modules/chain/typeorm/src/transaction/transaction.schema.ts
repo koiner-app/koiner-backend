@@ -35,6 +35,7 @@ export class TransactionSchema extends EntityBaseSchema {
   @Column({ length: 48, nullable: true })
   readonly operation_merkle_root?: string;
 
+  @Index()
   @Column({ length: 35 })
   readonly payer!: string;
 
@@ -53,6 +54,7 @@ export class TransactionSchema extends EntityBaseSchema {
   @Column({ type: 'smallint' })
   readonly operation_count!: number;
 
+  @Index()
   @Column({ type: 'bigint' })
   readonly timestamp!: number;
 }

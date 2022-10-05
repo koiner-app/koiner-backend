@@ -1,5 +1,5 @@
 import { EntityBaseSchema } from '@appvise/typeorm';
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, Index, PrimaryColumn } from 'typeorm';
 
 @Entity('chain_address')
 export class AddressSchema extends EntityBaseSchema {
@@ -7,12 +7,15 @@ export class AddressSchema extends EntityBaseSchema {
   @Column({ length: 35 })
   override readonly id!: string;
 
+  @Index()
   @Column()
   readonly is_producer!: boolean;
 
+  @Index()
   @Column()
   readonly is_contract!: boolean;
 
+  @Index()
   @Column()
   readonly is_token_contract!: boolean;
 }

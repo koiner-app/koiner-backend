@@ -1,5 +1,12 @@
 import { EntityBaseSchema } from '@appvise/typeorm';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryColumn,
+} from 'typeorm';
 import { OperationType } from '@koiner/chain/domain';
 import { TransactionSchema } from '..';
 
@@ -19,9 +26,11 @@ export class OperationSchema extends EntityBaseSchema {
   @Column({ type: 'smallint' })
   readonly operation_index!: number;
 
+  @Index()
   @Column({ type: 'enum', enum: OperationType })
   readonly type!: OperationType;
 
+  @Index()
   @Column({ type: 'bigint' })
   readonly timestamp!: number;
 }
