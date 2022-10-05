@@ -15,7 +15,7 @@ export class AddressesRequest extends SearchRequestArgs {
     nullable: true,
     defaultValue: [
       {
-        field: AddressesSortFieldEnum.createdAt,
+        field: AddressesSortFieldEnum.timestamp,
         direction: SortDirection.desc,
       } as AddressesSortInput,
     ],
