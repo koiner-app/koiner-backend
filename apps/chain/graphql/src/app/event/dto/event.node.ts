@@ -13,7 +13,7 @@ export class EventNode extends BaseNode {
   @Field()
   parentType: string;
 
-  @Field({ nullable: true })
+  @Field(() => Int, { nullable: true })
   sequence?: number;
 
   @Field({ nullable: true })
@@ -28,7 +28,7 @@ export class EventNode extends BaseNode {
   @Field(() => [String], { nullable: true })
   impacted?: string[];
 
-  @Field()
+  @Field(() => Int)
   timestamp: number;
 
   constructor(event: Event) {

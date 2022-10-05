@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import { OperationType, SystemCallOperation } from '@koiner/chain/domain';
 
@@ -7,7 +7,7 @@ export class SystemCallOperationNode extends BaseNode {
   @Field()
   contractId: string;
 
-  @Field()
+  @Field(() => Int)
   callId: number;
 
   // Used by UnionTypeResolver

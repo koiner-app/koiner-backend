@@ -9,7 +9,7 @@ export class BlockHeaderField {
   @Field(() => Int)
   height: number;
 
-  @Field()
+  @Field(() => Int)
   timestamp: number;
 
   @Field({ nullable: true })

@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import { Transaction } from '@koiner/chain/domain';
 import { OperationNode } from '../..';
@@ -6,7 +6,7 @@ import { TransactionHeaderField } from '.';
 
 @ObjectType('Transaction')
 export class TransactionNode extends BaseNode {
-  @Field()
+  @Field(() => Int)
   blockHeight: number;
 
   @Field(() => TransactionHeaderField)
@@ -18,13 +18,13 @@ export class TransactionNode extends BaseNode {
   @Field(() => [OperationNode])
   operations: OperationNode[];
 
-  @Field()
+  @Field(() => Int)
   operationCount: number;
 
-  @Field()
+  @Field(() => Int)
   index: number;
 
-  @Field()
+  @Field(() => Int)
   timestamp: number;
 
   constructor(transaction: Transaction) {

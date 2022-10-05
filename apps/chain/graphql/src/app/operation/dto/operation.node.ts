@@ -1,23 +1,23 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import { Operation, OperationType } from '@koiner/chain/domain';
 import { OperationDetailsUnion } from '.';
 
 @ObjectType('Operation')
 export class OperationNode extends BaseNode {
-  @Field()
+  @Field(() => Int)
   index: number;
 
   @Field(() => OperationType)
   type: OperationType;
 
-  @Field()
+  @Field(() => Int)
   blockHeight: number;
 
   @Field()
   transactionId: string;
 
-  @Field()
+  @Field(() => Int)
   timestamp: number;
 
   @Field(() => OperationDetailsUnion, { nullable: true })

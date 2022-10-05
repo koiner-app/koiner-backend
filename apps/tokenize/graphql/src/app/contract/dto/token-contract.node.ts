@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import { TokenContract } from '@koiner/tokenize/domain';
 
@@ -10,13 +10,13 @@ export class TokenContractNode extends BaseNode {
   @Field()
   symbol: string;
 
-  @Field()
+  @Field(() => Int)
   decimals: number;
 
-  @Field()
+  @Field(() => Int)
   totalSupply: number;
 
-  @Field()
+  @Field(() => Int)
   timestamp: number;
 
   constructor(tokenContract: TokenContract) {
