@@ -13,6 +13,12 @@ export class AddressesFilter implements FilterType {
   @Field(() => BooleanFilterInput, { nullable: true })
   isProducer?: BooleanFilterInput;
 
+  @Field(() => BooleanFilterInput, { nullable: true })
+  isContract?: BooleanFilterInput;
+
+  @Field(() => BooleanFilterInput, { nullable: true })
+  isTokenContract?: BooleanFilterInput;
+
   @Field(() => [AddressesFilter], {
     nullable: true,
   })

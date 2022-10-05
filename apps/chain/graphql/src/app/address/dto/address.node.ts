@@ -7,6 +7,12 @@ export class AddressNode extends BaseNode {
   @Field()
   isProducer: boolean;
 
+  @Field()
+  isContract: boolean;
+
+  @Field()
+  isTokenContract: boolean;
+
   @Field(() => Int)
   timestamp: number;
 
@@ -14,6 +20,8 @@ export class AddressNode extends BaseNode {
     super(address);
 
     this.isProducer = address.isProducer;
+    this.isContract = address.isContract;
+    this.isTokenContract = address.isTokenContract;
     this.timestamp = address.timestamp;
   }
 }
