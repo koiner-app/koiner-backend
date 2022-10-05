@@ -18,4 +18,8 @@ export class AddressSchema extends EntityBaseSchema {
   @Index()
   @Column()
   readonly is_token_contract!: boolean;
+
+  @Index()
+  @Column({ type: 'bigint' })
+  readonly timestamp!: number;
 }

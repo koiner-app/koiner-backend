@@ -4,4 +4,6 @@ export interface CreateAddressProps {
   isTokenContract: boolean;
 }
 
-export type AddressProps = CreateAddressProps;
+export interface AddressProps extends CreateAddressProps {
+  timestamp: number;
+}

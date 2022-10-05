@@ -8,6 +8,7 @@ export class Address extends AggregateRoot<AddressProps> {
   static create(create: CreateAddressProps, id: KoinosAddressId): Address {
     const props: AddressProps = {
       ...create,
+      timestamp: Date.now(),
     };
 
     const address = new Address({ id, props });
@@ -18,6 +19,7 @@ export class Address extends AggregateRoot<AddressProps> {
         isProducer: props.isProducer,
         isContract: props.isContract,
         isTokenContract: props.isTokenContract,
+        timestamp: props.timestamp,
       })
     );
 
@@ -34,6 +36,10 @@ export class Address extends AggregateRoot<AddressProps> {
 
   get isTokenContract(): boolean {
     return this.props.isTokenContract;
+  }
+
+  get timestamp(): number {
+    return this.props.timestamp;
   }
 
   markAsProducer(): void {

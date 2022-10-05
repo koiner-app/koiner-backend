@@ -20,6 +20,7 @@ export class AddressSchemaFactory extends EntitySchemaFactory<
       isProducer: entitySchema.is_producer,
       isContract: entitySchema.is_contract,
       isTokenContract: entitySchema.is_token_contract,
+      timestamp: entitySchema.timestamp,
     };
 
     return { id, props };
@@ -32,6 +33,7 @@ export class AddressSchemaFactory extends EntitySchemaFactory<
       is_producer: props.isProducer,
       is_contract: props.isContract,
       is_token_contract: props.isTokenContract,
+      timestamp: props.timestamp,
     };
   }
 }
