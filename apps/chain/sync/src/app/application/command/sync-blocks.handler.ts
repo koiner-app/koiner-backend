@@ -11,23 +11,19 @@ export class SyncBlocksHandler implements ICommandHandler<SyncBlocksCommand> {
   ) {}
 
   async execute(command: SyncBlocksCommand): Promise<void> {
-    try {
-      const blocks = await this.blocksService.getBlocks(
-        command.startHeight,
-        command.amount
-      );
+    const blocks = await this.blocksService.getBlocks(
+      command.startHeight,
+      command.amount
+    );
 
-      if (blocks) {
-        for (const block of blocks) {
-          await this.commandBus.execute(
-            new SyncBlockCommand({
-              blockHeight: parseInt(block.block_height),
-            })
-          );
-        }
+    if (blocks) {
+      for (const block of blocks) {
+        await this.commandBus.execute(
+          new SyncBlockCommand({
+            blockHeight: parseInt(block.block_height),
+          })
+        );
       }
-    } catch (error) {
-      console.log('Sync-blocks error', error);
     }
   }
 }

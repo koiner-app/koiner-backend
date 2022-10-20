@@ -13,10 +13,11 @@ import {
   StartSynchronizationCommand,
   UpdateSynchronizationCommand,
 } from '@koiner/sync/application';
-import { BlocksQuery } from '@koiner/chain/application';
+import { BlocksQuery, UndoBlocksCommand } from '@koiner/chain/application';
 import { SyncBlocksCommand } from './application';
 import { koinos } from '../config';
 import { koinosConfig } from '@koinos/jsonrpc';
+import { BlockSyncFailedException } from './application/exception';
 
 @Injectable()
 export class SyncService {
@@ -93,30 +94,57 @@ export class SyncService {
       `Start syncing next batch of ${batchSize} blocks, from ${startHeight} to ${endBlock}`
     );
 
-    await this.commandBus.execute(
-      new SyncBlocksCommand({
-        startHeight,
-        amount: batchSize,
-      })
-    );
+    let failedBlockHeight: number | undefined;
+    try {
+      await this.commandBus.execute(
+        new SyncBlocksCommand({
+          startHeight,
+          amount: batchSize,
+        })
+      );
+    } catch (error) {
+      if (error instanceof BlockSyncFailedException) {
+        console.error(`Sync block failed, undo last block ${error.height}`);
 
-    // Get highest synced block
-    const highestBlock = await this.queryBus.execute<
-      BlocksQuery,
-      SearchResponse<Block>
-    >(
-      new BlocksQuery({
-        first: 1,
-        sort: [
-          {
-            field: 'height',
-            direction: SortDirection.desc,
-          },
-        ],
-      })
-    );
+        failedBlockHeight = error.height;
 
-    const lastSyncedBlockHeight = highestBlock.results[0].item.header.height;
+        // Remove failed block
+        await this.commandBus.execute(
+          new UndoBlocksCommand({
+            blockHeights: [error.height],
+          })
+        );
+      } else {
+        console.error(
+          `Sync block failed. Something completely went wrong!`,
+          error
+        );
+      }
+    }
+
+    let lastSyncedBlockHeight: number;
+
+    if (failedBlockHeight) {
+      lastSyncedBlockHeight = failedBlockHeight - 1;
+    } else {
+      // Get highest synced block
+      const highestBlock = await this.queryBus.execute<
+        BlocksQuery,
+        SearchResponse<Block>
+      >(
+        new BlocksQuery({
+          first: 1,
+          sort: [
+            {
+              field: 'height',
+              direction: SortDirection.desc,
+            },
+          ],
+        })
+      );
+
+      lastSyncedBlockHeight = highestBlock.results[0].item.header.height;
+    }
 
     await this.commandBus.execute(
       new UpdateSynchronizationCommand({
@@ -132,8 +160,14 @@ export class SyncService {
       })
     );
 
-    this.logger.log(
-      `Done syncing batch of ${batchSize} blocks, from ${startHeight} to ${lastSyncedBlockHeight}`
-    );
+    if (failedBlockHeight) {
+      this.logger.error(
+        `Failed syncing batch of ${batchSize} blocks, started at ${startHeight}, failed at ${failedBlockHeight}`
+      );
+    } else {
+      this.logger.log(
+        `Done syncing batch of ${batchSize} blocks, from ${startHeight} to ${lastSyncedBlockHeight}`
+      );
+    }
   }
 }

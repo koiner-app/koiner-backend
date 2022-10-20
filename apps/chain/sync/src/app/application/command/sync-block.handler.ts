@@ -8,6 +8,7 @@ import { Logger } from '@appvise/domain';
 import { RawBlocksService } from '@koinos/jsonrpc';
 import { CreateBlockCommand } from '@koiner/chain/application';
 import { SyncBlockCommand } from './dto/sync-block.command';
+import { BlockSyncFailedException } from '../exception';
 
 @CommandHandler(SyncBlockCommand)
 export class SyncBlockHandler implements ICommandHandler<SyncBlockCommand> {
@@ -69,7 +70,14 @@ export class SyncBlockHandler implements ICommandHandler<SyncBlockCommand> {
         'SyncBlockHandler'
       );
     } catch (error) {
-      this.logger.error(error.message, error.stack, 'Sync-blocks error');
+      this.logger.error(error.message, error.stack, 'Sync-block error');
+
+      // Let caller (SyncService) handle it further and provide height of failed block
+      throw new BlockSyncFailedException(
+        command.blockHeight,
+        error.message,
+        error
+      );
     }
   }
 }

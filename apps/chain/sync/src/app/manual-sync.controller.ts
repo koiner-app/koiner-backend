@@ -10,6 +10,7 @@ import { CommandBus } from '@nestjs/cqrs';
 import { SyncService } from './sync.service';
 import { SyncBlockSetsCommand, SyncSet } from './application';
 import { koinos } from '../config';
+import { UndoBlocksCommand } from '@koiner/chain/application';
 
 @Controller()
 export class ManualSyncController {
@@ -39,6 +40,22 @@ export class ManualSyncController {
       await this.commandBus.execute(
         new SyncBlockSetsCommand({
           sets: input.sets,
+        })
+      );
+    } else {
+      throw new ForbiddenException();
+    }
+  }
+
+  @Post('/undo')
+  async undo(
+    @Query('secret') secret: string,
+    @Body() input: { heights: number[] }
+  ): Promise<void> {
+    if (secret && koinos.syncSecret && secret === koinos.syncSecret) {
+      await this.commandBus.execute(
+        new UndoBlocksCommand({
+          blockHeights: input.heights,
         })
       );
     } else {

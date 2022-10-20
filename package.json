@@ -29,7 +29,7 @@
   "private": true,
   "dependencies": {
     "@appvise/domain": "^1.0.10",
-    "@appvise/graphql": "^1.0.7",
+    "@appvise/graphql": "^1.0.10",
     "@appvise/typeorm": "^1.0.16",
     "@envelop/depth-limit": "^1.5.3",
     "@golevelup/nestjs-rabbitmq": "^2.3.0",
@@ -60,7 +60,7 @@
     "graphql-amqp-subscriptions": "^1.2.1",
     "graphql-scalars": "^1.18.0",
     "graphql-subscriptions": "^2.0.0",
-    "koilib": "^5.0.0",
+    "koilib": "^5.2.0",
     "mathjs": "^11.1.0",
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",
