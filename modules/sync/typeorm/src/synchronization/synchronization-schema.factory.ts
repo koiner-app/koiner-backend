@@ -30,6 +30,7 @@ export class SynchronizationSchemaFactory extends EntitySchemaFactory<
       syncing: entitySchema.syncing,
       stopped: entitySchema.stopped,
       lastSyncedBlock: entitySchema.last_synced_block,
+      lastSyncStarted: entitySchema.last_sync_started,
     };
 
     return { id, props };
@@ -48,6 +49,7 @@ export class SynchronizationSchemaFactory extends EntitySchemaFactory<
       syncing: props.syncing,
       stopped: props.stopped,
       last_synced_block: props.lastSyncedBlock,
+      last_sync_started: props.lastSyncStarted,
     };
   }
 }

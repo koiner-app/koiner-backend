@@ -41,7 +41,7 @@ export class UndoBlocksHandler implements ICommandHandler<UndoBlocksCommand> {
     );
 
     const blocks = await this.blockReadRepository.find({
-      first: 100,
+      first: 1000,
       filter: {
         OR: command.blockHeights.map((blockHeight) => {
           return {

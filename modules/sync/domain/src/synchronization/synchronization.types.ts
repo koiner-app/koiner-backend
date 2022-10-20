@@ -9,6 +9,7 @@ export interface CreateSynchronizationProps {
 
 export interface SynchronizationProps extends CreateSynchronizationProps {
   stopped: boolean;
+  lastSyncStarted: number;
 }
 
 export interface UpdateSynchronizationProps {

@@ -13,7 +13,11 @@ import {
   StartSynchronizationCommand,
   UpdateSynchronizationCommand,
 } from '@koiner/sync/application';
-import { BlocksQuery, UndoBlocksCommand } from '@koiner/chain/application';
+import {
+  BlocksQuery,
+  UndoBlocksCommand,
+  UndoBlocksFromCheckpointCommand,
+} from '@koiner/chain/application';
 import { SyncBlocksCommand } from './application';
 import { koinos } from '../config';
 import { koinosConfig } from '@koinos/jsonrpc';
@@ -61,8 +65,52 @@ export class SyncService {
       }
     }
 
-    if (!chain || chain.syncing || chain.stopped) {
+    if (!chain || chain.stopped) {
       console.log('Do not sync');
+
+      return;
+    }
+
+    if (chain && chain.syncing) {
+      console.log('Do not sync, still syncing');
+
+      const syncTimeout = process.env.CRON_SYNC_TIME_OUT
+        ? parseInt(process.env.CRON_SYNC_TIME_OUT)
+        : 600000;
+
+      if (Date.now() - chain.lastSyncStarted > syncTimeout) {
+        console.error(
+          `Sync has timed out. Reset sync to last checkpoint: ${chain.lastSyncedBlock}`
+        );
+
+        // Remove all blocks after last checkpoint
+        await this.commandBus.execute(
+          new UndoBlocksFromCheckpointCommand({
+            checkPoint: chain.lastSyncedBlock,
+          })
+        );
+
+        // Set syncing back to false allowing sync to continue
+        headInfo = await this.provider.getHeadInfo();
+
+        await this.commandBus.execute(
+          new UpdateSynchronizationCommand({
+            id: koinosConfig.chainId,
+            headTopology: {
+              id: headInfo.head_topology.id,
+              previous: headInfo.head_topology.previous,
+              height: parseInt(headInfo.head_topology.height),
+            },
+            lastIrreversibleBlock: parseInt(headInfo.last_irreversible_block),
+            lastSyncedBlock: chain.lastSyncedBlock,
+            syncing: false,
+          })
+        );
+
+        console.log(
+          `Sync has been reset to last checkpoint: ${chain.lastSyncedBlock}`
+        );
+      }
 
       return;
     }

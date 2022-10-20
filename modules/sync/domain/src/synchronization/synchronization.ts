@@ -1,4 +1,4 @@
-import { AggregateRoot, UUID } from '@appvise/domain';
+import { AggregateRoot } from '@appvise/domain';
 import { BlockTopology } from '@koiner/domain';
 import {
   SynchronizationProps,
@@ -19,6 +19,7 @@ export class Synchronization extends AggregateRoot<SynchronizationProps> {
     const props: SynchronizationProps = {
       ...create,
       stopped: false,
+      lastSyncStarted: Date.now(),
     };
 
     const synchronization = new Synchronization({ id, props });
@@ -52,6 +53,10 @@ export class Synchronization extends AggregateRoot<SynchronizationProps> {
     return this.props.stopped;
   }
 
+  get lastSyncStarted(): number {
+    return this.props.lastSyncStarted;
+  }
+
   update(props: UpdateSynchronizationProps): void {
     this.props.headTopology = new BlockTopology({
       id: props.headTopology.id,
@@ -62,6 +67,7 @@ export class Synchronization extends AggregateRoot<SynchronizationProps> {
     this.props.syncing = props.syncing;
     this.props.stopped = props.stopped;
     this.props.lastSyncedBlock = props.lastSyncedBlock;
+    this.props.lastSyncStarted = Date.now();
 
     this.addEvent(
       new SynchronizationUpdated({

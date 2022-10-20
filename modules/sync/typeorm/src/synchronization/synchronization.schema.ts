@@ -27,4 +27,7 @@ export class SynchronizationSchema extends EntityBaseSchema {
 
   @Column({ type: 'bigint' })
   readonly last_synced_block!: number;
+
+  @Column({ type: 'bigint' })
+  readonly last_sync_started!: number;
 }
