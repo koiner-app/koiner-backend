@@ -71,6 +71,8 @@ export class SyncService {
       headInfo = await this.provider.getHeadInfo();
     }
 
+    const lastIrreversibleBlock = parseInt(headInfo.last_irreversible_block);
+
     // Update chain info + set syncing flag
     await this.commandBus.execute(
       new UpdateSynchronizationCommand({
@@ -80,14 +82,20 @@ export class SyncService {
           previous: headInfo.head_topology.previous,
           height: parseInt(headInfo.head_topology.height),
         },
-        lastIrreversibleBlock: parseInt(headInfo.last_irreversible_block),
+        lastIrreversibleBlock: lastIrreversibleBlock,
         lastSyncedBlock: chain.lastSyncedBlock,
         syncing: true,
       })
     );
 
     const startHeight = parseInt(chain.lastSyncedBlock.toString()) + 1;
-    const endBlock = startHeight + (batchSize - 1);
+    let endBlock = startHeight + (batchSize - 1);
+
+    // Make sure we only process irreversible blocks
+    if (endBlock > lastIrreversibleBlock) {
+      batchSize = lastIrreversibleBlock - startHeight + 1;
+      endBlock = lastIrreversibleBlock;
+    }
 
     // Sync next x blocks
     this.logger.log(
