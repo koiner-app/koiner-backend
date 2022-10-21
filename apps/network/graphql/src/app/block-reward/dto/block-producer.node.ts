@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import { BlockProducer } from '@koiner/network/domain';
 import { GraphQLBigInt } from 'graphql-scalars';
@@ -17,6 +17,12 @@ export class BlockProducerNode extends BaseNode {
   @Field(() => Int)
   blocksProduced: number;
 
+  @Field(() => GraphQLBigInt)
+  burnedTotal: number;
+
+  @Field(() => Float)
+  roi: number;
+
   constructor(blockProducer: BlockProducer) {
     super(blockProducer);
 
@@ -24,5 +30,7 @@ export class BlockProducerNode extends BaseNode {
     this.contractId = blockProducer.contractId.value;
     this.balance = blockProducer.balance;
     this.blocksProduced = blockProducer.blocksProduced;
+    this.burnedTotal = blockProducer.burnedTotal;
+    this.roi = blockProducer.roi;
   }
 }

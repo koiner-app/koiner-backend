@@ -11,8 +11,6 @@ export class CreateBlockRewardCommand extends Command {
   readonly blockHeight!: number;
   readonly producerId!: string;
   readonly value!: number;
-  readonly burnerId?: string;
-  readonly burnedValue?: number;
-  readonly roi?: number;
+  readonly burnedValue!: number;
   readonly timestamp!: number;
 }

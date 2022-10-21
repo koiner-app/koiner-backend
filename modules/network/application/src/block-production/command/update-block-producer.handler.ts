@@ -20,7 +20,7 @@ export class UpdateBlockProducerHandler
     );
 
     if (blockProducer) {
-      blockProducer.addRewards(command.amountChanged);
+      blockProducer.addRewards(command.amountChanged, command.burnedValue);
 
       await this.writeRepository.save(blockProducer);
     } else {
@@ -29,6 +29,7 @@ export class UpdateBlockProducerHandler
           addressId: new KoinosAddressId(command.addressId),
           contractId: new KoinosAddressId(command.contractId),
           balance: command.amountChanged,
+          burnedTotal: command.burnedValue,
         },
         UUID.generate()
       );

@@ -23,13 +23,8 @@ export class BlockRewardSchemaFactory extends EntitySchemaFactory<
       blockHeight: entitySchema.block_height,
       producerId: new KoinosAddressId(entitySchema.producer_id),
       value: parseInt(entitySchema.value),
-      burnerId: entitySchema.burner_id
-        ? new KoinosAddressId(entitySchema.burner_id)
-        : undefined,
-      burnedValue: entitySchema.burned_value
-        ? parseInt(entitySchema.burned_value)
-        : undefined,
-      roi: entitySchema.roi ? math.evaluate(entitySchema.roi) : undefined,
+      burnedValue: parseInt(entitySchema.burned_value),
+      roi: math.evaluate(entitySchema.roi),
       timestamp: entitySchema.timestamp,
     };
 
@@ -46,11 +41,8 @@ export class BlockRewardSchemaFactory extends EntitySchemaFactory<
       block_height: props.blockHeight,
       producer_id: props.producerId.value,
       value: props.value.toString(),
-      burner_id: props.burnerId ? props.burnerId.value : undefined,
-      burned_value: props.burnedValue
-        ? props.burnedValue.toString()
-        : undefined,
-      roi: props.roi ? props.roi.toString().padStart(8, '0') : undefined,
+      burned_value: props.burnedValue.toString(),
+      roi: props.roi.toString().padStart(8, '0'),
       timestamp: props.timestamp,
     };
   }

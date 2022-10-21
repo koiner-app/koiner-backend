@@ -12,9 +12,8 @@ export class BlockRewardCreated extends DomainEvent {
   readonly producerId!: string;
   readonly contractId!: string;
   readonly value!: number;
-  readonly burnedContractId?: string;
-  readonly burnerId?: string;
-  readonly burnedValue?: number;
-  readonly roi?: number;
+  readonly burnedContractId!: string;
+  readonly burnedValue!: number;
+  readonly roi!: number;
   readonly timestamp!: number;
 }

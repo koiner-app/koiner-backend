@@ -15,6 +15,7 @@ export class UpdateBlockProducerOnBlockRewardCreated {
         addressId: event.producerId,
         contractId: event.contractId,
         amountChanged: event.value,
+        burnedValue: event.burnedValue,
       })
     );
   }

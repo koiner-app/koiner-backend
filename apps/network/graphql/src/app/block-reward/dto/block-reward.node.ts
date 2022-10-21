@@ -21,16 +21,13 @@ export class BlockRewardNode extends BaseNode {
   value: number;
 
   @Field({ nullable: true })
-  burnedContractId?: string;
+  burnedContractId: string;
 
-  @Field({ nullable: true })
-  burnerId?: string;
+  @Field(() => GraphQLBigInt)
+  burnedValue: number;
 
-  @Field(() => GraphQLBigInt, { nullable: true })
-  burnedValue?: number;
-
-  @Field(() => Float, { nullable: true })
-  roi?: number;
+  @Field(() => Float)
+  roi: number;
 
   @Field(() => GraphQLBigInt)
   timestamp: number;
@@ -44,9 +41,6 @@ export class BlockRewardNode extends BaseNode {
     this.contractId = blockReward.contractId.value;
     this.value = blockReward.value;
     this.burnedContractId = blockReward.burnedContractId.value;
-    this.burnerId = blockReward.burnerId
-      ? blockReward.burnerId.value
-      : undefined;
     this.burnedValue = blockReward.burnedValue;
     this.roi = blockReward.roi;
     this.timestamp = blockReward.timestamp;

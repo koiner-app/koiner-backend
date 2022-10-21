@@ -37,7 +37,10 @@ export class UndoBlockRewardsHandler
       );
 
       if (producer) {
-        producer.undoRewards(blockReward.item.value);
+        producer.undoRewards(
+          blockReward.item.value,
+          blockReward.item.burnedValue
+        );
 
         this.blockProducerWriteRepository.save(producer);
       }

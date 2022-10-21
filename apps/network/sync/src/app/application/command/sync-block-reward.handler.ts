@@ -77,17 +77,7 @@ export class SyncBlockRewardHandler
               blockHeight: command.blockHeight,
               producerId: <string>decodedMintEvent.args.to,
               value: producerRewards,
-              burnerId: <string>decodedBurnEvent.args.from,
               burnedValue,
-              roi: burnedValue
-                ? (math
-                    .chain<number>(producerRewards)
-                    .divide(burnedValue)
-                    .multiply(100)
-                    .subtract(100)
-                    .round(5)
-                    .done() as number)
-                : undefined,
               timestamp: parseInt(rawBlock.block.header.timestamp),
             })
           );

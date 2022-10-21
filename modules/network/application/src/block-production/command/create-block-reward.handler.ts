@@ -20,11 +20,7 @@ export class CreateBlockRewardHandler
         blockHeight: command.blockHeight,
         producerId: new KoinosAddressId(command.producerId),
         value: command.value,
-        burnerId: command.burnerId
-          ? new KoinosAddressId(command.burnerId)
-          : undefined,
         burnedValue: command.burnedValue,
-        roi: command.roi,
         timestamp: command.timestamp,
       },
       UUID.generate()

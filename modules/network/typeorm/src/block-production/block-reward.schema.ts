@@ -20,15 +20,11 @@ export class BlockRewardSchema extends EntityBaseSchema {
   readonly value!: string;
 
   @Index()
-  @Column({ length: 35, nullable: true })
-  readonly burner_id?: string;
+  @Column({ length: 20 })
+  readonly burned_value!: string;
 
-  @Index()
-  @Column({ length: 20, nullable: true })
-  readonly burned_value?: string;
-
-  @Column({ length: 8, nullable: true })
-  readonly roi?: string;
+  @Column({ length: 8 })
+  readonly roi!: string;
 
   @Index()
   @Column({ type: 'bigint' })

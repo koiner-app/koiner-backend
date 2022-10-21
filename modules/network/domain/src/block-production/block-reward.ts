@@ -6,6 +6,7 @@ import {
   CreateBlockRewardProps,
 } from '.';
 import { koinosConfig } from '@koinos/jsonrpc';
+import * as math from 'mathjs';
 
 export class BlockReward extends AggregateRoot<BlockRewardProps> {
   protected readonly _id!: KoinosId;
@@ -13,6 +14,13 @@ export class BlockReward extends AggregateRoot<BlockRewardProps> {
   static create(create: CreateBlockRewardProps, id: UUID): BlockReward {
     const props: BlockRewardProps = {
       ...create,
+      roi: math
+        .chain<number>(create.value)
+        .divide(create.burnedValue)
+        .multiply(100)
+        .subtract(100)
+        .round(5)
+        .done() as number,
     };
 
     const blockReward = new BlockReward({ id, props });
@@ -25,7 +33,6 @@ export class BlockReward extends AggregateRoot<BlockRewardProps> {
         producerId: blockReward.producerId.value,
         value: blockReward.value,
         contractId: blockReward.contractId.value,
-        burnerId: blockReward.burnerId ? blockReward.burnerId.value : undefined,
         burnedValue: blockReward.burnedValue,
         burnedContractId: blockReward.burnedContractId.value,
         roi: blockReward.roi,
@@ -60,15 +67,11 @@ export class BlockReward extends AggregateRoot<BlockRewardProps> {
     return new KoinosAddressId(koinosConfig.contracts.vhp);
   }
 
-  get burnerId(): KoinosAddressId | undefined {
-    return this.props.burnerId;
-  }
-
-  get burnedValue(): number | undefined {
+  get burnedValue(): number {
     return this.props.burnedValue;
   }
 
-  get roi(): number | undefined {
+  get roi(): number {
     return this.props.roi;
   }
 

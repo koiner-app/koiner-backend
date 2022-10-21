@@ -6,6 +6,7 @@ import {
   BlockRewardsReceived,
   CreateBlockProducerProps,
 } from '.';
+import * as math from 'mathjs';
 
 export class BlockProducer extends AggregateRoot<BlockProducerProps> {
   protected readonly _id!: KoinosAddressId;
@@ -13,6 +14,13 @@ export class BlockProducer extends AggregateRoot<BlockProducerProps> {
   static create(create: CreateBlockProducerProps, id: UUID): BlockProducer {
     const props: BlockProducerProps = {
       ...create,
+      roi: math
+        .chain<number>(create.balance)
+        .divide(create.burnedTotal)
+        .multiply(100)
+        .subtract(100)
+        .round(5)
+        .done() as number,
       blocksProduced: 1,
     };
 
@@ -52,18 +60,34 @@ export class BlockProducer extends AggregateRoot<BlockProducerProps> {
     return this.props.balance;
   }
 
+  get burnedTotal(): number {
+    return this.props.burnedTotal;
+  }
+
+  get roi(): number {
+    return this.props.roi;
+  }
+
   get blocksProduced(): number {
     return this.props.blocksProduced;
   }
 
-  addRewards(rewards: number): void {
+  addRewards(rewards: number, burnedValue: number): void {
     if (rewards < 0) {
       // TODO: Add custom exception
       throw new ConflictException('Rewards must be positive');
     }
 
     this.props.balance += rewards;
+    this.props.burnedTotal += burnedValue;
     this.props.blocksProduced += 1;
+    this.props.roi = math
+      .chain<number>(this.balance)
+      .divide(this.burnedTotal)
+      .multiply(100)
+      .subtract(100)
+      .round(5)
+      .done() as number;
 
     this.addEvent(
       new BlockRewardsReceived({
@@ -76,8 +100,9 @@ export class BlockProducer extends AggregateRoot<BlockProducerProps> {
     );
   }
 
-  undoRewards(rewards: number): void {
+  undoRewards(rewards: number, burnedValue: number): void {
     this.props.balance -= rewards;
+    this.props.burnedTotal -= burnedValue;
     this.props.blocksProduced -= 1;
   }
 

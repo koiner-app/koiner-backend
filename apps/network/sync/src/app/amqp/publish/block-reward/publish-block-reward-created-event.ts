@@ -14,6 +14,7 @@ export class PublishBlockRewardCreatedEvent extends DomainEventHandler {
       contractId: event.contractId,
       producerId: event.producerId,
       value: event.value,
+      burnedValue: event.burnedValue,
       publishedAt: Date.now(),
     });
 
