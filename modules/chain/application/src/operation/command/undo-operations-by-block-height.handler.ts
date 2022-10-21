@@ -22,8 +22,12 @@ export class UndoOperationsByBlockHeightHandler
   ) {}
 
   async execute(command: UndoOperationsByBlockHeightCommand): Promise<void> {
+    if (command.blockHeights.length === 0) {
+      return;
+    }
+
     const operations = await this.readRepository.find({
-      first: 100,
+      first: 100000,
       filter: {
         OR: command.blockHeights.map((blockHeight) => {
           return {

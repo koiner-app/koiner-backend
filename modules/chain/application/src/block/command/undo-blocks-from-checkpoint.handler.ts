@@ -35,14 +35,20 @@ export class UndoBlocksFromCheckpointHandler
       })
     );
 
-    const lastSyncedBlockHeight = highestBlock.results[0].item.header.height;
+    const lastSyncedBlockHeight = parseInt(
+      String(highestBlock.results[0].item.header.height)
+    );
 
     const blockHeights: number[] = [];
+    if (command.checkPoint === lastSyncedBlockHeight) {
+      // Nothing to undo
+      return;
+    }
 
     let start = command.checkPoint;
     start++;
 
-    // Get all heights from checkpoint up until last synced block
+    // Get all heights from next block after checkpoint up until last synced block
     for (let i = start; i <= lastSyncedBlockHeight; i++) {
       blockHeights.push(i);
     }

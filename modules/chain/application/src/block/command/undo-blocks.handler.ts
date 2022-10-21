@@ -19,6 +19,10 @@ export class UndoBlocksHandler implements ICommandHandler<UndoBlocksCommand> {
   ) {}
 
   async execute(command: UndoBlocksCommand): Promise<void> {
+    if (command.blockHeights.length === 0) {
+      return;
+    }
+
     // Remove events
     await this.commandBus.execute(
       new UndoEventsByBlockHeightCommand({
