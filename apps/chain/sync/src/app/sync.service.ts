@@ -130,7 +130,7 @@ export class SyncService {
           previous: headInfo.head_topology.previous,
           height: parseInt(headInfo.head_topology.height),
         },
-        lastIrreversibleBlock: lastIrreversibleBlock,
+        lastIrreversibleBlock,
         lastSyncedBlock: chain.lastSyncedBlock,
         syncing: true,
       })
@@ -151,6 +151,7 @@ export class SyncService {
     );
 
     let failedBlockHeight: number | undefined;
+
     try {
       await this.commandBus.execute(
         new SyncBlocksCommand({
