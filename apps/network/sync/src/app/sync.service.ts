@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Provider } from 'koilib';
 import { BlockReward } from '@koiner/network/domain';
@@ -8,6 +8,7 @@ import {
   UndoBlockRewardsFromCheckpointCommand,
 } from '@koiner/network/application';
 import {
+  Logger,
   NotFoundException,
   SearchResponse,
   SortDirection,
@@ -71,20 +72,20 @@ export class SyncService {
     }
 
     if (!chain || chain.stopped) {
-      console.log('Do not sync');
+      this.logger.log('Do not sync');
 
       return;
     }
 
     if (chain && chain.syncing) {
-      console.log('Do not sync, still syncing');
+      this.logger.log('Do not sync, still syncing');
 
       const syncTimeout = process.env.CRON_SYNC_TIME_OUT
         ? parseInt(process.env.CRON_SYNC_TIME_OUT)
         : 600000;
 
       if (Date.now() - chain.lastSyncStarted > syncTimeout) {
-        console.error(
+        this.logger.error(
           `Sync has timed out. Reset sync to last checkpoint: ${chain.lastSyncedBlock}`
         );
 
@@ -112,7 +113,7 @@ export class SyncService {
           })
         );
 
-        console.log(
+        this.logger.log(
           `Sync has been reset to last checkpoint: ${chain.lastSyncedBlock}`
         );
       }
@@ -166,7 +167,7 @@ export class SyncService {
       );
     } catch (error) {
       if (error instanceof BlockRewardSyncFailedException) {
-        console.error(`Sync block failed, undo last block ${error.height}`);
+        this.logger.error(`Sync block failed, undo last block ${error.height}`);
 
         failedBlockHeight = error.height;
 
@@ -177,8 +178,8 @@ export class SyncService {
           })
         );
       } else {
-        console.error(
-          `Sync block failed. Something completely went wrong!`,
+        this.logger.error(
+          `Sync block reward failed. Something completely went wrong!`,
           error
         );
       }

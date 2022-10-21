@@ -66,13 +66,13 @@ export class SyncService {
     }
 
     if (!chain || chain.stopped) {
-      console.log('Do not sync');
+      this.logger.log('Do not sync');
 
       return;
     }
 
     if (chain && chain.syncing) {
-      console.log('Do not sync, still syncing');
+      this.logger.log('Do not sync, still syncing');
 
       const syncTimeout = process.env.CRON_SYNC_TIME_OUT
         ? parseInt(process.env.CRON_SYNC_TIME_OUT)
@@ -107,7 +107,7 @@ export class SyncService {
           })
         );
 
-        console.log(
+        this.logger.log(
           `Sync has been reset to last checkpoint: ${chain.lastSyncedBlock}`
         );
       }

@@ -1,4 +1,4 @@
-import { Logger, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AmqpModule } from './amqp.module';
 import { ScheduleModule } from '@nestjs/schedule';
@@ -37,7 +37,6 @@ if (process.env.CRON_SYNC === 'active') {
     NetworkModule,
   ],
   providers: [
-    Logger,
     RawBlocksService,
 
     // Sync module
