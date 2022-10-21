@@ -35,6 +35,11 @@ export class UndoBlockRewardsFromCheckpointHandler
       })
     );
 
+    if (highestBlock.results.length < 1) {
+      // Nothing to undo if fails on first sync
+      return;
+    }
+
     const lastSyncedBlockHeight = highestBlock.results[0].item.blockHeight;
 
     const blockHeights: number[] = [];
