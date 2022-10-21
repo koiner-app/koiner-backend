@@ -19,7 +19,7 @@ export class CreateSystemContractOperationHandler
     const operation = SystemContractOperation.create(
       {
         contractId: new KoinosAddressId(command.contractId),
-        systemContract: command.systemContract,
+        systemContract: command.systemContract ?? false,
       },
       new UUID(command.id),
       command.timestamp
