@@ -91,7 +91,7 @@ export class ContractStandardKoilibService extends ContractStandardService {
             getterValues[getter] = result.result.value;
           }
         } catch (error: any) {
-          this.logger.error(
+          this.logger.debug(
             `ContractStandardKoilibService.getContractValues error: ${error.message}`,
             error
           );
