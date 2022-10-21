@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { GlobalAppModule } from '@koiner/nestjs-utils';
 import { KoinosModule } from '@koinos/jsonrpc';
 import { ContractStandardKoilibService } from '@koiner/contracts/koilib'; // Must be imported before ContractStandardService
 import { ContractStandardImReadRepository } from '@koiner/contracts/koilib';
@@ -19,7 +20,12 @@ import { database } from '../config';
 database.entities.push(...NetworkModels);
 
 @Module({
-  imports: [CqrsModule, TypeOrmModule.forFeature(NetworkModels), KoinosModule],
+  imports: [
+    CqrsModule,
+    TypeOrmModule.forFeature(NetworkModels),
+    GlobalAppModule,
+    KoinosModule,
+  ],
   providers: [
     {
       provide: ContractStandardService,
