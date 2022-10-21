@@ -13,23 +13,19 @@ export class SyncBlockRewardsHandler
   ) {}
 
   async execute(command: SyncBlockRewardsCommand): Promise<void> {
-    try {
-      const blocks = await this.blocksService.getBlocks(
-        command.startHeight,
-        command.amount
-      );
+    const blocks = await this.blocksService.getBlocks(
+      command.startHeight,
+      command.amount
+    );
 
-      if (blocks) {
-        for (const block of blocks) {
-          await this.commandBus.execute(
-            new SyncBlockRewardCommand({
-              blockHeight: parseInt(block.block_height),
-            })
-          );
-        }
+    if (blocks) {
+      for (const block of blocks) {
+        await this.commandBus.execute(
+          new SyncBlockRewardCommand({
+            blockHeight: parseInt(block.block_height),
+          })
+        );
       }
-    } catch (error) {
-      console.log('Sync-block-rewards error', error);
     }
   }
 }

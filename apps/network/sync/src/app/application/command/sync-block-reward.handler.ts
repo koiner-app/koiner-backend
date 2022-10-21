@@ -13,6 +13,7 @@ import {
   ContractStandardService,
   ContractStandardType,
 } from '@koiner/contracts/standards';
+import { BlockRewardSyncFailedException } from '../exception';
 
 @CommandHandler(SyncBlockRewardCommand)
 export class SyncBlockRewardHandler
@@ -88,7 +89,14 @@ export class SyncBlockRewardHandler
         'SyncBlockRewardsHandler'
       );
     } catch (error) {
-      this.logger.error(error.message, error.stack, 'Sync-block-rewards error');
+      this.logger.error(error.message, error.stack, 'Sync-block-reward error');
+
+      // Let caller (SyncService) handle it further and provide height of failed block
+      throw new BlockRewardSyncFailedException(
+        command.blockHeight,
+        error.message,
+        error
+      );
     }
   }
 }

@@ -6,12 +6,12 @@ import { SyncService } from './sync.service';
 export class CronSyncController {
   constructor(private readonly syncService: SyncService) {}
 
-  @Cron(CronExpression.EVERY_10_SECONDS, { name: 'cronSync' })
+  @Cron(CronExpression.EVERY_5_SECONDS, { name: 'cronSync' })
   async cron(): Promise<void> {
     await this.syncService.sync(
       process.env.CRON_SYNC_BATCH_SIZE
         ? parseInt(process.env.CRON_SYNC_BATCH_SIZE)
-        : 1000
+        : 250
     );
   }
 }

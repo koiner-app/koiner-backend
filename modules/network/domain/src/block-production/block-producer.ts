@@ -76,6 +76,11 @@ export class BlockProducer extends AggregateRoot<BlockProducerProps> {
     );
   }
 
+  undoRewards(rewards: number): void {
+    this.props.balance -= rewards;
+    this.props.blocksProduced -= 1;
+  }
+
   validate(): void {
     //
   }
