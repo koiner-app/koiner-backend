@@ -38,8 +38,18 @@ export class SyncBlockRewardHandler
       const events = rawBlock.receipt.events;
 
       if (events && events.length > 1) {
-        const mintEvent = events.find((event) => event.name === 'koin.mint');
-        const burnEvent = events.find((event) => event.name === 'vhp.burn');
+        const mintEvent = events.find(
+          (event) =>
+            (event.name === 'koin.mint' ||
+              event.name === 'koinos.contracts.token.mint_event') &&
+            event.source === koinosConfig.contracts.koin
+        );
+        const burnEvent = events.find(
+          (event) =>
+            (event.name === 'vhp.burn' ||
+              event.name === 'koinos.contracts.token.burn_event') &&
+            event.source === koinosConfig.contracts.vhp
+        );
 
         if (mintEvent && burnEvent) {
           const decodedMintEvent =
