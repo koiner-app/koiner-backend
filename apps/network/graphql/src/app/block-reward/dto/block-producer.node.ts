@@ -11,14 +11,14 @@ export class BlockProducerNode extends BaseNode {
   @Field()
   contractId: string;
 
-  @Field(() => GraphQLBigInt)
-  balance: number;
+  @Field()
+  balance: string;
 
-  @Field(() => Int)
+  @Field(() => GraphQLBigInt)
   blocksProduced: number;
 
-  @Field(() => GraphQLBigInt)
-  burnedTotal: number;
+  @Field()
+  burnedTotal: string;
 
   @Field(() => Float)
   roi: number;
@@ -28,9 +28,9 @@ export class BlockProducerNode extends BaseNode {
 
     this.addressId = blockProducer.addressId.value;
     this.contractId = blockProducer.contractId.value;
-    this.balance = blockProducer.balance;
+    this.balance = blockProducer.balance.toString();
     this.blocksProduced = blockProducer.blocksProduced;
-    this.burnedTotal = blockProducer.burnedTotal;
+    this.burnedTotal = blockProducer.burnedTotal.toString();
     this.roi = blockProducer.roi;
   }
 }

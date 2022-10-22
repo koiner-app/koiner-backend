@@ -1,25 +1,24 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BlockReceipt } from '@koiner/chain/domain';
-import { GraphQLBigInt } from 'graphql-scalars';
 
 @ObjectType('BlockReceipt')
 export class BlockReceiptField {
-  @Field(() => GraphQLBigInt)
-  diskStorageUsed: number;
+  @Field()
+  diskStorageUsed: string;
 
-  @Field(() => GraphQLBigInt)
-  networkBandwidthUsed: number;
+  @Field()
+  networkBandwidthUsed: string;
 
-  @Field(() => GraphQLBigInt)
-  computeBandwidthUsed: number;
+  @Field()
+  computeBandwidthUsed: string;
 
   @Field(() => Int)
   eventCount: number;
 
   constructor(blockReceipt: BlockReceipt) {
-    this.diskStorageUsed = blockReceipt.diskStorageUsed;
-    this.networkBandwidthUsed = blockReceipt.networkBandwidthUsed;
-    this.computeBandwidthUsed = blockReceipt.computeBandwidthUsed;
+    this.diskStorageUsed = blockReceipt.diskStorageUsed.toString();
+    this.networkBandwidthUsed = blockReceipt.networkBandwidthUsed.toString();
+    this.computeBandwidthUsed = blockReceipt.computeBandwidthUsed.toString();
     this.eventCount = blockReceipt.eventCount;
   }
 }

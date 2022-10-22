@@ -1,11 +1,10 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { GraphQLBigInt } from 'graphql-scalars';
 import { TransactionHeader } from '@koiner/chain/domain';
 
 @ObjectType('TransactionHeader')
 export class TransactionHeaderField {
-  @Field(() => GraphQLBigInt)
-  rcLimit: number;
+  @Field()
+  rcLimit: string;
 
   @Field({ nullable: true })
   nonce: string;
@@ -20,7 +19,7 @@ export class TransactionHeaderField {
   payee?: string;
 
   constructor(transactionHeader: TransactionHeader) {
-    this.rcLimit = transactionHeader.rcLimit;
+    this.rcLimit = transactionHeader.rcLimit.toString();
     this.nonce = transactionHeader.nonce;
     this.operationMerkleRoot = transactionHeader.operationMerkleRoot;
     this.payer = transactionHeader.payer;

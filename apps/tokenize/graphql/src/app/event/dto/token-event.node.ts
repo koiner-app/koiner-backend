@@ -17,8 +17,8 @@ export class TokenEventNode extends BaseNode {
   @Field({ nullable: true })
   to?: string;
 
-  @Field(() => GraphQLBigInt)
-  value: number;
+  @Field()
+  value: string;
 
   @Field(() => GraphQLBigInt)
   timestamp: number;
@@ -30,7 +30,7 @@ export class TokenEventNode extends BaseNode {
     this.name = event.name;
     this.from = event.from ? event.from.value : undefined;
     this.to = event.to ? event.to.value : undefined;
-    this.value = event.value;
+    this.value = event.value.toString();
     this.timestamp = event.timestamp;
   }
 }

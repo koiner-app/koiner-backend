@@ -1,5 +1,4 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { GraphQLBigInt } from 'graphql-scalars';
 import { TransactionReceipt } from '@koiner/chain/domain';
 
 @ObjectType('TransactionReceipt')
@@ -7,23 +6,23 @@ export class TransactionReceiptField {
   @Field()
   payer: string;
 
-  @Field(() => GraphQLBigInt)
-  maxPayerRc: number;
+  @Field()
+  maxPayerRc: string;
 
-  @Field(() => GraphQLBigInt)
-  rcLimit: number;
+  @Field()
+  rcLimit: string;
 
-  @Field(() => GraphQLBigInt)
-  rcUsed: number;
+  @Field()
+  rcUsed: string;
 
-  @Field(() => GraphQLBigInt)
-  diskStorageUsed: number;
+  @Field()
+  diskStorageUsed: string;
 
-  @Field(() => GraphQLBigInt)
-  networkBandwidthUsed: number;
+  @Field()
+  networkBandwidthUsed: string;
 
-  @Field(() => GraphQLBigInt)
-  computeBandwidthUsed: number;
+  @Field()
+  computeBandwidthUsed: string;
 
   @Field(() => Int)
   eventCount: number;
@@ -33,12 +32,14 @@ export class TransactionReceiptField {
 
   constructor(transactionReceipt: TransactionReceipt) {
     this.payer = transactionReceipt.payer;
-    this.maxPayerRc = transactionReceipt.maxPayerRc;
-    this.rcLimit = transactionReceipt.rcLimit;
-    this.rcUsed = transactionReceipt.rcUsed;
-    this.diskStorageUsed = transactionReceipt.diskStorageUsed;
-    this.networkBandwidthUsed = transactionReceipt.networkBandwidthUsed;
-    this.computeBandwidthUsed = transactionReceipt.computeBandwidthUsed;
+    this.maxPayerRc = transactionReceipt.maxPayerRc.toString();
+    this.rcLimit = transactionReceipt.rcLimit.toString();
+    this.rcUsed = transactionReceipt.rcUsed.toString();
+    this.diskStorageUsed = transactionReceipt.diskStorageUsed.toString();
+    this.networkBandwidthUsed =
+      transactionReceipt.networkBandwidthUsed.toString();
+    this.computeBandwidthUsed =
+      transactionReceipt.computeBandwidthUsed.toString();
     this.eventCount = transactionReceipt.eventCount;
     this.reverted = transactionReceipt.reverted;
   }

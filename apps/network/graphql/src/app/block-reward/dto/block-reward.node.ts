@@ -17,14 +17,14 @@ export class BlockRewardNode extends BaseNode {
   @Field()
   contractId: string;
 
-  @Field(() => GraphQLBigInt)
-  value: number;
+  @Field()
+  value: string;
 
   @Field({ nullable: true })
   burnedContractId: string;
 
-  @Field(() => GraphQLBigInt)
-  burnedValue: number;
+  @Field()
+  burnedValue: string;
 
   @Field(() => Float)
   roi: number;
@@ -39,9 +39,9 @@ export class BlockRewardNode extends BaseNode {
     this.blockHeight = blockReward.blockHeight;
     this.producerId = blockReward.producerId.value;
     this.contractId = blockReward.contractId.value;
-    this.value = blockReward.value;
+    this.value = blockReward.value.toString();
     this.burnedContractId = blockReward.burnedContractId.value;
-    this.burnedValue = blockReward.burnedValue;
+    this.burnedValue = blockReward.burnedValue.toString();
     this.roi = blockReward.roi;
     this.timestamp = blockReward.timestamp;
   }

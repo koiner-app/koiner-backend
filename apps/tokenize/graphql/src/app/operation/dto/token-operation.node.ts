@@ -21,8 +21,8 @@ export class TokenOperationNode extends BaseNode {
   @Field({ nullable: true })
   to?: string;
 
-  @Field(() => GraphQLBigInt)
-  value: number;
+  @Field()
+  value: string;
 
   @Field(() => GraphQLBigInt)
   timestamp: number;
@@ -38,7 +38,7 @@ export class TokenOperationNode extends BaseNode {
     this.name = tokenOperation.name;
     this.from = tokenOperation.from ? tokenOperation.from.value : undefined;
     this.to = tokenOperation.to ? tokenOperation.to.value : undefined;
-    this.value = tokenOperation.value;
+    this.value = tokenOperation.value.toString();
     this.timestamp = tokenOperation.timestamp;
   }
 }

@@ -14,8 +14,8 @@ export class TokenContractNode extends BaseNode {
   @Field(() => Int)
   decimals: number;
 
-  @Field(() => GraphQLBigInt)
-  totalSupply: number;
+  @Field()
+  totalSupply: string;
 
   @Field(() => GraphQLBigInt)
   timestamp: number;
@@ -26,7 +26,7 @@ export class TokenContractNode extends BaseNode {
     this.name = tokenContract.name;
     this.symbol = tokenContract.symbol;
     this.decimals = tokenContract.decimals;
-    this.totalSupply = tokenContract.totalSupply;
+    this.totalSupply = tokenContract.totalSupply.toString();
     this.timestamp = tokenContract.timestamp;
   }
 }
