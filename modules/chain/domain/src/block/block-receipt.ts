@@ -35,20 +35,18 @@ export class BlockReceipt extends ValueObject<BlockReceiptProps> {
 
     if (!Guard.isGreatherThan(props.networkBandwidthUsed, -1)) {
       throw new ArgumentOutOfRangeException(
-        'networkBandwidthUsed is out of range',
+        'networkBandwidthUsed is out of range'
       );
     }
 
     if (!Guard.isGreatherThan(props.computeBandwidthUsed, -1)) {
       throw new ArgumentOutOfRangeException(
-        'computeBandwidthUsed is out of range',
+        'computeBandwidthUsed is out of range'
       );
     }
 
     if (!Guard.isGreatherThan(props.eventCount, -1)) {
-      throw new ArgumentOutOfRangeException(
-        'computeBandwidthUsed is out of range',
-      );
+      throw new ArgumentOutOfRangeException('eventCount is out of range');
     }
   }
 }

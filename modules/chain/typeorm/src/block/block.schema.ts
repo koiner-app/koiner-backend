@@ -36,18 +36,14 @@ export class BlockSchema extends EntityBaseSchema {
   readonly transaction_count!: number;
 
   /** Receipt */
+  @Column({ length: 20 })
+  readonly disk_storage_used!: string;
 
-  @Index()
-  @Column({ type: 'bigint' })
-  readonly disk_storage_used!: number;
+  @Column({ length: 20 })
+  readonly network_bandwidth_used!: string;
 
-  @Index()
-  @Column({ type: 'bigint' })
-  readonly network_bandwidth_used!: number;
-
-  @Index()
-  @Column({ type: 'bigint' })
-  readonly compute_bandwidth_used!: number;
+  @Column({ length: 20 })
+  readonly compute_bandwidth_used!: string;
 
   @Column({ type: 'smallint' })
   readonly event_count!: number;

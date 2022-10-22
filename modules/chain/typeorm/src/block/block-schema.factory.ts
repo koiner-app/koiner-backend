@@ -31,9 +31,9 @@ export class BlockSchemaFactory extends EntitySchemaFactory<
       signature: entitySchema.signature,
       transactionCount: entitySchema.transaction_count,
       receipt: new BlockReceipt({
-        diskStorageUsed: entitySchema.disk_storage_used,
-        networkBandwidthUsed: entitySchema.network_bandwidth_used,
-        computeBandwidthUsed: entitySchema.compute_bandwidth_used,
+        diskStorageUsed: parseInt(entitySchema.disk_storage_used),
+        networkBandwidthUsed: parseInt(entitySchema.network_bandwidth_used),
+        computeBandwidthUsed: parseInt(entitySchema.compute_bandwidth_used),
         eventCount: entitySchema.event_count,
       }),
     };
@@ -53,9 +53,16 @@ export class BlockSchemaFactory extends EntitySchemaFactory<
       signer: props.header.signer,
       signature: props.signature,
       transaction_count: props.transactionCount,
-      disk_storage_used: props.receipt.diskStorageUsed,
-      network_bandwidth_used: props.receipt.networkBandwidthUsed,
-      compute_bandwidth_used: props.receipt.computeBandwidthUsed,
+      disk_storage_used: String(props.receipt.diskStorageUsed).padStart(
+        20,
+        '0'
+      ),
+      network_bandwidth_used: String(
+        props.receipt.networkBandwidthUsed
+      ).padStart(20, '0'),
+      compute_bandwidth_used: String(
+        props.receipt.computeBandwidthUsed
+      ).padStart(20, '0'),
       event_count: props.receipt.eventCount,
     };
   }
