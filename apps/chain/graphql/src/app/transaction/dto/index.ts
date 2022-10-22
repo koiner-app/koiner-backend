@@ -1,5 +1,6 @@
 export * from './transaction.node';
 export * from './transaction-header.field';
+export * from './transaction-receipt.field';
 export * from './transactions.connection';
 export * from './transactions.filter';
 export * from './transactions.request';

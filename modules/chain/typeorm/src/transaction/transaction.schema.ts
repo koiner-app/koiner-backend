@@ -26,6 +26,27 @@ export class TransactionSchema extends EntityBaseSchema {
   @JoinColumn({ name: 'block_height', referencedColumnName: 'height' })
   private readonly _block_height_fg!: never;
 
+  @OneToMany(() => OperationSchema, (operation) => operation.transaction, {
+    cascade: ['insert'],
+  })
+  readonly operations!: OperationSchema[];
+
+  @Column({ type: 'smallint' })
+  readonly operation_count!: number;
+
+  @Column({ type: 'simple-array' })
+  readonly signatures!: string[];
+
+  @Column({ type: 'smallint' })
+  readonly transaction_index!: number;
+
+  @Index()
+  @Column({ type: 'bigint' })
+  readonly timestamp!: number;
+
+  /**
+   *  Header
+   */
   @Column({ length: 20 })
   readonly rc_limit!: string;
 
@@ -39,22 +60,35 @@ export class TransactionSchema extends EntityBaseSchema {
   @Column({ length: 35 })
   readonly payer!: string;
 
-  // TODO: What should be max length of signature?
-  @Column({ length: 255 })
-  readonly signature!: string;
+  @Index()
+  @Column({ length: 35, nullable: true })
+  readonly payee?: string;
 
-  @Column({ type: 'smallint' })
-  readonly transaction_index!: number;
-
-  @OneToMany(() => OperationSchema, (operation) => operation.transaction, {
-    cascade: ['insert'],
-  })
-  readonly operations!: OperationSchema[];
-
-  @Column({ type: 'smallint' })
-  readonly operation_count!: number;
+  /**
+   *  Receipt
+   */
+  @Column({ length: 20 })
+  readonly max_payer_rc!: string;
 
   @Index()
-  @Column({ type: 'bigint' })
-  readonly timestamp!: number;
+  @Column({ length: 20 })
+  readonly rc_used!: string;
+
+  @Index()
+  @Column({ length: 20 })
+  readonly disk_storage_used!: string;
+
+  @Index()
+  @Column({ length: 20 })
+  readonly network_bandwidth_used!: string;
+
+  @Index()
+  @Column({ length: 20 })
+  readonly compute_bandwidth_used!: string;
+
+  @Column({ type: 'smallint' })
+  readonly event_count!: number;
+
+  @Column()
+  readonly reverted!: boolean;
 }

@@ -3,6 +3,7 @@ import { KoinosId } from '@koiner/domain';
 import {
   Transaction,
   TransactionHeader,
+  TransactionReceipt,
   TransactionWriteRepository,
 } from '@koiner/chain/domain';
 import { CreateTransactionCommand } from './dto/create-transaction.command';
@@ -17,14 +18,10 @@ export class CreateTransactionHandler
     const transaction = Transaction.create(
       {
         blockHeight: command.blockHeight,
-        header: new TransactionHeader({
-          rcLimit: command.rcLimit,
-          nonce: command.nonce,
-          operationMerkleRoot: command.operationMerkleRoot,
-          payer: command.payer,
-        }),
+        header: new TransactionHeader(command.header),
+        receipt: new TransactionReceipt(command.receipt),
         operationCount: command.operationCount,
-        signature: command.signature,
+        signatures: command.signatures,
         transactionIndex: command.transactionIndex,
         timestamp: command.timestamp,
       },

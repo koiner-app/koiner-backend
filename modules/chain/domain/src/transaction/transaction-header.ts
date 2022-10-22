@@ -5,14 +5,15 @@ import {
 } from '@appvise/domain';
 
 export interface TransactionHeaderProps {
-  rcLimit: string;
+  rcLimit: number;
   nonce?: string;
   operationMerkleRoot?: string;
   payer: string;
+  payee?: string;
 }
 
 export class TransactionHeader extends ValueObject<TransactionHeaderProps> {
-  get rcLimit(): string {
+  get rcLimit(): number {
     return this.props.rcLimit;
   }
 
@@ -26,6 +27,10 @@ export class TransactionHeader extends ValueObject<TransactionHeaderProps> {
 
   get payer(): string {
     return this.props.payer;
+  }
+
+  get payee(): string | undefined {
+    return this.props.payee;
   }
 
   protected validate(props: TransactionHeaderProps): void {
@@ -42,12 +47,16 @@ export class TransactionHeader extends ValueObject<TransactionHeaderProps> {
       !Guard.lengthIs(props.operationMerkleRoot, 48)
     ) {
       throw new ArgumentOutOfRangeException(
-        'previousStateMerkleRoot is out of range',
+        'previousStateMerkleRoot is out of range'
       );
     }
 
-    if (!Guard.lengthIsBetween(props.payer, 20, 34)) {
+    if (!Guard.lengthIsBetween(props.payer, 30, 34)) {
       throw new ArgumentOutOfRangeException('payer is out of range');
+    }
+
+    if (props.payee && !Guard.lengthIsBetween(props.payee, 30, 34)) {
+      throw new ArgumentOutOfRangeException('payee is out of range');
     }
   }
 }

@@ -1,4 +1,8 @@
 import { Command, CommandProps } from '@appvise/domain';
+import {
+  TransactionHeaderProps,
+  TransactionReceiptProps,
+} from '@koiner/chain/domain';
 
 export class CreateTransactionCommand extends Command {
   constructor(props: CommandProps<CreateTransactionCommand>) {
@@ -9,12 +13,10 @@ export class CreateTransactionCommand extends Command {
 
   readonly id!: string;
   readonly blockHeight!: number;
-  readonly rcLimit!: string;
-  readonly payer!: string;
-  readonly signature!: string;
-  readonly transactionIndex!: number;
+  readonly header!: TransactionHeaderProps;
+  readonly receipt!: TransactionReceiptProps;
   readonly operationCount!: number;
-  readonly nonce?: string;
-  readonly operationMerkleRoot?: string;
+  readonly signatures!: string[];
+  readonly transactionIndex!: number;
   readonly timestamp!: number;
 }

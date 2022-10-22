@@ -1,8 +1,4 @@
-import {
-  AggregateRoot,
-  ArgumentOutOfRangeException,
-  Guard,
-} from '@appvise/domain';
+import { AggregateRoot } from '@appvise/domain';
 import { KoinosId } from '@koiner/domain';
 import { Operation } from '../operation';
 import {
@@ -10,6 +6,7 @@ import {
   TransactionCreated,
   TransactionHeader,
   TransactionProps,
+  TransactionReceipt,
 } from '.';
 
 export class Transaction extends AggregateRoot<TransactionProps> {
@@ -40,20 +37,16 @@ export class Transaction extends AggregateRoot<TransactionProps> {
     return this.props.blockHeight;
   }
 
-  get header(): TransactionHeader {
-    return this.props.header;
-  }
-
-  get signature(): string {
-    return this.props.signature;
-  }
-
   get operations(): Operation[] {
     return this.props.operations;
   }
 
   get operationCount(): number {
     return this.props.operationCount;
+  }
+
+  get signatures(): string[] {
+    return this.props.signatures;
   }
 
   get index(): number {
@@ -64,12 +57,15 @@ export class Transaction extends AggregateRoot<TransactionProps> {
     return this.props.timestamp;
   }
 
+  get header(): TransactionHeader {
+    return this.props.header;
+  }
+
+  get receipt(): TransactionReceipt {
+    return this.props.receipt;
+  }
+
   validate(): void {
     // TODO: Add validations
-
-    // TODO: What should be max length of signature?
-    if (!Guard.lengthIsBetween(this.props.signature, 1, 255)) {
-      throw new ArgumentOutOfRangeException('signature is out of range');
-    }
   }
 }

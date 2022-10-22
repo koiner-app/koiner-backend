@@ -10,6 +10,7 @@ import {
   Transaction,
   TransactionHeader,
   TransactionProps,
+  TransactionReceipt,
 } from '@koiner/chain/domain';
 import { OperationSchema } from '../operation';
 import { TransactionSchema } from '.';
@@ -25,13 +26,7 @@ export class TransactionSchemaFactory extends EntitySchemaFactory<
 
     const props: TransactionProps = {
       blockHeight: entitySchema.block_height,
-      header: new TransactionHeader({
-        rcLimit: entitySchema.rc_limit,
-        nonce: entitySchema.nonce,
-        operationMerkleRoot: entitySchema.operation_merkle_root,
-        payer: entitySchema.payer,
-      }),
-      signature: entitySchema.signature,
+      signatures: entitySchema.signatures,
       transactionIndex: entitySchema.transaction_index,
       operations: entitySchema.operations
         ? entitySchema.operations.map((operationSchema) => {
@@ -49,6 +44,24 @@ export class TransactionSchemaFactory extends EntitySchemaFactory<
         : [],
       operationCount: entitySchema.operation_count,
       timestamp: entitySchema.timestamp,
+      header: new TransactionHeader({
+        rcLimit: parseInt(entitySchema.rc_limit),
+        nonce: entitySchema.nonce,
+        operationMerkleRoot: entitySchema.operation_merkle_root,
+        payer: entitySchema.payer,
+        payee: entitySchema.payee,
+      }),
+      receipt: new TransactionReceipt({
+        payer: entitySchema.payer,
+        maxPayerRc: parseInt(entitySchema.max_payer_rc),
+        rcLimit: parseInt(entitySchema.rc_limit),
+        rcUsed: parseInt(entitySchema.rc_used),
+        diskStorageUsed: parseInt(entitySchema.disk_storage_used),
+        networkBandwidthUsed: parseInt(entitySchema.network_bandwidth_used),
+        computeBandwidthUsed: parseInt(entitySchema.compute_bandwidth_used),
+        eventCount: entitySchema.event_count,
+        reverted: entitySchema.reverted,
+      }),
     };
 
     return { id, props };
@@ -61,12 +74,6 @@ export class TransactionSchemaFactory extends EntitySchemaFactory<
 
     return {
       block_height: props.blockHeight,
-      rc_limit: props.header.rcLimit,
-      nonce: props.header.nonce,
-      operation_merkle_root: props.header.operationMerkleRoot,
-      payer: props.header.payer,
-      signature: props.signature,
-      transaction_index: props.transactionIndex,
       operations: props.operations.map((operation) => {
         return new OperationSchema({
           id: operation.id.value,
@@ -78,7 +85,32 @@ export class TransactionSchemaFactory extends EntitySchemaFactory<
         });
       }),
       operation_count: props.operationCount,
+      signatures: props.signatures,
+      transaction_index: props.transactionIndex,
       timestamp: props.timestamp,
+
+      // Header
+      rc_limit: String(props.header.rcLimit).padStart(20, '0'),
+      nonce: props.header.nonce,
+      operation_merkle_root: props.header.operationMerkleRoot,
+      payer: props.header.payer,
+      payee: props.header.payee,
+
+      // Receipt
+      max_payer_rc: String(props.receipt.maxPayerRc).padStart(20, '0'),
+      rc_used: String(props.receipt.rcUsed).padStart(20, '0'),
+      disk_storage_used: String(props.receipt.diskStorageUsed).padStart(
+        20,
+        '0'
+      ),
+      network_bandwidth_used: String(
+        props.receipt.networkBandwidthUsed
+      ).padStart(20, '0'),
+      compute_bandwidth_used: String(
+        props.receipt.computeBandwidthUsed
+      ).padStart(20, '0'),
+      event_count: props.receipt.eventCount,
+      reverted: props.receipt.reverted,
     };
   }
 }

@@ -14,16 +14,7 @@ export class TransactionsFilter implements FilterType {
   blockHeight?: NumericFilterInput;
 
   @Field(() => StringFilterInput, { nullable: true })
-  rcLimit?: StringFilterInput;
-
-  @Field(() => StringFilterInput, { nullable: true })
-  nonce?: StringFilterInput;
-
-  @Field(() => StringFilterInput, { nullable: true })
   payer?: StringFilterInput;
-
-  @Field(() => NumericFilterInput, { nullable: true })
-  transactionIndex?: NumericFilterInput;
 
   @Field(() => NumericFilterInput, { nullable: true })
   operationCount?: NumericFilterInput;
