@@ -10,4 +10,7 @@ export class UpdateTokenContractCommand extends Command {
   readonly contractId!: string;
   readonly mintedTokens?: number;
   readonly burnedTokens?: number;
+  readonly mintCount?: number;
+  readonly burnCount?: number;
+  readonly transferCount?: number;
 }

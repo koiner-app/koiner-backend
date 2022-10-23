@@ -6,6 +6,7 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import {
   TokensBurnedEventMessage,
   TokensMintedEventMessage,
+  TokensTransferredEventMessage,
 } from '@koiner/tokenize/events';
 
 @Injectable()
@@ -23,12 +24,16 @@ export class EmitEventsTokenSupplyQueue {
     routingKey: [
       TokensBurnedEventMessage.routingKey,
       TokensMintedEventMessage.routingKey,
+      TokensTransferredEventMessage.routingKey,
     ],
     queue: 'koiner.tokenize.queue.token.total_supply',
   })
   async handle(message: any, amqpMsg: ConsumeMessage): Promise<void> {
     return new Promise((resolve, reject) => {
-      let event: TokensBurnedEventMessage | TokensMintedEventMessage;
+      let event:
+        | TokensBurnedEventMessage
+        | TokensMintedEventMessage
+        | TokensTransferredEventMessage;
 
       if (amqpMsg.fields.routingKey === TokensBurnedEventMessage.routingKey) {
         event = new TokensBurnedEventMessage(JSON.parse(message));
@@ -36,6 +41,12 @@ export class EmitEventsTokenSupplyQueue {
 
       if (amqpMsg.fields.routingKey === TokensMintedEventMessage.routingKey) {
         event = new TokensMintedEventMessage(JSON.parse(message));
+      }
+
+      if (
+        amqpMsg.fields.routingKey === TokensTransferredEventMessage.routingKey
+      ) {
+        event = new TokensTransferredEventMessage(JSON.parse(message));
       }
 
       this.eventEmitter

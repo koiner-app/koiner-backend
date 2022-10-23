@@ -7,9 +7,15 @@ export interface CreateTokenContractProps {
 
 export interface TokenContractProps extends CreateTokenContractProps {
   totalSupply: number;
+  mintCount: number;
+  burnCount: number;
+  transferCount: number;
 }
 
 export interface UpdateTokenContractProps {
   mintedTokens?: number;
   burnedTokens?: number;
+  mintCount?: number;
+  burnCount?: number;
+  transferCount?: number;
 }

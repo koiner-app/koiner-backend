@@ -2,21 +2,20 @@ import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { CommandBus } from '@nestjs/cqrs';
 import { UpdateTokenContractCommand } from '../command';
-import { TokensMintedEventMessage } from '@koiner/tokenize/events';
+import { TokensTransferredEventMessage } from '@koiner/tokenize/events';
 
 @Injectable()
-export class UpdateTokenSupplyOnTokensMinted {
+export class UpdateTokenTransferCountOnTokensTransferred {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @OnEvent(`${TokensMintedEventMessage.routingKey}.total_supply`, {
+  @OnEvent(`${TokensTransferredEventMessage.routingKey}.total_supply`, {
     async: false,
   })
-  async handle(event: TokensMintedEventMessage): Promise<void> {
+  async handle(event: TokensTransferredEventMessage): Promise<void> {
     await this.commandBus.execute(
       new UpdateTokenContractCommand({
         contractId: event.contractId,
-        mintedTokens: event.value,
-        mintCount: 1,
+        transferCount: 1,
       })
     );
   }

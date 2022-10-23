@@ -16,6 +16,7 @@ export class UpdateTokenSupplyOnTokensBurned {
       new UpdateTokenContractCommand({
         contractId: event.contractId,
         burnedTokens: event.value,
+        burnCount: 1,
       })
     );
   }

@@ -22,6 +22,15 @@ export class TokenContractSchema extends EntityBaseSchema {
   @Column({ length: 20 })
   readonly total_supply!: string;
 
+  @Column({ type: 'bigint' })
+  readonly burn_count!: number;
+
+  @Column({ type: 'bigint' })
+  readonly mint_count!: number;
+
+  @Column({ type: 'bigint' })
+  readonly transfer_count!: number;
+
   @Index()
   @Column({ type: 'bigint' })
   readonly timestamp!: number;

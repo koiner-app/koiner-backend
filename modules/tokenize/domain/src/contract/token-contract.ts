@@ -19,6 +19,9 @@ export class TokenContract extends AggregateRoot<TokenContractProps> {
     const props: TokenContractProps = {
       ...create,
       totalSupply: 0,
+      mintCount: 0,
+      burnCount: 0,
+      transferCount: 0,
     };
 
     const contract = new TokenContract({ id, props });
@@ -53,11 +56,27 @@ export class TokenContract extends AggregateRoot<TokenContractProps> {
     return this.props.totalSupply;
   }
 
+  get burnCount(): number {
+    return this.props.burnCount;
+  }
+
+  get mintCount(): number {
+    return this.props.mintCount;
+  }
+
+  get transferCount(): number {
+    return this.props.transferCount;
+  }
+
   get timestamp(): number {
     return this.props.timestamp;
   }
 
   update(props: UpdateTokenContractProps): void {
+    this.props.mintCount += props.mintCount ?? 0;
+    this.props.burnCount += props.burnCount ?? 0;
+    this.props.transferCount += props.transferCount ?? 0;
+
     if (props.mintedTokens) {
       this.updateTotalSupply(props.mintedTokens);
     }

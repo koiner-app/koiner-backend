@@ -16,6 +16,9 @@ export class UpdateTokenContractHandler
     tokenContract.update({
       mintedTokens: command.mintedTokens,
       burnedTokens: command.burnedTokens,
+      burnCount: command.burnCount,
+      mintCount: command.mintCount,
+      transferCount: command.transferCount,
     });
 
     await this.writeRepository.save(tokenContract);

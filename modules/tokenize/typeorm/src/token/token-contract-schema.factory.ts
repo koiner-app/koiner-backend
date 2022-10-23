@@ -21,6 +21,9 @@ export class TokenContractSchemaFactory extends EntitySchemaFactory<
       symbol: entitySchema.symbol,
       decimals: entitySchema.decimals,
       totalSupply: parseInt(entitySchema.total_supply),
+      burnCount: parseInt(entitySchema.burn_count.toString()),
+      mintCount: parseInt(entitySchema.mint_count.toString()),
+      transferCount: parseInt(entitySchema.transfer_count.toString()),
       timestamp: entitySchema.timestamp,
     };
 
@@ -37,6 +40,9 @@ export class TokenContractSchemaFactory extends EntitySchemaFactory<
       symbol: props.symbol,
       decimals: props.decimals,
       total_supply: String(props.totalSupply).padStart(20, '0'),
+      burn_count: props.burnCount,
+      mint_count: props.mintCount,
+      transfer_count: props.transferCount,
       timestamp: props.timestamp,
     };
   }
