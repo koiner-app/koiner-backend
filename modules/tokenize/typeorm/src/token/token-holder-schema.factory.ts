@@ -21,6 +21,10 @@ export class TokenHolderSchemaFactory extends EntitySchemaFactory<
       addressId: new KoinosAddressId(entitySchema.address_id),
       contractId: new KoinosAddressId(entitySchema.contract_id),
       balance: parseInt(entitySchema.balance),
+      burnCount: parseInt(entitySchema.burn_count.toString()),
+      mintCount: parseInt(entitySchema.mint_count.toString()),
+      transferInCount: parseInt(entitySchema.transfer_in_count.toString()),
+      transferOutCount: parseInt(entitySchema.transfer_out_count.toString()),
     };
 
     return { id, props };
@@ -35,6 +39,10 @@ export class TokenHolderSchemaFactory extends EntitySchemaFactory<
       address_id: props.addressId.value,
       contract_id: props.contractId.value,
       balance: String(props.balance).padStart(20, '0'),
+      burn_count: props.burnCount,
+      mint_count: props.mintCount,
+      transfer_in_count: props.transferInCount,
+      transfer_out_count: props.transferOutCount,
     };
   }
 }

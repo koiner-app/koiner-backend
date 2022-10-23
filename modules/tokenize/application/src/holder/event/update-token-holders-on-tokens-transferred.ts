@@ -17,6 +17,7 @@ export class UpdateTokenHoldersOnTokensTransferred {
         addressId: event.to,
         contractId: event.contractId,
         amountChanged: event.value,
+        transferInCount: 1,
       })
     );
 
@@ -25,6 +26,7 @@ export class UpdateTokenHoldersOnTokensTransferred {
         addressId: event.from,
         contractId: event.contractId,
         amountChanged: -event.value,
+        transferOutCount: 1,
       })
     );
   }

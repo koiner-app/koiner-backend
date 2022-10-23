@@ -17,6 +17,7 @@ export class UpdateTokenHolderOnTokensBurned {
         addressId: event.from,
         contractId: event.contractId,
         amountChanged: -event.value,
+        burnCount: 1,
       })
     );
   }

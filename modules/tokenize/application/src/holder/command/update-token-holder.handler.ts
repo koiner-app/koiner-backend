@@ -22,6 +22,10 @@ export class UpdateTokenHolderHandler
     if (tokenHolder) {
       tokenHolder.update({
         amountChanged: command.amountChanged,
+        burnCount: command.burnCount,
+        mintCount: command.mintCount,
+        transferInCount: command.transferInCount,
+        transferOutCount: command.transferOutCount,
       });
 
       await this.writeRepository.save(tokenHolder);
@@ -31,6 +35,10 @@ export class UpdateTokenHolderHandler
           addressId: new KoinosAddressId(command.addressId),
           contractId: new KoinosAddressId(command.contractId),
           balance: command.amountChanged,
+          burnCount: command.burnCount,
+          mintCount: command.mintCount,
+          transferInCount: command.transferInCount,
+          transferOutCount: command.transferOutCount,
         },
         UUID.generate()
       );

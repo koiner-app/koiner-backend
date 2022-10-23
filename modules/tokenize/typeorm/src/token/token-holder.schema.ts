@@ -14,4 +14,16 @@ export class TokenHolderSchema extends EntityBaseSchema {
   @Index()
   @Column({ length: 20 })
   readonly balance!: string;
+
+  @Column({ type: 'bigint' })
+  readonly burn_count!: number;
+
+  @Column({ type: 'bigint' })
+  readonly mint_count!: number;
+
+  @Column({ type: 'bigint' })
+  readonly transfer_in_count!: number;
+
+  @Column({ type: 'bigint' })
+  readonly transfer_out_count!: number;
 }

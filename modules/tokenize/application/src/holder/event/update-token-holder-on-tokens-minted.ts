@@ -17,6 +17,7 @@ export class UpdateTokenHolderOnTokensMinted {
         addressId: event.to,
         contractId: event.contractId,
         amountChanged: event.value,
+        mintCount: 1,
       })
     );
   }
