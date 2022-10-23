@@ -2,21 +2,20 @@ import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { OnEvent } from '@nestjs/event-emitter';
 import { BlockRewardCreatedMessage } from '@koiner/network/events';
-import { UpdateBlockProducerCommand } from '../command';
+import { UpdateBlockProductionStatsCommand } from '../command';
 
 @Injectable()
-export class UpdateBlockProducerOnBlockRewardCreated {
+export class UpdateBlockProductionStatsOnBlockRewardCreated {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @OnEvent(`${BlockRewardCreatedMessage.routingKey}.producer_queue`, {
+  @OnEvent(`${BlockRewardCreatedMessage.routingKey}.production_stats_queue`, {
     async: false,
   })
   async handle(event: BlockRewardCreatedMessage): Promise<void> {
     await this.commandBus.execute(
-      new UpdateBlockProducerCommand({
-        addressId: event.producerId,
+      new UpdateBlockProductionStatsCommand({
         contractId: event.contractId,
-        amountChanged: event.value,
+        amountRewarded: event.value,
         burnedValue: event.burnedValue,
       })
     );

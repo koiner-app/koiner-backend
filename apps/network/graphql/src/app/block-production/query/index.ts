@@ -10,8 +10,9 @@ export class BlockProducerResolver extends NodeQuery(
   'blockProducer'
 ) {}
 
-export * from './block-producers.resolver';
 export * from './block-reward.resolver';
 export * from './block-reward-producer.resolver';
 export * from './block-rewards.resolver';
 export * from './block-rewards-bulk.resolver';
+export * from './block-producers.resolver';
+export * from './block-production-stats.resolver';

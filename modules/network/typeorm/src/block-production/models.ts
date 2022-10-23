@@ -1,3 +1,11 @@
-import { BlockProducerSchema, BlockRewardSchema } from '.';
+import {
+  BlockProducerSchema,
+  BlockProductionStatsSchema,
+  BlockRewardSchema,
+} from '.';
 
-export const BlockProductionModels = [BlockRewardSchema, BlockProducerSchema];
+export const BlockProductionModels = [
+  BlockRewardSchema,
+  BlockProducerSchema,
+  BlockProductionStatsSchema,
+];

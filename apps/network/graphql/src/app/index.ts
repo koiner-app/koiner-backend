@@ -1,5 +1,5 @@
-import { BlockRewardGraphQLServices } from './block-reward';
+import { BlockRewardGraphQLServices } from './block-production';
 
-export * from './block-reward';
+export * from './block-production';
 
 export const NetworkModuleGraphQLServices = [...BlockRewardGraphQLServices];

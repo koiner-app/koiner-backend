@@ -5,24 +5,26 @@ import {
   EntitySchemaProps,
 } from '@appvise/typeorm';
 import { KoinosAddressId } from '@koiner/domain';
-import { BlockProducer, BlockProducerProps } from '@koiner/network/domain';
-import { BlockProducerSchema } from '.';
+import {
+  BlockProductionStats,
+  BlockProductionStatsProps,
+} from '@koiner/network/domain';
+import { BlockProductionStatsSchema } from '.';
 import * as math from 'mathjs';
 
-export class BlockProducerSchemaFactory extends EntitySchemaFactory<
-  BlockProducer,
-  BlockProducerSchema
+export class BlockProductionStatsSchemaFactory extends EntitySchemaFactory<
+  BlockProductionStats,
+  BlockProductionStatsSchema
 > {
   protected toDomainProps(
-    entitySchema: BlockProducerSchema
-  ): EntityProps<BlockProducerProps> {
+    entitySchema: BlockProductionStatsSchema
+  ): EntityProps<BlockProductionStatsProps> {
     const id = new UUID(entitySchema.id);
 
-    const props: BlockProducerProps = {
+    const props: BlockProductionStatsProps = {
       contractId: new KoinosAddressId(entitySchema.contract_id),
-      addressId: new KoinosAddressId(entitySchema.address_id),
-      balance: parseInt(entitySchema.balance),
-      burnedTotal: parseInt(entitySchema.burned_total),
+      rewarded: parseInt(entitySchema.rewarded),
+      burned: parseInt(entitySchema.burned),
       roi: math.evaluate(entitySchema.roi),
       blocksProduced: parseInt(entitySchema.blocks_produced),
     };
@@ -31,15 +33,14 @@ export class BlockProducerSchemaFactory extends EntitySchemaFactory<
   }
 
   protected toSchemaProps(
-    entity: BlockProducer
-  ): EntitySchemaProps<BlockProducerSchema> {
+    entity: BlockProductionStats
+  ): EntitySchemaProps<BlockProductionStatsSchema> {
     const props = entity.getPropsCopy();
 
     return {
       contract_id: props.contractId.value,
-      address_id: props.addressId.value,
-      balance: String(props.balance).padStart(20, '0'),
-      burned_total: String(props.burnedTotal).padStart(20, '0'),
+      rewarded: String(props.rewarded).padStart(20, '0'),
+      burned: String(props.burned).padStart(20, '0'),
       roi: props.roi.toString().padStart(8, '0'),
       blocks_produced: String(props.blocksProduced).padStart(20, '0'),
     };

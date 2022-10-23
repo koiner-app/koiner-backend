@@ -2,6 +2,7 @@ import { BlockProducersLoader, BlockRewardsLoader } from './dataloader';
 import {
   BlockProducerResolver,
   BlockProducersResolver,
+  BlockProductionStatsResolver,
   BlockRewardProducerResolver,
   BlockRewardResolver,
   BlockRewardsBulkResolver,
@@ -23,6 +24,7 @@ export const BlockRewardGraphQLServices = [
   BlockRewardResolver,
   BlockRewardsResolver,
   BlockRewardsBulkResolver,
+  BlockProductionStatsResolver,
 
   // FieldResolvers
   BlockRewardProducerResolver,

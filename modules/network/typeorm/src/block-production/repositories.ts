@@ -7,6 +7,9 @@ import {
   BlockProducerWriteRepository,
   BlockRewardReadRepository,
   BlockRewardWriteRepository,
+  BlockProductionStats,
+  BlockProductionStatsReadRepository,
+  BlockProductionStatsWriteRepository,
 } from '@koiner/network/domain';
 import {
   BlockRewardReadTypeormRepository,
@@ -15,6 +18,9 @@ import {
   BlockProducerWriteTypeormRepository,
   BlockRewardSchema,
   BlockRewardSchemaFactory,
+  BlockProductionStatsSchemaFactory,
+  BlockProductionStatsSchema,
+  BlockProductionStatsReadTypeormRepository,
 } from '.';
 
 // Factories
@@ -26,6 +32,11 @@ const blockRewardSchemaFactory = new BlockRewardSchemaFactory(
 const blockProducerSchemaFactory = new BlockProducerSchemaFactory(
   BlockProducer,
   BlockProducerSchema
+);
+
+const blockProductionStatsSchemaFactory = new BlockProductionStatsSchemaFactory(
+  BlockProductionStats,
+  BlockProductionStatsSchema
 );
 
 export const BlockProductionRepositories: Provider[] = [
@@ -51,4 +62,16 @@ export const BlockProductionRepositories: Provider[] = [
     provide: BlockProducerWriteRepository,
     useClass: BlockProducerWriteTypeormRepository,
   },
+
+  // BlockProductionStats
+  {
+    provide: BlockProductionStatsReadRepository,
+    useClass: BlockProductionStatsReadTypeormRepository,
+  },
+  TypeormRepositoryProvider.provide(
+    BlockProductionStatsWriteRepository,
+    BlockProductionStatsSchema,
+    blockProductionStatsSchemaFactory,
+    false
+  ),
 ];

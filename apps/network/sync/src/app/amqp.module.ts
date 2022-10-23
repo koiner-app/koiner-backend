@@ -18,6 +18,10 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
         'koiner.network.channel.block_producer': {
           prefetchCount: 1,
         },
+        // Channel for processing block production stats
+        'koiner.network.channel.block_production_stats': {
+          prefetchCount: 1,
+        },
       },
       uri: `amqp://${process.env.RABBITMQ_USER}:${process.env.RABBITMQ_PASSWORD}@${process.env.RABBITMQ_HOST}`,
     }),

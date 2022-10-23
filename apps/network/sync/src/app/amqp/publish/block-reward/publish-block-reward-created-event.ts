@@ -18,9 +18,17 @@ export class PublishBlockRewardCreatedEvent extends DomainEventHandler {
       publishedAt: Date.now(),
     });
 
+    // Publish for producer queue
     await this.amqpConnection.publish(
       'koiner.network.event',
-      BlockRewardCreatedMessage.routingKey,
+      `${BlockRewardCreatedMessage.routingKey}.producer_queue`,
+      message.toString()
+    );
+
+    // Publish for production stats queue
+    await this.amqpConnection.publish(
+      'koiner.network.event',
+      `${BlockRewardCreatedMessage.routingKey}.production_stats_queue`,
       message.toString()
     );
   }

@@ -1,4 +1,4 @@
-import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Float, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import { BlockProducer } from '@koiner/network/domain';
 import { GraphQLBigInt } from 'graphql-scalars';

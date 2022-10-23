@@ -1,6 +1,6 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 import { BlockProducersLoader } from '../dataloader/block-producer.loader';
-import { BlockRewardNode } from '../../block-reward/dto/block-reward.node';
+import { BlockRewardNode } from '../dto/block-reward.node';
 import { BlockProducerNode } from '../dto/block-producer.node';
 
 @Resolver(() => BlockRewardNode)
