@@ -1,12 +1,11 @@
 import { AggregateRoot } from '@appvise/domain';
-import { BlockTopology } from '@koiner/domain';
+import { BlockTopology, ChainId } from '@koiner/domain';
 import {
   SynchronizationProps,
   SynchronizationStarted,
   SynchronizationUpdated,
   CreateSynchronizationProps,
   UpdateSynchronizationProps,
-  ChainId,
 } from '.';
 
 export class Synchronization extends AggregateRoot<SynchronizationProps> {

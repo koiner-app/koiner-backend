@@ -1,4 +1,3 @@
-export * from './chain-id.value-object';
 export * from './synchronization.types';
 export * from './synchronization';
 

@@ -26,6 +26,10 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
       channels: {
         // Channel for processing addresses
         'koiner.chain.channel.address': {},
+        // Channel for processing chain stats
+        'koiner.chain.channel.chain.stats': {
+          prefetchCount: 1,
+        },
       },
       uri: `amqp://${process.env.RABBITMQ_USER}:${process.env.RABBITMQ_PASSWORD}@${process.env.RABBITMQ_HOST}`,
     }),

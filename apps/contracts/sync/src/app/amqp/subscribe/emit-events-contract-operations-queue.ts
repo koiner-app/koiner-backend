@@ -4,7 +4,7 @@ import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import { Logger } from '@appvise/domain';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import {
-  OperationCreatedMessage,
+  ContractOperationCreatedMessage,
   UploadContractOperationCreatedMessage,
 } from '@koiner/chain/events';
 import { ContractQuery } from '@koiner/contracts/application';
@@ -25,7 +25,7 @@ export class EmitEventsContractOperationsQueue {
     },
     exchange: 'koiner.chain.event',
     routingKey: [
-      OperationCreatedMessage.routingKey,
+      ContractOperationCreatedMessage.routingKey,
       `${UploadContractOperationCreatedMessage.routingKey}.operations_queue`,
     ],
     queue: 'koiner.contracts.queue.contract.operations',
@@ -33,12 +33,12 @@ export class EmitEventsContractOperationsQueue {
   async handle(message: any, amqpMsg: ConsumeMessage): Promise<void> {
     return new Promise((resolve, reject) => {
       let event:
-        | OperationCreatedMessage
+        | ContractOperationCreatedMessage
         | UploadContractOperationCreatedMessage;
       let routingKey = amqpMsg.fields.routingKey;
 
-      if (routingKey === OperationCreatedMessage.routingKey) {
-        event = new OperationCreatedMessage(JSON.parse(message));
+      if (routingKey === ContractOperationCreatedMessage.routingKey) {
+        event = new ContractOperationCreatedMessage(JSON.parse(message));
       }
 
       if (
@@ -49,7 +49,7 @@ export class EmitEventsContractOperationsQueue {
         event = new UploadContractOperationCreatedMessage(JSON.parse(message));
       }
 
-      if (event instanceof OperationCreatedMessage) {
+      if (event instanceof ContractOperationCreatedMessage) {
         this.eventEmitter
           .emitAsync(routingKey, event)
           .then(() => {

@@ -3,9 +3,10 @@ import { PublishAddressCreatedEvent } from './publish-address-created-event';
 import { PublishAddressUsedEventForBlockSigner } from './publish-address-used-event-for-block-signer';
 import { PublishAddressUsedEventForTransactionPayer } from './publish-address-used-event-for-transaction-payer';
 import { PublishBlockCreatedEvent } from './publish-block-created-event';
-import { PublishOperationCreatedEvent } from './publish-operation-created-event';
-import { PublishUploadContractOperationCreatedEvent } from './publish-upload-contract-operation-created-event';
 import { PublishEventCreatedEvent } from './publish-event-created-event';
+import { PublishOperationCreatedEvent } from './publish-operation-created-event';
+import { PublishTransactionCreatedEvent } from './publish-transaction-created-event';
+import { PublishUploadContractOperationCreatedEvent } from './publish-upload-contract-operation-created-event';
 
 export const ChainAmqpPublishHandlers = [
   {
@@ -80,6 +81,19 @@ export const ChainAmqpPublishHandlers = [
       amqpConnection: AmqpConnection
     ): PublishOperationCreatedEvent => {
       const eventHandler = new PublishOperationCreatedEvent(amqpConnection);
+
+      eventHandler.listen();
+
+      return eventHandler;
+    },
+    inject: [AmqpConnection],
+  },
+  {
+    provide: PublishTransactionCreatedEvent,
+    useFactory: (
+      amqpConnection: AmqpConnection
+    ): PublishTransactionCreatedEvent => {
+      const eventHandler = new PublishTransactionCreatedEvent(amqpConnection);
 
       eventHandler.listen();
 

@@ -3,12 +3,8 @@ import {
   EntitySchemaFactory,
   EntitySchemaProps,
 } from '@appvise/typeorm';
-import { BlockTopology, KoinosId } from '@koiner/domain';
-import {
-  Synchronization,
-  ChainId,
-  SynchronizationProps,
-} from '@koiner/sync/domain';
+import { BlockTopology, ChainId, KoinosId } from '@koiner/domain';
+import { Synchronization, SynchronizationProps } from '@koiner/sync/domain';
 import { SynchronizationSchema } from '.';
 
 export class SynchronizationSchemaFactory extends EntitySchemaFactory<

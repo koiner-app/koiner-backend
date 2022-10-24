@@ -1,7 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BlockTopology, KoinosId } from '@koiner/domain';
+import { BlockTopology, ChainId, KoinosId } from '@koiner/domain';
 import {
-  ChainId,
   Synchronization,
   SynchronizationWriteRepository,
 } from '@koiner/sync/domain';

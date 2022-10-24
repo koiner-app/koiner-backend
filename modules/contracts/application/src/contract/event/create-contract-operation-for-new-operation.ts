@@ -1,14 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { OperationType } from '@koiner/chain/domain';
+import { ContractOperationCreatedMessage } from '@koiner/chain/events';
 import { Contract } from '@koiner/contracts/domain';
-import {
-  ContractQuery,
-  CreateContractOperationCommand,
-} from '@koiner/contracts/application';
-import { OperationCreatedMessage } from '@koiner/chain/events';
 import { CallContractOperationJson } from 'koilib/lib/interface';
+import { ContractQuery, CreateContractOperationCommand } from '..';
 
 @Injectable()
 export class CreateContractOperationForNewOperation {
@@ -17,12 +13,9 @@ export class CreateContractOperationForNewOperation {
     private readonly queryBus: QueryBus
   ) {}
 
-  @OnEvent(OperationCreatedMessage.routingKey, { async: false })
-  async handle(event: OperationCreatedMessage): Promise<void> {
-    if (
-      event.type === OperationType.contractOperation &&
-      event.operationData['call_contract']
-    ) {
+  @OnEvent(ContractOperationCreatedMessage.routingKey, { async: false })
+  async handle(event: ContractOperationCreatedMessage): Promise<void> {
+    if (event.operationData['call_contract']) {
       const operationJson: CallContractOperationJson =
         event.operationData['call_contract'];
 
