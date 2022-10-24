@@ -3,7 +3,7 @@ import { TransactionHeader } from '@koiner/chain/domain';
 
 @ObjectType('TransactionHeader')
 export class TransactionHeaderField {
-  @Field()
+  @Field(() => String)
   rcLimit: string;
 
   @Field({ nullable: true })

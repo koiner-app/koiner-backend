@@ -3,13 +3,13 @@ import { BlockReceipt } from '@koiner/chain/domain';
 
 @ObjectType('BlockReceipt')
 export class BlockReceiptField {
-  @Field()
+  @Field(() => String)
   diskStorageUsed: string;
 
-  @Field()
+  @Field(() => String)
   networkBandwidthUsed: string;
 
-  @Field()
+  @Field(() => String)
   computeBandwidthUsed: string;
 
   @Field(() => Int)

@@ -14,7 +14,7 @@ export class TokenContractNode extends BaseNode {
   @Field(() => Int)
   decimals: number;
 
-  @Field()
+  @Field(() => String)
   totalSupply: string;
 
   @Field(() => GraphQLBigInt)

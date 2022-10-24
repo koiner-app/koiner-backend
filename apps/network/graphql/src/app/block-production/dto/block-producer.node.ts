@@ -11,13 +11,13 @@ export class BlockProducerNode extends BaseNode {
   @Field()
   contractId: string;
 
-  @Field()
+  @Field(() => String)
   balance: string;
 
   @Field(() => GraphQLBigInt)
   blocksProduced: number;
 
-  @Field()
+  @Field(() => String)
   burnedTotal: string;
 
   @Field(() => Float)

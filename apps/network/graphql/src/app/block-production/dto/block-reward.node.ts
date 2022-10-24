@@ -17,13 +17,13 @@ export class BlockRewardNode extends BaseNode {
   @Field()
   contractId: string;
 
-  @Field()
+  @Field(() => String)
   value: string;
 
   @Field({ nullable: true })
   burnedContractId: string;
 
-  @Field()
+  @Field(() => String)
   burnedValue: string;
 
   @Field(() => Float)

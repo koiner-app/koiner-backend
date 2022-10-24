@@ -17,7 +17,7 @@ export class TokenEventNode extends BaseNode {
   @Field({ nullable: true })
   to?: string;
 
-  @Field()
+  @Field(() => String)
   value: string;
 
   @Field(() => GraphQLBigInt)

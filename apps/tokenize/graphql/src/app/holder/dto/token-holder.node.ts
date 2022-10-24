@@ -1,6 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import { TokenHolder } from '@koiner/tokenize/domain';
+import { GraphQLBigInt } from 'graphql-scalars';
 
 @ObjectType('TokenHolder')
 export class TokenHolderNode extends BaseNode {
@@ -10,19 +11,19 @@ export class TokenHolderNode extends BaseNode {
   @Field()
   contractId: string;
 
-  @Field()
+  @Field(() => String)
   balance: string;
 
-  @Field()
+  @Field(() => GraphQLBigInt)
   burnCount: number;
 
-  @Field()
+  @Field(() => GraphQLBigInt)
   mintCount: number;
 
-  @Field()
+  @Field(() => GraphQLBigInt)
   transferInCount: number;
 
-  @Field()
+  @Field(() => GraphQLBigInt)
   transferOutCount: number;
 
   constructor(tokenHolder: TokenHolder) {

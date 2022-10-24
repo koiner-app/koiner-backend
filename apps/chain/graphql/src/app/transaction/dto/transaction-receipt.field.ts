@@ -6,22 +6,22 @@ export class TransactionReceiptField {
   @Field()
   payer: string;
 
-  @Field()
+  @Field(() => String)
   maxPayerRc: string;
 
-  @Field()
+  @Field(() => String)
   rcLimit: string;
 
-  @Field()
+  @Field(() => String)
   rcUsed: string;
 
-  @Field()
+  @Field(() => String)
   diskStorageUsed: string;
 
-  @Field()
+  @Field(() => String)
   networkBandwidthUsed: string;
 
-  @Field()
+  @Field(() => String)
   computeBandwidthUsed: string;
 
   @Field(() => Int)

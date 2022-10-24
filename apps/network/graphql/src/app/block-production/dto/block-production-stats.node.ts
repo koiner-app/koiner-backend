@@ -8,13 +8,13 @@ export class BlockProductionStatsNode extends BaseNode {
   @Field()
   contractId: string;
 
-  @Field()
+  @Field(() => String)
   rewarded: string;
 
   @Field(() => GraphQLBigInt)
   blocksProduced: number;
 
-  @Field()
+  @Field(() => String)
   burned: string;
 
   @Field(() => Float)
