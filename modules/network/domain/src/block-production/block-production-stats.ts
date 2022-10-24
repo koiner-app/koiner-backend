@@ -8,7 +8,7 @@ import {
 import * as math from 'mathjs';
 
 export class BlockProductionStats extends AggregateRoot<BlockProductionStatsProps> {
-  protected readonly _id!: KoinosAddressId;
+  protected readonly _id!: UUID;
 
   static create(
     create: CreateBlockProductionStatsProps,

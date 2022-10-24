@@ -2,6 +2,7 @@ import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 import { PublishAddressUsedForTokenContract } from './address/publish-address-used-for-token-contract';
 import { PublishAddressesUsedForTokenEvents } from './address/publish-addresses-used-for-token-events';
 import { PublishTokenEvents } from './token/publish-token-events';
+import { PublishTokenContractCreatedEvent } from './token/publish-token-contract-created-event';
 
 export const TokenizeAmqpPublishHandlers = [
   // Address
@@ -41,6 +42,19 @@ export const TokenizeAmqpPublishHandlers = [
     provide: PublishTokenEvents,
     useFactory: (amqpConnection: AmqpConnection): PublishTokenEvents => {
       const eventHandler = new PublishTokenEvents(amqpConnection);
+
+      eventHandler.listen();
+
+      return eventHandler;
+    },
+    inject: [AmqpConnection],
+  },
+  {
+    provide: PublishTokenContractCreatedEvent,
+    useFactory: (
+      amqpConnection: AmqpConnection
+    ): PublishTokenContractCreatedEvent => {
+      const eventHandler = new PublishTokenContractCreatedEvent(amqpConnection);
 
       eventHandler.listen();
 

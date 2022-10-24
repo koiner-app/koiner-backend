@@ -3,6 +3,7 @@ import { EmitEventsTokenSupplyQueue } from './emit-events-token-supply-queue';
 import { EmitEventsTokenContractQueue } from './emit-events-token-contract-queue';
 import { EmitEventsTokenEventQueue } from './emit-events-token-event-queue';
 import { EmitEventsTokenOperationQueue } from './emit-events-token-operation-queue';
+import { UpdateTokenStatsFromTokenizeEventsQueue } from './update-token-stats-from-tokenize-events-queue';
 
 export const TokenizeAmqpSubscribeHandlers = [
   EmitEventsTokenHolderQueue,
@@ -10,4 +11,5 @@ export const TokenizeAmqpSubscribeHandlers = [
   EmitEventsTokenEventQueue,
   EmitEventsTokenOperationQueue,
   EmitEventsTokenSupplyQueue,
+  UpdateTokenStatsFromTokenizeEventsQueue,
 ];

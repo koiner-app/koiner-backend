@@ -35,8 +35,14 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
         'koiner.tokenize.channel.token.token_holder': {
           prefetchCount: 1,
         },
-        // Channel for processing updates to Token.totalSupply for token events (burned, minted)
+        // Channel for processing updates to Token.totalSupply + stats for token events
+        // (burned, minted, transferred)
         'koiner.tokenize.channel.token.total_supply': {
+          prefetchCount: 1,
+        },
+        // Channel for processing update to Token stats for token events (burned, minted, transferred)
+        // and new token contracts
+        'koiner.tokenize.channel.stats.token': {
           prefetchCount: 1,
         },
       },
