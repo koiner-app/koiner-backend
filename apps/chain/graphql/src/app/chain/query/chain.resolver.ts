@@ -2,10 +2,10 @@ import { Args, ID, Query, Resolver } from '@nestjs/graphql';
 import { QueryBus } from '@nestjs/cqrs';
 import { SelectionSet } from '@appvise/graphql';
 import { SelectionSet as SelectionSetObject } from '@appvise/domain';
+import { koinosConfig } from '@koinos/jsonrpc';
 import { Chain } from '@koiner/chain/domain';
 import { ChainQuery } from '@koiner/chain/application';
 import { ChainNode } from '../dto';
-import { koinosConfig } from '@koinos/jsonrpc';
 
 @Resolver(() => ChainNode)
 export class ChainResolver {
