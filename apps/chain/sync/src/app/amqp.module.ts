@@ -25,7 +25,9 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
       // thus making handling chain events synchronously.
       channels: {
         // Channel for processing addresses
-        'koiner.chain.channel.address': {},
+        'koiner.chain.channel.address': {
+          prefetchCount: 1,
+        },
         // Channel for processing chain stats
         'koiner.chain.channel.chain.stats': {
           prefetchCount: 1,
