@@ -13,7 +13,6 @@ export class TokenStats extends AggregateRoot<TokenStatsProps> {
   static create(create: CreateTokenStatsProps, id: ChainId): TokenStats {
     const props: TokenStatsProps = {
       ...create,
-      operationCount: 0,
       transferCount: 0,
     };
 
@@ -23,7 +22,6 @@ export class TokenStats extends AggregateRoot<TokenStatsProps> {
       new TokenStatsUpdated({
         aggregateId: id.value,
         contractCount: props.contractCount,
-        operationCount: props.operationCount,
         transferCount: props.transferCount,
       })
     );
@@ -35,10 +33,6 @@ export class TokenStats extends AggregateRoot<TokenStatsProps> {
     return this.props.contractCount;
   }
 
-  get operationCount(): number {
-    return this.props.operationCount;
-  }
-
   get transferCount(): number {
     return this.props.transferCount;
   }
@@ -46,10 +40,6 @@ export class TokenStats extends AggregateRoot<TokenStatsProps> {
   update(props: UpdateTokenStatsProps): void {
     if (props.contractCount) {
       this.props.contractCount += props.contractCount;
-    }
-
-    if (props.operationCount) {
-      this.props.operationCount += props.operationCount;
     }
 
     if (props.transferCount) {
@@ -60,7 +50,6 @@ export class TokenStats extends AggregateRoot<TokenStatsProps> {
       new TokenStatsUpdated({
         aggregateId: this.id.value,
         contractCount: this.props.contractCount,
-        operationCount: this.props.operationCount,
         transferCount: this.props.transferCount,
       })
     );
@@ -69,10 +58,6 @@ export class TokenStats extends AggregateRoot<TokenStatsProps> {
   undo(props: UpdateTokenStatsProps): void {
     if (props.contractCount !== undefined) {
       this.props.contractCount -= props.contractCount;
-    }
-
-    if (props.operationCount !== undefined) {
-      this.props.operationCount -= props.operationCount;
     }
 
     if (props.transferCount !== undefined) {

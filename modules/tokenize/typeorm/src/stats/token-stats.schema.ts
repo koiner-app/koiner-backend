@@ -11,8 +11,5 @@ export class TokenStatsSchema extends EntityBaseSchema {
   readonly contract_count!: number;
 
   @Column({ type: 'bigint' })
-  readonly operation_count!: number;
-
-  @Column({ type: 'bigint' })
   readonly transfer_count!: number;
 }

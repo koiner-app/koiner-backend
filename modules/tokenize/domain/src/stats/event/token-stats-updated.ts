@@ -8,6 +8,5 @@ export class TokenStatsUpdated extends DomainEvent {
   }
 
   readonly contractCount!: number;
-  readonly operationCount!: number;
   readonly transferCount!: number;
 }

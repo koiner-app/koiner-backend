@@ -6,8 +6,6 @@ import { CommandBus } from '@nestjs/cqrs';
 import { koinosConfig } from '@koinos/jsonrpc';
 import {
   TokenContractCreatedMessage,
-  TokensBurnedEventMessage,
-  TokensMintedEventMessage,
   TokensTransferredEventMessage,
 } from '@koiner/tokenize/events';
 import { CreateOrUpdateTokenStatsCommand } from '@koiner/tokenize/application';
@@ -25,8 +23,6 @@ export class UpdateTokenStatsFromTokenizeEventsQueue {
     exchange: 'koiner.tokenize.event',
     routingKey: [
       TokenContractCreatedMessage.routingKey,
-      TokensBurnedEventMessage.routingKey,
-      TokensMintedEventMessage.routingKey,
       TokensTransferredEventMessage.routingKey,
     ],
     queue: 'koiner.tokenize.queue.stats.token',
@@ -36,28 +32,14 @@ export class UpdateTokenStatsFromTokenizeEventsQueue {
       const routingKey = amqpMsg.fields.routingKey;
 
       let contractCount = 0;
-      let operationCount = 0;
-      let burnCount = 0;
-      let mintCount = 0;
       let transferCount = 0;
 
       if (routingKey === TokenContractCreatedMessage.routingKey) {
         contractCount = 1;
       }
 
-      if (routingKey === TokensBurnedEventMessage.routingKey) {
-        burnCount = 1;
-        operationCount = 1;
-      }
-
-      if (routingKey === TokensMintedEventMessage.routingKey) {
-        mintCount = 1;
-        operationCount = 1;
-      }
-
       if (routingKey === TokensTransferredEventMessage.routingKey) {
         transferCount = 1;
-        operationCount = 1;
       }
 
       this.commandBus
@@ -66,9 +48,6 @@ export class UpdateTokenStatsFromTokenizeEventsQueue {
             id: koinosConfig.chainId,
             stats: {
               contractCount,
-              operationCount,
-              burnCount,
-              mintCount,
               transferCount,
             },
           })

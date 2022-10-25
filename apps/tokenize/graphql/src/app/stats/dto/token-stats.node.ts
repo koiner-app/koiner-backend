@@ -9,9 +9,6 @@ export class TokenStatsNode extends BaseNode {
   contractCount: number;
 
   @Field(() => GraphQLBigInt)
-  operationCount: number;
-
-  @Field(() => GraphQLBigInt)
   transferCount: number;
 
   @Field(() => GraphQLBigInt)
@@ -21,7 +18,6 @@ export class TokenStatsNode extends BaseNode {
     super(tokenStats);
 
     this.contractCount = tokenStats.contractCount;
-    this.operationCount = tokenStats.operationCount;
     this.transferCount = tokenStats.transferCount;
   }
 }
