@@ -19,8 +19,6 @@ export class TokenStatsSchemaFactory extends EntitySchemaFactory<
     const props: TokenStatsProps = {
       contractCount: parseInt(entitySchema.contract_count.toString()),
       operationCount: parseInt(entitySchema.operation_count.toString()),
-      burnCount: parseInt(entitySchema.burn_count.toString()),
-      mintCount: parseInt(entitySchema.mint_count.toString()),
       transferCount: parseInt(entitySchema.transfer_count.toString()),
     };
 
@@ -35,8 +33,6 @@ export class TokenStatsSchemaFactory extends EntitySchemaFactory<
     return {
       contract_count: props.contractCount,
       operation_count: props.operationCount,
-      burn_count: props.burnCount,
-      mint_count: props.mintCount,
       transfer_count: props.transferCount,
     };
   }

@@ -14,8 +14,6 @@ export class TokenStats extends AggregateRoot<TokenStatsProps> {
     const props: TokenStatsProps = {
       ...create,
       operationCount: 0,
-      burnCount: 0,
-      mintCount: 0,
       transferCount: 0,
     };
 
@@ -25,8 +23,7 @@ export class TokenStats extends AggregateRoot<TokenStatsProps> {
       new TokenStatsUpdated({
         aggregateId: id.value,
         contractCount: props.contractCount,
-        burnCount: props.burnCount,
-        mintCount: props.mintCount,
+        operationCount: props.operationCount,
         transferCount: props.transferCount,
       })
     );
@@ -38,12 +35,8 @@ export class TokenStats extends AggregateRoot<TokenStatsProps> {
     return this.props.contractCount;
   }
 
-  get burnCount(): number {
-    return this.props.burnCount;
-  }
-
-  get mintCount(): number {
-    return this.props.mintCount;
+  get operationCount(): number {
+    return this.props.operationCount;
   }
 
   get transferCount(): number {
@@ -55,12 +48,8 @@ export class TokenStats extends AggregateRoot<TokenStatsProps> {
       this.props.contractCount += props.contractCount;
     }
 
-    if (props.burnCount) {
-      this.props.burnCount += props.burnCount;
-    }
-
-    if (props.mintCount) {
-      this.props.mintCount += props.mintCount;
+    if (props.operationCount) {
+      this.props.operationCount += props.operationCount;
     }
 
     if (props.transferCount) {
@@ -71,8 +60,7 @@ export class TokenStats extends AggregateRoot<TokenStatsProps> {
       new TokenStatsUpdated({
         aggregateId: this.id.value,
         contractCount: this.props.contractCount,
-        burnCount: this.props.burnCount,
-        mintCount: this.props.mintCount,
+        operationCount: this.props.operationCount,
         transferCount: this.props.transferCount,
       })
     );
@@ -83,12 +71,8 @@ export class TokenStats extends AggregateRoot<TokenStatsProps> {
       this.props.contractCount -= props.contractCount;
     }
 
-    if (props.burnCount !== undefined) {
-      this.props.burnCount -= props.burnCount;
-    }
-
-    if (props.mintCount !== undefined) {
-      this.props.mintCount -= props.mintCount;
+    if (props.operationCount !== undefined) {
+      this.props.operationCount -= props.operationCount;
     }
 
     if (props.transferCount !== undefined) {
