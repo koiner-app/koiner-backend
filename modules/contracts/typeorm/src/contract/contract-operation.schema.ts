@@ -1,6 +1,14 @@
 import { EntityBaseSchema } from '@appvise/typeorm';
-import { Column, Entity, Index, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryColumn,
+} from 'typeorm';
 import { ContractStandardType } from '@koiner/contracts/standards';
+import { ContractSchema } from './contract.schema';
 
 @Entity('contracts_contract_operation')
 export class ContractOperationSchema extends EntityBaseSchema {
@@ -15,6 +23,11 @@ export class ContractOperationSchema extends EntityBaseSchema {
   @Index()
   @Column({ length: 35 })
   readonly contract_id!: string;
+
+  // Add foreign key without the need to always use the relation
+  @ManyToOne(() => ContractSchema, { nullable: false, persistence: false })
+  @JoinColumn({ name: 'contract_id', referencedColumnName: 'id' })
+  private _contract_id_fg!: never;
 
   @Index()
   @Column({ length: 70 })

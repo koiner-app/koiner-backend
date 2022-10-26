@@ -35,7 +35,11 @@ export class EmitEventsTokenEventQueue {
             'Could not process koiner.tokenize.queue.token.event message',
             error
           );
-          reject();
+
+          // Reject with small delay
+          setTimeout(() => {
+            reject();
+          }, 2000);
         });
     });
   }

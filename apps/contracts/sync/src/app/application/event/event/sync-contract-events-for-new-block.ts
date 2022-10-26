@@ -1,15 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { CommandBus } from '@nestjs/cqrs';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { UUID } from '@appvise/domain';
 import { RawBlocksService } from '@koinos/jsonrpc';
 import { EventParentType } from '@koiner/chain/domain';
-import { CreateEventCommand } from '@koiner/chain/application';
 import { BlockCreatedMessage } from '@koiner/chain/events';
+import {
+  ContractQuery,
+  CreateContractEventCommand,
+} from '@koiner/contracts/application';
+import { Contract } from '@koiner/contracts/domain';
 
 @Injectable()
-export class SyncEventsForNewBlock {
+export class SyncContractEventsForNewBlock {
   constructor(
     private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
     private readonly rawBlocksService: RawBlocksService
   ) {}
 
@@ -25,15 +31,24 @@ export class SyncEventsForNewBlock {
       ) {
         const blockEventEvent = rawBlock.receipt.events[eventIndex];
 
-        // Ignore contract events (handled by contracts service)
-        if (!blockEventEvent.source) {
+        if (blockEventEvent.source) {
+          let contractStandardType = undefined;
+
+          const contract = await this.queryBus.execute<ContractQuery, Contract>(
+            new ContractQuery(blockEventEvent.source)
+          );
+
+          contractStandardType = contract.contractStandardType;
+
           await this.commandBus.execute(
-            new CreateEventCommand({
+            new CreateContractEventCommand({
+              id: UUID.generate().value,
               blockHeight: event.height,
               parentId: event.id,
               parentType: EventParentType.block,
               sequence: blockEventEvent.sequence,
               contractId: blockEventEvent.source,
+              contractStandardType,
               name: blockEventEvent.name,
               data: blockEventEvent.data,
               impacted: blockEventEvent.impacted

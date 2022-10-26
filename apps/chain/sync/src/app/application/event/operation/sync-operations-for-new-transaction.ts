@@ -41,20 +41,19 @@ export class SyncOperationsForNewTransaction {
           operationType = OperationType.uploadContract;
         }
 
-        if (operation.call_contract) {
-          operationType = OperationType.contractOperation;
+        // Ignore contract operations (handled by contracts service)
+        if (!operation.call_contract) {
+          await this.commandBus.execute(
+            new CreateOperationCommand({
+              blockHeight: event.blockHeight,
+              transactionId: event.id,
+              operationIndex: operationIndex,
+              type: operationType,
+              timestamp: event.timestamp,
+              operationData: operation,
+            })
+          );
         }
-
-        await this.commandBus.execute(
-          new CreateOperationCommand({
-            blockHeight: event.blockHeight,
-            transactionId: event.id,
-            operationIndex: operationIndex,
-            type: operationType,
-            timestamp: event.timestamp,
-            operationData: operation,
-          })
-        );
       }
     }
   }

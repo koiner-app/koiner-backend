@@ -3,7 +3,6 @@ import { PublishAddressCreatedEvent } from './address/publish-address-created-ev
 import { PublishAddressUsedEventForBlockSigner } from './address/publish-address-used-event-for-block-signer';
 import { PublishAddressUsedEventForTransactionPayer } from './address/publish-address-used-event-for-transaction-payer';
 import { PublishBlockCreatedEvent } from './block/publish-block-created-event';
-import { PublishEventCreatedEvent } from './event/publish-event-created-event';
 import { PublishOperationCreatedEvent } from './operation/publish-operation-created-event';
 import { PublishTransactionCreatedEvent } from './transaction/publish-transaction-created-event';
 import { PublishUploadContractOperationCreatedEvent } from './operation/publish-upload-contract-operation-created-event';
@@ -73,17 +72,6 @@ export const ChainAmqpPublishHandlers = [
       const eventHandler = new PublishBlockWithTransactionsCreatedEvent(
         amqpConnection
       );
-
-      eventHandler.listen();
-
-      return eventHandler;
-    },
-    inject: [AmqpConnection],
-  },
-  {
-    provide: PublishEventCreatedEvent,
-    useFactory: (amqpConnection: AmqpConnection): PublishEventCreatedEvent => {
-      const eventHandler = new PublishEventCreatedEvent(amqpConnection);
 
       eventHandler.listen();
 

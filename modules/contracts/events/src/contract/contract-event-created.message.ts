@@ -12,7 +12,7 @@ export class ContractEventCreatedMessage {
   readonly contractId!: string;
   readonly contractStandardType?: string;
   readonly name!: string;
-  readonly data!: string;
+  readonly data?: string;
   readonly impacted?: string[];
   readonly timestamp!: number;
   readonly publishedAt!: number;

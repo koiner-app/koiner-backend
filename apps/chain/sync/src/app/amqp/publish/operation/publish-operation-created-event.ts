@@ -1,10 +1,7 @@
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 import { DomainEventHandler } from '@appvise/domain';
-import { OperationCreated, OperationType } from '@koiner/chain/domain';
-import {
-  ContractOperationCreatedMessage,
-  OperationCreatedMessage,
-} from '@koiner/chain/events';
+import { OperationCreated } from '@koiner/chain/domain';
+import { OperationCreatedMessage } from '@koiner/chain/events';
 
 export class PublishOperationCreatedEvent extends DomainEventHandler {
   constructor(private readonly amqpConnection: AmqpConnection) {
@@ -30,15 +27,5 @@ export class PublishOperationCreatedEvent extends DomainEventHandler {
       OperationCreatedMessage.routingKey,
       message.toString()
     );
-
-    if (event.type === OperationType.contractOperation) {
-      const message2 = new ContractOperationCreatedMessage(props);
-
-      await this.amqpConnection.publish(
-        'koiner.chain.event',
-        ContractOperationCreatedMessage.routingKey,
-        message2.toString()
-      );
-    }
   }
 }

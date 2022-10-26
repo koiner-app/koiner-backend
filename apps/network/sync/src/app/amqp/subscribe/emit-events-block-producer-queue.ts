@@ -37,7 +37,11 @@ export class EmitEventsBlockProducerQueue {
             error
           );
           this.logger.log('message', message);
-          reject();
+
+          // Reject with small delay
+          setTimeout(() => {
+            reject();
+          }, 2000);
         });
     });
   }

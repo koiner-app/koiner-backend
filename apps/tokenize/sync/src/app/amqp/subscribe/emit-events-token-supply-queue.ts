@@ -59,7 +59,11 @@ export class EmitEventsTokenSupplyQueue {
             'Could not process koiner.tokenize.queue.token.total_supply event',
             error
           );
-          reject();
+
+          // Reject with small delay
+          setTimeout(() => {
+            reject();
+          }, 2000);
         });
     });
   }

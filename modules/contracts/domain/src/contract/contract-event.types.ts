@@ -14,7 +14,7 @@ export interface CreateContractEventProps {
   contractId: KoinosAddressId;
   contractStandardType?: ContractStandardType;
   name: string;
-  data: string;
+  data?: string;
   impacted?: KoinosAddressId[];
   timestamp: number;
 }

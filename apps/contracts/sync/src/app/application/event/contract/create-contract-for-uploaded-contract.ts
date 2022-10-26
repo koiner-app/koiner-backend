@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { CommandBus } from '@nestjs/cqrs';
 import { ContractStandardService } from '@koiner/contracts/standards';
-import { CreateContractCommand } from '@koiner/contracts/application';
 import { UploadContractOperationCreatedMessage } from '@koiner/chain/events';
+import { CreateContractCommand } from '@koiner/contracts/application';
 
 @Injectable()
 export class CreateContractForUploadedContract {

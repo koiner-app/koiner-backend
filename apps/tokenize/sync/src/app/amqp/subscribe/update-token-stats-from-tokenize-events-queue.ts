@@ -57,11 +57,14 @@ export class UpdateTokenStatsFromTokenizeEventsQueue {
         })
         .catch((error) => {
           this.logger.error(
-            'Could not process koiner.chain.queue.chain.stats message',
+            'Could not process koiner.tokenize.channel.stats.token message',
             error
           );
 
-          reject();
+          // Reject with small delay
+          setTimeout(() => {
+            reject();
+          }, 2000);
         });
     });
   }
