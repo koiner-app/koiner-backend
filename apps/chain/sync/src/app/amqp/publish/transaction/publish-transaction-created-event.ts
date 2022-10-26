@@ -10,6 +10,7 @@ export class PublishTransactionCreatedEvent extends DomainEventHandler {
 
   async handle(event: TransactionCreated): Promise<void> {
     const message = new TransactionCreatedMessage({
+      id: event.aggregateId,
       blockHeight: event.blockHeight,
       payer: event.payer,
       operationCount: event.operationCount,

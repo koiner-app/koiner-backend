@@ -32,6 +32,22 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
         'koiner.chain.channel.chain.stats': {
           prefetchCount: 1,
         },
+        // Channel for processing block events
+        'koiner.chain.channel.event.block': {
+          prefetchCount: 1,
+        },
+        // Channel for processing transaction events
+        'koiner.chain.channel.event.transaction': {
+          prefetchCount: 1,
+        },
+        // Channel for processing operations
+        'koiner.chain.channel.operation': {
+          prefetchCount: 1,
+        },
+        // Channel for processing transactions
+        'koiner.chain.channel.transaction': {
+          prefetchCount: 1,
+        },
       },
       uri: `amqp://${process.env.RABBITMQ_USER}:${process.env.RABBITMQ_PASSWORD}@${process.env.RABBITMQ_HOST}`,
     }),

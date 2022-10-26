@@ -1,21 +1,23 @@
+import { Injectable } from '@nestjs/common';
+import { OnEvent } from '@nestjs/event-emitter';
 import { CommandBus } from '@nestjs/cqrs';
-import { DomainEventHandler } from '@appvise/domain';
 import { RawBlocksService } from '@koinos/jsonrpc';
-import { OperationType, TransactionCreated } from '@koiner/chain/domain';
+import { OperationType } from '@koiner/chain/domain';
 import { CreateOperationCommand } from '@koiner/chain/application';
+import { TransactionCreatedMessage } from '@koiner/chain/events';
 
-export class SyncOperationsForNewTransaction extends DomainEventHandler {
+@Injectable()
+export class SyncOperationsForNewTransaction {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly rawBlocksService: RawBlocksService
-  ) {
-    super(TransactionCreated);
-  }
+  ) {}
 
-  async handle(event: TransactionCreated): Promise<void> {
+  @OnEvent(TransactionCreatedMessage.routingKey, { async: false })
+  async handle(event: TransactionCreatedMessage): Promise<void> {
     const rawTransaction = await this.rawBlocksService.getTransaction(
       event.blockHeight,
-      event.aggregateId
+      event.id
     );
 
     if (Array.isArray(rawTransaction.operations)) {
@@ -46,7 +48,7 @@ export class SyncOperationsForNewTransaction extends DomainEventHandler {
         await this.commandBus.execute(
           new CreateOperationCommand({
             blockHeight: event.blockHeight,
-            transactionId: event.aggregateId,
+            transactionId: event.id,
             operationIndex: operationIndex,
             type: operationType,
             timestamp: event.timestamp,

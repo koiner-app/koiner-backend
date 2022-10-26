@@ -4,6 +4,8 @@ export class TransactionCreatedMessage {
   constructor(props: Partial<TransactionCreatedMessage>) {
     Object.assign(this, props);
   }
+
+  readonly id!: string;
   readonly blockHeight!: number;
   readonly payer!: string;
   readonly operationCount!: number;

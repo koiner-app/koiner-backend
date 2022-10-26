@@ -1,21 +1,22 @@
-import { CommandBus, CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { Injectable } from '@nestjs/common';
+import { OnEvent } from '@nestjs/event-emitter';
+import { CommandBus } from '@nestjs/cqrs';
 import { Logger } from '@appvise/domain';
-import { RawBlocksService } from '@koinos/jsonrpc';
+import { BlockWithTransactionsCreatedMessage } from '@koiner/chain/events';
 import { CreateTransactionCommand } from '@koiner/chain/application';
-import { SyncTransactionsCommand } from './dto/sync-transactions.command';
+import { RawBlocksService } from '@koinos/jsonrpc';
 
-@CommandHandler(SyncTransactionsCommand)
-export class SyncTransactionsHandler
-  implements ICommandHandler<SyncTransactionsCommand>
-{
+@Injectable()
+export class SyncTransactionsForNewBlock {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly logger: Logger,
     private readonly rawBlocksService: RawBlocksService
   ) {}
 
-  async execute(command: SyncTransactionsCommand): Promise<void> {
-    const rawBlock = await this.rawBlocksService.getBlock(command.blockHeight);
+  @OnEvent(BlockWithTransactionsCreatedMessage.routingKey, { async: false })
+  async handle(event: BlockWithTransactionsCreatedMessage): Promise<void> {
+    const rawBlock = await this.rawBlocksService.getBlock(event.height);
     const transactions = rawBlock.block.transactions;
 
     for (
@@ -31,7 +32,7 @@ export class SyncTransactionsHandler
       await this.commandBus.execute(
         new CreateTransactionCommand({
           id: transactionId,
-          blockHeight: command.blockHeight,
+          blockHeight: event.height,
           signatures: transactionJson.signatures,
           transactionIndex,
           operationCount: Array.isArray(transactionJson.operations)

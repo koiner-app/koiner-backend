@@ -1,18 +1,20 @@
+import { Injectable } from '@nestjs/common';
+import { OnEvent } from '@nestjs/event-emitter';
 import { CommandBus } from '@nestjs/cqrs';
-import { DomainEventHandler } from '@appvise/domain';
 import { RawBlocksService } from '@koinos/jsonrpc';
-import { BlockCreated, EventParentType } from '@koiner/chain/domain';
+import { EventParentType } from '@koiner/chain/domain';
 import { CreateEventCommand } from '@koiner/chain/application';
+import { BlockCreatedMessage } from '@koiner/chain/events';
 
-export class SyncEventsForNewBlock extends DomainEventHandler {
+@Injectable()
+export class SyncEventsForNewBlock {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly rawBlocksService: RawBlocksService
-  ) {
-    super(BlockCreated);
-  }
+  ) {}
 
-  async handle(event: BlockCreated): Promise<void> {
+  @OnEvent(BlockCreatedMessage.routingKey, { async: false })
+  async handle(event: BlockCreatedMessage): Promise<void> {
     const rawBlock = await this.rawBlocksService.getBlock(event.height);
 
     if (Array.isArray(rawBlock.receipt.events)) {
@@ -26,7 +28,7 @@ export class SyncEventsForNewBlock extends DomainEventHandler {
         await this.commandBus.execute(
           new CreateEventCommand({
             blockHeight: event.height,
-            parentId: event.aggregateId,
+            parentId: event.id,
             parentType: EventParentType.block,
             sequence: blockEventEvent.sequence,
             contractId: blockEventEvent.source,

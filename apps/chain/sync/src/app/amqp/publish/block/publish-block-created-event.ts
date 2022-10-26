@@ -10,6 +10,7 @@ export class PublishBlockCreatedEvent extends DomainEventHandler {
 
   async handle(event: AfterBlockCreated): Promise<void> {
     const message = new BlockCreatedMessage({
+      id: event.aggregateId,
       height: event.height,
       timestamp: event.timestamp,
       transactionCount: event.transactionCount,

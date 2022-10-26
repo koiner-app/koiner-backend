@@ -1,7 +1,7 @@
-export class BlockCreatedMessage {
-  static routingKey = 'chain.block.created';
+export class BlockWithTransactionsCreatedMessage {
+  static routingKey = 'chain.block-with-transactions.created';
 
-  constructor(props: Partial<BlockCreatedMessage>) {
+  constructor(props: Partial<BlockWithTransactionsCreatedMessage>) {
     Object.assign(this, props);
   }
 

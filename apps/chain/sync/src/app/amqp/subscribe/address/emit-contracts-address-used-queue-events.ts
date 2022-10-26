@@ -5,16 +5,17 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { AddressUsedMessage } from '@koiner/chain/events';
 
 @Injectable()
-export class EmitTokenizeAddressUsedQueueEvents {
+export class EmitContractsAddressUsedQueueEvents {
   constructor(
     private readonly logger: Logger,
     private readonly eventEmitter: EventEmitter2
   ) {}
+
   @RabbitSubscribe({
     queueOptions: {
       channel: 'koiner.chain.channel.address',
     },
-    exchange: 'koiner.tokenize.event',
+    exchange: 'koiner.contracts.event',
     routingKey: AddressUsedMessage.routingKey,
     queue: 'koiner.chain.queue.address',
   })
@@ -29,7 +30,7 @@ export class EmitTokenizeAddressUsedQueueEvents {
         })
         .catch(() => {
           this.logger.error(
-            'Could not process koiner.chain.queue.address message (from tokenize)'
+            'Could not process koiner.chain.queue.address message (from contracts)'
           );
           resolve();
         });
