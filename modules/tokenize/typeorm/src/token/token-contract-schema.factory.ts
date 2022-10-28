@@ -16,11 +16,20 @@ export class TokenContractSchemaFactory extends EntitySchemaFactory<
   ): EntityProps<TokenContractProps> {
     const id = new KoinosAddressId(entitySchema.id);
 
+    // Because token events are processed async it can occur that a balance
+    // is negative during processing
+    let totalSupply = entitySchema.total_supply;
+    let negative = false;
+    if (totalSupply.includes('-')) {
+      negative = true;
+      totalSupply = totalSupply.replace('-', '');
+    }
+
     const props: TokenContractProps = {
       name: entitySchema.name,
       symbol: entitySchema.symbol,
       decimals: entitySchema.decimals,
-      totalSupply: parseInt(entitySchema.total_supply),
+      totalSupply: negative ? -parseInt(totalSupply) : +parseInt(totalSupply),
       burnCount: parseInt(entitySchema.burn_count.toString()),
       mintCount: parseInt(entitySchema.mint_count.toString()),
       transferCount: parseInt(entitySchema.transfer_count.toString()),

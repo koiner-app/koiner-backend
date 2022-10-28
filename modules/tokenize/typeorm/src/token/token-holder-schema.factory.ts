@@ -19,17 +19,17 @@ export class TokenHolderSchemaFactory extends EntitySchemaFactory<
 
     // Because token events are processed async it can occur that a balance
     // is negative during processing
-    let balanceStr = entitySchema.balance;
+    let balance = entitySchema.balance;
     let negative = false;
-    if (balanceStr.includes('-')) {
+    if (balance.includes('-')) {
       negative = true;
-      balanceStr = balanceStr.replace('-', '');
+      balance = balance.replace('-', '');
     }
 
     const props: TokenHolderProps = {
       addressId: new KoinosAddressId(entitySchema.address_id),
       contractId: new KoinosAddressId(entitySchema.contract_id),
-      balance: negative ? -parseInt(balanceStr) : +parseInt(balanceStr),
+      balance: negative ? -parseInt(balance) : +parseInt(balance),
       burnCount: parseInt(entitySchema.burn_count.toString()),
       mintCount: parseInt(entitySchema.mint_count.toString()),
       transferInCount: parseInt(entitySchema.transfer_in_count.toString()),
