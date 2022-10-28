@@ -148,10 +148,12 @@ services:
       - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
       - RABBITMQ_HOST=${RABBITMQ_HOST}
       - JSONRPC_NODES=${JSONRPC_NODES}
+      - JSONRPC_CACHE_DIR=${JSONRPC_CACHE_DIR}
     depends_on:
       - koiner-postgres
       - amqp
     volumes:
+      - ./data/jsonrpc:/data/jsonrpc
       - ./data/chain/sync/logs:/var/logs
       - ./apps:/app/apps
       - ./modules:/app/modules
@@ -228,10 +230,12 @@ services:
       - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
       - RABBITMQ_HOST=${RABBITMQ_HOST}
       - JSONRPC_NODES=${JSONRPC_NODES}
+      - JSONRPC_CACHE_DIR=${JSONRPC_CACHE_DIR}
     depends_on:
       - koiner-postgres
       - amqp
     volumes:
+      - ./data/jsonrpc:/data/jsonrpc
       - ./data/contracts/sync/logs:/var/logs
       - ./apps:/app/apps
       - ./modules:/app/modules
@@ -308,10 +312,12 @@ services:
       - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
       - RABBITMQ_HOST=${RABBITMQ_HOST}
       - JSONRPC_NODES=${JSONRPC_NODES}
+      - JSONRPC_CACHE_DIR=${JSONRPC_CACHE_DIR}
     depends_on:
       - koiner-postgres
       - amqp
     volumes:
+      - ./data/jsonrpc:/data/jsonrpc
       - ./data/network/sync/logs:/var/logs
       - ./apps:/app/apps
       - ./modules:/app/modules
@@ -388,10 +394,12 @@ services:
       - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
       - RABBITMQ_HOST=${RABBITMQ_HOST}
       - JSONRPC_NODES=${JSONRPC_NODES}
+      - JSONRPC_CACHE_DIR=${JSONRPC_CACHE_DIR}
     depends_on:
       - koiner-postgres
       - amqp
     volumes:
+      - ./data/jsonrpc:/data/jsonrpc
       - ./data/tokenize/sync/logs:/var/logs
       - ./apps:/app/apps
       - ./modules:/app/modules

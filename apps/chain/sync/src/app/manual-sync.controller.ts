@@ -14,6 +14,7 @@ import {
   UndoBlocksCommand,
   UndoBlocksFromCheckpointCommand,
 } from '@koiner/chain/application';
+import * as findRemoveSync from 'find-remove';
 
 @Controller()
 export class ManualSyncController {
@@ -77,6 +78,20 @@ export class ManualSyncController {
           checkPoint: input.checkPoint,
         })
       );
+    } else {
+      throw new ForbiddenException();
+    }
+  }
+
+  @Post('/cleanup-cache')
+  async cleanupCache(@Query('secret') secret: string): Promise<void> {
+    if (secret && koinos.syncSecret && secret === koinos.syncSecret) {
+      // Delete cached block json files older than 30 minutes
+      findRemoveSync(process.env.JSONRPC_CACHE_DIR ?? '/jsonrpc', {
+        age: { seconds: 3600 },
+        extensions: '.json',
+        limit: 1000,
+      });
     } else {
       throw new ForbiddenException();
     }

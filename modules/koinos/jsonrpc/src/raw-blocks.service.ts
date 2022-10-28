@@ -6,6 +6,8 @@ import {
   TransactionReceipt,
 } from 'koilib/lib/interface';
 import { Provider } from 'koilib';
+import { readFile, writeFile } from 'fs/promises';
+import { koinosConfig } from './koinos.config';
 
 export interface RawBlock {
   block_id: string;
@@ -30,15 +32,72 @@ export class RawBlocksService {
 
   constructor(private readonly provider: Provider) {}
 
-  async getBlocks(height: number, amount = 1): Promise<RawBlock[]> {
-    const blocks = await this._koilibGetBlocks(height, amount);
+  async getBlocks(startHeight: number, amount = 1): Promise<RawBlock[]> {
+    const blocks = [];
+    const missingBlocksSets: {
+      startHeight: number;
+      amount: number;
+    }[] = [];
 
-    // console.log('RESET IN MEMORY');
-    // this.blocksInMemory = {};
+    for (
+      let height = startHeight;
+      height < startHeight + Number(amount);
+      height++
+    ) {
+      try {
+        const data = await readFile(
+          `${koinosConfig.cacheDir}/${height}.json`,
+          'utf8'
+        );
+        blocks.push(JSON.parse(data));
+      } catch {
+        let addedToSet = false;
 
-    for (let i = 0; i < blocks.length; i++) {
-      // Save to memory
-      this.blocksInMemory[blocks[i].block_height.toString()] = blocks[i];
+        for (let i = 0; i < missingBlocksSets.length; i++) {
+          if (
+            missingBlocksSets[i].startHeight + missingBlocksSets[i].amount ===
+            height
+          ) {
+            // Add to existing set if it's the next height
+            missingBlocksSets[i] = {
+              startHeight: missingBlocksSets[i].startHeight,
+              amount: missingBlocksSets[i].amount + 1,
+            };
+
+            addedToSet = true;
+          }
+        }
+
+        if (!addedToSet) {
+          // Create new set
+          missingBlocksSets.push({
+            startHeight: height,
+            amount: 1,
+          });
+        }
+      }
+    }
+
+    if (missingBlocksSets) {
+      for (let i = 0; i < missingBlocksSets.length; i++) {
+        const newBlocks = await this._koilibGetBlocks(
+          missingBlocksSets[i].startHeight,
+          missingBlocksSets[i].amount
+        );
+
+        for (let i = 0; i < newBlocks.length; i++) {
+          // Add to result
+          blocks.push(newBlocks[i]);
+
+          // Save to file to reduce unnecessary api calls by other sync services
+          await writeFile(
+            `${koinosConfig.cacheDir}/${newBlocks[
+              i
+            ].block_height.toString()}.json`,
+            JSON.stringify(newBlocks[i])
+          );
+        }
+      }
     }
 
     return blocks;
@@ -59,17 +118,7 @@ export class RawBlocksService {
   }
 
   async getBlock(height: number): Promise<RawBlock> {
-    // Only fetch from memory when 1 block is retrieved
-    // We only use memory for event listeners that process block data
-    if (this.blocksInMemory[height]) {
-      // console.log(`:: LOAD FROM MEMORY ${height}`);
-      // this.blocksInMemory = {};
-      return this.blocksInMemory[height];
-    }
-
-    const blocks = await this._koilibGetBlocks(height, 1);
-
-    this.blocksInMemory[height.toString()] = blocks[0];
+    const blocks = await this.getBlocks(height, 1);
 
     return blocks[0];
   }
