@@ -18,14 +18,14 @@ export class UpdateTokenStatsFromTokenizeEventsQueue {
   ) {}
   @RabbitSubscribe({
     queueOptions: {
-      channel: 'koiner.tokenize.channel.stats.token',
+      channel: 'koiner.tokenize.channel.token.stats',
     },
     exchange: 'koiner.tokenize.event',
     routingKey: [
       TokenContractCreatedMessage.routingKey,
       TokensTransferredEventMessage.routingKey,
     ],
-    queue: 'koiner.tokenize.queue.stats.token',
+    queue: 'koiner.tokenize.queue.token.stats',
   })
   async handle(message: any, amqpMsg: ConsumeMessage): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -57,7 +57,7 @@ export class UpdateTokenStatsFromTokenizeEventsQueue {
         })
         .catch((error) => {
           this.logger.error(
-            'Could not process koiner.tokenize.channel.stats.token message',
+            'Could not process koiner.tokenize.channel.token.stats message',
             error
           );
 

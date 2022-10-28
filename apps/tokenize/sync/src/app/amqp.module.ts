@@ -36,7 +36,7 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
         },
         // Channel for processing update to Token stats for token events (burned, minted, transferred)
         // and new token contracts
-        'koiner.tokenize.channel.stats.token': {
+        'koiner.tokenize.channel.token.stats': {
           prefetchCount: 1,
         },
       },
