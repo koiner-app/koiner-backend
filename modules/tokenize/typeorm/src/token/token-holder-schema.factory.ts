@@ -17,10 +17,19 @@ export class TokenHolderSchemaFactory extends EntitySchemaFactory<
   ): EntityProps<TokenHolderProps> {
     const id = new UUID(entitySchema.id);
 
+    // Because token events are processed async it can occur that a balance
+    // is negative during processing
+    let balanceStr = entitySchema.balance;
+    let negative = false;
+    if (balanceStr.includes('-')) {
+      negative = true;
+      balanceStr = balanceStr.replace('-', '');
+    }
+
     const props: TokenHolderProps = {
       addressId: new KoinosAddressId(entitySchema.address_id),
       contractId: new KoinosAddressId(entitySchema.contract_id),
-      balance: parseInt(entitySchema.balance),
+      balance: negative ? -parseInt(balanceStr) : +parseInt(balanceStr),
       burnCount: parseInt(entitySchema.burn_count.toString()),
       mintCount: parseInt(entitySchema.mint_count.toString()),
       transferInCount: parseInt(entitySchema.transfer_in_count.toString()),

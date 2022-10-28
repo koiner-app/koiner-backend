@@ -70,11 +70,6 @@ export class TokenHolder extends AggregateRoot<TokenHolderProps> {
     this.props.transferInCount += props.transferInCount ?? 0;
     this.props.transferOutCount += props.transferOutCount ?? 0;
 
-    if (this.props.balance < 0) {
-      // TODO: Add custom exception
-      // throw new ConflictException('Balance cannot be lower than 0');
-    }
-
     this.addEvent(
       new TokenHolderUpdated({
         aggregateId: this.id.value,
