@@ -10,13 +10,17 @@ import {
   CreateContractEventCommand,
 } from '@koiner/contracts/application';
 import { Contract } from '@koiner/contracts/domain';
+import { ContractStandardType } from '@koiner/contracts/standards';
+import { ContractEventWithTokenTypeCreatedMessage } from '@koiner/contracts/events';
+import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 
 @Injectable()
 export class SyncContractEventsForNewTransaction {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-    private readonly rawBlocksService: RawBlocksService
+    private readonly rawBlocksService: RawBlocksService,
+    private readonly amqpConnection: AmqpConnection
   ) {}
 
   @OnEvent(`${TransactionCreatedMessage.routingKey}.event_queue`, {
@@ -45,25 +49,44 @@ export class SyncContractEventsForNewTransaction {
 
           contractStandardType = contract.contractStandardType;
 
-          await this.commandBus.execute(
-            new CreateContractEventCommand({
-              id: UUID.generate().value,
-              blockHeight: event.blockHeight,
-              parentId: event.id,
-              parentType: EventParentType.transaction,
-              sequence: transactionEvent.sequence,
-              contractId: transactionEvent.source,
-              contractStandardType,
-              name: transactionEvent.name,
-              data: transactionEvent.data,
-              impacted: transactionEvent.impacted
-                ? transactionEvent.impacted.filter(
-                    (impactedItem) => impactedItem !== '' // Filter out empty items
-                  )
-                : [],
-              timestamp: event.timestamp,
-            })
-          );
+          const sharedProps = {
+            parentId: event.id,
+            parentType: EventParentType.transaction,
+            sequence: transactionEvent.sequence,
+            contractId: transactionEvent.source,
+            contractStandardType,
+            name: transactionEvent.name,
+            data: transactionEvent.data,
+            impacted: transactionEvent.impacted
+              ? transactionEvent.impacted.filter(
+                  (impactedItem) => impactedItem !== '' // Filter out empty items
+                )
+              : [],
+            timestamp: event.timestamp,
+          };
+
+          // Don't save token events. Publish message so contract service can process it
+          if (contractStandardType === ContractStandardType.token) {
+            const message = new ContractEventWithTokenTypeCreatedMessage({
+              eventId: UUID.generate().value,
+              ...sharedProps,
+              publishedAt: Date.now(),
+            });
+
+            await this.amqpConnection.publish(
+              'koiner.contracts.event',
+              ContractEventWithTokenTypeCreatedMessage.routingKey,
+              message.toString()
+            );
+          } else {
+            await this.commandBus.execute(
+              new CreateContractEventCommand({
+                id: UUID.generate().value,
+                blockHeight: event.blockHeight,
+                ...sharedProps,
+              })
+            );
+          }
         }
       }
     }
