@@ -13,6 +13,11 @@ export class CreateTokenContractHandler
   constructor(private readonly writeRepository: TokenContractWriteRepository) {}
 
   async execute(command: CreateTokenContractCommand): Promise<void> {
+    // Only add new contracts (not updates)
+    if (await this.writeRepository.existsById(command.id)) {
+      return;
+    }
+
     const contract = TokenContract.create(
       {
         name: command.name,

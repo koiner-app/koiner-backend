@@ -10,6 +10,12 @@ export class CreateContractHandler
   constructor(private readonly writeRepository: ContractWriteRepository) {}
 
   async execute(command: CreateContractCommand): Promise<void> {
+    // TODO: Add contract versions
+    // Only add new contracts (not updates)
+    if (await this.writeRepository.existsById(command.id)) {
+      return;
+    }
+
     const contract = Contract.create(
       {
         bytecode: command.bytecode,
