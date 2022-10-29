@@ -1,7 +1,7 @@
 import { EntityBaseSchema } from '@appvise/typeorm';
 import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
 import { ContractStandardType } from '@koiner/contracts/standards';
-import { ContractEventParentType } from '@koiner/contracts/domain';
+import { EventParentType } from '@koiner/domain';
 import { ContractSchema } from './contract.schema';
 
 @Entity('contracts_contract_event')
@@ -14,8 +14,8 @@ export class ContractEventSchema extends EntityBaseSchema {
   @Column({ length: 70 })
   readonly parent_id!: string;
 
-  @Column({ type: 'enum', enum: ContractEventParentType })
-  readonly parent_type!: ContractEventParentType;
+  @Column({ type: 'enum', enum: EventParentType })
+  readonly parent_type!: EventParentType;
 
   @Column({ type: 'smallint', nullable: true })
   readonly sequence?: number;

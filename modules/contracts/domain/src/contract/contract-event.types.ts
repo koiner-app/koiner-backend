@@ -1,15 +1,10 @@
-import { KoinosAddressId, KoinosId } from '@koiner/domain';
+import { EventParentType, KoinosAddressId, KoinosId } from '@koiner/domain';
 import { ContractStandardType } from '@koiner/contracts/standards';
-
-export enum ContractEventParentType {
-  block = 'block',
-  transaction = 'transaction',
-}
 
 export interface CreateContractEventProps {
   blockHeight: number;
   parentId: KoinosId;
-  parentType: ContractEventParentType;
+  parentType: EventParentType;
   sequence?: number;
   contractId: KoinosAddressId;
   contractStandardType?: ContractStandardType;

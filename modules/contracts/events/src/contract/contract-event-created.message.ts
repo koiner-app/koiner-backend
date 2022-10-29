@@ -6,6 +6,7 @@ export class ContractEventCreatedMessage {
   }
 
   readonly eventId!: string;
+  readonly blockHeight!: number;
   readonly parentId!: string;
   readonly parentType!: string;
   readonly sequence?: number;

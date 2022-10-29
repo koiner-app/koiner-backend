@@ -2,10 +2,9 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UUID } from '@appvise/domain';
 import {
   ContractEvent,
-  ContractEventParentType,
   ContractEventWriteRepository,
 } from '@koiner/contracts/domain';
-import { KoinosAddressId, KoinosId } from '@koiner/domain';
+import { EventParentType, KoinosAddressId, KoinosId } from '@koiner/domain';
 import { CreateContractEventCommand } from './dto/create-contract-event.command';
 
 @CommandHandler(CreateContractEventCommand)
@@ -19,7 +18,7 @@ export class CreateContractEventHandler
       {
         blockHeight: command.blockHeight,
         parentId: new KoinosId(command.parentId),
-        parentType: command.parentType as ContractEventParentType,
+        parentType: command.parentType as EventParentType,
         sequence: command.sequence,
         contractId: new KoinosAddressId(command.contractId),
         contractStandardType: command.contractStandardType,

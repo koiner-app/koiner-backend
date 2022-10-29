@@ -1,9 +1,8 @@
 import { AggregateRoot, ArgumentInvalidException, UUID } from '@appvise/domain';
-import { KoinosAddressId, KoinosId } from '@koiner/domain';
+import { EventParentType, KoinosAddressId, KoinosId } from '@koiner/domain';
 import {
   CreateContractEventProps,
   ContractEventCreated,
-  ContractEventParentType,
   ContractEventProps,
 } from '.';
 import { ContractStandardType } from '@koiner/contracts/standards';
@@ -48,7 +47,7 @@ export class ContractEvent extends AggregateRoot<ContractEventProps> {
     return this.props.parentId;
   }
 
-  get parentType(): ContractEventParentType {
+  get parentType(): EventParentType {
     return this.props.parentType;
   }
 
@@ -81,11 +80,11 @@ export class ContractEvent extends AggregateRoot<ContractEventProps> {
   }
 
   validate(): void {
-    const parentTypeKeys = Object.keys(ContractEventParentType);
+    const parentTypeKeys = Object.keys(EventParentType);
 
     if (!parentTypeKeys.includes(this.props.parentType)) {
       throw new ArgumentInvalidException(
-        'parentType is not a valid ContractEventParentType'
+        'parentType is not a valid EventParentType'
       );
     }
   }
