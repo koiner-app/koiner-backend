@@ -88,9 +88,9 @@ export class ManualSyncController {
     if (secret && koinos.syncSecret && secret === koinos.syncSecret) {
       // Delete cached block json files older than 30 minutes
       findRemoveSync(process.env.JSONRPC_CACHE_DIR ?? '/jsonrpc', {
-        age: { seconds: 3600 },
+        age: { seconds: 1200 },
         extensions: '.json',
-        limit: 1000,
+        limit: 5000,
       });
     } else {
       throw new ForbiddenException();
