@@ -1,10 +1,22 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import { TokenEvent } from '@koiner/tokenize/domain';
 import { GraphQLBigInt } from 'graphql-scalars';
 
 @ObjectType('TokenEvent')
 export class TokenEventNode extends BaseNode {
+  @Field(() => GraphQLBigInt)
+  blockHeight: number;
+
+  @Field()
+  parentId: string;
+
+  @Field()
+  parentType: string;
+
+  @Field(() => Int, { nullable: true })
+  sequence?: number;
+
   @Field({ nullable: true })
   contractId?: string;
 
@@ -26,6 +38,10 @@ export class TokenEventNode extends BaseNode {
   constructor(event: TokenEvent) {
     super(event);
 
+    this.blockHeight = event.blockHeight;
+    this.parentId = event.parentId.value;
+    this.parentType = event.parentType;
+    this.sequence = event.sequence;
     this.contractId = event.contractId ? event.contractId.value : undefined;
     this.name = event.name;
     this.from = event.from ? event.from.value : undefined;

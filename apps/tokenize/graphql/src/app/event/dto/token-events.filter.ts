@@ -10,6 +10,15 @@ export class TokenEventsFilter implements FilterType {
   @Field(() => StringFilterInput, { nullable: true })
   id?: StringFilterInput;
 
+  @Field(() => NumericFilterInput, { nullable: true })
+  blockHeight?: NumericFilterInput;
+
+  @Field(() => StringFilterInput, { nullable: true })
+  parentId?: StringFilterInput;
+
+  @Field(() => StringFilterInput, { nullable: true })
+  parentType?: StringFilterInput;
+
   @Field(() => StringFilterInput, { nullable: true })
   contractId?: StringFilterInput;
 
