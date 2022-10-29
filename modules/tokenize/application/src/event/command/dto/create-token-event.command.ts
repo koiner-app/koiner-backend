@@ -8,6 +8,10 @@ export class CreateTokenEventCommand extends Command {
   }
 
   readonly id!: string;
+  readonly blockHeight!: number;
+  readonly parentId!: string;
+  readonly parentType!: string;
+  readonly sequence?: number;
   readonly contractId!: string;
   readonly name!: string;
   readonly from?: string;

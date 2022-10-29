@@ -1,6 +1,6 @@
 import { CommandBus, CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UUID } from '@appvise/domain';
-import { KoinosAddressId } from '@koiner/domain';
+import { EventParentType, KoinosAddressId, KoinosId } from '@koiner/domain';
 import { TokenEvent, TokenEventWriteRepository } from '@koiner/tokenize/domain';
 import { CreateTokenEventCommand } from './dto/create-token-event.command';
 
@@ -16,6 +16,10 @@ export class CreateTokenEventHandler
   async execute(command: CreateTokenEventCommand): Promise<void> {
     const operation = TokenEvent.create(
       {
+        blockHeight: command.blockHeight,
+        parentId: new KoinosId(command.parentId),
+        parentType: command.parentType as EventParentType,
+        sequence: command.sequence,
         contractId: new KoinosAddressId(command.contractId),
         name: command.name,
         from: command.from ? new KoinosAddressId(command.from) : undefined,

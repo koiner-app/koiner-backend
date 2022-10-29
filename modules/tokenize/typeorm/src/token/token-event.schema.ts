@@ -1,9 +1,24 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
 import { EntityBaseSchema } from '@appvise/typeorm';
 import { TokenContractSchema } from './token-contract.schema';
+import { EventParentType } from '@koiner/domain';
 
 @Entity('tokenize_token_event')
+@Index(['parent_id', 'parent_type'])
 export class TokenEventSchema extends EntityBaseSchema {
+  @Index()
+  @Column({ type: 'bigint' })
+  readonly block_height!: number;
+
+  @Column({ length: 70 })
+  readonly parent_id!: string;
+
+  @Column({ type: 'enum', enum: EventParentType })
+  readonly parent_type!: EventParentType;
+
+  @Column({ type: 'smallint', nullable: true })
+  readonly sequence?: number;
+
   @Column({ length: 35 })
   readonly contract_id!: string;
 

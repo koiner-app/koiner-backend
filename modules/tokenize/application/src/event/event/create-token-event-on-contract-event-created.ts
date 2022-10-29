@@ -7,6 +7,7 @@ import {
 } from '@koiner/contracts/standards';
 import { ContractEventWithTokenTypeCreatedMessage } from '@koiner/contracts/events';
 import { CreateTokenEventCommand } from '../..';
+import { EventParentType } from '@koiner/domain';
 
 @Injectable()
 export class CreateTokenEventOnContractEventCreated {
@@ -45,6 +46,10 @@ export class CreateTokenEventOnContractEventCreated {
     await this.commandBus.execute(
       new CreateTokenEventCommand({
         id: event.eventId,
+        blockHeight: event.blockHeight,
+        parentId: event.parentId,
+        parentType: event.parentType as EventParentType.block,
+        sequence: event.sequence,
         contractId: event.contractId,
         name: decodedEvent.name,
         from: <string>decodedEvent.args.from,

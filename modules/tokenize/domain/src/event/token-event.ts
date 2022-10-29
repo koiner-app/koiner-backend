@@ -1,5 +1,5 @@
-import { AggregateRoot, UUID } from '@appvise/domain';
-import { KoinosAddressId, KoinosId } from '@koiner/domain';
+import { AggregateRoot, ArgumentInvalidException, UUID } from '@appvise/domain';
+import { EventParentType, KoinosAddressId, KoinosId } from '@koiner/domain';
 import {
   CreateTokenEventProps,
   TokenEventCreated,
@@ -72,6 +72,22 @@ export class TokenEvent extends AggregateRoot<TokenEventProps> {
     return event;
   }
 
+  get blockHeight(): number {
+    return this.props.blockHeight;
+  }
+
+  get parentId(): KoinosId {
+    return this.props.parentId;
+  }
+
+  get parentType(): EventParentType {
+    return this.props.parentType;
+  }
+
+  get sequence(): number | undefined {
+    return this.props.sequence;
+  }
+
   get contractId(): KoinosAddressId | undefined {
     return this.props.contractId;
   }
@@ -97,6 +113,12 @@ export class TokenEvent extends AggregateRoot<TokenEventProps> {
   }
 
   validate(): void {
-    //
+    const parentTypeKeys = Object.keys(EventParentType);
+
+    if (!parentTypeKeys.includes(this.props.parentType)) {
+      throw new ArgumentInvalidException(
+        'parentType is not a valid EventParentType'
+      );
+    }
   }
 }

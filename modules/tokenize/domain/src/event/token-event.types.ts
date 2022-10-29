@@ -1,6 +1,10 @@
-import { KoinosAddressId } from '@koiner/domain';
+import { EventParentType, KoinosAddressId, KoinosId } from '@koiner/domain';
 
 export interface CreateTokenEventProps {
+  blockHeight: number;
+  parentId: KoinosId;
+  parentType: EventParentType;
+  sequence?: number;
   contractId: KoinosAddressId;
   name: string;
   from?: KoinosAddressId;

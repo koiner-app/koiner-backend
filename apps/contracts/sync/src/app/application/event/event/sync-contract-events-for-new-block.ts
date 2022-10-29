@@ -45,6 +45,7 @@ export class SyncContractEventsForNewBlock {
           contractStandardType = contract.contractStandardType;
 
           const sharedProps = {
+            blockHeight: event.height,
             parentId: event.id,
             parentType: EventParentType.block,
             sequence: blockEventEvent.sequence,

@@ -50,6 +50,7 @@ export class SyncContractEventsForNewTransaction {
           contractStandardType = contract.contractStandardType;
 
           const sharedProps = {
+            blockHeight: event.blockHeight,
             parentId: event.id,
             parentType: EventParentType.transaction,
             sequence: transactionEvent.sequence,
