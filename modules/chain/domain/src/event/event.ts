@@ -1,6 +1,6 @@
 import { AggregateRoot, ArgumentInvalidException, UUID } from '@appvise/domain';
-import { KoinosAddressId, KoinosId } from '@koiner/domain';
-import { CreateEventProps, EventCreated, EventParentType, EventProps } from '.';
+import { EventParentType, KoinosAddressId, KoinosId } from '@koiner/domain';
+import { CreateEventProps, EventCreated, EventProps } from '.';
 
 export class Event extends AggregateRoot<EventProps> {
   protected readonly _id!: KoinosId;

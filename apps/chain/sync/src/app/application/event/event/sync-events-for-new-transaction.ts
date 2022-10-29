@@ -1,6 +1,6 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { RawBlocksService } from '@koinos/jsonrpc';
-import { EventParentType } from '@koiner/chain/domain';
+import { EventParentType } from '@koiner/domain';
 import { CreateEventCommand } from '@koiner/chain/application';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Injectable } from '@nestjs/common';

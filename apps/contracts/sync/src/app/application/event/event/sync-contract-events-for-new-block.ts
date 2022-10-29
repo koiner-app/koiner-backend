@@ -4,7 +4,7 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 import { UUID } from '@appvise/domain';
 import { RawBlocksService } from '@koinos/jsonrpc';
-import { EventParentType } from '@koiner/chain/domain';
+import { EventParentType } from '@koiner/domain';
 import { BlockCreatedMessage } from '@koiner/chain/events';
 import {
   ContractQuery,

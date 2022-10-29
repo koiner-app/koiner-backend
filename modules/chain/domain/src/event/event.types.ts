@@ -1,9 +1,4 @@
-import { KoinosAddressId, KoinosId } from '@koiner/domain';
-
-export enum EventParentType {
-  block = 'block',
-  transaction = 'transaction',
-}
+import { EventParentType, KoinosAddressId, KoinosId } from '@koiner/domain';
 
 export interface CreateEventProps {
   blockHeight: number;

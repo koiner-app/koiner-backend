@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { CommandBus } from '@nestjs/cqrs';
 import { RawBlocksService } from '@koinos/jsonrpc';
-import { EventParentType } from '@koiner/chain/domain';
+import { EventParentType } from '@koiner/domain';
 import { CreateEventCommand } from '@koiner/chain/application';
 import { BlockCreatedMessage } from '@koiner/chain/events';
 

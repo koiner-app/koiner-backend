@@ -1,6 +1,6 @@
 import { EntityBaseSchema } from '@appvise/typeorm';
 import { Column, Entity, Index } from 'typeorm';
-import { EventParentType } from '@koiner/chain/domain';
+import { EventParentType } from '@koiner/domain';
 
 @Entity('chain_event')
 @Index(['parent_id', 'parent_type'])

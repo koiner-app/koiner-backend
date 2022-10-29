@@ -1,10 +1,10 @@
 import { Args, Parent, ResolveField, Resolver } from '@nestjs/graphql';
 import { SelectionSet } from '@appvise/graphql';
+import { EventParentType } from '@koiner/domain';
 import { BlockNode } from '../dto/block.node';
 import { EventsRequest } from '../../event';
 import { EventsConnection } from '../../event';
 import { EventsResolver } from '../../event/query';
-import { EventParentType } from '@koiner/chain/domain';
 
 @Resolver(() => BlockNode)
 export class BlockEventsResolver {
