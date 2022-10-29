@@ -19,9 +19,6 @@ export class ContractEventsFilter implements FilterType {
   @Field(() => StringFilterInput, { nullable: true })
   parentType?: StringFilterInput;
 
-  @Field(() => NumericFilterInput, { nullable: true })
-  sequence?: NumericFilterInput;
-
   @Field(() => StringFilterInput, { nullable: true })
   contractId?: StringFilterInput;
 
