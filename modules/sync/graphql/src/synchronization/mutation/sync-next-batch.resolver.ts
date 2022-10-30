@@ -1,3 +1,4 @@
+import { ForbiddenException } from '@nestjs/common';
 import { Args, ID, Int, Mutation, Resolver } from '@nestjs/graphql';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { SelectionSet } from '@appvise/graphql';
@@ -8,8 +9,6 @@ import {
 } from '@koiner/sync/application';
 import { Synchronization } from '@koiner/sync/domain';
 import { SynchronizationNode } from '../dto';
-import { koinos } from '../../../../../../apps/chain/sync/src/config';
-import { ForbiddenException } from '@nestjs/common';
 
 @Resolver(() => SynchronizationNode)
 export class SyncNextBatchResolver {
@@ -34,7 +33,11 @@ export class SyncNextBatchResolver {
     @Args({ name: 'batchSize', type: () => Int, nullable: true })
     batchSize?: number
   ): Promise<SynchronizationNode> {
-    if (!secret || !koinos.syncSecret || secret !== koinos.syncSecret) {
+    if (
+      !secret ||
+      !koinosConfig.syncSecret ||
+      secret !== koinosConfig.syncSecret
+    ) {
       throw new ForbiddenException();
     }
 
