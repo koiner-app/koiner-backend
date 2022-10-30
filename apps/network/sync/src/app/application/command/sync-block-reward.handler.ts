@@ -8,7 +8,6 @@ import { Logger } from '@appvise/domain';
 import { koinosConfig, RawBlocksService } from '@koinos/jsonrpc';
 import { SyncBlockRewardCommand } from './dto/sync-block-reward.command';
 import { CreateBlockRewardCommand } from '@koiner/network/application';
-import * as math from 'mathjs';
 import {
   ContractStandardService,
   ContractStandardType,

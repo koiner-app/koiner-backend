@@ -7,10 +7,12 @@ import { SyncTransactionsForNewBlock } from './transaction/sync-transactions-for
 import { CreateSystemCallOperationForNewOperation } from './operation/create-system-call-operation-for-new-operation';
 import { CreateSystemContractOperationForNewOperation } from './operation/create-system-contract-operation-for-new-operation';
 import { CreateUploadOperationForNewOperation } from './operation/create-upload-operation-for-new-operation';
+import { SyncBlocksOnSynchronizationBatchStarted } from './sync/sync-blocks-on-synchronization-batch-started';
 
 export const ChainSyncEventHandlers = [
   // EventEmitter
   SyncAddressOnAddressUsed,
+  SyncBlocksOnSynchronizationBatchStarted,
   SyncEventsForNewBlock,
   SyncEventsForNewTransaction,
   SyncOperationsForNewTransaction,

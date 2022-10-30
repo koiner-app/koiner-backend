@@ -3,7 +3,7 @@ import {
   EntitySchemaFactory,
   EntitySchemaProps,
 } from '@appvise/typeorm';
-import { BlockTopology, ChainId, KoinosId } from '@koiner/domain';
+import { ChainId } from '@koiner/domain';
 import { Synchronization, SynchronizationProps } from '@koiner/sync/domain';
 import { SynchronizationSchema } from '.';
 
@@ -17,16 +17,18 @@ export class SynchronizationSchemaFactory extends EntitySchemaFactory<
     const id = new ChainId(entitySchema.id);
 
     const props: SynchronizationProps = {
-      headTopology: new BlockTopology({
-        id: new KoinosId(entitySchema.head_topology_id),
-        previous: entitySchema.head_topology_previous,
-        height: entitySchema.head_topology_height,
-      }),
+      headTopologyHeight: entitySchema.head_topology_height,
       lastIrreversibleBlock: entitySchema.last_irreversible_block,
+      lastSyncedBlock: entitySchema.last_synced_block,
+      batchStartedAt: entitySchema.batch_started_at ?? undefined,
+      batchStartHeight: entitySchema.batch_start_height ?? undefined,
+      batchEndHeight: entitySchema.batch_end_height ?? undefined,
       syncing: entitySchema.syncing,
       stopped: entitySchema.stopped,
-      lastSyncedBlock: entitySchema.last_synced_block,
-      lastSyncStarted: entitySchema.last_sync_started,
+      stoppedAt: entitySchema.stopped_at ?? undefined,
+      lastError: entitySchema.last_error
+        ? JSON.stringify(entitySchema.last_error)
+        : undefined,
     };
 
     return { id, props };
@@ -38,14 +40,16 @@ export class SynchronizationSchemaFactory extends EntitySchemaFactory<
     const props = entity.getPropsCopy();
 
     return {
-      head_topology_id: props.headTopology.id.value,
-      head_topology_previous: props.headTopology.previous,
-      head_topology_height: props.headTopology.height,
+      head_topology_height: props.headTopologyHeight,
       last_irreversible_block: props.lastIrreversibleBlock,
+      last_synced_block: props.lastSyncedBlock,
+      batch_started_at: props.batchStartedAt ?? null,
+      batch_start_height: props.batchStartHeight ?? null,
+      batch_end_height: props.batchEndHeight ?? null,
       syncing: props.syncing,
       stopped: props.stopped,
-      last_synced_block: props.lastSyncedBlock,
-      last_sync_started: props.lastSyncStarted,
+      stopped_at: props.stoppedAt ?? null,
+      last_error: props.lastError ? JSON.parse(props.lastError) : null,
     };
   }
 }

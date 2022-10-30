@@ -1,11 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UUID } from '@appvise/domain';
-import {
-  Event,
-  EventParentType,
-  EventWriteRepository,
-} from '@koiner/chain/domain';
-import { KoinosAddressId, KoinosId } from '@koiner/domain';
+import { Event, EventWriteRepository } from '@koiner/chain/domain';
+import { EventParentType, KoinosAddressId, KoinosId } from '@koiner/domain';
 import { CreateEventCommand } from './dto/create-event.command';
 
 @CommandHandler(CreateEventCommand)

@@ -11,4 +11,5 @@ export const koinosConfig = {
     vhp: '1JZqj7dDrK5LzvdJgufYBJNUFo88xBoWC8',
     pob: '198RuEouhgiiaQm7uGfaXS6jqZr6g6nyoR',
   },
+  syncSecret: 'AHOY!',
 };

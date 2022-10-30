@@ -1,3 +1,5 @@
+export * from './stop-signal.types';
+export * from './stop-signal';
 export * from './synchronization.types';
 export * from './synchronization';
 

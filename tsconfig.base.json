@@ -32,6 +32,11 @@
       ],
       "@koiner/contracts/typeorm": ["modules/contracts/typeorm/src/index.ts"],
       "@koiner/domain": ["modules/domain/src/index.ts"],
+      "@koiner/logger/application": ["modules/logger/application/src/index.ts"],
+      "@koiner/logger/domain": ["modules/logger/domain/src/index.ts"],
+      "@koiner/logger/graphql": ["modules/logger/graphql/src/index.ts"],
+      "@koiner/logger/nestjs": ["modules/logger/nestjs/src/index.ts"],
+      "@koiner/logger/typeorm": ["modules/logger/typeorm/src/index.ts"],
       "@koiner/nestjs-utils": ["modules/nestjs-utils/src/index.ts"],
       "@koiner/network/application": [
         "modules/network/application/src/index.ts"
@@ -41,6 +46,8 @@
       "@koiner/network/typeorm": ["modules/network/typeorm/src/index.ts"],
       "@koiner/sync/application": ["modules/sync/application/src/index.ts"],
       "@koiner/sync/domain": ["modules/sync/domain/src/index.ts"],
+      "@koiner/sync/graphql": ["modules/sync/graphql/src/index.ts"],
+      "@koiner/sync/logger": ["modules/sync/logger/src/index.ts"],
       "@koiner/sync/typeorm": ["modules/sync/typeorm/src/index.ts"],
       "@koiner/tokenize/application": [
         "modules/tokenize/application/src/index.ts"

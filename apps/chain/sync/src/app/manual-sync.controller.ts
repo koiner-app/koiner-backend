@@ -2,12 +2,10 @@ import {
   Body,
   Controller,
   ForbiddenException,
-  Get,
   Post,
   Query,
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { SyncService } from './sync.service';
 import { SyncBlockSetsCommand, SyncSet } from './application';
 import { koinos } from '../config';
 import {
@@ -18,22 +16,7 @@ import * as findRemoveSync from 'find-remove';
 
 @Controller()
 export class ManualSyncController {
-  constructor(
-    private readonly syncService: SyncService,
-    private readonly commandBus: CommandBus
-  ) {}
-
-  @Get('/sync')
-  async sync(
-    @Query('secret') secret: string,
-    @Query('batchSize') batchSize?: number
-  ): Promise<void> {
-    if (secret && koinos.syncSecret && secret === koinos.syncSecret) {
-      await this.syncService.sync(batchSize);
-    } else {
-      throw new ForbiddenException();
-    }
-  }
+  constructor(private readonly commandBus: CommandBus) {}
 
   @Post('/sync-set')
   async syncSet(

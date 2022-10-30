@@ -1,3 +1,3 @@
-import { SynchronizationSchema } from '.';
+import { StopSignalSchema, SynchronizationSchema } from '.';
 
-export const SynchronizationModels = [SynchronizationSchema];
+export const SynchronizationModels = [StopSignalSchema, SynchronizationSchema];

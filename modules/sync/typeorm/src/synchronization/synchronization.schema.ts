@@ -7,17 +7,23 @@ export class SynchronizationSchema extends EntityBaseSchema {
   @Column({ length: 46 })
   override readonly id!: string;
 
-  @Column({ length: 70 })
-  readonly head_topology_id!: string;
-
-  @Column({ length: 70 })
-  readonly head_topology_previous!: string;
-
   @Column({ type: 'bigint' })
   readonly head_topology_height!: number;
 
   @Column({ type: 'bigint' })
   readonly last_irreversible_block!: number;
+
+  @Column({ type: 'bigint' })
+  readonly last_synced_block!: number;
+
+  @Column({ type: 'bigint', nullable: true })
+  readonly batch_started_at?: number | null;
+
+  @Column({ type: 'bigint', nullable: true })
+  readonly batch_start_height?: number | null;
+
+  @Column({ type: 'bigint', nullable: true })
+  readonly batch_end_height?: number | null;
 
   @Column()
   readonly syncing!: boolean;
@@ -25,9 +31,9 @@ export class SynchronizationSchema extends EntityBaseSchema {
   @Column()
   readonly stopped!: boolean;
 
-  @Column({ type: 'bigint' })
-  readonly last_synced_block!: number;
+  @Column({ type: 'bigint', nullable: true })
+  readonly stopped_at?: number | null;
 
-  @Column({ type: 'bigint' })
-  readonly last_sync_started!: number;
+  @Column({ type: 'json', nullable: true })
+  readonly last_error?: string | null;
 }

@@ -1,17 +1,14 @@
 import { Controller } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { SyncService } from './sync.service';
+import { CommandBus } from '@nestjs/cqrs';
+import { StartSynchronizationBatchCommand } from '@koiner/sync/application';
 
 @Controller()
 export class CronSyncController {
-  constructor(private readonly syncService: SyncService) {}
+  constructor(private readonly commandBus: CommandBus) {}
 
   @Cron(CronExpression.EVERY_5_SECONDS, { name: 'cronSync' })
   async cron(): Promise<void> {
-    await this.syncService.sync(
-      process.env.CRON_SYNC_BATCH_SIZE
-        ? parseInt(process.env.CRON_SYNC_BATCH_SIZE)
-        : 250
-    );
+    await this.commandBus.execute(new StartSynchronizationBatchCommand());
   }
 }
