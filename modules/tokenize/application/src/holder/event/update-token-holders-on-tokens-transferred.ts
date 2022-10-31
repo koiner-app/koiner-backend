@@ -11,7 +11,7 @@ export class UpdateTokenHoldersOnTokensTransferred {
   @OnEvent(`${TokensTransferredEventMessage.eventName}.token_holder`, {
     async: false,
   })
-  async handle(event: TokensTransferredEventMessage): Promise<void> {
+  async handleTo(event: TokensTransferredEventMessage): Promise<void> {
     await this.commandBus.execute(
       new UpdateTokenHolderCommand({
         addressId: event.to,
@@ -20,7 +20,12 @@ export class UpdateTokenHoldersOnTokensTransferred {
         transferInCount: 1,
       })
     );
+  }
 
+  @OnEvent(`${TokensTransferredEventMessage.eventName}.from.token_holder`, {
+    async: false,
+  })
+  async handleFrom(event: TokensTransferredEventMessage): Promise<void> {
     await this.commandBus.execute(
       new UpdateTokenHolderCommand({
         addressId: event.from,

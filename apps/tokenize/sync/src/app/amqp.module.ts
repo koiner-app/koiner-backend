@@ -1,5 +1,15 @@
 import { Module } from '@nestjs/common';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
+import { AmqpChannelPostfixes } from './amqp';
+
+const tokenHolderChannels = {};
+for (let i = 0; i < AmqpChannelPostfixes.length; i++) {
+  tokenHolderChannels[
+    `koiner.tokenize.channel.token.token_holder.${AmqpChannelPostfixes[i]}`
+  ] = {
+    prefetchCount: 1,
+  };
+}
 
 @Module({
   imports: [
@@ -25,10 +35,8 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
         'koiner.tokenize.channel.token.event': {},
         // Channel for processing token operations
         'koiner.tokenize.channel.token.operation': {},
-        // Channel for processing updates to TokenHolder for token events (burned, minted, transferred)
-        'koiner.tokenize.channel.token.token_holder': {
-          prefetchCount: 1,
-        },
+        // Channels for processing updates to TokenHolder for token events (burned, minted, transferred)
+        ...tokenHolderChannels,
         // Channel for processing updates to Token.totalSupply + stats for token events
         // (burned, minted, transferred)
         'koiner.tokenize.channel.token.total_supply': {
