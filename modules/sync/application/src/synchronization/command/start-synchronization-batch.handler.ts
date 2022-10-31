@@ -27,8 +27,8 @@ export class StartSynchronizationBatchHandler
     let batchSize = command.batchSize;
 
     if (!batchSize) {
-      batchSize = process.env['CRON_SYNC_BATCH_SIZE']
-        ? parseInt(process.env['CRON_SYNC_BATCH_SIZE'])
+      batchSize = process.env['SYNC_BATCH_SIZE']
+        ? parseInt(process.env['SYNC_BATCH_SIZE'])
         : 100;
     }
 
@@ -46,10 +46,16 @@ export class StartSynchronizationBatchHandler
     if (!synchronization) {
       headInfo = await this.provider.getHeadInfo();
 
+      // Where to start syncing
+      const initialHeight = process.env['SYNC_INITIAL_HEIGHT']
+        ? parseInt(process.env['SYNC_INITIAL_HEIGHT'])
+        : 0;
+
       synchronization = Synchronization.create(
         {
           headTopologyHeight: parseInt(headInfo.head_topology.height),
           lastIrreversibleBlock: parseInt(headInfo.last_irreversible_block),
+          lastSyncedBlock: initialHeight,
         },
         new ChainId(chainId)
       );
@@ -76,8 +82,8 @@ export class StartSynchronizationBatchHandler
     ) {
       this.logger.log('Do not sync, still syncing');
 
-      const syncTimeout = process.env['CRON_SYNC_TIME_OUT']
-        ? parseInt(process.env['CRON_SYNC_TIME_OUT'])
+      const syncTimeout = process.env['SYNC_TIME_OUT']
+        ? parseInt(process.env['SYNC_TIME_OUT'])
         : 600000;
 
       if (Date.now() - synchronization.batchStartedAt > syncTimeout) {
@@ -121,7 +127,7 @@ export class StartSynchronizationBatchHandler
         StopSignal
       >(new StopSignalQuery(synchronization.id.value));
 
-      this.logger.log(`Stop signal present`, stopSignal);
+      this.logger.log(`Stop signal present: ${stopSignal.stopAtHeight}`);
 
       // Stop if stopAtHeight has been reached
       if (startHeight > stopSignal.stopAtHeight) {

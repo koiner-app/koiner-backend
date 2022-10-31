@@ -7,7 +7,6 @@ import {
   MarkBatchAsFailedCommand,
 } from '@koiner/sync/application';
 import { SynchronizationBatchStarted } from '@koiner/sync/domain';
-
 import { BlockRewardsQuery } from '@koiner/network/application';
 import { BlockReward } from '@koiner/network/domain';
 import { SyncBlockRewardsCommand } from '../../command';
@@ -61,7 +60,7 @@ export class SyncBlockRewardsOnSynchronizationBatchStarted {
           first: 1,
           sort: [
             {
-              field: 'height',
+              field: 'blockHeight',
               direction: SortDirection.desc,
             },
           ],
@@ -76,7 +75,7 @@ export class SyncBlockRewardsOnSynchronizationBatchStarted {
         new MarkBatchAsFailedCommand({
           id: event.aggregateId,
           failedAtBlock,
-          error: failedError,
+          error: JSON.stringify(failedError),
         })
       );
     } else {

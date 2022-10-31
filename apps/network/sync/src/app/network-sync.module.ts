@@ -24,8 +24,8 @@ database.entities.push(...SynchronizationModuleModels);
 
 const CronSyncControllerWrapper = [];
 
-// Activate cron sync by updating CRON_SYNC=active
-if (process.env.CRON_SYNC === 'active') {
+// Activate cron sync by updating SYNC_CRON=active
+if (process.env.SYNC_CRON === 'active') {
   CronSyncControllerWrapper.push(CronSyncController);
 }
 

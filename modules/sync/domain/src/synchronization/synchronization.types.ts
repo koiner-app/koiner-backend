@@ -1,6 +1,7 @@
 export interface CreateSynchronizationProps {
   headTopologyHeight: number;
   lastIrreversibleBlock: number;
+  lastSyncedBlock?: number;
 }
 
 export interface SynchronizationProps extends CreateSynchronizationProps {

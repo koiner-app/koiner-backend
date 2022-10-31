@@ -25,7 +25,7 @@ export class Synchronization extends AggregateRoot<SynchronizationProps> {
   ): Synchronization {
     const props: SynchronizationProps = {
       ...create,
-      lastSyncedBlock: 0,
+      lastSyncedBlock: create.lastSyncedBlock ?? 0,
       syncing: false,
       stopped: false,
     };
