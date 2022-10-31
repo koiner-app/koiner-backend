@@ -1,4 +1,4 @@
-import { AggregateRoot, ConflictException } from '@appvise/domain';
+import { AggregateRoot } from '@appvise/domain';
 import { ChainId } from '@koiner/domain';
 import {
   CompleteBatchProps,
@@ -10,6 +10,7 @@ import {
   SynchronizationBatchStarted,
   SynchronizationProps,
   SynchronizationCreated,
+  SynchronizationNotRunningException,
   SynchronizationResumed,
   SynchronizationStopped,
   SynchronizationTimedOut,
@@ -110,8 +111,7 @@ export class Synchronization extends AggregateRoot<SynchronizationProps> {
       !this.batchStartHeight ||
       !this.batchEndHeight
     ) {
-      // TODO: Throw custom domain exception
-      throw new ConflictException('No batch to complete');
+      throw new SynchronizationNotRunningException();
     }
 
     // Create event before resetting props
@@ -141,8 +141,7 @@ export class Synchronization extends AggregateRoot<SynchronizationProps> {
       !this.batchStartHeight ||
       !this.batchEndHeight
     ) {
-      // TODO: Throw custom domain exception
-      throw new ConflictException('No batch to mark as failed');
+      throw new SynchronizationNotRunningException();
     }
 
     this.props.headTopologyHeight = props.headTopologyHeight;
