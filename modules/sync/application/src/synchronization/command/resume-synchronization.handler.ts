@@ -3,6 +3,7 @@ import { Logger } from '@appvise/domain';
 import { koinosConfig } from '@koinos/jsonrpc';
 import {
   Synchronization,
+  SynchronizationNotResumableException,
   SynchronizationWriteRepository,
 } from '@koiner/sync/domain';
 import { StartSynchronizationBatchCommand } from './dto/start-synchronization-batch.command';
@@ -24,9 +25,13 @@ export class ResumeSynchronizationHandler
     const synchronization: Synchronization =
       await this.writeRepository.findOneByIdOrThrow(chainId);
 
+    if (!synchronization.stopped) {
+      throw new SynchronizationNotResumableException();
+    }
+
     this.logger.log('Resume syncing!');
 
-    synchronization.resume();
+    synchronization.resume(command.lastSyncedBlock);
 
     await this.writeRepository.save(synchronization);
 

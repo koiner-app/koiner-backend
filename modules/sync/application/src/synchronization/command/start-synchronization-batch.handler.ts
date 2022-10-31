@@ -1,5 +1,4 @@
 import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
-import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Provider } from 'koilib';
 import { Logger } from '@appvise/domain';
 import { ChainId } from '@koiner/domain';
@@ -7,7 +6,6 @@ import { koinosConfig } from '@koinos/jsonrpc';
 import {
   StopSignal,
   Synchronization,
-  SynchronizationBatchStarted,
   SynchronizationWriteRepository,
 } from '@koiner/sync/domain';
 import { StopSignalQuery } from '../query';
@@ -21,7 +19,6 @@ export class StartSynchronizationBatchHandler
     private readonly writeRepository: SynchronizationWriteRepository,
     private readonly queryBus: QueryBus,
     private readonly provider: Provider,
-    private readonly eventEmitter: EventEmitter2,
     private readonly logger: Logger
   ) {}
 
@@ -167,27 +164,5 @@ export class StartSynchronizationBatchHandler
     });
 
     await this.writeRepository.save(synchronization);
-
-    /**
-     * Emit started event using EventEmitter because listening to DomainEvents will cause the updates
-     * to synchronization inside the listener be overridden by the updates to the source synchronization.
-     */
-    if (synchronization.batchStartHeight && synchronization.batchEndHeight) {
-      await this.eventEmitter.emitAsync(
-        SynchronizationBatchStarted.eventName,
-        new SynchronizationBatchStarted({
-          aggregateId: synchronization.id.value,
-          headTopologyHeight: synchronization.headTopologyHeight,
-          lastIrreversibleBlock: synchronization.lastIrreversibleBlock,
-          lastSyncedBlock: synchronization.lastSyncedBlock,
-          startHeight: synchronization.batchStartHeight,
-          endHeight: synchronization.batchEndHeight,
-          batchSize:
-            synchronization.batchEndHeight -
-            synchronization.batchStartHeight +
-            1,
-        })
-      );
-    }
   }
 }

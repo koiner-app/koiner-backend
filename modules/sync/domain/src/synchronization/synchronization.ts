@@ -188,8 +188,13 @@ export class Synchronization extends AggregateRoot<SynchronizationProps> {
     );
   }
 
-  resume(): void {
+  resume(lastSyncedBlock?: number): void {
     this.reset();
+
+    // Set last synced block when resuming after time-out
+    if (lastSyncedBlock) {
+      this.props.lastSyncedBlock = lastSyncedBlock;
+    }
 
     this.addEvent(
       new SynchronizationResumed({

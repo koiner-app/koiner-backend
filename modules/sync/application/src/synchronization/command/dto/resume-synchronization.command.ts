@@ -9,4 +9,5 @@ export class ResumeSynchronizationCommand extends Command {
 
   readonly chainId?: string;
   readonly batchSize?: number;
+  readonly lastSyncedBlock?: number;
 }

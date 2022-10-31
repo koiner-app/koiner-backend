@@ -1,16 +1,18 @@
 import { CommandBus } from '@nestjs/cqrs';
+import { ResumeSyncOnSynchronizationTimedOut } from './sync/resume-sync-on-synchronization-timed-out';
 import { SyncAddressOnAddressUsed } from './address/sync-address-on-address-used';
 import { SyncEventsForNewBlock } from './event/sync-events-for-new-block';
 import { SyncEventsForNewTransaction } from './event/sync-events-for-new-transaction';
 import { SyncOperationsForNewTransaction } from './operation/sync-operations-for-new-transaction';
 import { SyncTransactionsForNewBlock } from './transaction/sync-transactions-for-new-block';
+import { SyncBlocksOnSynchronizationBatchStarted } from './sync/sync-blocks-on-synchronization-batch-started';
 import { CreateSystemCallOperationForNewOperation } from './operation/create-system-call-operation-for-new-operation';
 import { CreateSystemContractOperationForNewOperation } from './operation/create-system-contract-operation-for-new-operation';
 import { CreateUploadOperationForNewOperation } from './operation/create-upload-operation-for-new-operation';
-import { SyncBlocksOnSynchronizationBatchStarted } from './sync/sync-blocks-on-synchronization-batch-started';
 
 export const ChainSyncEventHandlers = [
   // EventEmitter
+  ResumeSyncOnSynchronizationTimedOut,
   SyncAddressOnAddressUsed,
   SyncBlocksOnSynchronizationBatchStarted,
   SyncEventsForNewBlock,
