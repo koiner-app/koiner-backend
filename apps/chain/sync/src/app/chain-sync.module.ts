@@ -16,6 +16,8 @@ import { CronSyncController } from './cron-sync.controller';
 import { ManualSyncController } from './manual-sync.controller';
 
 import { SyncLoggerModule } from '@koiner/sync/logger';
+import { KoinerLoggerModule } from '@koiner/logger/nestjs';
+import { LoggerModule } from './logger.module';
 
 // Register our models with typeorm
 import { database } from '../config';
@@ -36,6 +38,8 @@ if (process.env.SYNC_CRON === 'active') {
     KoinosModule,
     TypeOrmModule.forFeature(SynchronizationModuleModels),
     SyncLoggerModule,
+    KoinerLoggerModule,
+    LoggerModule,
   ],
   providers: [
     RawBlocksService,

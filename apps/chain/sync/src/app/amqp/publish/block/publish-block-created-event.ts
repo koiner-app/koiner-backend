@@ -19,7 +19,7 @@ export class PublishBlockCreatedEvent extends DomainEventHandler {
 
     await this.amqpConnection.publish(
       'koiner.chain.event',
-      BlockCreatedMessage.routingKey,
+      BlockCreatedMessage.eventName,
       message.toString()
     );
   }

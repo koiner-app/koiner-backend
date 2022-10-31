@@ -17,7 +17,7 @@ export class PublishAddressUsedForNewBlockProducer extends DomainEventHandler {
 
     await this.amqpConnection.publish(
       'koiner.network.event',
-      AddressUsedMessage.routingKey,
+      AddressUsedMessage.eventName,
       message.toString()
     );
   }

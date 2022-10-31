@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BaseNode } from '@appvise/graphql';
 import { EventLog } from '@koiner/logger/domain';
 import { GraphQLBigInt } from 'graphql-scalars';
@@ -20,6 +20,9 @@ export class EventLogNode extends BaseNode {
   @Field(() => GraphQLBigInt)
   timestamp: number;
 
+  @Field(() => Int)
+  count: number;
+
   constructor(entity: EventLog) {
     super(entity);
 
@@ -28,5 +31,6 @@ export class EventLogNode extends BaseNode {
     this.itemId = entity.itemId;
     this.itemType = entity.itemType;
     this.timestamp = entity.timestamp;
+    this.count = entity.count;
   }
 }

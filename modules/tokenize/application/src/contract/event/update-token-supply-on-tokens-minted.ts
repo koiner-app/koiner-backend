@@ -8,7 +8,7 @@ import { TokensMintedEventMessage } from '@koiner/tokenize/events';
 export class UpdateTokenSupplyOnTokensMinted {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @OnEvent(`${TokensMintedEventMessage.routingKey}.total_supply`, {
+  @OnEvent(`${TokensMintedEventMessage.eventName}.total_supply`, {
     async: false,
   })
   async handle(event: TokensMintedEventMessage): Promise<void> {

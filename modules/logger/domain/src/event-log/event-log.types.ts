@@ -8,4 +8,5 @@ export interface CreateEventLogProps {
 
 export interface EventLogProps extends CreateEventLogProps {
   timestamp: number;
+  count: number;
 }

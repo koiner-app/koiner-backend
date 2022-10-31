@@ -22,9 +22,9 @@ export class EmitEventsTokenHolderQueue {
     },
     exchange: 'koiner.tokenize.event',
     routingKey: [
-      TokensBurnedEventMessage.routingKey,
-      TokensMintedEventMessage.routingKey,
-      TokensTransferredEventMessage.routingKey,
+      TokensBurnedEventMessage.eventName,
+      TokensMintedEventMessage.eventName,
+      TokensTransferredEventMessage.eventName,
     ],
     queue: 'koiner.tokenize.queue.token.token_holder',
   })
@@ -35,16 +35,16 @@ export class EmitEventsTokenHolderQueue {
         | TokensMintedEventMessage
         | TokensTransferredEventMessage;
 
-      if (amqpMsg.fields.routingKey === TokensBurnedEventMessage.routingKey) {
+      if (amqpMsg.fields.routingKey === TokensBurnedEventMessage.eventName) {
         event = new TokensBurnedEventMessage(JSON.parse(message));
       }
 
-      if (amqpMsg.fields.routingKey === TokensMintedEventMessage.routingKey) {
+      if (amqpMsg.fields.routingKey === TokensMintedEventMessage.eventName) {
         event = new TokensMintedEventMessage(JSON.parse(message));
       }
 
       if (
-        amqpMsg.fields.routingKey === TokensTransferredEventMessage.routingKey
+        amqpMsg.fields.routingKey === TokensTransferredEventMessage.eventName
       ) {
         const parsedMessage = JSON.parse(message);
 

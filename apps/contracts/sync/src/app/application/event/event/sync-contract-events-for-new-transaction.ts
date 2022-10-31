@@ -23,7 +23,7 @@ export class SyncContractEventsForNewTransaction {
     private readonly amqpConnection: AmqpConnection
   ) {}
 
-  @OnEvent(`${TransactionCreatedMessage.routingKey}.event_queue`, {
+  @OnEvent(`${TransactionCreatedMessage.eventName}.event_queue`, {
     async: false,
   })
   async handle(event: TransactionCreatedMessage): Promise<void> {
@@ -76,7 +76,7 @@ export class SyncContractEventsForNewTransaction {
 
             await this.amqpConnection.publish(
               'koiner.contracts.event',
-              ContractEventWithTokenTypeCreatedMessage.routingKey,
+              ContractEventWithTokenTypeCreatedMessage.eventName,
               message.toString()
             );
           } else {

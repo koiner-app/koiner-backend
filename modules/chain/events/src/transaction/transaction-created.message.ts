@@ -1,5 +1,5 @@
 export class TransactionCreatedMessage {
-  static routingKey = 'chain.transaction.created';
+  static eventName = 'chain.transaction.created';
 
   constructor(props: Partial<TransactionCreatedMessage>) {
     Object.assign(this, props);

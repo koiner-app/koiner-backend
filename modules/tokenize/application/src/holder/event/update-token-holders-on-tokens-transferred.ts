@@ -8,7 +8,7 @@ import { TokensTransferredEventMessage } from '@koiner/tokenize/events';
 export class UpdateTokenHoldersOnTokensTransferred {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @OnEvent(`${TokensTransferredEventMessage.routingKey}.token_holder`, {
+  @OnEvent(`${TokensTransferredEventMessage.eventName}.token_holder`, {
     async: false,
   })
   async handle(event: TokensTransferredEventMessage): Promise<void> {

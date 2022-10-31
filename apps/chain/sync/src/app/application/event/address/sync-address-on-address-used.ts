@@ -8,7 +8,7 @@ import { AddressUsedMessage } from '@koiner/chain/events';
 export class SyncAddressOnAddressUsed {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @OnEvent(AddressUsedMessage.routingKey, { async: false })
+  @OnEvent(AddressUsedMessage.eventName, { async: false })
   async handle(event: AddressUsedMessage): Promise<void> {
     await this.commandBus.execute(
       new CreateOrUpdateAddressCommand({

@@ -15,7 +15,7 @@ export class CreateTokenOperationOnOperationCreated {
     private readonly contractStandardService: ContractStandardService
   ) {}
 
-  @OnEvent(ContractOperationWithTokenTypeCreatedMessage.routingKey, {
+  @OnEvent(ContractOperationWithTokenTypeCreatedMessage.eventName, {
     async: false,
   })
   async handle(

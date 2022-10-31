@@ -17,4 +17,7 @@ export class EventLogSchema extends EntityBaseSchema {
 
   @Column({ type: 'bigint' })
   readonly timestamp!: number;
+
+  @Column({ type: 'smallint' })
+  readonly count!: number;
 }

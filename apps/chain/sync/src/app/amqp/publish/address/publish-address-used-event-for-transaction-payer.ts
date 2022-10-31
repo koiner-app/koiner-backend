@@ -16,7 +16,7 @@ export class PublishAddressUsedEventForTransactionPayer extends DomainEventHandl
 
     await this.amqpConnection.publish(
       'koiner.chain.event',
-      AddressUsedMessage.routingKey,
+      AddressUsedMessage.eventName,
       message.toString()
     );
   }

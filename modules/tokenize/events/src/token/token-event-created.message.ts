@@ -1,5 +1,5 @@
 export class TokenEventCreatedMessage {
-  static routingKey = 'tokenize.event.created';
+  static eventName = 'tokenize.event.created';
 
   constructor(props: Partial<TokenEventCreatedMessage>) {
     Object.assign(this, props);

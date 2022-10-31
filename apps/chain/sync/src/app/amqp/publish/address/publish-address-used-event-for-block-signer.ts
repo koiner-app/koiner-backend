@@ -16,7 +16,7 @@ export class PublishAddressUsedEventForBlockSigner extends DomainEventHandler {
 
     await this.amqpConnection.publish(
       'koiner.chain.event',
-      AddressUsedMessage.routingKey,
+      AddressUsedMessage.eventName,
       message.toString()
     );
   }

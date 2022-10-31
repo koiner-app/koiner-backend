@@ -1,5 +1,5 @@
 export class AddressCreatedMessage {
-  static routingKey = 'chain.address.created';
+  static eventName = 'chain.address.created';
 
   constructor(props: Partial<AddressCreatedMessage>) {
     Object.assign(this, props);

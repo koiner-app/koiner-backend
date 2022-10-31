@@ -22,8 +22,8 @@ export class UpdateTokenStatsFromTokenizeEventsQueue {
     },
     exchange: 'koiner.tokenize.event',
     routingKey: [
-      TokenContractCreatedMessage.routingKey,
-      TokensTransferredEventMessage.routingKey,
+      TokenContractCreatedMessage.eventName,
+      TokensTransferredEventMessage.eventName,
     ],
     queue: 'koiner.tokenize.queue.token.stats',
   })
@@ -34,11 +34,11 @@ export class UpdateTokenStatsFromTokenizeEventsQueue {
       let contractCount = 0;
       let transferCount = 0;
 
-      if (routingKey === TokenContractCreatedMessage.routingKey) {
+      if (routingKey === TokenContractCreatedMessage.eventName) {
         contractCount = 1;
       }
 
-      if (routingKey === TokensTransferredEventMessage.routingKey) {
+      if (routingKey === TokensTransferredEventMessage.eventName) {
         transferCount = 1;
       }
 

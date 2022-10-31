@@ -13,7 +13,7 @@ export class SyncEventsForNewBlock {
     private readonly rawBlocksService: RawBlocksService
   ) {}
 
-  @OnEvent(BlockCreatedMessage.routingKey, { async: false })
+  @OnEvent(BlockCreatedMessage.eventName, { async: false })
   async handle(event: BlockCreatedMessage): Promise<void> {
     const rawBlock = await this.rawBlocksService.getBlock(event.height);
 

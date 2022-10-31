@@ -16,7 +16,7 @@ export class EmitUploadContractOperationCreated {
       channel: 'koiner.contracts.channel.contract',
     },
     exchange: 'koiner.chain.event',
-    routingKey: UploadContractOperationCreatedMessage.routingKey,
+    routingKey: UploadContractOperationCreatedMessage.eventName,
     queue: 'koiner.contracts.queue.contract',
   })
   async handle(message: any): Promise<void> {
@@ -26,7 +26,7 @@ export class EmitUploadContractOperationCreated {
       );
 
       this.eventEmitter
-        .emitAsync(UploadContractOperationCreatedMessage.routingKey, event)
+        .emitAsync(UploadContractOperationCreatedMessage.eventName, event)
         .then(() => {
           resolve();
         })

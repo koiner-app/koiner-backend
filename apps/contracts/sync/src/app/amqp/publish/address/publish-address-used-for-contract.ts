@@ -17,7 +17,7 @@ export class PublishAddressUsedForContract extends DomainEventHandler {
 
     await this.amqpConnection.publish(
       'koiner.contracts.event',
-      AddressUsedMessage.routingKey,
+      AddressUsedMessage.eventName,
       message.toString()
     );
   }

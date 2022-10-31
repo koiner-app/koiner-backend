@@ -16,7 +16,7 @@ export class EmitTransactionCreatedFromEventQueue {
       channel: 'koiner.contracts.channel.event.transaction',
     },
     exchange: 'koiner.chain.event',
-    routingKey: TransactionCreatedMessage.routingKey,
+    routingKey: TransactionCreatedMessage.eventName,
     queue: 'koiner.contracts.queue.event.transaction',
   })
   async handle(message: any): Promise<void> {
@@ -24,7 +24,7 @@ export class EmitTransactionCreatedFromEventQueue {
       const event = new TransactionCreatedMessage(JSON.parse(message));
 
       this.eventEmitter
-        .emitAsync(`${TransactionCreatedMessage.routingKey}.event_queue`, event)
+        .emitAsync(`${TransactionCreatedMessage.eventName}.event_queue`, event)
         .then(() => {
           resolve();
         })

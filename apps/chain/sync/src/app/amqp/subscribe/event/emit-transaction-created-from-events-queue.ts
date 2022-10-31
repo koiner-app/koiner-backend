@@ -1,14 +1,16 @@
 import { Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import { Logger } from '@appvise/domain';
-import { EventEmitter2 } from '@nestjs/event-emitter';
+import { EventLogger } from '@koiner/logger/domain';
 import { TransactionCreatedMessage } from '@koiner/chain/events';
 
 @Injectable()
 export class EmitTransactionCreatedFromEventsQueue {
   constructor(
     private readonly logger: Logger,
-    private readonly eventEmitter: EventEmitter2
+    private readonly eventEmitter: EventEmitter2,
+    private readonly eventLogger: EventLogger
   ) {}
 
   @RabbitSubscribe({
@@ -16,7 +18,7 @@ export class EmitTransactionCreatedFromEventsQueue {
       channel: 'koiner.chain.channel.event.transaction',
     },
     exchange: 'koiner.chain.event',
-    routingKey: TransactionCreatedMessage.routingKey,
+    routingKey: TransactionCreatedMessage.eventName,
     queue: 'koiner.chain.queue.event.transaction',
   })
   async handle(message: any): Promise<void> {
@@ -24,7 +26,7 @@ export class EmitTransactionCreatedFromEventsQueue {
       const event = new TransactionCreatedMessage(JSON.parse(message));
 
       this.eventEmitter
-        .emitAsync(TransactionCreatedMessage.routingKey, event)
+        .emitAsync(TransactionCreatedMessage.eventName, event)
         .then(() => {
           resolve();
         })
@@ -34,10 +36,25 @@ export class EmitTransactionCreatedFromEventsQueue {
             error
           );
 
-          // Reject with small delay
-          setTimeout(() => {
-            reject();
-          }, 2000);
+          // Create event log for error
+          this.eventLogger
+            .error(
+              {
+                ...event,
+                eventName: TransactionCreatedMessage.eventName,
+              },
+              error,
+              event.blockHeight.toString()
+            )
+            .then((eventLog) => {
+              // Reject with small delay based on occurrences of error
+              setTimeout(
+                () => {
+                  reject();
+                },
+                eventLog.count < 10 ? 2000 : 120000
+              );
+            });
         });
     });
   }

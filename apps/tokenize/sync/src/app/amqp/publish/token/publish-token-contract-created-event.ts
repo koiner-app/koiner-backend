@@ -22,7 +22,7 @@ export class PublishTokenContractCreatedEvent extends DomainEventHandler {
 
     await this.amqpConnection.publish(
       'koiner.tokenize.event',
-      TokenContractCreatedMessage.routingKey,
+      TokenContractCreatedMessage.eventName,
       message.toString()
     );
   }

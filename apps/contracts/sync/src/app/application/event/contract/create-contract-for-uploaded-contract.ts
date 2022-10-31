@@ -12,7 +12,7 @@ export class CreateContractForUploadedContract {
     private readonly contractStandardService: ContractStandardService
   ) {}
 
-  @OnEvent(UploadContractOperationCreatedMessage.routingKey, { async: false })
+  @OnEvent(UploadContractOperationCreatedMessage.eventName, { async: false })
   async handle(event: UploadContractOperationCreatedMessage): Promise<void> {
     const contractStandardWithValues =
       await this.contractStandardService.getForContract(event.contractId);

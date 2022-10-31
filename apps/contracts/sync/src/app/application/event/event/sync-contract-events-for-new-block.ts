@@ -23,7 +23,7 @@ export class SyncContractEventsForNewBlock {
     private readonly amqpConnection: AmqpConnection
   ) {}
 
-  @OnEvent(BlockCreatedMessage.routingKey, { async: false })
+  @OnEvent(BlockCreatedMessage.eventName, { async: false })
   async handle(event: BlockCreatedMessage): Promise<void> {
     const rawBlock = await this.rawBlocksService.getBlock(event.height);
 
@@ -71,7 +71,7 @@ export class SyncContractEventsForNewBlock {
 
             await this.amqpConnection.publish(
               'koiner.contracts.event',
-              ContractEventWithTokenTypeCreatedMessage.routingKey,
+              ContractEventWithTokenTypeCreatedMessage.eventName,
               message.toString()
             );
           } else {

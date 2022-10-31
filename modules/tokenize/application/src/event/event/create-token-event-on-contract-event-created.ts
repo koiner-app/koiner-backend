@@ -16,7 +16,7 @@ export class CreateTokenEventOnContractEventCreated {
     private readonly contractStandardService: ContractStandardService
   ) {}
 
-  @OnEvent(ContractEventWithTokenTypeCreatedMessage.routingKey, {
+  @OnEvent(ContractEventWithTokenTypeCreatedMessage.eventName, {
     async: false,
   })
   async handle(event: ContractEventWithTokenTypeCreatedMessage): Promise<void> {

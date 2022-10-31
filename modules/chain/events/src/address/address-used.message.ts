@@ -4,7 +4,7 @@
  * Chain sync will listen to this message for syncing addresses.
  */
 export class AddressUsedMessage {
-  static routingKey = 'address.used';
+  static eventName = 'address.used';
 
   constructor(props: Partial<AddressUsedMessage>) {
     Object.assign(this, props);

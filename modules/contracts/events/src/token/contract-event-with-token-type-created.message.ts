@@ -1,7 +1,7 @@
 import { ContractEventCreatedMessage } from '..';
 
 export class ContractEventWithTokenTypeCreatedMessage extends ContractEventCreatedMessage {
-  static override routingKey = 'contracts.contract.type_token.event.created';
+  static override eventName = 'contracts.contract.type_token.event.created';
 
   constructor(props: Partial<ContractEventWithTokenTypeCreatedMessage>) {
     super(props);

@@ -24,6 +24,7 @@ export class EventLogSchemaFactory extends TypeOrmEntitySchemaFactory<
       itemId: eventLogSchema.item_id,
       itemType: eventLogSchema.item_type,
       timestamp: eventLogSchema.timestamp,
+      count: eventLogSchema.count,
     };
 
     return { id, props };
@@ -40,6 +41,7 @@ export class EventLogSchemaFactory extends TypeOrmEntitySchemaFactory<
       item_id: props.itemId,
       item_type: props.itemType,
       timestamp: props.timestamp,
+      count: props.count,
     };
   }
 }

@@ -1,5 +1,5 @@
 export class ContractOperationCreatedMessage {
-  static routingKey = 'contracts.contract.operation.created';
+  static eventName = 'contracts.contract.operation.created';
 
   constructor(props: Partial<ContractOperationCreatedMessage>) {
     Object.assign(this, props);

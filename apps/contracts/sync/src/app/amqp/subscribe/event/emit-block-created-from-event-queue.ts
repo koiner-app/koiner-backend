@@ -16,7 +16,7 @@ export class EmitBlockCreatedFromEventQueue {
       channel: 'koiner.contracts.channel.event.block',
     },
     exchange: 'koiner.chain.event',
-    routingKey: BlockCreatedMessage.routingKey,
+    routingKey: BlockCreatedMessage.eventName,
     queue: 'koiner.contracts.queue.event.block',
   })
   async handle(message: any): Promise<void> {
@@ -24,7 +24,7 @@ export class EmitBlockCreatedFromEventQueue {
       const event = new BlockCreatedMessage(JSON.parse(message));
 
       this.eventEmitter
-        .emitAsync(BlockCreatedMessage.routingKey, event)
+        .emitAsync(BlockCreatedMessage.eventName, event)
         .then(() => {
           resolve();
         })

@@ -17,7 +17,7 @@ export class PublishAddressesUsedForTokenEvents extends DomainEventHandler {
 
       await this.amqpConnection.publish(
         'koiner.tokenize.event',
-        AddressUsedMessage.routingKey,
+        AddressUsedMessage.eventName,
         message.toString()
       );
     }
@@ -30,7 +30,7 @@ export class PublishAddressesUsedForTokenEvents extends DomainEventHandler {
 
       await this.amqpConnection.publish(
         'koiner.tokenize.event',
-        AddressUsedMessage.routingKey,
+        AddressUsedMessage.eventName,
         message.toString()
       );
     }

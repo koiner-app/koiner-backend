@@ -19,7 +19,7 @@ export class PublishBlockCreatedToPubSub {
       channel: 'koiner.chain.channel.graphql.subscriptions',
     },
     exchange: 'koiner.chain.event',
-    routingKey: BlockCreatedMessage.routingKey,
+    routingKey: BlockCreatedMessage.eventName,
     queue: 'koiner.chain.queue.graphql.subscriptions',
   })
   async handle(message: any, amqpMsg: ConsumeMessage): Promise<void> {
@@ -28,7 +28,7 @@ export class PublishBlockCreatedToPubSub {
         JSON.parse(message)
       );
 
-      if (amqpMsg.fields.routingKey !== BlockCreatedMessage.routingKey) {
+      if (amqpMsg.fields.routingKey !== BlockCreatedMessage.eventName) {
         reject();
       }
 

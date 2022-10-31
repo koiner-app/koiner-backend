@@ -10,8 +10,6 @@ export class CreateEventLogHandler
   constructor(private readonly writeRepository: EventLogWriteRepository) {}
 
   async execute(command: CreateEventLogCommand): Promise<void> {
-    const eventLogId = UUID.generate();
-
     const eventLog = EventLog.create(
       {
         eventName: command.eventName,
@@ -20,7 +18,7 @@ export class CreateEventLogHandler
         itemType: command.itemType,
         timestamp: command.timestamp,
       },
-      eventLogId
+      command.id ? new UUID(command.id) : undefined
     );
 
     await this.writeRepository.save(eventLog);

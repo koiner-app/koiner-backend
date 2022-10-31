@@ -24,7 +24,7 @@ export class PublishOperationCreatedEvent extends DomainEventHandler {
 
     await this.amqpConnection.publish(
       'koiner.chain.event',
-      OperationCreatedMessage.routingKey,
+      OperationCreatedMessage.eventName,
       message.toString()
     );
   }

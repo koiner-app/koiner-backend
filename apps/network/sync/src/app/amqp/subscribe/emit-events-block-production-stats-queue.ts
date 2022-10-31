@@ -16,7 +16,7 @@ export class EmitEventsBlockProductionStatsQueue {
       channel: 'koiner.network.channel.block_production_stats',
     },
     exchange: 'koiner.network.event',
-    routingKey: `${BlockRewardCreatedMessage.routingKey}.production_stats_queue`,
+    routingKey: `${BlockRewardCreatedMessage.eventName}.production_stats_queue`,
     queue: 'koiner.network.queue.block_production_stats',
   })
   async handle(message: any): Promise<void> {
@@ -25,7 +25,7 @@ export class EmitEventsBlockProductionStatsQueue {
 
       this.eventEmitter
         .emitAsync(
-          `${BlockRewardCreatedMessage.routingKey}.production_stats_queue`,
+          `${BlockRewardCreatedMessage.eventName}.production_stats_queue`,
           event
         )
         .then(() => {

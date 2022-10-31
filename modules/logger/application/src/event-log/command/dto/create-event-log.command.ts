@@ -12,4 +12,5 @@ export class CreateEventLogCommand extends Command {
   readonly itemId!: string;
   readonly itemType!: string;
   readonly timestamp?: number;
+  readonly id?: string;
 }

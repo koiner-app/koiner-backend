@@ -14,7 +14,7 @@ export class SyncTransactionsForNewBlock {
     private readonly rawBlocksService: RawBlocksService
   ) {}
 
-  @OnEvent(BlockWithTransactionsCreatedMessage.routingKey, { async: false })
+  @OnEvent(BlockWithTransactionsCreatedMessage.eventName, { async: false })
   async handle(event: BlockWithTransactionsCreatedMessage): Promise<void> {
     const rawBlock = await this.rawBlocksService.getBlock(event.height);
     const transactions = rawBlock.block.transactions;

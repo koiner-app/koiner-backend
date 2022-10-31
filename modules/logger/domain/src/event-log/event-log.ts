@@ -11,6 +11,7 @@ export class EventLog extends AggregateRoot<EventLogProps> {
     const props: EventLogProps = {
       ...create,
       timestamp: create.timestamp ?? Date.now(),
+      count: 1,
     };
 
     const eventLog = new EventLog({
@@ -50,6 +51,22 @@ export class EventLog extends AggregateRoot<EventLogProps> {
 
   get timestamp(): number {
     return this.props.timestamp;
+  }
+
+  get count(): number {
+    return this.props.count;
+  }
+
+  addToCount(): void {
+    this.props.count += 1;
+  }
+
+  override equals(object: EventLog): boolean {
+    return (
+      this.eventName === object.eventName &&
+      this.itemId === object.itemId &&
+      this.itemType === object.itemType
+    );
   }
 
   validate(): void {

@@ -29,17 +29,17 @@ export class PublishTokenEvents extends DomainEventHandler {
 
     if (event.name === 'burn') {
       message = new TokensBurnedEventMessage(props);
-      routingKey = TokensBurnedEventMessage.routingKey;
+      routingKey = TokensBurnedEventMessage.eventName;
     }
 
     if (event.name === 'mint') {
       message = new TokensMintedEventMessage(props);
-      routingKey = TokensMintedEventMessage.routingKey;
+      routingKey = TokensMintedEventMessage.eventName;
     }
 
     if (event.name === 'transfer') {
       message = new TokensTransferredEventMessage(props);
-      routingKey = TokensTransferredEventMessage.routingKey;
+      routingKey = TokensTransferredEventMessage.eventName;
     }
 
     await this.amqpConnection.publish(

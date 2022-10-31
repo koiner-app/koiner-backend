@@ -1,5 +1,5 @@
 export class TokenContractCreatedMessage {
-  static routingKey = 'tokenize.contract.created';
+  static eventName = 'tokenize.contract.created';
 
   constructor(props: Partial<TokenContractCreatedMessage>) {
     Object.assign(this, props);

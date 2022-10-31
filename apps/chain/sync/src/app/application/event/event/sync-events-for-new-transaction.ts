@@ -13,7 +13,7 @@ export class SyncEventsForNewTransaction {
     private readonly rawBlocksService: RawBlocksService
   ) {}
 
-  @OnEvent(TransactionCreatedMessage.routingKey, { async: false })
+  @OnEvent(TransactionCreatedMessage.eventName, { async: false })
   async handle(event: TransactionCreatedMessage): Promise<void> {
     const txReceipt = await this.rawBlocksService.getTransactionReceipt(
       event.blockHeight,

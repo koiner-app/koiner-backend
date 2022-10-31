@@ -16,7 +16,7 @@ export class EmitTokenizeAddressUsedQueueEvents {
       channel: 'koiner.chain.channel.address',
     },
     exchange: 'koiner.tokenize.event',
-    routingKey: AddressUsedMessage.routingKey,
+    routingKey: AddressUsedMessage.eventName,
     queue: 'koiner.chain.queue.address',
   })
   async handle(message: any): Promise<void> {
@@ -24,7 +24,7 @@ export class EmitTokenizeAddressUsedQueueEvents {
       const event = new AddressUsedMessage(JSON.parse(message));
 
       this.eventEmitter
-        .emitAsync(AddressUsedMessage.routingKey, event)
+        .emitAsync(AddressUsedMessage.eventName, event)
         .then(() => {
           resolve();
         })

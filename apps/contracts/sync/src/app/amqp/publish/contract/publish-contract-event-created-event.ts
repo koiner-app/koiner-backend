@@ -28,7 +28,7 @@ export class PublishContractEventCreatedEvent extends DomainEventHandler {
 
       await this.amqpConnection.publish(
         'koiner.contracts.event',
-        ContractEventWithTokenTypeCreatedMessage.routingKey,
+        ContractEventWithTokenTypeCreatedMessage.eventName,
         message.toString()
       );
     }

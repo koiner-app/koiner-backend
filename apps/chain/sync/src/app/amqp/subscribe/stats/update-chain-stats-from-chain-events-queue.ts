@@ -23,9 +23,9 @@ export class UpdateChainStatsFromChainEventsQueue {
     },
     exchange: 'koiner.chain.event',
     routingKey: [
-      AddressCreatedMessage.routingKey,
-      OperationCreatedMessage.routingKey,
-      TransactionCreatedMessage.routingKey,
+      AddressCreatedMessage.eventName,
+      OperationCreatedMessage.eventName,
+      TransactionCreatedMessage.eventName,
     ],
     queue: 'koiner.chain.queue.chain.stats',
   })
@@ -37,15 +37,15 @@ export class UpdateChainStatsFromChainEventsQueue {
       let operationCount = 0;
       let transactionCount = 0;
 
-      if (routingKey === AddressCreatedMessage.routingKey) {
+      if (routingKey === AddressCreatedMessage.eventName) {
         addressCount = 1;
       }
 
-      if (routingKey === OperationCreatedMessage.routingKey) {
+      if (routingKey === OperationCreatedMessage.eventName) {
         operationCount = 1;
       }
 
-      if (routingKey === TransactionCreatedMessage.routingKey) {
+      if (routingKey === TransactionCreatedMessage.eventName) {
         transactionCount = 1;
       }
 

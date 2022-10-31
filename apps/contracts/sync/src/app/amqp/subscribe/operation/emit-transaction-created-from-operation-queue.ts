@@ -16,7 +16,7 @@ export class EmitTransactionCreatedFromOperationQueue {
       channel: 'koiner.contracts.channel.operation',
     },
     exchange: 'koiner.chain.event',
-    routingKey: TransactionCreatedMessage.routingKey,
+    routingKey: TransactionCreatedMessage.eventName,
     queue: 'koiner.contracts.queue.operation',
   })
   async handle(message: any): Promise<void> {
@@ -25,7 +25,7 @@ export class EmitTransactionCreatedFromOperationQueue {
 
       this.eventEmitter
         .emitAsync(
-          `${TransactionCreatedMessage.routingKey}.operation_queue`,
+          `${TransactionCreatedMessage.eventName}.operation_queue`,
           event
         )
         .then(() => {
