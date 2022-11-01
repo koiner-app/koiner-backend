@@ -17,11 +17,13 @@ import * as config from '../config';
       driver: ApolloDriver,
       autoSchemaFile: true,
       introspection: true,
+      playground: false,
       subscriptions: {
         'graphql-ws': {
           path: '/graphql',
         },
       },
+      cache: 'bounded',
     }),
     GlobalAppModule,
     ChainModule,

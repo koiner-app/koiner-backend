@@ -22,6 +22,8 @@ import * as config from '../config';
       driver: ApolloDriver,
       autoSchemaFile: true,
       introspection: true,
+      playground: false,
+      cache: 'bounded',
     }),
     ScheduleModule.forRoot(),
     GlobalAppModule,

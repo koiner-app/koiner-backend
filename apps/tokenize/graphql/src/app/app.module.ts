@@ -22,6 +22,7 @@ import * as config from '../config';
           path: '/graphql',
         },
       },
+      cache: 'bounded',
     }),
     GlobalAppModule,
     TokenizeModule,
