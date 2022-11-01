@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { ConsumeMessage } from 'amqplib';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import { Logger } from '@appvise/domain';
-import { EventEmitter2 } from '@nestjs/event-emitter';
+import { EventLogger } from '@koiner/logger/domain';
+import { ConsumeMessage } from 'amqplib';
 import {
   TokensBurnedEventMessage,
   TokensMintedEventMessage,
@@ -30,7 +31,8 @@ const rabbitSubscribeProps = (suffix: string) => {
 export class EmitEventsTokenHolderQueue {
   constructor(
     private readonly logger: Logger,
-    private readonly eventEmitter: EventEmitter2
+    private readonly eventEmitter: EventEmitter2,
+    private readonly eventLogger: EventLogger
   ) {}
 
   /**
@@ -150,10 +152,25 @@ export class EmitEventsTokenHolderQueue {
             error
           );
 
-          // Reject with small delay
-          setTimeout(() => {
-            reject();
-          }, 2000);
+          // Create event log for error
+          this.eventLogger
+            .error(
+              {
+                ...event,
+                eventName: amqpMsg.fields.routingKey,
+              },
+              error,
+              event.id
+            )
+            .then((eventLog) => {
+              // Reject with small delay based on occurrences of error
+              setTimeout(
+                () => {
+                  reject();
+                },
+                eventLog.count < 10 ? 2000 : 120000
+              );
+            });
         });
     });
   }

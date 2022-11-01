@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { ConsumeMessage } from 'amqplib';
 import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import { Logger } from '@appvise/domain';
+import { EventLogger } from '@koiner/logger/domain';
+import { ConsumeMessage } from 'amqplib';
 import { CommandBus } from '@nestjs/cqrs';
 import { koinosConfig } from '@koinos/jsonrpc';
 import {
@@ -14,7 +15,8 @@ import { CreateOrUpdateTokenStatsCommand } from '@koiner/tokenize/application';
 export class UpdateTokenStatsFromTokenizeEventsQueue {
   constructor(
     private readonly logger: Logger,
-    private readonly commandBus: CommandBus
+    private readonly commandBus: CommandBus,
+    private readonly eventLogger: EventLogger
   ) {}
   @RabbitSubscribe({
     queueOptions: {
@@ -29,6 +31,8 @@ export class UpdateTokenStatsFromTokenizeEventsQueue {
   })
   async handle(message: any, amqpMsg: ConsumeMessage): Promise<void> {
     return new Promise((resolve, reject) => {
+      let event: TokenContractCreatedMessage | TokensTransferredEventMessage;
+
       const routingKey = amqpMsg.fields.routingKey;
 
       let contractCount = 0;
@@ -36,10 +40,12 @@ export class UpdateTokenStatsFromTokenizeEventsQueue {
 
       if (routingKey === TokenContractCreatedMessage.eventName) {
         contractCount = 1;
+        event = new TokenContractCreatedMessage(JSON.parse(message));
       }
 
       if (routingKey === TokensTransferredEventMessage.eventName) {
         transferCount = 1;
+        event = new TokensTransferredEventMessage(JSON.parse(message));
       }
 
       this.commandBus
@@ -61,10 +67,25 @@ export class UpdateTokenStatsFromTokenizeEventsQueue {
             error
           );
 
-          // Reject with small delay
-          setTimeout(() => {
-            reject();
-          }, 2000);
+          // Create event log for error
+          this.eventLogger
+            .error(
+              {
+                ...event,
+                eventName: routingKey,
+              },
+              error,
+              event.contractId
+            )
+            .then((eventLog) => {
+              // Reject with small delay based on occurrences of error
+              setTimeout(
+                () => {
+                  reject();
+                },
+                eventLog.count < 10 ? 2000 : 120000
+              );
+            });
         });
     });
   }
