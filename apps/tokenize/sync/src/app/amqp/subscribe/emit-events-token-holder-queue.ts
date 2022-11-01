@@ -17,9 +17,9 @@ const rabbitSubscribeProps = (suffix: string) => {
     },
     exchange: 'koiner.tokenize.event',
     routingKey: [
-      `${TokensBurnedEventMessage.eventName}.${suffix}`,
-      `${TokensMintedEventMessage.eventName}.${suffix}`,
-      `${TokensTransferredEventMessage.eventName}.${suffix}`,
+      `${TokensBurnedEventMessage.eventName}.from.${suffix}`,
+      `${TokensMintedEventMessage.eventName}.to.${suffix}`,
+      `${TokensTransferredEventMessage.eventName}.to.${suffix}`,
       `${TokensTransferredEventMessage.eventName}.from.${suffix}`,
     ],
     queue: `koiner.tokenize.queue.token.token_holder.${suffix}`,
@@ -32,7 +32,7 @@ export class EmitEventsTokenHolderQueue {
     private readonly logger: Logger,
     private readonly eventEmitter: EventEmitter2
   ) {}
-  ab;
+
   /**
    * Split queues in groups based on last letter of to/from address.
    * This way we can split the work among multiple queues and
@@ -114,11 +114,11 @@ export class EmitEventsTokenHolderQueue {
         ''
       );
 
-      if (routingKey === TokensBurnedEventMessage.eventName) {
+      if (routingKey.includes(TokensBurnedEventMessage.eventName)) {
         event = new TokensBurnedEventMessage(JSON.parse(message));
       }
 
-      if (routingKey === TokensMintedEventMessage.eventName) {
+      if (routingKey.includes(TokensMintedEventMessage.eventName)) {
         event = new TokensMintedEventMessage(JSON.parse(message));
       }
 
@@ -146,7 +146,7 @@ export class EmitEventsTokenHolderQueue {
         })
         .catch((error) => {
           this.logger.error(
-            `Could not process koiner.tokenize.queue.token.token_holder.${channelSuffix} event ${routingKey}`,
+            `Could not process koiner.tokenize.queue.token.token_holder.${channelSuffix} event`,
             error
           );
 

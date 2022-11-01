@@ -1,11 +1,27 @@
 import { Module } from '@nestjs/common';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
-import { AmqpChannelPostfixes } from './amqp';
+import { AmqpChannelPostfixes, AmqpTokenChannels } from './amqp';
 
 const tokenHolderChannels = {};
+const tokenSupplyChannels = {};
+
+for (let i = 0; i < AmqpTokenChannels.length; i++) {
+  tokenSupplyChannels[
+    `koiner.tokenize.channel.token.total_supply.${AmqpTokenChannels[i].suffix}`
+  ] = {
+    prefetchCount: 1,
+  };
+}
+
 for (let i = 0; i < AmqpChannelPostfixes.length; i++) {
   tokenHolderChannels[
     `koiner.tokenize.channel.token.token_holder.${AmqpChannelPostfixes[i]}`
+  ] = {
+    prefetchCount: 1,
+  };
+
+  tokenSupplyChannels[
+    `koiner.tokenize.channel.token.total_supply.${AmqpChannelPostfixes[i]}`
   ] = {
     prefetchCount: 1,
   };
@@ -37,11 +53,9 @@ for (let i = 0; i < AmqpChannelPostfixes.length; i++) {
         'koiner.tokenize.channel.token.operation': {},
         // Channels for processing updates to TokenHolder for token events (burned, minted, transferred)
         ...tokenHolderChannels,
-        // Channel for processing updates to Token.totalSupply + stats for token events
+        // Channels for processing updates to Token.totalSupply + stats for token events
         // (burned, minted, transferred)
-        'koiner.tokenize.channel.token.total_supply': {
-          prefetchCount: 1,
-        },
+        ...tokenSupplyChannels,
         // Channel for processing update to Token stats for token events (burned, minted, transferred)
         // and new token contracts
         'koiner.tokenize.channel.token.stats': {

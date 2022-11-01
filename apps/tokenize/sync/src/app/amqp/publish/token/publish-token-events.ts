@@ -6,7 +6,7 @@ import {
   TokensMintedEventMessage,
   TokensTransferredEventMessage,
 } from '@koiner/tokenize/events';
-import { AmqpChannelPostfixes } from '../..';
+import { AmqpChannelPostfixes, AmqpTokenChannels } from '../..';
 
 export class PublishTokenEvents extends DomainEventHandler {
   constructor(private readonly amqpConnection: AmqpConnection) {
@@ -50,31 +50,59 @@ export class PublishTokenEvents extends DomainEventHandler {
     );
 
     /**
-     * Also publish to routingKeys grouped by last char of address.
-     * This way we can split the work among multiple queues and
-     * still process them synchronously.
+     * Publish to routingKeys grouped by last char of address or
+     * contractId. This way we can split the work among multiple
+     * queues and still process them synchronously.
      */
-    let lastChar: string;
 
-    if (event.name === 'burn') {
-      lastChar = event.from[event.from.length - 1].toLowerCase();
-    } else {
-      lastChar = event.to[event.to.length - 1].toLowerCase();
+    /**
+     * Publish for total supply queues
+     */
+    let contractIdSuffix: string;
+
+    // Check if event if from token with separate a channel
+    const tokenChannel = AmqpTokenChannels.find(
+      (_tokenChannel) => _tokenChannel.contractId === event.contractId
+    );
+
+    if (tokenChannel) {
+      contractIdSuffix = tokenChannel.suffix;
     }
 
-    const suffix = AmqpChannelPostfixes.find((_suffix) =>
-      _suffix.includes(lastChar)
-    );
+    // Otherwise use the last char of the contractId
+    if (!contractIdSuffix) {
+      const lastCharContractId =
+        event.contractId[event.contractId.length - 1].toLowerCase();
+
+      contractIdSuffix = AmqpChannelPostfixes.find((_suffix) =>
+        _suffix.includes(lastCharContractId)
+      );
+    }
 
     await this.amqpConnection.publish(
       'koiner.tokenize.event',
-      `${routingKey}.${suffix}`,
+      `${routingKey}.token.${contractIdSuffix}`,
       message.toString()
     );
 
-    // Publish separate message for sender because it must be
-    // processed by their own token holder address group queue
-    if (event.name === 'transfer') {
+    /**
+     * Publish for token holder queues
+     */
+    if (event.to) {
+      const lastCharTo = event.to[event.to.length - 1].toLowerCase();
+
+      const toSuffix = AmqpChannelPostfixes.find((_suffix) =>
+        _suffix.includes(lastCharTo)
+      );
+
+      await this.amqpConnection.publish(
+        'koiner.tokenize.event',
+        `${routingKey}.to.${toSuffix}`,
+        message.toString()
+      );
+    }
+
+    if (event.from) {
       const lastCharFrom = event.from[event.from.length - 1].toLowerCase();
 
       const fromSuffix = AmqpChannelPostfixes.find((_suffix) =>
