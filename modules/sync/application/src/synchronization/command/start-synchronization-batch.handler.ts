@@ -2,7 +2,6 @@ import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
 import { Provider } from 'koilib';
 import { Logger } from '@appvise/domain';
 import { ChainId } from '@koiner/domain';
-import { koinosConfig } from '@koinos/jsonrpc';
 import {
   StopSignal,
   Synchronization,
@@ -23,7 +22,7 @@ export class StartSynchronizationBatchHandler
   ) {}
 
   async execute(command: StartSynchronizationBatchCommand): Promise<void> {
-    const chainId = command.chainId ?? koinosConfig.chainId;
+    const chainId = command.chainId;
     let batchSize = command.batchSize;
 
     if (!batchSize) {

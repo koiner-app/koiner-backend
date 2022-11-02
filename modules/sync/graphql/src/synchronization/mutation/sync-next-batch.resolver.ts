@@ -41,6 +41,10 @@ export class SyncNextBatchResolver {
       throw new ForbiddenException();
     }
 
+    if (!chainId) {
+      chainId = koinosConfig.chainId;
+    }
+
     await this.commandBus.execute(
       new StartSynchronizationBatchCommand({ chainId, batchSize })
     );
@@ -48,7 +52,7 @@ export class SyncNextBatchResolver {
     const synchronization = await this.queryBus.execute<
       SynchronizationQuery,
       Synchronization
-    >(new SynchronizationQuery(chainId ?? koinosConfig.chainId, selectionSet));
+    >(new SynchronizationQuery(chainId, selectionSet));
 
     return new SynchronizationNode(synchronization);
   }
