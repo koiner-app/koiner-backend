@@ -5,6 +5,10 @@ import { TokenContractSchema } from './token-contract.schema';
 @Entity('tokenize_token_operation')
 export class TokenOperationSchema extends EntityBaseSchema {
   @Index()
+  @Column({ type: 'bigint' })
+  readonly block_height!: number;
+
+  @Index()
   @Column({ length: 35 })
   readonly contract_id!: string;
 

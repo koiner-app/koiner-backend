@@ -19,6 +19,7 @@ export class CreateTokenOperationHandler
   async execute(command: CreateTokenOperationCommand): Promise<void> {
     const operation = TokenOperation.create(
       {
+        blockHeight: command.blockHeight,
         contractId: new KoinosAddressId(command.contractId),
         transactionId: new KoinosId(command.transactionId),
         name: command.name,

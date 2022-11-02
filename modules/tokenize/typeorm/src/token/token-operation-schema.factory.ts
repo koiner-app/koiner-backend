@@ -18,6 +18,7 @@ export class TokenOperationSchemaFactory extends EntitySchemaFactory<
     const id = new UUID(entitySchema.id);
 
     const props: TokenOperationProps = {
+      blockHeight: entitySchema.block_height,
       contractId: new KoinosAddressId(entitySchema.contract_id),
       transactionId: new KoinosId(entitySchema.transaction_id),
       name: entitySchema.name,
@@ -38,6 +39,7 @@ export class TokenOperationSchemaFactory extends EntitySchemaFactory<
     const props = entity.getPropsCopy();
 
     return {
+      block_height: props.blockHeight,
       contract_id: props.contractId.value,
       transaction_id: props.transactionId.value,
       name: props.name,

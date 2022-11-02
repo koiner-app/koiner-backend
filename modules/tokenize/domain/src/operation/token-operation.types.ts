@@ -1,6 +1,7 @@
 import { KoinosAddressId, KoinosId } from '@koiner/domain';
 
 export interface CreateTokenOperationProps {
+  blockHeight: number;
   contractId: KoinosAddressId;
   transactionId: KoinosId;
   name: string;

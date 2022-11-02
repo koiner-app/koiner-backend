@@ -1,4 +1,4 @@
-import { ContractOperationCreatedMessage } from '@koiner/contracts/events';
+import { ContractOperationCreatedMessage } from '../contract/contract-operation-created.message';
 
 export class ContractOperationWithTokenTypeCreatedMessage extends ContractOperationCreatedMessage {
   static override eventName = 'contracts.contract.type_token.operation.created';

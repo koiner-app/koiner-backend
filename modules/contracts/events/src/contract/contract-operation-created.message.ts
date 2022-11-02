@@ -6,6 +6,7 @@ export class ContractOperationCreatedMessage {
   }
 
   readonly operationId!: string;
+  readonly blockHeight!: number;
   readonly contractId!: string;
   readonly transactionId!: string;
   readonly entryPoint!: number;

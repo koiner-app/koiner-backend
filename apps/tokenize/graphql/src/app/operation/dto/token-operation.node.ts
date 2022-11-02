@@ -6,6 +6,9 @@ import { GraphQLBigInt } from 'graphql-scalars';
 
 @ObjectType('TokenOperation')
 export class TokenOperationNode extends BaseNode {
+  @Field(() => GraphQLBigInt)
+  blockHeight: number;
+
   @Field()
   transactionId: string;
 
@@ -33,6 +36,7 @@ export class TokenOperationNode extends BaseNode {
   constructor(tokenOperation: TokenOperation) {
     super(tokenOperation);
 
+    this.blockHeight = tokenOperation.blockHeight;
     this.transactionId = tokenOperation.transactionId.value;
     this.contractId = tokenOperation.contractId.value;
     this.name = tokenOperation.name;

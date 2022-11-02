@@ -13,6 +13,7 @@ export class PublishContractOperationCreatedEvent extends DomainEventHandler {
     if (event.contractStandardType === ContractStandardType.token) {
       const message = new ContractOperationWithTokenTypeCreatedMessage({
         operationId: event.aggregateId,
+        blockHeight: event.blockHeight,
         contractId: event.contractId,
         transactionId: event.transactionId,
         entryPoint: event.entryPoint,

@@ -36,6 +36,7 @@ export class CreateTokenOperationOnOperationCreated {
     await this.commandBus.execute(
       new CreateTokenOperationCommand({
         id: event.operationId,
+        blockHeight: event.blockHeight,
         contractId: event.contractId,
         transactionId: event.transactionId,
         name: decodedOperation.name,
