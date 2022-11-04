@@ -6,4 +6,4 @@
   value: koiner-test-tls
 - op: replace
   path: /spec/rules/0/host
-  value: test-koiner.app
+  value: test.koiner.app
