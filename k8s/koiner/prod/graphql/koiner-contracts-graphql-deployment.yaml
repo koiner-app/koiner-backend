@@ -4,7 +4,7 @@ metadata:
   labels:
     service: koiner-contracts-graphql
   name: koiner-contracts-graphql
-  namespace: koiner
+  namespace: koiner-graphql
 spec:
   replicas: 1
   selector:
@@ -22,36 +22,16 @@ spec:
     spec:
       containers:
         - name: koiner-contracts-graphql
-          image: elimbatido/koiner-contracts-graphql:v0.1.1
-          env:
-            - name: NODE_ENV
-              value: "production"
-
-            - name: DB_HOST
-              value: [INSERT]
-            - name: DB_PORT
-              value: "25060"
-            - name: DB_NAME
-              value: koiner-contracts
-            - name: DB_USER
-              value: koiner-contracts
-            - name: DB_PASSWORD
-              value: [INSERT]
-            - name: DB_TYPE
-              value: postgres
-            - name: SSL_CERT
-              value: '[INSERT]'
-            - name: PORT
-              value: "3002"
-            - name: POSTGRES_SYNC
-              value: "false"
-
-            - name: RABBITMQ_HOST
-              value: amqp:5672
-            - name: RABBITMQ_USER
-              value: guest
-            - name: RABBITMQ_PASSWORD
-              value: guest
+          image: elimbatido/koiner-contracts-graphql:v0.2.5
+          envFrom:
+            - configMapRef:
+                name: graphql-config
+            - configMapRef:
+                name: contracts-graphql-config
+            - secretRef:
+                name: db-contracts-credentials
+            - secretRef:
+                name: amqp-credentials
 #          resources:
 #            requests:
 #              memory: "64Mi"

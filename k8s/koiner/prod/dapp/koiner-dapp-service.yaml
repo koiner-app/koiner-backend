@@ -4,7 +4,7 @@ metadata:
   labels:
     service: koiner-dapp
   name: koiner-dapp
-  namespace: koiner
+  namespace: koiner-dapp
 spec:
   ports:
     - name: "8000"
@@ -12,4 +12,3 @@ spec:
       targetPort: 80
   selector:
     service: koiner-dapp
-  type: LoadBalancer

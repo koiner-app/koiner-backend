@@ -1,0 +1,76 @@
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  labels:
+    app.kubernetes.io/component: controller
+  name: nginx
+  annotations:
+    ingressclass.kubernetes.io/is-default-class: "true"
+spec:
+  controller: k8s.io/ingress-nginx
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: koiner-sync-ingress
+  namespace: koiner-sync
+  annotations:
+    cert-manager.io/cluster-issuer: "cert-manager-webhook-dnsimple-production"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - chain.sync.koiner.app
+      secretName: koiner-chain-sync-tls
+    - hosts:
+        - contracts.sync.koiner.app
+      secretName: koiner-contracts-sync-tls
+    - hosts:
+        - network.sync.koiner.app
+      secretName: koiner-network-sync-tls
+    - hosts:
+        - tokenize.sync.koiner.app
+      secretName: koiner-tokenize-sync-tls
+  rules:
+    - host: chain.sync.koiner.app
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: koiner-chain-sync
+                port:
+                  number: 3101
+    - host: contracts.sync.koiner.app
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: koiner-contracts-sync
+                port:
+                  number: 3102
+    - host: network.sync.koiner.app
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: koiner-network-sync
+                port:
+                  number: 3103
+    - host: tokenize.sync.koiner.app
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: koiner-tokenize-sync
+                port:
+                  number: 3104

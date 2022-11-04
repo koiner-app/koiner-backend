@@ -1,0 +1,56 @@
+namespace: koiner-sync
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+secretGenerator:
+  - name: db-chain-credentials
+    envs:
+      - env/.env.db-chain
+    namespace: koiner-sync
+  - name: db-contracts-credentials
+    envs:
+      - env/.env.db-contracts
+    namespace: koiner-sync
+  - name: db-network-credentials
+    envs:
+      - env/.env.db-network
+    namespace: koiner-sync
+  - name: db-tokenize-credentials
+    envs:
+      - env/.env.db-tokenize
+    namespace: koiner-sync
+  - name: amqp-credentials
+    envs:
+      - env/.env.amqp
+    namespace: koiner-sync
+
+configMapGenerator:
+  - name: sync-config
+    files:
+      - config/sync.properties
+  - name: chain-sync-config
+    files:
+      - config/chain-sync.properties
+  - name: contracts-sync-config
+    files:
+      - config/contracts-sync.properties
+  - name: network-sync-config
+    files:
+      - config/network-sync.properties
+  - name: tokenize-sync-config
+    files:
+      - config/tokenize-sync.properties
+
+resources:
+  - namespace.yaml
+  - jsonrpc-data-pvc.yaml
+  - koiner-chain-sync-deployment.yaml
+  - koiner-chain-sync-service.yaml
+  - koiner-contracts-sync-deployment.yaml
+  - koiner-contracts-sync-service.yaml
+  - koiner-network-sync-deployment.yaml
+  - koiner-network-sync-service.yaml
+  - koiner-tokenize-sync-deployment.yaml
+  - koiner-tokenize-sync-service.yaml
+  - ingress.yaml

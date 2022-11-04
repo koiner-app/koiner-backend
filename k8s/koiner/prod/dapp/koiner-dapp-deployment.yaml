@@ -4,7 +4,7 @@ metadata:
   labels:
     service: koiner-dapp
   name: koiner-dapp
-  namespace: koiner
+  namespace: koiner-dapp
 spec:
   replicas: 1
   selector:
@@ -22,17 +22,17 @@ spec:
     spec:
       containers:
         - name: koiner-dapp
-          image: elimbatido/koiner-dapp:v0.2.0
-          env:
-            - name: NODE_ENV
-              value: "production"
-          resources:
-            requests:
-              memory: "64Mi"
-              cpu: "250m"
-            limits:
-              memory: "128Mi"
-              cpu: "500m"
+          image: elimbatido/koiner-dapp:v0.2.13
+          envFrom:
+            - configMapRef:
+                name: dapp-config
+#          resources:
+#            requests:
+#              memory: "64Mi"
+#              cpu: "250m"
+#            limits:
+#              memory: "128Mi"
+#              cpu: "500m"
           ports:
             - containerPort: 80
           readinessProbe:

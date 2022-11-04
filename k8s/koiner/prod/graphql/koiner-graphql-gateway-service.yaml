@@ -4,7 +4,7 @@ metadata:
   labels:
     service: koiner-graphql-gateway
   name: koiner-graphql-gateway
-  namespace: koiner
+  namespace: koiner-graphql
 spec:
   ports:
     - name: "8000"

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: koiner-tokenize-graphql
+  name: koiner-tokenize-graphql
+  namespace: koiner-graphql
+spec:
+  ports:
+    - name: "8000"
+      protocol: TCP
+      port: 8000
+      targetPort: 3004
+  selector:
+    service: koiner-tokenize-graphql

@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: koiner-chain-sync
+  name: koiner-chain-sync
+  namespace: koiner-sync
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: koiner-chain-sync
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        service: koiner-chain-sync
+    spec:
+      containers:
+        - name: koiner-chain-sync
+          image: elimbatido/koiner-chain-sync:v0.2.20
+          volumeMounts:
+            - mountPath: /jsonrpc
+              name: jsonrpc-data
+          envFrom:
+            - configMapRef:
+                name: sync-config
+            - configMapRef:
+                name: chain-sync-config
+            - secretRef:
+                name: db-chain-credentials
+            - secretRef:
+                name: amqp-credentials
+#          resources:
+#            requests:
+#              cpu: "500m"
+#              memory: "128Mi"
+#            limits:
+#              cpu: "500m"
+#              memory: "128Mi"
+          ports:
+            - containerPort: 3101
+          readinessProbe:
+            tcpSocket:
+              port: 3101
+            initialDelaySeconds: 5
+            periodSeconds: 5
+#          livenessProbe:
+#            httpGet:
+#              path: /health
+#              port: 3101
+          imagePullPolicy: Always
+      volumes:
+        - name: jsonrpc-data
+          persistentVolumeClaim:
+            claimName: jsonrpc-data
+      serviceAccountName: default

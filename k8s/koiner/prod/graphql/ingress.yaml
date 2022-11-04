@@ -14,8 +14,8 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: koiner-ingress
-  namespace: koiner
+  name: koiner-graphql-ingress
+  namespace: koiner-graphql
   annotations:
     cert-manager.io/cluster-issuer: "cert-manager-webhook-dnsimple-production"
 spec:
@@ -31,16 +31,11 @@ spec:
         - contracts.api.koiner.app
       secretName: koiner-contracts-api-tls
     - hosts:
-        - amqp.koiner.app
-      secretName: koiner-amqp-tls
-#    - hosts:
-#        - jsonrpc.dev.koiner.app
-#      secretName: jsonrpc-dev-koiner-tls
-  defaultBackend:
-    service:
-      name: koiner-graphql-gateway
-      port:
-        number: 3000
+        - network.api.koiner.app
+      secretName: koiner-network-api-tls
+    - hosts:
+        - tokenize.api.koiner.app
+      secretName: koiner-tokenize-api-tls
   rules:
     - host: api.koiner.app
       http:
@@ -72,33 +67,23 @@ spec:
                 name: koiner-contracts-graphql
                 port:
                   number: 3002
-    - host: amqp.koiner.app
+    - host: network.api.koiner.app
       http:
         paths:
           - pathType: Prefix
             path: "/"
             backend:
               service:
-                name: amqp
+                name: koiner-network-graphql
                 port:
-                  number: 15672
-#    - # host: koiner.app
-#      http:
-#        paths:
-#          - pathType: Prefix
-#            path: "/"
-#            backend:
-#              service:
-#                name: koiner-dapp
-#                port:
-#                  number: 8000
-#    - # host: jsonrpc.koiner.app
-#      http:
-#        paths:
-#          - pathType: Prefix
-#            path: "/"
-#            backend:
-#              service:
-#                name: jsonrpc-tcp
-#                port:
-#                  number: 80
+                  number: 3003
+    - host: tokenize.api.koiner.app
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: koiner-tokenize-graphql
+                port:
+                  number: 3004
