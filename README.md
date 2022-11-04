@@ -16,15 +16,17 @@ docker-compose up
 
 ### Add virtual hosts (Optional)
 ```
-127.0.0.1	gateway.docker
-127.0.0.1	subscriptions.docker
-127.0.0.1	chain.docker
-127.0.0.1	contracts.docker
-127.0.0.1	sync.chain.docker
-127.0.0.1	sync.contracts.docker
-127.0.0.1	jsonrpc.docker
-127.0.0.1	pg-chain.docker
-127.0.0.1	pg-contracts.docker
+127.0.0.1	api.local
+127.0.0.1	chain-api.local
+127.0.0.1	contracts-api.local
+127.0.0.1	network-api.local
+127.0.0.1	tokenize-api.local
+127.0.0.1	chain-sync.local
+127.0.0.1	contracts-sync.local
+127.0.0.1	network-sync.local
+127.0.0.1	tokenize-sync.local
+127.0.0.1	dapp.local
+127.0.0.1	pg.docker
 ```
 
 ## Kubernetes

@@ -23,6 +23,11 @@ import * as config from '../config';
         },
       },
       cache: 'bounded',
+      cors: {
+        origin: process.env.CORS_ORIGIN
+          ? JSON.parse(process.env.CORS_ORIGIN)
+          : [],
+      },
     }),
     GlobalAppModule,
     TokenizeModule,

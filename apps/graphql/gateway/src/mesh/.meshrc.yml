@@ -2,24 +2,38 @@ serve:
   hostname: '{env.MESH_HOSTNAME}'
   port: '{env.PORT}'
   playground: true
+  cors:
+    origin: '*'
 
 sources:
   - name: Chain
     handler:
       graphql:
         endpoint: "{env.CHAIN_GRAPHQL_URL}"
+        operationHeaders:
+          Origin: '{env.MESH_URL}'
+          Referer: '{env.MESH_URL}'
   - name: Contracts
     handler:
       graphql:
         endpoint: "{env.CONTRACTS_GRAPHQL_URL}"
+        operationHeaders:
+          Origin: '{env.MESH_URL}'
+          Referer: '{env.MESH_URL}'
   - name: Network
     handler:
       graphql:
         endpoint: "{env.NETWORK_GRAPHQL_URL}"
+        operationHeaders:
+          Origin: '{env.MESH_URL}'
+          Referer: '{env.MESH_URL}'
   - name: Tokenize
     handler:
       graphql:
         endpoint: "{env.TOKENIZE_GRAPHQL_URL}"
+        operationHeaders:
+          Origin: '{env.MESH_URL}'
+          Referer: '{env.MESH_URL}'
 
 additionalEnvelopPlugins: './envelop-plugins'
 
