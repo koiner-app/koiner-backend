@@ -23,7 +23,7 @@ export class SynchronizationNode extends BaseNode {
   @Field(() => GraphQLBigInt)
   lastSyncedBlock: number;
 
-  @Field()
+  @Field({ nullable: true })
   lastError?: string;
 
   @Field()
