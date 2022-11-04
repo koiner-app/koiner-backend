@@ -1,0 +1,55 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: amqp
+  namespace: amqp
+spec:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 2000m
+      memory: 2Gi
+    limits:
+      cpu: 2000m
+      memory: 2Gi
+# Production-ready
+#    requests:
+#      cpu: 4
+#      memory: 10Gi
+#    limits:
+#      cpu: 4
+#      memory: 10Gi
+  rabbitmq:
+    additionalConfig: |
+      default_user=koiner
+      default_pass=ElObm6hOzU78PZ8JG5XL
+      cluster_partition_handling = pause_minority
+      vm_memory_high_watermark_paging_ratio = 0.99
+      disk_free_limit.relative = 1.0
+      collect_statistics_interval = 10000
+  persistence:
+    storageClassName: do-block-storage
+    storage: "20Gi"
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - amqp
+          topologyKey: kubernetes.io/hostname
+#  override:
+#    statefulSet:
+#      spec:
+#        template:
+#          spec:
+#            containers: []
+#            topologySpreadConstraints:
+#              - maxSkew: 1
+#                topologyKey: "topology.kubernetes.io/zone"
+#                whenUnsatisfiable: DoNotSchedule
+#                labelSelector:
+#                  matchLabels:
+#                    app.kubernetes.io/name: amqp

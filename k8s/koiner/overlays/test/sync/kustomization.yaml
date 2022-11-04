@@ -1,0 +1,55 @@
+namespace: koiner-test-sync
+
+resources:
+  - namespace.yaml
+  - ../../../base/sync
+
+patches:
+  - target:
+      kind: Ingress
+      name: koiner-sync-ingress
+    path: ingress_patches.yaml
+
+secretGenerator:
+  - name: db-chain-credentials
+    envs:
+      - env/.env.db-chain
+    namespace: koiner-sync
+  - name: db-contracts-credentials
+    envs:
+      - env/.env.db-contracts
+    namespace: koiner-sync
+  - name: db-network-credentials
+    envs:
+      - env/.env.db-network
+    namespace: koiner-sync
+  - name: db-tokenize-credentials
+    envs:
+      - env/.env.db-tokenize
+    namespace: koiner-sync
+  - name: amqp-credentials
+    envs:
+      - env/.env.amqp
+    namespace: koiner-sync
+
+configMapGenerator:
+  - name: sync-config
+    behavior: merge
+    files:
+      - config/sync.properties
+  - name: chain-sync-config
+    behavior: merge
+    files:
+      - config/chain-sync.properties
+  - name: contracts-sync-config
+    behavior: merge
+    files:
+      - config/contracts-sync.properties
+  - name: network-sync-config
+    behavior: merge
+    files:
+      - config/network-sync.properties
+  - name: tokenize-sync-config
+    behavior: merge
+    files:
+      - config/tokenize-sync.properties

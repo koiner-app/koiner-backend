@@ -1,0 +1,54 @@
+# api
+- op: replace
+  path: /spec/tls/0/hosts/0
+  value: api.test.koiner.app
+- op: replace
+  path: /spec/tls/0/secretName
+  value: koiner-test-api-tls
+- op: replace
+  path: /spec/rules/0/host
+  value: api.test.koiner.app
+
+# chain
+- op: replace
+  path: /spec/tls/1/hosts/0
+  value: chain.api.test.koiner.app
+- op: replace
+  path: /spec/tls/1/secretName
+  value: koiner-test-chain-api-tls
+- op: replace
+  path: /spec/rules/1/host
+  value: chain.api.test.koiner.app
+
+# contracts
+- op: replace
+  path: /spec/tls/2/hosts/0
+  value: contracts.api.test.koiner.app
+- op: replace
+  path: /spec/tls/2/secretName
+  value: koiner-test-contracts-api-tls
+- op: replace
+  path: /spec/rules/2/host
+  value: contracts.api.test.koiner.app
+
+# network
+- op: replace
+  path: /spec/tls/3/hosts/0
+  value: network.api.test.koiner.app
+- op: replace
+  path: /spec/tls/3/secretName
+  value: koiner-test-network-api-tls
+- op: replace
+  path: /spec/rules/3/host
+  value: network.api.test.koiner.app
+
+# tokenize
+- op: replace
+  path: /spec/tls/4/hosts/0
+  value: tokenize.api.test.koiner.app
+- op: replace
+  path: /spec/tls/4/secretName
+  value: koiner-test-tokenize-api-tls
+- op: replace
+  path: /spec/rules/4/host
+  value: tokenize.api.test.koiner.app

@@ -1,0 +1,32 @@
+configMapGenerator:
+  - name: gateway-config
+    files:
+      - config/gateway.common.properties
+  - name: graphql-config
+    files:
+      - config/graphql.common.properties
+  - name: chain-graphql-config
+    files:
+      - config/chain-graphql.common.properties
+  - name: contracts-graphql-config
+    files:
+      - config/contracts-graphql.common.properties
+  - name: network-graphql-config
+    files:
+      - config/network-graphql.common.properties
+  - name: tokenize-graphql-config
+    files:
+      - config/tokenize-graphql.common.properties
+
+resources:
+  - koiner-chain-graphql-deployment.yaml
+  - koiner-chain-graphql-service.yaml
+  - koiner-contracts-graphql-deployment.yaml
+  - koiner-contracts-graphql-service.yaml
+  - koiner-graphql-gateway-deployment.yaml
+  - koiner-graphql-gateway-service.yaml
+  - koiner-network-graphql-deployment.yaml
+  - koiner-network-graphql-service.yaml
+  - koiner-tokenize-graphql-deployment.yaml
+  - koiner-tokenize-graphql-service.yaml
+  - ingress.yaml

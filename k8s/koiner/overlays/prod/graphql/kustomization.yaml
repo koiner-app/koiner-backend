@@ -1,0 +1,59 @@
+namespace: koiner-graphql
+
+resources:
+  - namespace.yaml
+  - ../../../base/graphql
+
+patches:
+  - target:
+      kind: Deployment
+      name: koiner-graphql-gateway
+    path: gateway_patches.yaml
+
+secretGenerator:
+  - name: db-chain-credentials
+    envs:
+      - env/.env.db-chain
+    namespace: koiner-graphql
+  - name: db-contracts-credentials
+    envs:
+      - env/.env.db-contracts
+    namespace: koiner-graphql
+  - name: db-network-credentials
+    envs:
+      - env/.env.db-network
+    namespace: koiner-graphql
+  - name: db-tokenize-credentials
+    envs:
+      - env/.env.db-tokenize
+    namespace: koiner-graphql
+  - name: amqp-credentials
+    envs:
+      - env/.env.amqp
+    namespace: koiner-graphql
+
+configMapGenerator:
+  - name: gateway-config
+    behavior: merge
+    files:
+      - config/gateway.properties
+  - name: graphql-config
+    behavior: merge
+    files:
+      - config/graphql.properties
+  - name: chain-graphql-config
+    behavior: merge
+    files:
+      - config/chain-graphql.properties
+  - name: contracts-graphql-config
+    behavior: merge
+    files:
+      - config/contracts-graphql.properties
+  - name: network-graphql-config
+    behavior: merge
+    files:
+      - config/network-graphql.properties
+  - name: tokenize-graphql-config
+    behavior: merge
+    files:
+      - config/tokenize-graphql.properties

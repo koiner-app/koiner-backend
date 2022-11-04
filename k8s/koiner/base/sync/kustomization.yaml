@@ -1,0 +1,28 @@
+configMapGenerator:
+  - name: sync-config
+    files:
+      - config/sync.common.properties
+  - name: chain-sync-config
+    files:
+      - config/chain-sync.common.properties
+  - name: contracts-sync-config
+    files:
+      - config/contracts-sync.common.properties
+  - name: network-sync-config
+    files:
+      - config/network-sync.common.properties
+  - name: tokenize-sync-config
+    files:
+      - config/tokenize-sync.common.properties
+
+resources:
+  - jsonrpc-data-pvc.yaml
+  - koiner-chain-sync-deployment.yaml
+  - koiner-chain-sync-service.yaml
+  - koiner-contracts-sync-deployment.yaml
+  - koiner-contracts-sync-service.yaml
+  - koiner-network-sync-deployment.yaml
+  - koiner-network-sync-service.yaml
+  - koiner-tokenize-sync-deployment.yaml
+  - koiner-tokenize-sync-service.yaml
+  - ingress.yaml
