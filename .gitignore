@@ -46,3 +46,5 @@ Thumbs.db
 
 # Cloud
 .digitalocean
+
+/env
