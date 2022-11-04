@@ -16,7 +16,6 @@ configMapGenerator:
       - config/tokenize-sync.common.properties
 
 resources:
-  - jsonrpc-data-pvc.yaml
   - koiner-chain-sync-deployment.yaml
   - koiner-chain-sync-service.yaml
   - koiner-contracts-sync-deployment.yaml

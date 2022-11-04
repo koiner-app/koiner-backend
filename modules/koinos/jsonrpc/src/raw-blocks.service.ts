@@ -6,8 +6,7 @@ import {
   TransactionReceipt,
 } from 'koilib/lib/interface';
 import { Provider } from 'koilib';
-import { readFile, writeFile } from 'fs/promises';
-import { koinosConfig } from './koinos.config';
+import { Logger } from '@appvise/domain';
 
 export interface RawBlock {
   block_id: string;
@@ -30,7 +29,10 @@ export interface RawBlock {
 export class RawBlocksService {
   private blocksInMemory: Record<string, RawBlock> = {};
 
-  constructor(private readonly provider: Provider) {}
+  constructor(
+    private readonly provider: Provider,
+    private readonly logger: Logger
+  ) {}
 
   async getBlocks(startHeight: number, amount = 1): Promise<RawBlock[]> {
     const blocks = [];
@@ -39,66 +41,99 @@ export class RawBlocksService {
       amount: number;
     }[] = [];
 
+    this.logger.debug(
+      `getBlocks startHeight: ${startHeight}, amount: ${amount}`
+    );
+
     for (
       let height = startHeight;
       height < startHeight + Number(amount);
       height++
     ) {
-      try {
-        const data = await readFile(
-          `${koinosConfig.cacheDir}/${height}.json`,
-          'utf8'
-        );
-        blocks.push(JSON.parse(data));
-      } catch {
-        let addedToSet = false;
+      // try {
+      // const data = await readFile(
+      //   `${koinosConfig.cacheDir}/${height}.json`,
+      //   'utf8'
+      // );
+      // blocks.push(JSON.parse(data));
+      // } catch (error) {
+      //   this.logger.debug('Could not load block from cache', error);
+      //
+      //   let addedToSet = false;
+      //
+      //   for (let i = 0; i < missingBlocksSets.length; i++) {
+      //     if (
+      //       missingBlocksSets[i].startHeight + missingBlocksSets[i].amount ===
+      //       height
+      //     ) {
+      //       // Add to existing set if it's the next height
+      //       missingBlocksSets[i] = {
+      //         startHeight: missingBlocksSets[i].startHeight,
+      //         amount: missingBlocksSets[i].amount + 1,
+      //       };
+      //
+      //       addedToSet = true;
+      //     }
+      //   }
+      // if (!addedToSet) {
+      //   // Create new set
+      //   missingBlocksSets.push({
+      //     startHeight: height,
+      //     amount: 1,
+      //   });
+      // }
+      // }
+    }
+
+    this.logger.debug(
+      `getBlocks missingBlocksSets: ${missingBlocksSets.map(
+        (missingBlocksSet) =>
+          `${missingBlocksSet.startHeight}, amount: ${amount}`
+      )}`
+    );
+
+    try {
+      if (missingBlocksSets) {
+        this.logger.debug(`getBlocks go get missingBlocksSets`);
 
         for (let i = 0; i < missingBlocksSets.length; i++) {
-          if (
-            missingBlocksSets[i].startHeight + missingBlocksSets[i].amount ===
-            height
-          ) {
-            // Add to existing set if it's the next height
-            missingBlocksSets[i] = {
-              startHeight: missingBlocksSets[i].startHeight,
-              amount: missingBlocksSets[i].amount + 1,
-            };
-
-            addedToSet = true;
-          }
-        }
-
-        if (!addedToSet) {
-          // Create new set
-          missingBlocksSets.push({
-            startHeight: height,
-            amount: 1,
-          });
-        }
-      }
-    }
-
-    if (missingBlocksSets) {
-      for (let i = 0; i < missingBlocksSets.length; i++) {
-        const newBlocks = await this._koilibGetBlocks(
-          missingBlocksSets[i].startHeight,
-          missingBlocksSets[i].amount
-        );
-
-        for (let i = 0; i < newBlocks.length; i++) {
-          // Add to result
-          blocks.push(newBlocks[i]);
-
-          // Save to file to reduce unnecessary api calls by other sync services
-          await writeFile(
-            `${koinosConfig.cacheDir}/${newBlocks[
-              i
-            ].block_height.toString()}.json`,
-            JSON.stringify(newBlocks[i])
+          this.logger.debug(
+            `getBlocks get missingBlocksSet: ${missingBlocksSets[i].startHeight}, amount: ${missingBlocksSets[i].amount}`
           );
+
+          const newBlocks = await this._koilibGetBlocks(
+            missingBlocksSets[i].startHeight,
+            missingBlocksSets[i].amount
+          );
+
+          this.logger.debug(
+            `getBlocks missingBlocksSets: ${missingBlocksSets.map(
+              (missingBlocksSet) =>
+                `${missingBlocksSet.startHeight}, amount: ${amount}`
+            )}`
+          );
+
+          // for (let i = 0; i < newBlocks.length; i++) {
+          //   // Add to result
+          //   blocks.push(newBlocks[i]);
+          //
+          //   // Save to file to reduce unnecessary api calls by other sync services
+          //   await writeFile(
+          //     `${koinosConfig.cacheDir}/${newBlocks[
+          //       i
+          //     ].block_height.toString()}.json`,
+          //     JSON.stringify(newBlocks[i])
+          //   );
+          // }
         }
       }
+    } catch (error) {
+      this.logger.error('getBlocks failed', error);
     }
+
+    this.logger.debug(
+      `getBlocks blocks: ${blocks.map((block) => block.block_height)}`
+    );
 
     return blocks;
   }

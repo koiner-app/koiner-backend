@@ -1,7 +1,6 @@
 // TODO: Load from app config file
 export const koinosConfig = {
   chainId: 'QmeehjqATVaC4ReXxwbw4DQLbEdEAo8SmTBVzZz8s5ZV5F',
-  cacheDir: process.env.JSONRPC_CACHE_DIR ?? '/jsonrpc',
   rpcNodes: process.env.JSONRPC_NODES
     ? JSON.parse(process.env.JSONRPC_NODES)
     : ['https://api.koinos.io'],

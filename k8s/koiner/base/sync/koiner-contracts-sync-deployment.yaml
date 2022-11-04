@@ -23,9 +23,6 @@ spec:
       containers:
         - name: koiner-contracts-sync
           image: elimbatido/koiner-contracts-sync:v0.2.4
-          volumeMounts:
-            - mountPath: /jsonrpc
-              name: jsonrpc-data
           envFrom:
             - configMapRef:
                 name: sync-config
@@ -54,8 +51,4 @@ spec:
               path: /health
               port: 3102
           imagePullPolicy: Always
-      volumes:
-        - name: jsonrpc-data
-          persistentVolumeClaim:
-            claimName: jsonrpc-data
       serviceAccountName: default

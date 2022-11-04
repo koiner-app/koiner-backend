@@ -57,7 +57,6 @@
     "apollo-server-express": "^3.8.1",
     "dataloader": "^2.1.0",
     "fastify": "^4.6.0",
-    "find-remove": "^4.1.0",
     "graphql": "^16.5.0",
     "graphql-amqp-subscriptions": "^1.2.1",
     "graphql-scalars": "^1.18.0",

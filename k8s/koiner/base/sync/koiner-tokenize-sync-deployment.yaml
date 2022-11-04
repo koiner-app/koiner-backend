@@ -23,9 +23,6 @@ spec:
       containers:
         - name: koiner-tokenize-sync
           image: elimbatido/koiner-tokenize-sync:v0.2.5
-          volumeMounts:
-            - mountPath: /jsonrpc
-              name: jsonrpc-data
           envFrom:
             - configMapRef:
                 name: sync-config
@@ -54,8 +51,4 @@ spec:
               path: /health
               port: 3104
           imagePullPolicy: Always
-      volumes:
-        - name: jsonrpc-data
-          persistentVolumeClaim:
-            claimName: jsonrpc-data
       serviceAccountName: default
