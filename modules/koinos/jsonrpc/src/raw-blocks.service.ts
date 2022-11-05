@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
+import { Cache } from 'cache-manager';
 import {
   BlockJson,
   OperationJson,
@@ -30,11 +31,26 @@ export class RawBlocksService {
   private blocksInMemory: Record<string, RawBlock> = {};
 
   constructor(
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache,
     private readonly provider: Provider,
     private readonly logger: Logger
   ) {}
 
   async getBlocks(startHeight: number, amount = 1): Promise<RawBlock[]> {
+    this.cacheManager
+      .set('test', JSON.stringify({ test: 1, bla: 2 }))
+      .then((result) => {
+        this.logger.log('test is set', result);
+      })
+      .catch((error) => {
+        this.logger.error('NONONONO', error);
+      });
+
+    this.cacheManager.get('test').then((result) => {
+      this.logger.log('test is dit = ', result);
+    });
+
     const blocks = [];
     const missingBlocksSets: {
       startHeight: number;
@@ -50,39 +66,45 @@ export class RawBlocksService {
       height < startHeight + Number(amount);
       height++
     ) {
-      // try {
-      // const data = await readFile(
-      //   `${koinosConfig.cacheDir}/${height}.json`,
-      //   'utf8'
-      // );
-      // blocks.push(JSON.parse(data));
-      // } catch (error) {
-      //   this.logger.debug('Could not load block from cache', error);
-      //
-      //   let addedToSet = false;
-      //
-      //   for (let i = 0; i < missingBlocksSets.length; i++) {
-      //     if (
-      //       missingBlocksSets[i].startHeight + missingBlocksSets[i].amount ===
-      //       height
-      //     ) {
-      //       // Add to existing set if it's the next height
-      //       missingBlocksSets[i] = {
-      //         startHeight: missingBlocksSets[i].startHeight,
-      //         amount: missingBlocksSets[i].amount + 1,
-      //       };
-      //
-      //       addedToSet = true;
-      //     }
-      //   }
-      // if (!addedToSet) {
-      //   // Create new set
-      //   missingBlocksSets.push({
-      //     startHeight: height,
-      //     amount: 1,
-      //   });
-      // }
-      // }
+      this.logger.debug(`Load block from cache??? ${height}`);
+
+      try {
+        const block = await this.cacheManager.store.get(`block:${height}`);
+
+        if (block) {
+          this.logger.debug(`Load block from cache ${height}`, block);
+          blocks.push(block);
+        } else {
+          this.logger.debug('Could not load block from cache');
+
+          let addedToSet = false;
+
+          for (let i = 0; i < missingBlocksSets.length; i++) {
+            if (
+              missingBlocksSets[i].startHeight + missingBlocksSets[i].amount ===
+              height
+            ) {
+              // Add to existing set if it's the next height
+              missingBlocksSets[i] = {
+                startHeight: missingBlocksSets[i].startHeight,
+                amount: missingBlocksSets[i].amount + 1,
+              };
+
+              addedToSet = true;
+            }
+          }
+
+          if (!addedToSet) {
+            // Create new set
+            missingBlocksSets.push({
+              startHeight: height,
+              amount: 1,
+            });
+          }
+        }
+      } catch (error) {
+        this.logger.error(error);
+      }
     }
 
     this.logger.debug(
@@ -113,18 +135,16 @@ export class RawBlocksService {
             )}`
           );
 
-          // for (let i = 0; i < newBlocks.length; i++) {
-          //   // Add to result
-          //   blocks.push(newBlocks[i]);
-          //
-          //   // Save to file to reduce unnecessary api calls by other sync services
-          //   await writeFile(
-          //     `${koinosConfig.cacheDir}/${newBlocks[
-          //       i
-          //     ].block_height.toString()}.json`,
-          //     JSON.stringify(newBlocks[i])
-          //   );
-          // }
+          for (let i = 0; i < newBlocks.length; i++) {
+            // Add to result
+            blocks.push(newBlocks[i]);
+
+            // Save to cache to reduce unnecessary api calls by other sync services
+            await this.cacheManager.store.set(
+              `block:${blocks[i].height}`,
+              blocks[i]
+            );
+          }
         }
       }
     } catch (error) {

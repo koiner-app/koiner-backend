@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { KoinosModule } from '@koinos/jsonrpc';
 import { PubSubEngineProvider } from '@koiner/nestjs-utils';
 import { AmqpModule } from '../amqp.module';
 import {
@@ -25,7 +24,6 @@ database.entities.push(...ChainModuleModels);
     AmqpModule,
     CqrsModule,
     TypeOrmModule.forFeature(ChainModuleModels),
-    KoinosModule,
   ],
   providers: [
     PubSubEngineProvider('koiner.chain'),

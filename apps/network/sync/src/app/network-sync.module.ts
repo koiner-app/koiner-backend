@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AmqpModule } from './amqp.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { CqrsModule } from '@nestjs/cqrs';
-import { KoinosModule, RawBlocksService } from '@koinos/jsonrpc';
+import { KoinosModule } from '@koinos/jsonrpc';
 import { SynchronizationModuleApplicationHandlers } from '@koiner/sync/application';
 import {
   SynchronizationModuleModels,
@@ -44,8 +44,6 @@ if (process.env.SYNC_CRON === 'active') {
     LoggerModule,
   ],
   providers: [
-    RawBlocksService,
-
     // Sync module
     ...SynchronizationModuleApplicationHandlers,
     ...SynchronizationModuleRepositories,

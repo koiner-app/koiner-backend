@@ -20,12 +20,27 @@ services:
   amqp:
     container_name: koiner-amqp
     image: rabbitmq:3-management
-    environment:
-      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
-      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
+    networks:
+      - webproxy
+      - default
+    env_file:
+      - '.env.amqp'
     ports:
       - '${AMQP_INTERFACE:-127.0.0.1}:5672:5672'
       - '${AMQP_INTERFACE:-127.0.0.1}:15672:15672'
+
+  redis:
+    image: redis:latest
+    restart: always
+    networks:
+      - redis-tier
+    ports:
+      - '6379:6379'
+    command: redis-server --loglevel warning --requirepass ${REDIS_PASSWORD}
+    env_file:
+      - '.env.redis'
+    volumes:
+      - ./data/cache:/data
 
   koiner-postgres:
     container_name: koiner-postgres
@@ -36,13 +51,8 @@ services:
       - webproxy
     ports:
       - '5432:5432'
-    environment:
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_MULTIPLE_DATABASES=${DB_DATABASES}
-      - VIRTUAL_PORT=5432
-      - VIRTUAL_HOST=${DB_VIRTUAL_HOST}
+    env_file:
+      - '.env.db'
     volumes:
       - ./postgres-init.sh:/docker-entrypoint-initdb.d/postgres-init.sh
       - ./data/pgdata:/var/lib/postgresql/data
@@ -104,15 +114,13 @@ services:
     profiles: ['koiner', 'koiner-graphql', 'all']
     command: npm run start:chain-graphql
     env_file:
+      - '.env.db'
+      - '.env.amqp'
       - 'apps/chain/graphql/.env'
-    environment:
-      - RABBITMQ_USER=${RABBITMQ_USER}
-      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
-      - RABBITMQ_HOST=${RABBITMQ_HOST}
-      - JSONRPC_NODES=${JSONRPC_NODES}
     depends_on:
       - koiner-postgres
       - amqp
+      - redis
     volumes:
       - ./data/chain/graphql/logs:/var/logs
       - ./apps:/app/apps
@@ -121,6 +129,7 @@ services:
     networks:
       - default
       - webproxy
+      - redis-tier
     dns:
       - 8.8.8.8
     ports:
@@ -142,16 +151,15 @@ services:
     profiles: ['koiner', 'koiner-sync', 'all']
     command: npm run start:chain-sync
     env_file:
+      - '.env.db'
+      - '.env.amqp'
+      - '.env.redis'
+      - '.env.sync'
       - 'apps/chain/sync/.env'
-    environment:
-      - RABBITMQ_USER=${RABBITMQ_USER}
-      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
-      - RABBITMQ_HOST=${RABBITMQ_HOST}
-      - JSONRPC_NODES=${JSONRPC_NODES}
-      - JSONRPC_CACHE_DIR=${JSONRPC_CACHE_DIR}
     depends_on:
       - koiner-postgres
       - amqp
+      - redis
     volumes:
       - ./data/jsonrpc:/data/jsonrpc
       - ./data/chain/sync/logs:/var/logs
@@ -160,7 +168,7 @@ services:
       - /app/node_modules
     networks:
       - webproxy
-      - default
+      - redis-tier
     dns:
       - 8.8.8.8
     ports:
@@ -186,15 +194,14 @@ services:
     profiles: ['koiner', 'koiner-graphql', 'all']
     command: npm run start:contracts-graphql
     env_file:
+      - '.env.db'
+      - '.env.amqp'
+      - '.env.redis'
       - 'apps/contracts/graphql/.env'
-    environment:
-      - RABBITMQ_USER=${RABBITMQ_USER}
-      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
-      - RABBITMQ_HOST=${RABBITMQ_HOST}
-      - JSONRPC_NODES=${JSONRPC_NODES}
     depends_on:
       - koiner-postgres
       - amqp
+      - redis
     volumes:
       - ./data/contracts/graphql/logs:/var/logs
       - ./apps:/app/apps
@@ -203,6 +210,7 @@ services:
     networks:
       - default
       - webproxy
+      - redis-tier
     dns:
       - 8.8.8.8
     ports:
@@ -224,16 +232,15 @@ services:
     profiles: ['koiner', 'koiner-sync', 'all']
     command: npm run start:contracts-sync
     env_file:
+      - '.env.db'
+      - '.env.amqp'
+      - '.env.redis'
+      - '.env.sync'
       - 'apps/contracts/sync/.env'
-    environment:
-      - RABBITMQ_USER=${RABBITMQ_USER}
-      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
-      - RABBITMQ_HOST=${RABBITMQ_HOST}
-      - JSONRPC_NODES=${JSONRPC_NODES}
-      - JSONRPC_CACHE_DIR=${JSONRPC_CACHE_DIR}
     depends_on:
       - koiner-postgres
       - amqp
+      - redis
     volumes:
       - ./data/jsonrpc:/data/jsonrpc
       - ./data/contracts/sync/logs:/var/logs
@@ -242,7 +249,7 @@ services:
       - /app/node_modules
     networks:
       - webproxy
-      - default
+      - redis-tier
     dns:
       - 8.8.8.8
     ports:
@@ -268,15 +275,14 @@ services:
     profiles: ['koiner', 'koiner-graphql', 'all']
     command: npm run start:network-graphql
     env_file:
+      - '.env.db'
+      - '.env.amqp'
+      - '.env.redis'
       - 'apps/network/graphql/.env'
-    environment:
-      - RABBITMQ_USER=${RABBITMQ_USER}
-      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
-      - RABBITMQ_HOST=${RABBITMQ_HOST}
-      - JSONRPC_NODES=${JSONRPC_NODES}
     depends_on:
       - koiner-postgres
       - amqp
+      - redis
     volumes:
       - ./data/network/graphql/logs:/var/logs
       - ./apps:/app/apps
@@ -285,6 +291,7 @@ services:
     networks:
       - default
       - webproxy
+      - redis-tier
     dns:
       - 8.8.8.8
     ports:
@@ -306,16 +313,15 @@ services:
     profiles: ['koiner', 'koiner-sync', 'all']
     command: npm run start:network-sync
     env_file:
+      - '.env.db'
+      - '.env.amqp'
+      - '.env.redis'
+      - '.env.sync'
       - 'apps/network/sync/.env'
-    environment:
-      - RABBITMQ_USER=${RABBITMQ_USER}
-      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
-      - RABBITMQ_HOST=${RABBITMQ_HOST}
-      - JSONRPC_NODES=${JSONRPC_NODES}
-      - JSONRPC_CACHE_DIR=${JSONRPC_CACHE_DIR}
     depends_on:
       - koiner-postgres
       - amqp
+      - redis
     volumes:
       - ./data/jsonrpc:/data/jsonrpc
       - ./data/network/sync/logs:/var/logs
@@ -324,7 +330,7 @@ services:
       - /app/node_modules
     networks:
       - webproxy
-      - default
+      - redis-tier
     dns:
       - 8.8.8.8
     ports:
@@ -350,15 +356,14 @@ services:
     profiles: ['koiner', 'koiner-graphql', 'all']
     command: npm run start:tokenize-graphql
     env_file:
+      - '.env.db'
+      - '.env.amqp'
+      - '.env.redis'
       - 'apps/tokenize/graphql/.env'
-    environment:
-      - RABBITMQ_USER=${RABBITMQ_USER}
-      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
-      - RABBITMQ_HOST=${RABBITMQ_HOST}
-      - JSONRPC_NODES=${JSONRPC_NODES}
     depends_on:
       - koiner-postgres
       - amqp
+      - redis
     volumes:
       - ./data/tokenize/graphql/logs:/var/logs
       - ./apps:/app/apps
@@ -367,6 +372,7 @@ services:
     networks:
       - default
       - webproxy
+      - redis-tier
     dns:
       - 8.8.8.8
     ports:
@@ -388,16 +394,14 @@ services:
     profiles: ['koiner', 'koiner-sync', 'all']
     command: npm run start:tokenize-sync
     env_file:
+      - '.env.db'
+      - '.env.amqp'
+      - '.env.redis'
       - 'apps/tokenize/sync/.env'
-    environment:
-      - RABBITMQ_USER=${RABBITMQ_USER}
-      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
-      - RABBITMQ_HOST=${RABBITMQ_HOST}
-      - JSONRPC_NODES=${JSONRPC_NODES}
-      - JSONRPC_CACHE_DIR=${JSONRPC_CACHE_DIR}
     depends_on:
       - koiner-postgres
       - amqp
+      - redis
     volumes:
       - ./data/jsonrpc:/data/jsonrpc
       - ./data/tokenize/sync/logs:/var/logs
@@ -406,7 +410,7 @@ services:
       - /app/node_modules
     networks:
       - webproxy
-      - default
+      - redis-tier
     dns:
       - 8.8.8.8
     ports:
@@ -561,6 +565,11 @@ services:
 
 networks:
   webproxy:
+  default:
+  redis-tier:
+    driver: bridge
 
 volumes:
   letsencrypt-certs:
+  cache:
+    driver: local
