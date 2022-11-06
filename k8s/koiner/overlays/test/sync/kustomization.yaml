@@ -31,6 +31,14 @@ secretGenerator:
     envs:
       - env/.env.amqp
     namespace: koiner-sync
+  - name: redis-credentials
+    envs:
+      - env/.env.redis
+    namespace: koiner-sync
+  - name: sync-credentials
+    envs:
+      - env/.env.sync
+    namespace: koiner-sync
 
 configMapGenerator:
   - name: sync-config
