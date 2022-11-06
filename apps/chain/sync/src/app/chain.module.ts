@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { KoinosModule } from '@koinos/jsonrpc';
+import { BlocksServiceModule } from '@koinos/jsonrpc';
 import { ChainModuleApplicationHandlers } from '@koiner/chain/application';
 import {
   ChainModuleModels,
@@ -16,7 +16,7 @@ database.entities.push(...ChainModuleModels);
   imports: [
     CqrsModule,
     TypeOrmModule.forFeature(ChainModuleModels),
-    KoinosModule,
+    BlocksServiceModule,
   ],
   providers: [...ChainModuleApplicationHandlers, ...ChainModuleRepositories],
 })

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { KoinosModule } from '@koinos/jsonrpc';
+import { BlocksServiceModule } from '@koinos/jsonrpc';
 import { AmqpModule } from './amqp.module';
 import { KoinerLoggerModule } from '@koiner/logger/nestjs';
 import { LoggerModule } from './logger.module';
@@ -11,7 +11,7 @@ import { TokenizeAmqpHandlers } from './amqp';
   imports: [
     AmqpModule,
     CqrsModule,
-    KoinosModule,
+    BlocksServiceModule,
     KoinerLoggerModule,
     LoggerModule,
     TokenizeModule,
