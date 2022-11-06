@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: koiner-tokenize-sync
-          image: elimbatido/koiner-tokenize-sync:v0.2.5
+          image: elimbatido/koiner-tokenize-sync:v0.2.7
           envFrom:
             - configMapRef:
                 name: sync-config
