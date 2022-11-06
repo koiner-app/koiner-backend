@@ -64,7 +64,7 @@
     "graphql-amqp-subscriptions": "^1.2.1",
     "graphql-scalars": "^1.18.0",
     "graphql-subscriptions": "^2.0.0",
-    "koilib": "^5.2.0",
+    "koilib": "^5.2.2",
     "mathjs": "^11.1.0",
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",

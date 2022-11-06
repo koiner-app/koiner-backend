@@ -8,21 +8,17 @@ import { redisStore } from 'cache-manager-redis-store';
     ConfigModule.forRoot(),
     CacheModule.registerAsync({
       imports: [ConfigModule],
-      useFactory: async (config: ConfigService) => {
-        const store = (await redisStore({
+      useFactory: async (config: ConfigService) =>
+        (await redisStore({
           socket: {
             host: config.get('REDIS_HOST'),
             port: +config.get('REDIS_PORT_NUMBER'),
+            tls: true,
           },
+          username: config.get('REDIS_USERNAME'),
           password: config.get('REDIS_PASSWORD'),
-        })) as unknown as CacheStore;
-
-        return {
-          store,
           ttl: config.get('CACHE_TTL') ?? 86400, // 1 day
-          max: config.get('CACHE_MAX') ?? 25000, // maximum number of items in cache
-        };
-      },
+        })) as unknown as CacheStore,
       inject: [ConfigService],
     }),
   ],

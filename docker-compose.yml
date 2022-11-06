@@ -20,27 +20,24 @@ services:
   amqp:
     container_name: koiner-amqp
     image: rabbitmq:3-management
-    networks:
-      - webproxy
-      - default
     env_file:
       - '.env.amqp'
     ports:
       - '${AMQP_INTERFACE:-127.0.0.1}:5672:5672'
       - '${AMQP_INTERFACE:-127.0.0.1}:15672:15672'
 
-  redis:
-    image: redis:latest
-    restart: always
-    networks:
-      - redis-tier
-    ports:
-      - '6379:6379'
-    command: redis-server --loglevel warning --requirepass ${REDIS_PASSWORD}
-    env_file:
-      - '.env.redis'
-    volumes:
-      - ./data/cache:/data
+#  redis:
+#    image: redis:latest
+#    restart: always
+#    networks:
+#      - redis-tier
+#    ports:
+#      - '6379:6379'
+#    command: redis-server --loglevel warning --requirepass ${REDIS_PASSWORD}
+#    env_file:
+#      - '.env.redis'
+#    volumes:
+#      - ./data/cache:/data
 
   koiner-postgres:
     container_name: koiner-postgres
@@ -120,7 +117,7 @@ services:
     depends_on:
       - koiner-postgres
       - amqp
-      - redis
+#      - redis
     volumes:
       - ./data/chain/graphql/logs:/var/logs
       - ./apps:/app/apps
@@ -129,7 +126,7 @@ services:
     networks:
       - default
       - webproxy
-      - redis-tier
+#      - redis-tier
     dns:
       - 8.8.8.8
     ports:
@@ -159,7 +156,7 @@ services:
     depends_on:
       - koiner-postgres
       - amqp
-      - redis
+#      - redis
     volumes:
       - ./data/jsonrpc:/data/jsonrpc
       - ./data/chain/sync/logs:/var/logs
@@ -168,7 +165,8 @@ services:
       - /app/node_modules
     networks:
       - webproxy
-      - redis-tier
+      - default
+#      - redis-tier
     dns:
       - 8.8.8.8
     ports:
@@ -201,7 +199,7 @@ services:
     depends_on:
       - koiner-postgres
       - amqp
-      - redis
+#      - redis
     volumes:
       - ./data/contracts/graphql/logs:/var/logs
       - ./apps:/app/apps
@@ -210,7 +208,7 @@ services:
     networks:
       - default
       - webproxy
-      - redis-tier
+#      - redis-tier
     dns:
       - 8.8.8.8
     ports:
@@ -240,7 +238,7 @@ services:
     depends_on:
       - koiner-postgres
       - amqp
-      - redis
+#      - redis
     volumes:
       - ./data/jsonrpc:/data/jsonrpc
       - ./data/contracts/sync/logs:/var/logs
@@ -249,7 +247,8 @@ services:
       - /app/node_modules
     networks:
       - webproxy
-      - redis-tier
+      - default
+#      - redis-tier
     dns:
       - 8.8.8.8
     ports:
@@ -282,7 +281,7 @@ services:
     depends_on:
       - koiner-postgres
       - amqp
-      - redis
+#      - redis
     volumes:
       - ./data/network/graphql/logs:/var/logs
       - ./apps:/app/apps
@@ -291,7 +290,7 @@ services:
     networks:
       - default
       - webproxy
-      - redis-tier
+#      - redis-tier
     dns:
       - 8.8.8.8
     ports:
@@ -321,7 +320,7 @@ services:
     depends_on:
       - koiner-postgres
       - amqp
-      - redis
+#      - redis
     volumes:
       - ./data/jsonrpc:/data/jsonrpc
       - ./data/network/sync/logs:/var/logs
@@ -330,7 +329,8 @@ services:
       - /app/node_modules
     networks:
       - webproxy
-      - redis-tier
+      - default
+#      - redis-tier
     dns:
       - 8.8.8.8
     ports:
@@ -363,7 +363,7 @@ services:
     depends_on:
       - koiner-postgres
       - amqp
-      - redis
+#      - redis
     volumes:
       - ./data/tokenize/graphql/logs:/var/logs
       - ./apps:/app/apps
@@ -372,7 +372,7 @@ services:
     networks:
       - default
       - webproxy
-      - redis-tier
+#      - redis-tier
     dns:
       - 8.8.8.8
     ports:
@@ -397,11 +397,12 @@ services:
       - '.env.db'
       - '.env.amqp'
       - '.env.redis'
+      - '.env.sync'
       - 'apps/tokenize/sync/.env'
     depends_on:
       - koiner-postgres
       - amqp
-      - redis
+#      - redis
     volumes:
       - ./data/jsonrpc:/data/jsonrpc
       - ./data/tokenize/sync/logs:/var/logs
@@ -410,7 +411,8 @@ services:
       - /app/node_modules
     networks:
       - webproxy
-      - redis-tier
+      - default
+#      - redis-tier
     dns:
       - 8.8.8.8
     ports:
@@ -566,10 +568,10 @@ services:
 networks:
   webproxy:
   default:
-  redis-tier:
-    driver: bridge
+#  redis-tier:
+#    driver: bridge
 
 volumes:
   letsencrypt-certs:
-  cache:
-    driver: local
+#  cache:
+#    driver: local

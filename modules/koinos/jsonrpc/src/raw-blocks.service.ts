@@ -8,6 +8,7 @@ import {
 } from 'koilib/lib/interface';
 import { Provider } from 'koilib';
 import { Logger } from '@appvise/domain';
+import { ConfigService } from '@nestjs/config';
 
 export interface RawBlock {
   block_id: string;
@@ -28,51 +29,37 @@ export interface RawBlock {
 
 @Injectable()
 export class RawBlocksService {
-  private blocksInMemory: Record<string, RawBlock> = {};
-
   constructor(
     @Inject(CACHE_MANAGER)
     private readonly cacheManager: Cache,
     private readonly provider: Provider,
-    private readonly logger: Logger
+    private readonly logger: Logger,
+    private readonly configService: ConfigService
   ) {}
 
   async getBlocks(startHeight: number, amount = 1): Promise<RawBlock[]> {
-    this.cacheManager
-      .set('test', JSON.stringify({ test: 1, bla: 2 }))
-      .then((result) => {
-        this.logger.log('test is set', result);
-      })
-      .catch((error) => {
-        this.logger.error('NONONONO', error);
-      });
-
-    this.cacheManager.get('test').then((result) => {
-      this.logger.log('test is dit = ', result);
-    });
-
+    const chainName = this.configService.get('CHAIN_NAME');
     const blocks = [];
     const missingBlocksSets: {
       startHeight: number;
       amount: number;
     }[] = [];
 
-    this.logger.debug(
-      `getBlocks startHeight: ${startHeight}, amount: ${amount}`
-    );
-
     for (
       let height = startHeight;
       height < startHeight + Number(amount);
       height++
     ) {
-      this.logger.debug(`Load block from cache??? ${height}`);
-
       try {
-        const block = await this.cacheManager.store.get(`block:${height}`);
+        const block = await this.cacheManager.get(
+          `${chainName}:block:${height}`
+        );
 
         if (block) {
-          this.logger.debug(`Load block from cache ${height}`, block);
+          this.logger.debug(
+            `Load block from cache ${chainName}:block:${height}`
+          );
+
           blocks.push(block);
         } else {
           this.logger.debug('Could not load block from cache');
@@ -107,17 +94,8 @@ export class RawBlocksService {
       }
     }
 
-    this.logger.debug(
-      `getBlocks missingBlocksSets: ${missingBlocksSets.map(
-        (missingBlocksSet) =>
-          `${missingBlocksSet.startHeight}, amount: ${amount}`
-      )}`
-    );
-
     try {
-      if (missingBlocksSets) {
-        this.logger.debug(`getBlocks go get missingBlocksSets`);
-
+      if (missingBlocksSets.length > 0) {
         for (let i = 0; i < missingBlocksSets.length; i++) {
           this.logger.debug(
             `getBlocks get missingBlocksSet: ${missingBlocksSets[i].startHeight}, amount: ${missingBlocksSets[i].amount}`
@@ -140,8 +118,8 @@ export class RawBlocksService {
             blocks.push(newBlocks[i]);
 
             // Save to cache to reduce unnecessary api calls by other sync services
-            await this.cacheManager.store.set(
-              `block:${blocks[i].height}`,
+            await this.cacheManager.set(
+              `${chainName}:block:${blocks[i].block_height}`,
               blocks[i]
             );
           }
@@ -159,17 +137,7 @@ export class RawBlocksService {
   }
 
   async getBlocksByIds(blockIds: string[]): Promise<RawBlock[]> {
-    const blocks = await this._koilibGetBlocksByIds(blockIds);
-
-    // console.log('RESET IN MEMORY');
-    // this.blocksInMemory = {};
-
-    for (let i = 0; i < blocks.length; i++) {
-      // Save to memory
-      this.blocksInMemory[blocks[i].block_height.toString()] = blocks[i];
-    }
-
-    return blocks;
+    return await this._koilibGetBlocksByIds(blockIds);
   }
 
   async getBlock(height: number): Promise<RawBlock> {

@@ -26,7 +26,8 @@ docker-compose up
 127.0.0.1	network-sync.local
 127.0.0.1	tokenize-sync.local
 127.0.0.1	dapp.local
-127.0.0.1	pg.docker
+127.0.0.1	pg.local
+127.0.0.1	amqp.local
 ```
 
 ## Kubernetes
