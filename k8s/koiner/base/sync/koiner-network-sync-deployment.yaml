@@ -32,6 +32,10 @@ spec:
                 name: db-network-credentials
             - secretRef:
                 name: amqp-credentials
+            - secretRef:
+                name: redis-credentials
+            - secretRef:
+                name: sync-credentials
 #          resources:
 #            requests:
 #              memory: "64Mi"

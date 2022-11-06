@@ -39,25 +39,25 @@ secretGenerator:
 configMapGenerator:
   - name: gateway-config
     behavior: merge
-    files:
+    envs:
       - config/gateway.properties
   - name: graphql-config
     behavior: merge
-    files:
+    envs:
       - config/graphql.properties
   - name: chain-graphql-config
     behavior: merge
-    files:
+    envs:
       - config/chain-graphql.properties
   - name: contracts-graphql-config
     behavior: merge
-    files:
+    envs:
       - config/contracts-graphql.properties
   - name: network-graphql-config
     behavior: merge
-    files:
+    envs:
       - config/network-graphql.properties
   - name: tokenize-graphql-config
     behavior: merge
-    files:
+    envs:
       - config/tokenize-graphql.properties

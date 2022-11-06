@@ -1,18 +1,18 @@
 configMapGenerator:
   - name: sync-config
-    files:
+    envs:
       - config/sync.common.properties
   - name: chain-sync-config
-    files:
+    envs:
       - config/chain-sync.common.properties
   - name: contracts-sync-config
-    files:
+    envs:
       - config/contracts-sync.common.properties
   - name: network-sync-config
-    files:
+    envs:
       - config/network-sync.common.properties
   - name: tokenize-sync-config
-    files:
+    envs:
       - config/tokenize-sync.common.properties
 
 resources:

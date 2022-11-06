@@ -32,6 +32,10 @@ spec:
                 name: db-chain-credentials
             - secretRef:
                 name: amqp-credentials
+            - secretRef:
+                name: redis-credentials
+            - secretRef:
+                name: sync-credentials
 #          resources:
 #            requests:
 #              cpu: "500m"

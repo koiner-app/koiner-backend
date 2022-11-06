@@ -32,6 +32,8 @@ spec:
                 name: db-tokenize-credentials
             - secretRef:
                 name: amqp-credentials
+            - secretRef:
+                name: redis-credentials
 #          resources:
 #            requests:
 #              memory: "64Mi"

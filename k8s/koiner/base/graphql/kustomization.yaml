@@ -1,21 +1,21 @@
 configMapGenerator:
   - name: gateway-config
-    files:
+    envs:
       - config/gateway.common.properties
   - name: graphql-config
-    files:
+    envs:
       - config/graphql.common.properties
   - name: chain-graphql-config
-    files:
+    envs:
       - config/chain-graphql.common.properties
   - name: contracts-graphql-config
-    files:
+    envs:
       - config/contracts-graphql.common.properties
   - name: network-graphql-config
-    files:
+    envs:
       - config/network-graphql.common.properties
   - name: tokenize-graphql-config
-    files:
+    envs:
       - config/tokenize-graphql.common.properties
 
 resources:

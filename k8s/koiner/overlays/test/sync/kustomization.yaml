@@ -43,21 +43,21 @@ secretGenerator:
 configMapGenerator:
   - name: sync-config
     behavior: merge
-    files:
+    envs:
       - config/sync.properties
   - name: chain-sync-config
     behavior: merge
-    files:
+    envs:
       - config/chain-sync.properties
   - name: contracts-sync-config
     behavior: merge
-    files:
+    envs:
       - config/contracts-sync.properties
   - name: network-sync-config
     behavior: merge
-    files:
+    envs:
       - config/network-sync.properties
   - name: tokenize-sync-config
     behavior: merge
-    files:
+    envs:
       - config/tokenize-sync.properties
