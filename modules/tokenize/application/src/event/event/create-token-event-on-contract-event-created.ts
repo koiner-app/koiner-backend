@@ -28,11 +28,11 @@ export class CreateTokenEventOnContractEventCreated {
     let entryPoint = 0x27f576ca;
 
     // TODO: Find way to retrieve using contract standards
-    if (event.name.endsWith('.transfer')) {
+    if (event.name.includes('.transfer')) {
       entryPoint = 0x27f576ca;
-    } else if (event.name.endsWith('.mint')) {
+    } else if (event.name.includes('.mint')) {
       entryPoint = 0xdc6f17bb;
-    } else if (event.name.endsWith('.burn')) {
+    } else if (event.name.includes('.burn')) {
       entryPoint = 0x859facc5;
     }
 
