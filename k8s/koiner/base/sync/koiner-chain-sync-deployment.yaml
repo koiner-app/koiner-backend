@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: koiner-chain-sync
-          image: elimbatido/koiner-chain-sync:v0.2.23
+          image: elimbatido/koiner-chain-sync:v0.2.24
           envFrom:
             - configMapRef:
                 name: sync-config
