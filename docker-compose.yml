@@ -111,6 +111,7 @@ services:
     profiles: ['koiner', 'koiner-graphql', 'all']
     command: npm run start:chain-graphql
     env_file:
+      - '.env.common'
       - '.env.db'
       - '.env.amqp'
       - 'apps/chain/graphql/.env'
@@ -148,6 +149,7 @@ services:
     profiles: ['koiner', 'koiner-sync', 'all']
     command: npm run start:chain-sync
     env_file:
+      - '.env.common'
       - '.env.db'
       - '.env.amqp'
       - '.env.redis'
@@ -192,9 +194,9 @@ services:
     profiles: ['koiner', 'koiner-graphql', 'all']
     command: npm run start:contracts-graphql
     env_file:
+      - '.env.common'
       - '.env.db'
       - '.env.amqp'
-      - '.env.redis'
       - 'apps/contracts/graphql/.env'
     depends_on:
       - koiner-postgres
@@ -230,6 +232,7 @@ services:
     profiles: ['koiner', 'koiner-sync', 'all']
     command: npm run start:contracts-sync
     env_file:
+      - '.env.common'
       - '.env.db'
       - '.env.amqp'
       - '.env.redis'
@@ -274,9 +277,9 @@ services:
     profiles: ['koiner', 'koiner-graphql', 'all']
     command: npm run start:network-graphql
     env_file:
+      - '.env.common'
       - '.env.db'
       - '.env.amqp'
-      - '.env.redis'
       - 'apps/network/graphql/.env'
     depends_on:
       - koiner-postgres
@@ -312,6 +315,7 @@ services:
     profiles: ['koiner', 'koiner-sync', 'all']
     command: npm run start:network-sync
     env_file:
+      - '.env.common'
       - '.env.db'
       - '.env.amqp'
       - '.env.redis'
@@ -356,9 +360,9 @@ services:
     profiles: ['koiner', 'koiner-graphql', 'all']
     command: npm run start:tokenize-graphql
     env_file:
+      - '.env.common'
       - '.env.db'
       - '.env.amqp'
-      - '.env.redis'
       - 'apps/tokenize/graphql/.env'
     depends_on:
       - koiner-postgres
@@ -394,6 +398,7 @@ services:
     profiles: ['koiner', 'koiner-sync', 'all']
     command: npm run start:tokenize-sync
     env_file:
+      - '.env.common'
       - '.env.db'
       - '.env.amqp'
       - '.env.redis'
