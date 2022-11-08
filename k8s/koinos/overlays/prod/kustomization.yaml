@@ -1,0 +1,10 @@
+namespace: koinos
+
+resources:
+  - namespace.yaml
+  - ../../base
+
+configMapGenerator:
+  - name: koinos-config
+    files:
+      - config/koinos-config.yaml

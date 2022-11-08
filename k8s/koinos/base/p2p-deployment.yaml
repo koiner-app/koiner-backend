@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: p2p
+  name: p2p
+  namespace: koinos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: p2p
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        service: p2p
+    spec:
+      containers:
+        - args:
+            - --basedir=/koinos
+          image: koinos/koinos-p2p:v1.0.0
+          name: p2p
+          ports:
+            - containerPort: 8888
+          volumeMounts:
+            - name: koinos-data10
+              mountPath: /koinos
+      restartPolicy: Always
+      volumes:
+        - name: koinos-data10
+          persistentVolumeClaim:
+            claimName: koinos-data10
+

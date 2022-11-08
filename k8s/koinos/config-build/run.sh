@@ -17,5 +17,3 @@ pushd /koinos/jsonrpc/descriptors
 wget https://github.com/koinos/koinos-proto-descriptors/raw/$DESCRIPTORS_TAG/koinos_descriptors.pb
 
 popd
-
-rsync -a -v --ignore-existing /koinos-config/default-config.yml /koinos/config.yml

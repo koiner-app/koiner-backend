@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: jsonrpc
+  name: jsonrpc
+  namespace: koinos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: jsonrpc
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        service: jsonrpc
+    spec:
+      containers:
+        - args:
+            - --basedir=/koinos
+          image: koinos/koinos-jsonrpc:v1.0.0
+          name: jsonrpc
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: koinos-data10
+              mountPath: /koinos
+      restartPolicy: Always
+      volumes:
+        - name: koinos-data10
+          persistentVolumeClaim:
+            claimName: koinos-data10

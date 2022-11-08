@@ -18,7 +18,6 @@
     "contracts-typeorm": "modules/contracts/typeorm",
     "graphql-gateway": "apps/graphql/gateway",
     "koiner-domain": "modules/domain",
-    "koinos-config": "modules/koinos/config",
     "koinos-jsonrpc": "modules/koinos/jsonrpc",
     "logger-application": "modules/logger/application",
     "logger-domain": "modules/logger/domain",

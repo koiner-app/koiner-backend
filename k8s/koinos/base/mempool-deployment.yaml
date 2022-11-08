@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: mempool
+  name: mempool
+  namespace: koinos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: mempool
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        service: mempool
+    spec:
+      containers:
+        - args:
+            - --basedir=/koinos
+          image: koinos/koinos-mempool:v1.0.0
+          name: mempool
+          volumeMounts:
+            - name: koinos-data10
+              mountPath: /koinos
+      restartPolicy: Always
+      volumes:
+        - name: koinos-data10
+          persistentVolumeClaim:
+            claimName: koinos-data10

@@ -1,0 +1,14 @@
+resources:
+  - koinos-data10-pvc.yaml
+  - block-producer-deployment.yaml
+  - block-store-deployment.yaml
+  - chain-deployment.yaml
+  - config-deployment.yaml
+  - contract-meta-store-deployment.yaml
+  - jsonrpc-deployment.yaml
+  - jsonrpc-service.yaml
+  - mempool-deployment.yaml
+  - p2p-deployment.yaml
+  - p2p-service.yaml
+  - transaction-store-deployment.yaml
+  - ingress.yaml
