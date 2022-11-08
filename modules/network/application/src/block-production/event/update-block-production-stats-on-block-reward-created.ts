@@ -15,7 +15,7 @@ export class UpdateBlockProductionStatsOnBlockRewardCreated {
     await this.commandBus.execute(
       new UpdateBlockProductionStatsCommand({
         contractId: event.contractId,
-        amountRewarded: event.value,
+        mintedValue: event.mintedValue,
         burnedValue: event.burnedValue,
       })
     );

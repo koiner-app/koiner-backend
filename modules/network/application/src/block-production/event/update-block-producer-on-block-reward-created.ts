@@ -16,7 +16,7 @@ export class UpdateBlockProducerOnBlockRewardCreated {
       new UpdateBlockProducerCommand({
         addressId: event.producerId,
         contractId: event.contractId,
-        amountChanged: event.value,
+        mintedValue: event.mintedValue,
         burnedValue: event.burnedValue,
       })
     );

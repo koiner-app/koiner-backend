@@ -9,8 +9,10 @@ export class BlockProductionStatsUpdated extends DomainEvent {
 
   readonly contractId!: string;
   readonly rewarded!: number;
-  readonly burned!: number;
+  readonly mintedTotal!: number;
+  readonly burnedTotal!: number;
   readonly rewardsAdded!: number;
+  readonly mintedAdded!: number;
   readonly burnedAdded!: number;
   readonly blocksProduced!: number;
 }

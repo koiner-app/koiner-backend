@@ -15,7 +15,10 @@ export class BlockProductionStatsNode extends BaseNode {
   blocksProduced: number;
 
   @Field(() => String)
-  burned: string;
+  mintedTotal: string;
+
+  @Field(() => String)
+  burnedTotal: string;
 
   @Field(() => Float)
   roi: number;
@@ -26,7 +29,8 @@ export class BlockProductionStatsNode extends BaseNode {
     this.contractId = blockProductionStats.contractId.value;
     this.rewarded = blockProductionStats.rewarded.toString();
     this.blocksProduced = blockProductionStats.blocksProduced;
-    this.burned = blockProductionStats.burned.toString();
+    this.mintedTotal = blockProductionStats.mintedTotal.toString();
+    this.burnedTotal = blockProductionStats.burnedTotal.toString();
     this.roi = blockProductionStats.roi;
   }
 }

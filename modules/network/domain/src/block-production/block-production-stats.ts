@@ -14,11 +14,14 @@ export class BlockProductionStats extends AggregateRoot<BlockProductionStatsProp
     create: CreateBlockProductionStatsProps,
     id: UUID
   ): BlockProductionStats {
+    const rewarded = create.mintedTotal - create.burnedTotal;
+
     const props: BlockProductionStatsProps = {
       ...create,
+      rewarded,
       roi: math
-        .chain<number>(create.rewarded)
-        .divide(create.burned)
+        .chain<number>(create.mintedTotal)
+        .divide(create.burnedTotal)
         .multiply(100)
         .subtract(100)
         .round(5)
@@ -33,9 +36,11 @@ export class BlockProductionStats extends AggregateRoot<BlockProductionStatsProp
         aggregateId: id.value,
         contractId: props.contractId.value,
         rewarded: props.rewarded,
-        burned: props.burned,
+        mintedTotal: props.mintedTotal,
+        burnedTotal: props.burnedTotal,
         rewardsAdded: props.rewarded,
-        burnedAdded: props.burned,
+        mintedAdded: props.mintedTotal,
+        burnedAdded: props.burnedTotal,
         blocksProduced: props.blocksProduced,
       })
     );
@@ -51,8 +56,12 @@ export class BlockProductionStats extends AggregateRoot<BlockProductionStatsProp
     return this.props.rewarded;
   }
 
-  get burned(): number {
-    return this.props.burned;
+  get mintedTotal(): number {
+    return this.props.mintedTotal;
+  }
+
+  get burnedTotal(): number {
+    return this.props.burnedTotal;
   }
 
   get roi(): number {
@@ -63,18 +72,20 @@ export class BlockProductionStats extends AggregateRoot<BlockProductionStatsProp
     return this.props.blocksProduced;
   }
 
-  addRewards(rewarded: number, burnedValue: number): void {
+  addRewards(mintedValue: number, burnedValue: number): void {
+    const rewarded = mintedValue - burnedValue;
     if (rewarded < 0) {
       // TODO: Add custom exception
       throw new ConflictException('Rewards must be positive');
     }
 
     this.props.rewarded += rewarded;
-    this.props.burned += burnedValue;
+    this.props.mintedTotal += mintedValue;
+    this.props.burnedTotal += burnedValue;
     this.props.blocksProduced += 1;
     this.props.roi = math
-      .chain<number>(this.rewarded)
-      .divide(this.burned)
+      .chain<number>(this.mintedTotal)
+      .divide(this.burnedTotal)
       .multiply(100)
       .subtract(100)
       .round(5)
@@ -85,17 +96,20 @@ export class BlockProductionStats extends AggregateRoot<BlockProductionStatsProp
         aggregateId: this.id.value,
         contractId: this.props.contractId.value,
         rewarded: this.props.rewarded,
-        burned: this.props.burned,
+        mintedTotal: this.props.mintedTotal,
+        burnedTotal: this.props.burnedTotal,
         rewardsAdded: rewarded,
+        mintedAdded: mintedValue,
         burnedAdded: burnedValue,
         blocksProduced: this.props.blocksProduced,
       })
     );
   }
 
-  undoRewards(rewarded: number, burnedValue: number): void {
-    this.props.rewarded -= rewarded;
-    this.props.burned -= burnedValue;
+  undoRewards(mintedValue: number, burnedValue: number): void {
+    this.props.rewarded -= mintedValue - burnedValue;
+    this.props.mintedTotal -= mintedValue;
+    this.props.burnedTotal -= burnedValue;
     this.props.blocksProduced -= 1;
   }
 

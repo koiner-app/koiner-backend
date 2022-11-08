@@ -11,4 +11,6 @@ export class BlockRewardsReceived extends DomainEvent {
   readonly contractId!: string;
   readonly balance!: number;
   readonly rewardsReceived!: number;
+  readonly mintedTotal!: number;
+  readonly burnedTotal!: number;
 }

@@ -14,8 +14,9 @@ export class BlockReward extends AggregateRoot<BlockRewardProps> {
   static create(create: CreateBlockRewardProps, id: UUID): BlockReward {
     const props: BlockRewardProps = {
       ...create,
+      value: create.mintedValue - create.burnedValue,
       roi: math
-        .chain<number>(create.value)
+        .chain<number>(create.mintedValue)
         .divide(create.burnedValue)
         .multiply(100)
         .subtract(100)
@@ -32,6 +33,7 @@ export class BlockReward extends AggregateRoot<BlockRewardProps> {
         blockHeight: blockReward.blockHeight,
         producerId: blockReward.producerId.value,
         value: blockReward.value,
+        mintedValue: blockReward.mintedValue,
         contractId: blockReward.contractId.value,
         burnedValue: blockReward.burnedValue,
         burnedContractId: blockReward.burnedContractId.value,
@@ -61,6 +63,10 @@ export class BlockReward extends AggregateRoot<BlockRewardProps> {
 
   get value(): number {
     return this.props.value;
+  }
+
+  get mintedValue(): number {
+    return this.props.mintedValue;
   }
 
   get burnedContractId(): KoinosAddressId {

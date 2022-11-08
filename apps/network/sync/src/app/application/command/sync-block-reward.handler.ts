@@ -67,7 +67,7 @@ export class SyncBlockRewardHandler
               burnEvent.data
             );
 
-          const producerRewards = parseInt(<string>decodedMintEvent.args.value);
+          const mintedValue = parseInt(<string>decodedMintEvent.args.value);
           const burnedValue = parseInt(<string>decodedBurnEvent.args.value);
 
           await this.commandBus.execute(
@@ -75,7 +75,7 @@ export class SyncBlockRewardHandler
               blockId: rawBlock.block_id,
               blockHeight: command.blockHeight,
               producerId: <string>decodedMintEvent.args.to,
-              value: producerRewards,
+              mintedValue,
               burnedValue,
               timestamp: parseInt(rawBlock.block.header.timestamp),
             })

@@ -8,6 +8,6 @@ export class UpdateBlockProductionStatsCommand extends Command {
   }
 
   readonly contractId!: string;
-  readonly amountRewarded!: number;
+  readonly mintedValue!: number;
   readonly burnedValue!: number;
 }

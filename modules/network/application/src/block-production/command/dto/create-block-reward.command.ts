@@ -10,7 +10,7 @@ export class CreateBlockRewardCommand extends Command {
   readonly blockId!: string;
   readonly blockHeight!: number;
   readonly producerId!: string;
-  readonly value!: number;
+  readonly mintedValue!: number;
   readonly burnedValue!: number;
   readonly timestamp!: number;
 }

@@ -19,7 +19,7 @@ export class CreateBlockRewardHandler
         blockId: new KoinosId(command.blockId),
         blockHeight: command.blockHeight,
         producerId: new KoinosAddressId(command.producerId),
-        value: command.value,
+        mintedValue: command.mintedValue,
         burnedValue: command.burnedValue,
         timestamp: command.timestamp,
       },

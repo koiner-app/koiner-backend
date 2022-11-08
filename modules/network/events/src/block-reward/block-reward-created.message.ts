@@ -8,6 +8,7 @@ export class BlockRewardCreatedMessage {
   readonly blockHeight!: number;
   readonly producerId!: string;
   readonly value!: number;
+  readonly mintedValue!: number;
   readonly burnedValue!: number;
   readonly contractId!: string;
   readonly publishedAt!: number;

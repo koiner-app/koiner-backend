@@ -23,18 +23,15 @@ export class UpdateBlockProductionStatsHandler
     );
 
     if (blockProductionStats) {
-      blockProductionStats.addRewards(
-        command.amountRewarded,
-        command.burnedValue
-      );
+      blockProductionStats.addRewards(command.mintedValue, command.burnedValue);
 
       await this.writeRepository.save(blockProductionStats);
     } else {
       blockProductionStats = BlockProductionStats.create(
         {
           contractId: new KoinosAddressId(command.contractId),
-          rewarded: command.amountRewarded,
-          burned: command.burnedValue,
+          mintedTotal: command.mintedValue,
+          burnedTotal: command.burnedValue,
         },
         UUID.generate()
       );

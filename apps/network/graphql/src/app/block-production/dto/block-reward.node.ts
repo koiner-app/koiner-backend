@@ -20,6 +20,9 @@ export class BlockRewardNode extends BaseNode {
   @Field(() => String)
   value: string;
 
+  @Field(() => String)
+  mintedValue: string;
+
   @Field({ nullable: true })
   burnedContractId: string;
 
@@ -40,6 +43,7 @@ export class BlockRewardNode extends BaseNode {
     this.producerId = blockReward.producerId.value;
     this.contractId = blockReward.contractId.value;
     this.value = blockReward.value.toString();
+    this.mintedValue = blockReward.mintedValue.toString();
     this.burnedContractId = blockReward.burnedContractId.value;
     this.burnedValue = blockReward.burnedValue.toString();
     this.roi = blockReward.roi;

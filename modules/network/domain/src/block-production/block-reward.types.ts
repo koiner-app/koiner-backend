@@ -4,11 +4,12 @@ export interface CreateBlockRewardProps {
   blockId: KoinosId;
   blockHeight: number;
   producerId: KoinosAddressId;
-  value: number;
+  mintedValue: number;
   burnedValue: number;
   timestamp: number;
 }
 
 export interface BlockRewardProps extends CreateBlockRewardProps {
+  value: number;
   roi: number;
 }

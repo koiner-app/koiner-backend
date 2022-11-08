@@ -17,7 +17,11 @@ export class BlockProductionStatsSchema extends EntityBaseSchema {
 
   @Index()
   @Column({ length: 20 })
-  readonly burned!: string;
+  readonly minted_total!: string;
+
+  @Index()
+  @Column({ length: 20 })
+  readonly burned_total!: string;
 
   @Column({ length: 8 })
   readonly roi!: string;

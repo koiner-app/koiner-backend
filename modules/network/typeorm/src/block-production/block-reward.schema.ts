@@ -21,6 +21,10 @@ export class BlockRewardSchema extends EntityBaseSchema {
 
   @Index()
   @Column({ length: 20 })
+  readonly minted_value!: string;
+
+  @Index()
+  @Column({ length: 20 })
   readonly burned_value!: string;
 
   @Column({ length: 8 })

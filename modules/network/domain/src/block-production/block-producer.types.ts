@@ -4,6 +4,7 @@ export interface CreateBlockProducerProps {
   addressId: KoinosAddressId;
   contractId: KoinosAddressId;
   balance: number;
+  mintedTotal: number;
   burnedTotal: number;
 }
 

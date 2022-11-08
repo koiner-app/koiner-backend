@@ -10,4 +10,6 @@ export class BlockProducerCreated extends DomainEvent {
   readonly addressId!: string;
   readonly contractId!: string;
   readonly balance!: number;
+  readonly mintedTotal!: number;
+  readonly burnedTotal!: number;
 }

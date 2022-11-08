@@ -15,7 +15,7 @@ export class BlockProducer extends AggregateRoot<BlockProducerProps> {
     const props: BlockProducerProps = {
       ...create,
       roi: math
-        .chain<number>(create.balance)
+        .chain<number>(create.mintedTotal)
         .divide(create.burnedTotal)
         .multiply(100)
         .subtract(100)
@@ -32,6 +32,8 @@ export class BlockProducer extends AggregateRoot<BlockProducerProps> {
         addressId: props.addressId.value,
         contractId: props.contractId.value,
         balance: props.balance,
+        mintedTotal: props.mintedTotal,
+        burnedTotal: props.burnedTotal,
       })
     );
 
@@ -42,6 +44,8 @@ export class BlockProducer extends AggregateRoot<BlockProducerProps> {
         contractId: props.contractId.value,
         balance: props.balance,
         rewardsReceived: props.balance,
+        mintedTotal: props.mintedTotal,
+        burnedTotal: props.burnedTotal,
       })
     );
 
@@ -60,6 +64,10 @@ export class BlockProducer extends AggregateRoot<BlockProducerProps> {
     return this.props.balance;
   }
 
+  get mintedTotal(): number {
+    return this.props.mintedTotal;
+  }
+
   get burnedTotal(): number {
     return this.props.burnedTotal;
   }
@@ -72,17 +80,19 @@ export class BlockProducer extends AggregateRoot<BlockProducerProps> {
     return this.props.blocksProduced;
   }
 
-  addRewards(rewards: number, burnedValue: number): void {
+  addRewards(mintedValue: number, burnedValue: number): void {
+    const rewards = mintedValue - burnedValue;
     if (rewards < 0) {
       // TODO: Add custom exception
       throw new ConflictException('Rewards must be positive');
     }
 
     this.props.balance += rewards;
+    this.props.mintedTotal += mintedValue;
     this.props.burnedTotal += burnedValue;
     this.props.blocksProduced += 1;
     this.props.roi = math
-      .chain<number>(this.balance)
+      .chain<number>(this.mintedTotal)
       .divide(this.burnedTotal)
       .multiply(100)
       .subtract(100)
@@ -92,16 +102,19 @@ export class BlockProducer extends AggregateRoot<BlockProducerProps> {
     this.addEvent(
       new BlockRewardsReceived({
         aggregateId: this.id.value,
-        addressId: this.props.addressId.value,
-        contractId: this.props.contractId.value,
-        balance: this.props.balance,
+        addressId: this.addressId.value,
+        contractId: this.contractId.value,
+        balance: this.balance,
         rewardsReceived: rewards,
+        mintedTotal: this.mintedTotal,
+        burnedTotal: this.burnedTotal,
       })
     );
   }
 
-  undoRewards(rewards: number, burnedValue: number): void {
-    this.props.balance -= rewards;
+  undoRewards(mintedValue: number, burnedValue: number): void {
+    this.props.balance -= burnedValue - mintedValue;
+    this.props.mintedTotal -= mintedValue;
     this.props.burnedTotal -= burnedValue;
     this.props.blocksProduced -= 1;
   }
