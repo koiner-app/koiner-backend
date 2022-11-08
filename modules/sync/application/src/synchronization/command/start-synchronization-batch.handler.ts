@@ -154,8 +154,6 @@ export class StartSynchronizationBatchHandler
       }
     } catch (error: any) {
       // No stop signal. Continue..
-      this.logger.log('No stop signal');
-      this.logger.error(error);
     }
 
     /**
