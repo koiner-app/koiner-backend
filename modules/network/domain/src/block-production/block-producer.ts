@@ -3,7 +3,7 @@ import { KoinosAddressId } from '@koiner/domain';
 import {
   BlockProducerCreated,
   BlockProducerProps,
-  BlockRewardsReceived,
+  BlockRewardReceived,
   CreateBlockProducerProps,
 } from '.';
 import * as math from 'mathjs';
@@ -38,12 +38,15 @@ export class BlockProducer extends AggregateRoot<BlockProducerProps> {
     );
 
     blockProducer.addEvent(
-      new BlockRewardsReceived({
+      new BlockRewardReceived({
         aggregateId: id.value,
+        isNewProducer: true,
         addressId: props.addressId.value,
         contractId: props.contractId.value,
         balance: props.balance,
         rewardsReceived: props.balance,
+        mintedValue: props.mintedTotal,
+        burnedValue: props.burnedTotal,
         mintedTotal: props.mintedTotal,
         burnedTotal: props.burnedTotal,
       })
@@ -100,12 +103,15 @@ export class BlockProducer extends AggregateRoot<BlockProducerProps> {
       .done() as number;
 
     this.addEvent(
-      new BlockRewardsReceived({
+      new BlockRewardReceived({
         aggregateId: this.id.value,
+        isNewProducer: false,
         addressId: this.addressId.value,
         contractId: this.contractId.value,
         balance: this.balance,
         rewardsReceived: rewards,
+        mintedValue,
+        burnedValue,
         mintedTotal: this.mintedTotal,
         burnedTotal: this.burnedTotal,
       })

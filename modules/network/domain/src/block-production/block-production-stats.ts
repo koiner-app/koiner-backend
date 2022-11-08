@@ -26,6 +26,7 @@ export class BlockProductionStats extends AggregateRoot<BlockProductionStatsProp
         .subtract(100)
         .round(5)
         .done() as number,
+      producerCount: 1,
       blocksProduced: 1,
     };
 
@@ -68,21 +69,29 @@ export class BlockProductionStats extends AggregateRoot<BlockProductionStatsProp
     return this.props.roi;
   }
 
+  get producerCount(): number {
+    return this.props.producerCount;
+  }
+
   get blocksProduced(): number {
     return this.props.blocksProduced;
   }
 
-  addRewards(mintedValue: number, burnedValue: number): void {
+  addRewards(
+    mintedValue: number,
+    burnedValue: number,
+    isNewProducer: boolean
+  ): void {
     const rewarded = mintedValue - burnedValue;
     if (rewarded < 0) {
       // TODO: Add custom exception
       throw new ConflictException('Rewards must be positive');
     }
 
+    this.props.blocksProduced += 1;
     this.props.rewarded += rewarded;
     this.props.mintedTotal += mintedValue;
     this.props.burnedTotal += burnedValue;
-    this.props.blocksProduced += 1;
     this.props.roi = math
       .chain<number>(this.mintedTotal)
       .divide(this.burnedTotal)
@@ -90,6 +99,10 @@ export class BlockProductionStats extends AggregateRoot<BlockProductionStatsProp
       .subtract(100)
       .round(5)
       .done() as number;
+
+    if (isNewProducer) {
+      this.props.producerCount += 1;
+    }
 
     this.addEvent(
       new BlockProductionStatsUpdated({

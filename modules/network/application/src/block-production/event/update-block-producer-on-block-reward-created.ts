@@ -8,7 +8,7 @@ import { UpdateBlockProducerCommand } from '../command';
 export class UpdateBlockProducerOnBlockRewardCreated {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @OnEvent(`${BlockRewardCreatedMessage.eventName}.producer_queue`, {
+  @OnEvent(BlockRewardCreatedMessage.eventName, {
     async: false,
   })
   async handle(event: BlockRewardCreatedMessage): Promise<void> {

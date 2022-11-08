@@ -22,14 +22,7 @@ export class PublishBlockRewardCreatedEvent extends DomainEventHandler {
     // Publish for producer queue
     await this.amqpConnection.publish(
       'koiner.network.event',
-      `${BlockRewardCreatedMessage.eventName}.producer_queue`,
-      message.toString()
-    );
-
-    // Publish for production stats queue
-    await this.amqpConnection.publish(
-      'koiner.network.event',
-      `${BlockRewardCreatedMessage.eventName}.production_stats_queue`,
+      `${BlockRewardCreatedMessage.eventName}`,
       message.toString()
     );
   }

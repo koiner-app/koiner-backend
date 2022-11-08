@@ -23,7 +23,11 @@ export class UpdateBlockProductionStatsHandler
     );
 
     if (blockProductionStats) {
-      blockProductionStats.addRewards(command.mintedValue, command.burnedValue);
+      blockProductionStats.addRewards(
+        command.mintedValue,
+        command.burnedValue,
+        command.isNewProducer
+      );
 
       await this.writeRepository.save(blockProductionStats);
     } else {

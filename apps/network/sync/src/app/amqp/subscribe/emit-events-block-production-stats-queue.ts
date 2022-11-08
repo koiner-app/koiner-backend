@@ -3,7 +3,7 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import { Logger } from '@appvise/domain';
 import { EventLogger } from '@koiner/logger/domain';
-import { BlockRewardCreatedMessage } from '@koiner/network/events';
+import { BlockRewardReceivedMessage } from '@koiner/network/events';
 
 @Injectable()
 export class EmitEventsBlockProductionStatsQueue {
@@ -18,18 +18,15 @@ export class EmitEventsBlockProductionStatsQueue {
       channel: 'koiner.network.channel.block_production_stats',
     },
     exchange: 'koiner.network.event',
-    routingKey: `${BlockRewardCreatedMessage.eventName}.production_stats_queue`,
+    routingKey: `${BlockRewardReceivedMessage.eventName}`,
     queue: 'koiner.network.queue.block_production_stats',
   })
   async handle(message: any): Promise<void> {
     return new Promise((resolve, reject) => {
-      const event = new BlockRewardCreatedMessage(JSON.parse(message));
+      const event = new BlockRewardReceivedMessage(JSON.parse(message));
 
       this.eventEmitter
-        .emitAsync(
-          `${BlockRewardCreatedMessage.eventName}.production_stats_queue`,
-          event
-        )
+        .emitAsync(`${BlockRewardReceivedMessage.eventName}`, event)
         .then(() => {
           resolve();
         })
@@ -45,10 +42,9 @@ export class EmitEventsBlockProductionStatsQueue {
             .error(
               {
                 ...event,
-                eventName: `${BlockRewardCreatedMessage.eventName}.production_stats_queue`,
+                eventName: `${BlockRewardReceivedMessage.eventName}`,
               },
-              error,
-              event.blockHeight.toString()
+              error
             )
             .then((eventLog) => {
               // Reject with small delay based on occurrences of error

@@ -9,6 +9,7 @@ export interface CreateBlockProductionStatsProps {
 export interface BlockProductionStatsProps
   extends CreateBlockProductionStatsProps {
   rewarded: number;
+  producerCount: number;
   blocksProduced: number;
   roi: number;
 }

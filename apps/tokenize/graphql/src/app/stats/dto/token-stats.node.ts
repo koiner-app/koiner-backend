@@ -3,7 +3,7 @@ import { BaseNode } from '@appvise/graphql';
 import { TokenStats } from '@koiner/tokenize/domain';
 import { GraphQLBigInt } from 'graphql-scalars';
 
-@ObjectType('Chain')
+@ObjectType('TokenStats')
 export class TokenStatsNode extends BaseNode {
   @Field(() => GraphQLBigInt)
   contractCount: number;

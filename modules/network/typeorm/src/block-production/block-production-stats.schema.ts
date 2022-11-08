@@ -9,11 +9,11 @@ export class BlockProductionStatsSchema extends EntityBaseSchema {
 
   @Index()
   @Column({ length: 20 })
-  readonly rewarded!: string;
+  readonly blocks_produced!: string;
 
   @Index()
   @Column({ length: 20 })
-  readonly blocks_produced!: string;
+  readonly rewarded!: string;
 
   @Index()
   @Column({ length: 20 })
@@ -22,6 +22,10 @@ export class BlockProductionStatsSchema extends EntityBaseSchema {
   @Index()
   @Column({ length: 20 })
   readonly burned_total!: string;
+
+  @Index()
+  @Column({ length: 20 })
+  readonly producer_count!: string;
 
   @Column({ length: 8 })
   readonly roi!: string;
