@@ -12,6 +12,9 @@ export class BlockProductionStatsNode extends BaseNode {
   rewarded: string;
 
   @Field(() => GraphQLBigInt)
+  producerCount: number;
+
+  @Field(() => GraphQLBigInt)
   blocksProduced: number;
 
   @Field(() => String)
@@ -28,6 +31,7 @@ export class BlockProductionStatsNode extends BaseNode {
 
     this.contractId = blockProductionStats.contractId.value;
     this.rewarded = blockProductionStats.rewarded.toString();
+    this.producerCount = blockProductionStats.producerCount;
     this.blocksProduced = blockProductionStats.blocksProduced;
     this.mintedTotal = blockProductionStats.mintedTotal.toString();
     this.burnedTotal = blockProductionStats.burnedTotal.toString();
