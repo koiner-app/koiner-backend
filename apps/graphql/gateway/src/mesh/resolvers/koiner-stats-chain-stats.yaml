@@ -1,5 +1,0 @@
-sourceName: Chain
-sourceTypeName: Query
-targetTypeName: KoinerStats
-targetFieldName: chainStats
-sourceFieldName: chainStats

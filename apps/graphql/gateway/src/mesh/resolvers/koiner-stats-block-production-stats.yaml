@@ -1,5 +1,5 @@
 sourceName: Network
 sourceTypeName: Query
-targetTypeName: KoinerStats
+targetTypeName: Chain
 targetFieldName: blockProductionStats
 sourceFieldName: blockProductionStats
