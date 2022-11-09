@@ -39,6 +39,9 @@ additionalEnvelopPlugins: './envelop-plugins'
 
 additionalTypeDefs: ./additional-types/additional-types.graphql
 additionalResolvers:
+  - !include ./resolvers/koiner-stats-chain-stats.yaml
+  - !include ./resolvers/koiner-stats-block-production-stats.yaml
+  - !include ./resolvers/koiner-stats-token-stats.yaml
   # Chain
   - !include ./resolvers/chain/address-block-producers.yaml
   - !include ./resolvers/chain/address-block-rewards.yaml

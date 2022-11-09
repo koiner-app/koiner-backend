@@ -43,3 +43,9 @@ extend type BlockProducer {
 extend type ContractOperationWithDetails {
   contract: Contract!
 }
+
+type KoinerStats {
+  chainStats: ChainStats!
+  blockProductionStats: BlockProductionStats!
+  tokenStats: TokenStats!
+}
