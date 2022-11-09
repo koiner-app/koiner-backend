@@ -18,6 +18,9 @@ export class BlockProducerNode extends BaseNode {
   blocksProduced: number;
 
   @Field(() => String)
+  mintedTotal: string;
+
+  @Field(() => String)
   burnedTotal: string;
 
   @Field(() => Float)
@@ -30,6 +33,7 @@ export class BlockProducerNode extends BaseNode {
     this.contractId = blockProducer.contractId.value;
     this.balance = blockProducer.balance.toString();
     this.blocksProduced = blockProducer.blocksProduced;
+    this.mintedTotal = blockProducer.mintedTotal.toString();
     this.burnedTotal = blockProducer.burnedTotal.toString();
     this.roi = blockProducer.roi;
   }
