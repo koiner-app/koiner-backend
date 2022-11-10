@@ -18,6 +18,15 @@ export class TokenContractNode extends BaseNode {
   totalSupply: string;
 
   @Field(() => GraphQLBigInt)
+  burnCount: number;
+
+  @Field(() => GraphQLBigInt)
+  mintCount: number;
+
+  @Field(() => GraphQLBigInt)
+  transferCount: number;
+
+  @Field(() => GraphQLBigInt)
   timestamp: number;
 
   constructor(tokenContract: TokenContract) {
@@ -27,6 +36,9 @@ export class TokenContractNode extends BaseNode {
     this.symbol = tokenContract.symbol;
     this.decimals = tokenContract.decimals;
     this.totalSupply = tokenContract.totalSupply.toString();
+    this.burnCount = tokenContract.burnCount;
+    this.mintCount = tokenContract.mintCount;
+    this.transferCount = tokenContract.transferCount;
     this.timestamp = tokenContract.timestamp;
   }
 }
