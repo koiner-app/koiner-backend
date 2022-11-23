@@ -1,0 +1,10 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: amqp
+  namespace: amqp
+spec:
+  rabbitmq:
+    additionalConfig: |
+      default_user=koiner-test
+      default_pass={COPY_THIS_FILE_TO_ENV_DIR}

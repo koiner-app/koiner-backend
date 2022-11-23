@@ -1,0 +1,7 @@
+namespace: amqp
+
+resources:
+  - namespace.yaml
+  - ../../../base/amqp
+
+# TODO: Setup merge for amqp-cluster config with credentials
