@@ -23,18 +23,9 @@ spec:
       containers:
         - name: koiner-graphql-gateway
           image: elimbatido/koiner-graphql-gateway:v0.2.6
-#          envFrom:
-#            - configMapRef:
-#                name: gateway-config
-          env:
-            - name: CHAIN_GRAPHQL_URL
-              value: "http://chain/graphql"
-            - name: CONTRACTS_GRAPHQL_URL
-              value: "http://contracts/graphql"
-            - name: NETWORK_GRAPHQL_URL
-              value: "http://network/graphql"
-            - name: TOKENIZE_GRAPHQL_URL
-              value: "http://tokenize/graphql"
+          envFrom:
+            - configMapRef:
+                name: gateway-config
 #          resources:
 #            requests:
 #              memory: "64Mi"

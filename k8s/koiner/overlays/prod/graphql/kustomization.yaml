@@ -4,12 +4,6 @@ resources:
   - namespace.yaml
   - ../../../base/graphql
 
-patches:
-  - target:
-      kind: Deployment
-      name: koiner-graphql-gateway
-    path: gateway_patches.yaml
-
 secretGenerator:
   - name: db-chain-credentials
     envs:
