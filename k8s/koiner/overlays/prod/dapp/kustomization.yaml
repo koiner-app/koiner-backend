@@ -4,12 +4,6 @@ resources:
   - namespace.yaml
   - ../../../base/dapp
 
-patches:
-  - target:
-      kind: Ingress
-      name: koiner-dapp-ingress
-    path: ingress_patches.yaml
-
 configMapGenerator:
   - name: dapp-config
     behavior: merge
