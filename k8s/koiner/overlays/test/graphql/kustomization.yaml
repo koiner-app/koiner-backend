@@ -6,10 +6,6 @@ resources:
 
 patches:
   - target:
-      kind: Deployment
-      name: koiner-graphql-gateway
-    path: gateway_patches.yaml
-  - target:
       kind: Ingress
       name: koiner-graphql-ingress
     path: ingress_patches.yaml
