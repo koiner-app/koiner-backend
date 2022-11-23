@@ -16,6 +16,9 @@ export class ContractOperationsFilter implements FilterType {
   @Field(() => StringFilterInput, { nullable: true })
   contractId?: StringFilterInput;
 
+  @Field(() => StringFilterInput, { nullable: true })
+  transactionId?: StringFilterInput;
+
   @Field(() => NumericFilterInput, { nullable: true })
   entryPoint?: NumericFilterInput;
 
