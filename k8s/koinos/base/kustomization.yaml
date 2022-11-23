@@ -1,5 +1,5 @@
 resources:
-  - koinos-data10-pvc.yaml
+  - koinos-data-pvc.yaml
   - block-producer-deployment.yaml
   - block-store-deployment.yaml
   - chain-deployment.yaml

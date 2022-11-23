@@ -40,3 +40,13 @@ spec:
                 name: jsonrpc
                 port:
                   number: 8080
+    -
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/jsonrpc"
+            backend:
+              service:
+                name: jsonrpc
+                port:
+                  number: 8080

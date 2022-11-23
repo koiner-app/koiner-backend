@@ -1,0 +1,24 @@
+namespace: koinos-test
+
+resources:
+  - namespace.yaml
+  - ../../base
+
+patches:
+  - target:
+      kind: Ingress
+      name: koinos-ingress
+    path: patches/ingress_patches.yaml
+  - target:
+      kind: Deployment
+      name: config
+    path: patches/config_patch.yaml
+  - target:
+      kind: PersistentVolumeClaim
+      name: koinos-data10
+    path: patches/pvc_patch.yaml
+
+configMapGenerator:
+  - name: koinos-config
+    files:
+      - env/koinos-config.yaml

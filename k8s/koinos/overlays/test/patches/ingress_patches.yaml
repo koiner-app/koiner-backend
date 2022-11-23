@@ -1,0 +1,13 @@
+# jsonrpc
+- op: replace
+  path: /spec/tls/0/hosts/0
+  value: jsonrpc.test.koiner.app
+- op: replace
+  path: /spec/tls/0/secretName
+  value: koiner-test-jsonrpc-tls
+- op: replace
+  path: /spec/rules/0/host
+  value: jsonrpc.test.koiner.app
+- op: replace
+  path: /spec/rules/1/http/paths/0/path
+  value: /jsonrpc-test
