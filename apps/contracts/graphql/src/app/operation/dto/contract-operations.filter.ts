@@ -22,6 +22,9 @@ export class ContractOperationsFilter implements FilterType {
   @Field(() => NumericFilterInput, { nullable: true })
   entryPoint?: NumericFilterInput;
 
+  @Field(() => StringFilterInput, { nullable: true })
+  name?: StringFilterInput;
+
   @Field(() => NumericFilterInput, { nullable: true })
   timestamp?: NumericFilterInput;
 

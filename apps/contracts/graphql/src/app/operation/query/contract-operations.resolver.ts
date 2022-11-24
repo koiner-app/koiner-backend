@@ -22,7 +22,13 @@ export class ContractOperationsResolver {
     const searchResponse = await this.queryBus.execute<
       ContractOperationsQuery,
       SearchResponse<ContractOperation>
-    >(new ContractOperationsQuery(request, selectionSet, ['id', 'contractId']));
+    >(
+      new ContractOperationsQuery(request, selectionSet, [
+        'id',
+        'contractId',
+        'name',
+      ])
+    );
 
     return ConnectionFactory.fromSearchResponse(
       ContractOperationsConnection,
