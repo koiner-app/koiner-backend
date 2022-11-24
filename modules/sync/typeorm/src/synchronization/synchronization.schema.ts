@@ -34,6 +34,6 @@ export class SynchronizationSchema extends EntityBaseSchema {
   @Column({ type: 'bigint', nullable: true })
   readonly stopped_at?: number | null;
 
-  @Column({ type: 'json', nullable: true })
-  readonly last_error?: string | null;
+  @Column({ type: 'jsonb', nullable: true })
+  readonly last_error?: Record<string, any> | null;
 }

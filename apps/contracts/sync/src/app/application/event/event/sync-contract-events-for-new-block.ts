@@ -11,7 +11,10 @@ import {
   CreateContractEventCommand,
 } from '@koiner/contracts/application';
 import { Contract } from '@koiner/contracts/domain';
-import { ContractStandardType } from '@koiner/contracts/standards';
+import {
+  ContractStandardService,
+  ContractStandardType,
+} from '@koiner/contracts/standards';
 import { ContractEventWithTokenTypeCreatedMessage } from '@koiner/contracts/events';
 
 @Injectable()
@@ -20,7 +23,8 @@ export class SyncContractEventsForNewBlock {
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
     private readonly rawBlocksService: RawBlocksService,
-    private readonly amqpConnection: AmqpConnection
+    private readonly amqpConnection: AmqpConnection,
+    private readonly contractStandardService: ContractStandardService
   ) {}
 
   @OnEvent(BlockCreatedMessage.eventName, { async: false })
@@ -33,13 +37,13 @@ export class SyncContractEventsForNewBlock {
         eventIndex < rawBlock.receipt.events.length;
         eventIndex++
       ) {
-        const blockEventEvent = rawBlock.receipt.events[eventIndex];
+        const blockEvent = rawBlock.receipt.events[eventIndex];
 
-        if (blockEventEvent.source) {
+        if (blockEvent.source) {
           let contractStandardType = undefined;
 
           const contract = await this.queryBus.execute<ContractQuery, Contract>(
-            new ContractQuery(blockEventEvent.source)
+            new ContractQuery(blockEvent.source)
           );
 
           contractStandardType = contract.contractStandardType;
@@ -48,13 +52,13 @@ export class SyncContractEventsForNewBlock {
             blockHeight: event.height,
             parentId: event.id,
             parentType: EventParentType.block,
-            sequence: blockEventEvent.sequence,
-            contractId: blockEventEvent.source,
+            sequence: blockEvent.sequence,
+            contractId: blockEvent.source,
             contractStandardType,
-            name: blockEventEvent.name,
-            data: blockEventEvent.data,
-            impacted: blockEventEvent.impacted
-              ? blockEventEvent.impacted.filter(
+            name: blockEvent.name,
+            data: blockEvent.data,
+            impacted: blockEvent.impacted
+              ? blockEvent.impacted.filter(
                   (impactedItem) => impactedItem !== '' // Filter out empty items
                 )
               : [],
@@ -75,13 +79,26 @@ export class SyncContractEventsForNewBlock {
               message.toString()
             );
           } else {
-            await this.commandBus.execute(
-              new CreateContractEventCommand({
-                id: UUID.generate().value,
-                blockHeight: event.height,
-                ...sharedProps,
-              })
-            );
+            try {
+              const decodedOperation =
+                await this.contractStandardService.decodeEvent(
+                  blockEvent.source,
+                  blockEvent.name,
+                  blockEvent.data
+                );
+
+              await this.commandBus.execute(
+                new CreateContractEventCommand({
+                  id: UUID.generate().value,
+                  blockHeight: event.height,
+                  ...sharedProps,
+                  name: decodedOperation.name,
+                  decodedData: decodedOperation.data,
+                })
+              );
+            } catch (error) {
+              console.log('decoded error', error);
+            }
           }
         }
       }

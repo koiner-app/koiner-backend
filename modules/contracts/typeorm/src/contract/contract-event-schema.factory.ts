@@ -28,6 +28,7 @@ export class ContractEventSchemaFactory extends EntitySchemaFactory<
       data: entitySchema.data
         ? (entitySchema.data as unknown as Uint8Array).toString()
         : undefined,
+      decodedData: entitySchema.decoded_data,
       impacted: entitySchema.impacted
         ? entitySchema.impacted.map((impacted) => new KoinosAddressId(impacted))
         : undefined,
@@ -51,6 +52,7 @@ export class ContractEventSchemaFactory extends EntitySchemaFactory<
       contract_standard_type: props.contractStandardType,
       name: props.name,
       data: props.data,
+      decoded_data: props.decodedData,
       impacted: props.impacted
         ? props.impacted.map((impacted) => impacted.value)
         : undefined,

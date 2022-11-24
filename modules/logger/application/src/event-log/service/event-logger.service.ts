@@ -23,10 +23,10 @@ export class EventLoggerService extends EventLogger {
   ): Promise<EventLog> {
     const eventLog = EventLog.create({
       eventName: 'error',
-      data: JSON.stringify({
+      data: {
         event: event.toString(),
         error: JSON.stringify(error, Object.getOwnPropertyNames(error)),
-      }),
+      },
       itemId: itemId ?? event.id,
       itemType: event.eventName,
       timestamp: Date.now(),

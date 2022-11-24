@@ -39,6 +39,9 @@ export class ContractEventSchema extends EntityBaseSchema {
   @Column({ type: 'bytea', nullable: true })
   readonly data?: string;
 
+  @Column({ type: 'jsonb', nullable: true })
+  readonly decoded_data?: Record<string, any>;
+
   @Index()
   @Column({ type: 'simple-array', nullable: true })
   readonly impacted?: string[];

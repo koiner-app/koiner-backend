@@ -18,9 +18,7 @@ export class EventLogSchemaFactory extends TypeOrmEntitySchemaFactory<
 
     const props: EventLogProps = {
       eventName: eventLogSchema.event_name,
-      data: eventLogSchema.data
-        ? JSON.stringify(eventLogSchema.data)
-        : undefined,
+      data: eventLogSchema.data ?? undefined,
       itemId: eventLogSchema.item_id,
       itemType: eventLogSchema.item_type,
       timestamp: eventLogSchema.timestamp,
@@ -37,7 +35,7 @@ export class EventLogSchemaFactory extends TypeOrmEntitySchemaFactory<
 
     return {
       event_name: props.eventName,
-      data: props.data ? JSON.parse(props.data) : null,
+      data: props.data,
       item_id: props.itemId,
       item_type: props.itemType,
       timestamp: props.timestamp,

@@ -67,7 +67,7 @@ export class Synchronization extends AggregateRoot<SynchronizationProps> {
     return this.props.lastSyncedBlock;
   }
 
-  get lastError(): string | undefined {
+  get lastError(): Record<string, any> | undefined {
     return this.props.lastError;
   }
 
@@ -158,7 +158,7 @@ export class Synchronization extends AggregateRoot<SynchronizationProps> {
       endHeight: this.batchEndHeight,
       batchSize: this.batchEndHeight - this.batchStartHeight + 1,
       failedAtBlock: props.failedAtBlock,
-      error: props.error,
+      error: props.error.toString(),
     });
 
     this.stop();

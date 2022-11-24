@@ -10,6 +10,7 @@ export interface CreateContractEventProps {
   contractStandardType?: ContractStandardType;
   name: string;
   data?: string;
+  decodedData?: Record<string, any>;
   impacted?: KoinosAddressId[];
   timestamp: number;
 }

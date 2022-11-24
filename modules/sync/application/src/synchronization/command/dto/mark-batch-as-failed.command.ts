@@ -9,5 +9,5 @@ export class MarkBatchAsFailedCommand extends Command {
 
   readonly id!: string;
   readonly failedAtBlock!: number;
-  readonly error!: string;
+  readonly error!: Record<string, unknown>;
 }

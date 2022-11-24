@@ -13,6 +13,8 @@ export class CreateContractOperationCommand extends Command {
   readonly transactionId!: string;
   readonly entryPoint!: number;
   readonly args?: string;
+  readonly name!: string;
+  readonly data?: Record<string, any>;
   readonly contractStandardType?: string;
   readonly timestamp!: number;
 }

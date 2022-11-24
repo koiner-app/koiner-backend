@@ -1,6 +1,6 @@
 export interface CreateEventLogProps {
   eventName: string;
-  data?: string;
+  data?: Record<string, any>;
   itemId: string;
   itemType: string;
   timestamp?: number;

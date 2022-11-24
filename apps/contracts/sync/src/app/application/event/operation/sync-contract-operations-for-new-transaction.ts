@@ -11,7 +11,10 @@ import {
   CreateContractOperationCommand,
 } from '@koiner/contracts/application';
 import { Contract } from '@koiner/contracts/domain';
-import { ContractStandardType } from '@koiner/contracts/standards';
+import {
+  ContractStandardService,
+  ContractStandardType,
+} from '@koiner/contracts/standards';
 import { ContractOperationWithTokenTypeCreatedMessage } from '@koiner/contracts/events';
 
 @Injectable()
@@ -20,7 +23,8 @@ export class SyncContractOperationsForNewTransaction {
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
     private readonly rawBlocksService: RawBlocksService,
-    private readonly amqpConnection: AmqpConnection
+    private readonly amqpConnection: AmqpConnection,
+    private readonly contractStandardService: ContractStandardService
   ) {}
 
   @OnEvent(`${TransactionCreatedMessage.eventName}.operation_queue`, {
@@ -77,12 +81,25 @@ export class SyncContractOperationsForNewTransaction {
               message.toString()
             );
           } else {
-            await this.commandBus.execute(
-              new CreateContractOperationCommand({
-                id: UUID.generate().value,
-                ...sharedProps,
-              })
-            );
+            try {
+              const decodedOperation =
+                await this.contractStandardService.decodeOperation(
+                  contractId,
+                  sharedProps.entryPoint,
+                  sharedProps.args
+                );
+
+              await this.commandBus.execute(
+                new CreateContractOperationCommand({
+                  id: UUID.generate().value,
+                  ...sharedProps,
+                  name: decodedOperation.name,
+                  data: decodedOperation.data,
+                })
+              );
+            } catch (error) {
+              console.log('decoded error', error);
+            }
           }
         }
       }

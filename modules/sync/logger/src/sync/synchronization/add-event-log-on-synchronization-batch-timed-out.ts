@@ -12,7 +12,7 @@ export class AddEventLogOnSynchronizationBatchTimedOut extends DomainEventHandle
     await this.commandBus.execute(
       new CreateEventLogCommand({
         eventName: SynchronizationTimedOut.eventName,
-        data: event.toString(),
+        data: event,
         itemId: event.aggregateId,
         itemType: 'synchronization',
       })

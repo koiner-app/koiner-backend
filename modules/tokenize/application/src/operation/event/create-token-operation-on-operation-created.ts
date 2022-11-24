@@ -27,10 +27,10 @@ export class CreateTokenOperationOnOperationCreated {
     }
 
     const decodedOperation = await this.contractStandardService.decodeOperation(
-      ContractStandardType.token,
       event.contractId,
       event.entryPoint,
-      event.args
+      event.args,
+      ContractStandardType.token
     );
 
     await this.commandBus.execute(
@@ -40,9 +40,9 @@ export class CreateTokenOperationOnOperationCreated {
         contractId: event.contractId,
         transactionId: event.transactionId,
         name: decodedOperation.name,
-        from: <string>decodedOperation.args.from,
-        to: <string>decodedOperation.args.to,
-        value: parseInt(<string>decodedOperation.args.value),
+        from: <string>decodedOperation.data.from,
+        to: <string>decodedOperation.data.to,
+        value: parseInt(<string>decodedOperation.data.value),
         timestamp: event.timestamp,
       })
     );

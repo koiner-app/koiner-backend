@@ -27,6 +27,8 @@ export class ContractOperation extends AggregateRoot<ContractOperationProps> {
         transactionId: props.transactionId.value,
         entryPoint: props.entryPoint,
         args: props.args,
+        name: props.name,
+        data: props.data?.toString(),
         contractStandardType: props.contractStandardType,
         timestamp: props.timestamp,
       })
@@ -53,6 +55,14 @@ export class ContractOperation extends AggregateRoot<ContractOperationProps> {
 
   get args(): string | undefined {
     return this.props.args;
+  }
+
+  get name(): string {
+    return this.props.name;
+  }
+
+  get data(): Record<string, any> | undefined {
+    return this.props.data;
   }
 
   get contractStandardType(): string | undefined {

@@ -9,7 +9,7 @@ export interface SynchronizationProps extends CreateSynchronizationProps {
   batchStartHeight?: number;
   batchEndHeight?: number;
   lastSyncedBlock: number;
-  lastError?: string;
+  lastError?: Record<string, any>;
   syncing: boolean;
   stopped: boolean;
   stoppedAt?: number;
@@ -32,5 +32,5 @@ export interface MarkBatchAsFailedProps {
   headTopologyHeight: number;
   lastIrreversibleBlock: number;
   failedAtBlock: number;
-  error: string;
+  error: Record<string, any>;
 }

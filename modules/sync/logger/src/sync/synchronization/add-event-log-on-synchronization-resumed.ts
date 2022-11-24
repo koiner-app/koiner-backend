@@ -12,7 +12,7 @@ export class AddEventLogOnSynchronizationResumed extends DomainEventHandler {
     await this.commandBus.execute(
       new CreateEventLogCommand({
         eventName: SynchronizationResumed.eventName,
-        data: event.toString(),
+        data: event,
         itemId: event.aggregateId,
         itemType: 'synchronization',
       })

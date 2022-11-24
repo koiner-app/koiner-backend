@@ -10,6 +10,16 @@ import {
   ContractStandardWithValues,
 } from '@koiner/contracts/standards';
 import { promiseWithTimeout } from '../utils';
+import { ContractQuery } from '@koiner/contracts/application';
+import { Contract as KoinerContract } from '@koiner/contracts/domain';
+import { QueryBus } from '@nestjs/cqrs';
+import {
+  decodeArgs,
+  fetchContractMeta,
+  findEntryPoint,
+  findEntryPointByTypes,
+  potentialTypes,
+} from './decoding-utils';
 
 /**
  * TODO: Revisit this class to see if it can be simplified
@@ -17,6 +27,7 @@ import { promiseWithTimeout } from '../utils';
 @Injectable()
 export class ContractStandardKoilibService extends ContractStandardService {
   constructor(
+    private readonly queryBus: QueryBus,
     private readonly readRepository: ContractStandardReadRepository,
     private readonly provider: Provider,
     private readonly signer: Signer,
@@ -109,28 +120,121 @@ export class ContractStandardKoilibService extends ContractStandardService {
   }
 
   async decodeOperation(
-    contractStandardType: ContractStandardType,
+    contractId: string,
+    entryPoint: number,
+    args: string,
+    contractStandardType?: ContractStandardType
+  ): Promise<{ name: string; data?: any }> {
+    // Use koilib for known token standard (token)
+    if (contractStandardType) {
+      const contractStandard = await this.readRepository.findOneByType(
+        contractStandardType
+      );
+
+      const abi = contractStandard.abi as Abi;
+      const contract = new Contract({
+        id: contractId,
+        abi,
+        provider: this.provider,
+        signer: this.signer,
+      });
+
+      const data = await contract.decodeOperation({
+        call_contract: {
+          contract_id: contractId,
+          entry_point: entryPoint,
+          args: args as any,
+        },
+      });
+
+      return {
+        name: data.name,
+        data: data.args,
+      };
+    }
+
+    // Otherwise decode using contract abi
+    return this.decodeOperationWithProto(contractId, entryPoint, args);
+  }
+
+  async decodeOperationWithProto(
     contractId: string,
     entryPoint: number,
     args: string
-  ): Promise<any> {
-    const contractStandard = await this.readRepository.findOneByType(
-      contractStandardType
+  ): Promise<{ name: string; data?: any }> {
+    const contract = await this.queryBus.execute<ContractQuery, KoinerContract>(
+      new ContractQuery(contractId)
     );
 
-    const contract = new Contract({
-      id: contractId,
-      abi: contractStandard.abi as Abi,
-      provider: this.provider,
-      signer: this.signer,
-    });
+    if (contract && contract.abi) {
+      try {
+        const meta = await fetchContractMeta(contract.abi);
 
-    return await contract.decodeOperation({
-      call_contract: {
-        contract_id: contractId,
-        entry_point: entryPoint,
-        args: args as any,
-      },
-    });
+        if (!meta.root || !meta.abi) {
+          this.logger.error('Could not decode args. No root or abi');
+
+          return {
+            name: 'unknown',
+          };
+        }
+
+        const abi = meta.abi;
+        const method = findEntryPoint(entryPoint, abi);
+        const decoded = decodeArgs(entryPoint, args, abi, meta.root);
+
+        return {
+          name: method ?? 'unknown',
+          data: decoded,
+        };
+      } catch (e) {
+        this.logger.error('Could not decode args', e);
+      }
+    }
+
+    return {
+      name: 'unknown',
+    };
+  }
+
+  async decodeEvent(
+    contractId: string,
+    name: string,
+    args: string
+  ): Promise<{ name: string; entryPoint?: number; data?: any }> {
+    const potentialTypes1 = potentialTypes(name);
+
+    const contract = await this.queryBus.execute<ContractQuery, KoinerContract>(
+      new ContractQuery(contractId)
+    );
+
+    if (contract && contract.abi) {
+      try {
+        const meta = await fetchContractMeta(contract.abi);
+
+        if (!meta.root || !meta.abi) {
+          this.logger.error('Could not decode args. No root or abi');
+
+          return {
+            name: 'unknown',
+          };
+        }
+
+        const abi = meta.abi;
+        const entryPoint = findEntryPointByTypes(potentialTypes1, abi);
+        const decoded = decodeArgs(entryPoint, args, abi, meta.root);
+
+        return {
+          name,
+          entryPoint,
+          data: decoded,
+        };
+      } catch (e) {
+        this.logger.error('Could not decode args', e);
+      }
+    }
+
+    return {
+      name: 'unknown',
+    };
   }
 }

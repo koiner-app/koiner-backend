@@ -12,7 +12,7 @@ export class AddEventLogOnSynchronizationBatchCompleted extends DomainEventHandl
     await this.commandBus.execute(
       new CreateEventLogCommand({
         eventName: SynchronizationBatchCompleted.eventName,
-        data: event.toString(),
+        data: event,
         itemId: event.aggregateId,
         itemType: 'synchronization',
       })

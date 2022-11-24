@@ -30,6 +30,9 @@ export class ContractEventNode extends BaseNode {
   @Field({ nullable: true })
   data?: string;
 
+  @Field({ nullable: true })
+  decodedData?: string;
+
   @Field(() => [String], { nullable: true })
   impacted?: string[];
 
@@ -47,6 +50,7 @@ export class ContractEventNode extends BaseNode {
     this.contractStandardType = event.contractStandardType;
     this.name = event.name;
     this.data = event.data;
+    this.decodedData = event.decodedData;
     this.impacted = event.impacted
       ? event.impacted.map((address) => address.value)
       : undefined;

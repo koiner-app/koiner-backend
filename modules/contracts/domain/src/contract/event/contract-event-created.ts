@@ -15,6 +15,7 @@ export class ContractEventCreated extends DomainEvent {
   readonly contractStandardType?: string;
   readonly name!: string;
   readonly data?: string;
+  readonly decodedData?: string;
   readonly impacted?: string[];
   readonly timestamp!: number;
 }

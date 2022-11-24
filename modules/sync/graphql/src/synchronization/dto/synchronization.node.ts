@@ -44,7 +44,7 @@ export class SynchronizationNode extends BaseNode {
     this.batchStartHeight = entity.batchStartHeight;
     this.batchEndHeight = entity.batchEndHeight;
     this.lastSyncedBlock = entity.lastSyncedBlock;
-    this.lastError = entity.lastError;
+    this.lastError = entity.lastError?.toString();
     this.syncing = entity.syncing;
     this.stopped = entity.stopped;
     this.stoppedAt = entity.stoppedAt;

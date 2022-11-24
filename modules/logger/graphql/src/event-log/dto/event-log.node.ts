@@ -27,7 +27,7 @@ export class EventLogNode extends BaseNode {
     super(entity);
 
     this.eventName = entity.eventName;
-    this.data = entity.data;
+    this.data = entity.data?.toString();
     this.itemId = entity.itemId;
     this.itemType = entity.itemType;
     this.timestamp = entity.timestamp;

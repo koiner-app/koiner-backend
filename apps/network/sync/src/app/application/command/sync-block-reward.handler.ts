@@ -43,6 +43,7 @@ export class SyncBlockRewardHandler
               event.name === 'koinos.contracts.token.mint_event') &&
             event.source === koinosConfig.contracts.koin
         );
+
         const burnEvent = events.find(
           (event) =>
             (event.name === 'vhp.burn' ||
@@ -53,28 +54,28 @@ export class SyncBlockRewardHandler
         if (mintEvent && burnEvent) {
           const decodedMintEvent =
             await this.contractStandardService.decodeOperation(
-              ContractStandardType.token,
               koinosConfig.contracts.koin,
               0xdc6f17bb, // TODO: Find way to retrieve using contract standards
-              mintEvent.data
+              mintEvent.data,
+              ContractStandardType.token
             );
 
           const decodedBurnEvent =
             await this.contractStandardService.decodeOperation(
-              ContractStandardType.token,
               koinosConfig.contracts.vhp,
               0x859facc5, // TODO: Find way to retrieve using contract standards
-              burnEvent.data
+              burnEvent.data,
+              ContractStandardType.token
             );
 
-          const mintedValue = parseInt(<string>decodedMintEvent.args.value);
-          const burnedValue = parseInt(<string>decodedBurnEvent.args.value);
+          const mintedValue = parseInt(<string>decodedMintEvent.data.value);
+          const burnedValue = parseInt(<string>decodedBurnEvent.data.value);
 
           await this.commandBus.execute(
             new CreateBlockRewardCommand({
               blockId: rawBlock.block_id,
               blockHeight: command.blockHeight,
-              producerId: <string>decodedMintEvent.args.to,
+              producerId: <string>decodedMintEvent.data.to,
               mintedValue,
               burnedValue,
               timestamp: parseInt(rawBlock.block.header.timestamp),

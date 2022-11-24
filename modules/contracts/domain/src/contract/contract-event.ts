@@ -29,6 +29,7 @@ export class ContractEvent extends AggregateRoot<ContractEventProps> {
         contractStandardType: props.contractStandardType,
         name: props.name,
         data: props.data,
+        decodedData: props.decodedData?.toString(),
         impacted: props.impacted
           ? props.impacted.map((impactedAddress) => impactedAddress.value)
           : undefined,
@@ -69,6 +70,10 @@ export class ContractEvent extends AggregateRoot<ContractEventProps> {
 
   get data(): string | undefined {
     return this.props.data;
+  }
+
+  get decodedData(): any | undefined {
+    return this.props.decodedData;
   }
 
   get impacted(): KoinosAddressId[] | undefined {

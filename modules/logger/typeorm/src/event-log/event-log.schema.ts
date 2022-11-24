@@ -6,8 +6,8 @@ export class EventLogSchema extends EntityBaseSchema {
   @Column()
   readonly event_name!: string;
 
-  @Column({ type: 'json', nullable: true })
-  readonly data?: string;
+  @Column({ type: 'jsonb', nullable: true })
+  readonly data?: Record<string, any>;
 
   @Column()
   readonly item_id!: string;

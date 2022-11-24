@@ -17,6 +17,7 @@ export class CreateContractEventCommand extends Command {
   readonly contractStandardType?: ContractStandardType;
   readonly name!: string;
   readonly data?: string;
+  readonly decodedData?: Record<string, any>;
   readonly impacted?: string[];
   readonly timestamp!: number;
 }

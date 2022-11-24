@@ -37,10 +37,10 @@ export class CreateTokenEventOnContractEventCreated {
     }
 
     const decodedEvent = await this.contractStandardService.decodeOperation(
-      ContractStandardType.token,
       event.contractId,
       entryPoint,
-      event.data
+      event.data,
+      ContractStandardType.token
     );
 
     await this.commandBus.execute(
@@ -52,9 +52,9 @@ export class CreateTokenEventOnContractEventCreated {
         sequence: event.sequence,
         contractId: event.contractId,
         name: decodedEvent.name,
-        from: <string>decodedEvent.args.from,
-        to: <string>decodedEvent.args.to,
-        value: parseInt(<string>decodedEvent.args.value),
+        from: <string>decodedEvent.data.from,
+        to: <string>decodedEvent.data.to,
+        value: parseInt(<string>decodedEvent.data.value),
         timestamp: event.timestamp,
       })
     );

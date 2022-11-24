@@ -12,6 +12,8 @@ export class ContractOperationCreated extends DomainEvent {
   readonly transactionId!: string;
   readonly entryPoint!: number;
   readonly args?: string;
+  readonly name!: string;
+  readonly data?: string;
   readonly contractStandardType?: string;
   readonly timestamp!: number;
 }

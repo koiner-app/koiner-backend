@@ -75,7 +75,7 @@ export class SyncBlocksOnSynchronizationBatchStarted {
         new MarkBatchAsFailedCommand({
           id: event.aggregateId,
           failedAtBlock,
-          error: JSON.stringify(failedError),
+          error: failedError,
         })
       );
     } else {

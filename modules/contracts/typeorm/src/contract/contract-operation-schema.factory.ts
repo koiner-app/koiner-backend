@@ -26,7 +26,11 @@ export class ContractOperationSchemaFactory extends EntitySchemaFactory<
       contractId: new KoinosAddressId(entitySchema.contract_id),
       transactionId: new KoinosId(entitySchema.transaction_id),
       entryPoint: entitySchema.entry_point,
-      args: entitySchema.args,
+      args: entitySchema.args
+        ? (entitySchema.args as unknown as Uint8Array).toString()
+        : undefined,
+      data: entitySchema.data,
+      name: entitySchema.name,
       contractStandardType: entitySchema.contract_standard_type,
       timestamp: entitySchema.timestamp,
     };
@@ -45,6 +49,8 @@ export class ContractOperationSchemaFactory extends EntitySchemaFactory<
       transaction_id: props.transactionId.value,
       entry_point: props.entryPoint,
       args: props.args,
+      name: props.name,
+      data: props.data,
       contract_standard_type:
         props.contractStandardType as ContractStandardType,
       timestamp: props.timestamp,

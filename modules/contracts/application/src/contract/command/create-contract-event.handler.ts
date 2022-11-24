@@ -23,6 +23,7 @@ export class CreateContractEventHandler
         contractId: new KoinosAddressId(command.contractId),
         contractStandardType: command.contractStandardType,
         name: command.name,
+        decodedData: command.decodedData,
         data: command.data,
         impacted: command.impacted
           ? command.impacted.map((impacted) => new KoinosAddressId(impacted))

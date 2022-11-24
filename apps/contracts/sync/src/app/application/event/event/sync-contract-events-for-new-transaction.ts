@@ -10,7 +10,10 @@ import {
   CreateContractEventCommand,
 } from '@koiner/contracts/application';
 import { Contract } from '@koiner/contracts/domain';
-import { ContractStandardType } from '@koiner/contracts/standards';
+import {
+  ContractStandardService,
+  ContractStandardType,
+} from '@koiner/contracts/standards';
 import { ContractEventWithTokenTypeCreatedMessage } from '@koiner/contracts/events';
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 
@@ -20,7 +23,8 @@ export class SyncContractEventsForNewTransaction {
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
     private readonly rawBlocksService: RawBlocksService,
-    private readonly amqpConnection: AmqpConnection
+    private readonly amqpConnection: AmqpConnection,
+    private readonly contractStandardService: ContractStandardService
   ) {}
 
   @OnEvent(`${TransactionCreatedMessage.eventName}.event_queue`, {
@@ -80,13 +84,26 @@ export class SyncContractEventsForNewTransaction {
               message.toString()
             );
           } else {
-            await this.commandBus.execute(
-              new CreateContractEventCommand({
-                id: UUID.generate().value,
-                blockHeight: event.blockHeight,
-                ...sharedProps,
-              })
-            );
+            try {
+              const decodedOperation =
+                await this.contractStandardService.decodeEvent(
+                  transactionEvent.source,
+                  transactionEvent.name,
+                  transactionEvent.data
+                );
+
+              await this.commandBus.execute(
+                new CreateContractEventCommand({
+                  id: UUID.generate().value,
+                  blockHeight: event.blockHeight,
+                  ...sharedProps,
+                  name: decodedOperation.name,
+                  decodedData: decodedOperation.data,
+                })
+              );
+            } catch (error) {
+              console.log('decoded error', error);
+            }
           }
         }
       }

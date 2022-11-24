@@ -26,9 +26,7 @@ export class SynchronizationSchemaFactory extends EntitySchemaFactory<
       syncing: entitySchema.syncing,
       stopped: entitySchema.stopped,
       stoppedAt: entitySchema.stopped_at ?? undefined,
-      lastError: entitySchema.last_error
-        ? JSON.stringify(entitySchema.last_error)
-        : undefined,
+      lastError: entitySchema.last_error ?? undefined,
     };
 
     return { id, props };
@@ -49,7 +47,7 @@ export class SynchronizationSchemaFactory extends EntitySchemaFactory<
       syncing: props.syncing,
       stopped: props.stopped,
       stopped_at: props.stoppedAt ?? null,
-      last_error: props.lastError ? JSON.parse(props.lastError) : null,
+      last_error: props.lastError,
     };
   }
 }

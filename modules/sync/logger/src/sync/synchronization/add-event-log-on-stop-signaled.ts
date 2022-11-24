@@ -12,7 +12,7 @@ export class AddEventLogOnStopSignaled extends DomainEventHandler {
     await this.commandBus.execute(
       new CreateEventLogCommand({
         eventName: StopSignaled.eventName,
-        data: event.toString(),
+        data: event,
         itemId: event.aggregateId,
         itemType: 'stopSignal',
       })

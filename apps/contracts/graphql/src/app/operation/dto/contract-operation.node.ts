@@ -21,6 +21,12 @@ export class ContractOperationNode extends BaseNode {
   @Field({ nullable: true })
   args?: string;
 
+  @Field()
+  name: string;
+
+  @Field({ nullable: true })
+  data?: string;
+
   @Field(() => ContractStandardType, { nullable: true })
   contractStandardType: ContractStandardType;
 
@@ -35,6 +41,8 @@ export class ContractOperationNode extends BaseNode {
     this.transactionId = operation.transactionId.value;
     this.entryPoint = operation.entryPoint;
     this.args = operation.args;
+    this.name = operation.name;
+    this.data = operation.data.toString();
     this.contractStandardType =
       operation.contractStandardType as ContractStandardType;
     this.timestamp = operation.timestamp;

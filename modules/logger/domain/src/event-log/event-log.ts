@@ -23,7 +23,7 @@ export class EventLog extends AggregateRoot<EventLogProps> {
       new EventLogCreated({
         aggregateId: id.value,
         eventName: props.eventName,
-        data: props.data,
+        data: props.data?.toString(),
         itemId: props.itemId,
         itemType: props.itemType,
         timestamp: props.timestamp,
@@ -37,7 +37,7 @@ export class EventLog extends AggregateRoot<EventLogProps> {
     return this.props.eventName;
   }
 
-  get data(): string | undefined {
+  get data(): Record<string, any> | undefined {
     return this.props.data;
   }
 

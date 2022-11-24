@@ -41,6 +41,13 @@ export class ContractOperationSchema extends EntityBaseSchema {
   readonly args?: string;
 
   @Index()
+  @Column()
+  readonly name!: string;
+
+  @Column({ type: 'jsonb', nullable: true })
+  readonly data?: Record<string, any>;
+
+  @Index()
   @Column({ type: 'enum', enum: ContractStandardType, nullable: true })
   readonly contract_standard_type?: ContractStandardType;
 

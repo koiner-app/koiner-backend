@@ -23,6 +23,8 @@ export class CreateContractOperationHandler
         transactionId: new KoinosId(command.transactionId),
         entryPoint: command.entryPoint,
         args: command.args,
+        name: command.name,
+        data: command.data,
         contractStandardType: command.contractStandardType,
         timestamp: command.timestamp,
       },
