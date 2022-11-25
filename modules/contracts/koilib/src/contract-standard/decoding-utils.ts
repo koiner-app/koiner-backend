@@ -115,18 +115,8 @@ export const findEntryPoint = (entryPoint: number | string, abi: any) => {
 };
 
 export const findEntryPointByTypes = (possibleTypes: string[], abi: any) => {
-  console.log('possibleTypes', possibleTypes);
-
   for (const method of Object.keys(abi.methods)) {
-    console.log('find entry point by types', {
-      method,
-    });
-
     if (possibleTypes.find((possibleType) => possibleType.includes(method))) {
-      console.log('found', {
-        method,
-        point: abi.methods[method]['entry-point'],
-      });
       return abi.methods[method]['entry-point'];
     }
   }
