@@ -1,5 +1,6 @@
 export const koinosConfig = {
-  chainId: process.env.CHAIN_ID,
+  chainId:
+    process.env.CHAIN_ID ?? 'QmeehjqATVaC4ReXxwbw4DQLbEdEAo8SmTBVzZz8s5ZV5F',
   rpcNodes: process.env.JSONRPC_NODES
     ? JSON.parse(process.env.JSONRPC_NODES)
     : ['https://api.koinos.io'],
@@ -9,5 +10,5 @@ export const koinosConfig = {
     vhp: process.env.VHP_CONTRACT_ID ?? '1AdzuXSpC6K9qtXdCBgD5NUpDNwHjMgrc9',
     pob: process.env.POB_CONTRACT_ID ?? '159myq5YUhhoVWu3wsHKHiJYKPKGUrGiyv',
   },
-  syncSecret: process.env.SYNC_SECRET,
+  syncSecret: process.env.SYNC_SECRET ?? 'secret',
 };
