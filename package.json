@@ -30,7 +30,7 @@
   "dependencies": {
     "@appvise/domain": "^1.0.10",
     "@appvise/graphql": "^1.0.10",
-    "@appvise/typeorm": "^1.0.16",
+    "@appvise/typeorm": "^1.0.17",
     "@envelop/depth-limit": "^1.5.3",
     "@fastify/cors": "^8.1.0",
     "@golevelup/nestjs-rabbitmq": "^2.3.0",
