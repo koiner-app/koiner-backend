@@ -42,7 +42,7 @@ export class ContractOperationNode extends BaseNode {
     this.entryPoint = operation.entryPoint;
     this.args = operation.args;
     this.name = operation.name;
-    this.data = operation.data.toString();
+    this.data = operation.data?.toString();
     this.contractStandardType =
       operation.contractStandardType as ContractStandardType;
     this.timestamp = operation.timestamp;

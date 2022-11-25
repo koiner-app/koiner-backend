@@ -50,7 +50,7 @@ export class ContractEventNode extends BaseNode {
     this.contractStandardType = event.contractStandardType;
     this.name = event.name;
     this.data = event.data;
-    this.decodedData = event.decodedData;
+    this.decodedData = event.decodedData?.toString();
     this.impacted = event.impacted
       ? event.impacted.map((address) => address.value)
       : undefined;

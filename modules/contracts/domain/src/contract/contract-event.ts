@@ -72,7 +72,7 @@ export class ContractEvent extends AggregateRoot<ContractEventProps> {
     return this.props.data;
   }
 
-  get decodedData(): any | undefined {
+  get decodedData(): Record<string, any> | undefined {
     return this.props.decodedData;
   }
 
