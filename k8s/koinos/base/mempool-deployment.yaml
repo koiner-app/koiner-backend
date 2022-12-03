@@ -20,7 +20,7 @@ spec:
       containers:
         - args:
             - --basedir=/koinos
-          image: koinos/koinos-mempool:v1.0.0
+          image: koinos/koinos-mempool:v1.0.1
           name: mempool
           volumeMounts:
             - name: koinos-data10
