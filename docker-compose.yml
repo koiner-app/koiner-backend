@@ -404,6 +404,7 @@ services:
       - '.env.redis'
       - '.env.sync'
       - 'apps/tokenize/sync/.env'
+      - 'apps/tokenize/sync/.env.secrets'
     depends_on:
       - koiner-postgres
       - amqp

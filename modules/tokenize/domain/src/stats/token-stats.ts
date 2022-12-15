@@ -49,8 +49,8 @@ export class TokenStats extends AggregateRoot<TokenStatsProps> {
     this.addEvent(
       new TokenStatsUpdated({
         aggregateId: this.id.value,
-        contractCount: this.props.contractCount,
-        transferCount: this.props.transferCount,
+        contractCount: this.contractCount,
+        transferCount: this.transferCount,
       })
     );
   }

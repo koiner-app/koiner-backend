@@ -1,3 +1,3 @@
-import { TokenStatsSchema } from '.';
+import { KoinStatsSchema, TokenStatsSchema } from '.';
 
-export const StatsModels = [TokenStatsSchema];
+export const StatsModels = [KoinStatsSchema, TokenStatsSchema];

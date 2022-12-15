@@ -22,11 +22,11 @@ export class TokenStatsResolver {
     })
     id?: string
   ): Promise<TokenStatsNode> {
-    const chain: TokenStats = await this.queryBus.execute<
+    const tokenStats: TokenStats = await this.queryBus.execute<
       TokenStatsQuery,
       TokenStats
     >(new TokenStatsQuery(id ?? koinosConfig.chainId, selectionSet));
 
-    return new TokenStatsNode(chain);
+    return new TokenStatsNode(tokenStats);
   }
 }

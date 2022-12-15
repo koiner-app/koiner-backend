@@ -1,3 +1,5 @@
+export * from './koin-stats.types';
+export * from './koin-stats';
 export * from './token-stats.types';
 export * from './token-stats';
 
