@@ -9,6 +9,13 @@ import { TokenizeModule } from './tokenize.module';
 import { TokenizeAmqpHandlers } from './amqp';
 import { CronSyncKoinStatsController } from './cron-sync-koin-stats.controller';
 
+const CronSyncControllerWrapper = [];
+
+// Activate cron for syncing KoinStats by updating SYNC_KOIN_STATS=active
+if (process.env.SYNC_KOIN_STATS === 'active') {
+  CronSyncControllerWrapper.push(CronSyncKoinStatsController);
+}
+
 @Module({
   imports: [
     AmqpModule,
@@ -20,6 +27,6 @@ import { CronSyncKoinStatsController } from './cron-sync-koin-stats.controller';
     TokenizeModule,
   ],
   providers: [...TokenizeAmqpHandlers],
-  controllers: [CronSyncKoinStatsController],
+  controllers: [...CronSyncControllerWrapper],
 })
 export class TokenizeSyncModule {}
