@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: koiner-graphql-gateway
-          image: elimbatido/koiner-graphql-gateway:v0.2.8
+          image: elimbatido/koiner-graphql-gateway:v0.2.9
           envFrom:
             - configMapRef:
                 name: gateway-config
