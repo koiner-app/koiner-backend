@@ -1,9 +1,0 @@
-- op: replace
-  path: /spec/tls/0/hosts/0
-  value: test.koiner.app
-- op: replace
-  path: /spec/tls/0/secretName
-  value: koiner-test-tls
-- op: replace
-  path: /spec/rules/0/host
-  value: test.koiner.app

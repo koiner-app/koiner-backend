@@ -1,9 +1,0 @@
-configMapGenerator:
-  - name: dapp-config
-    envs:
-      - config/dapp.common.properties
-
-resources:
-  - koiner-dapp-deployment.yaml
-  - koiner-dapp-service.yaml
-  - ingress.yaml
