@@ -17,6 +17,14 @@ export class CreateTokenOperationHandler
   ) {}
 
   async execute(command: CreateTokenOperationCommand): Promise<void> {
+    if (
+      (command.from && command.from.length > 35) ||
+      (command.to && command.to.length > 35)
+    ) {
+      // Don't save when length is invalid
+      return;
+    }
+
     const operation = TokenOperation.create(
       {
         blockHeight: command.blockHeight,
