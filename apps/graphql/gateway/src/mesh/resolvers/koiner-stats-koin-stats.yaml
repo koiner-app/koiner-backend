@@ -1,0 +1,5 @@
+sourceName: Tokenize
+sourceTypeName: Query
+targetTypeName: Chain
+targetFieldName: koinStats
+sourceFieldName: koinStats

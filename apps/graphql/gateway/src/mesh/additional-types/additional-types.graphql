@@ -47,4 +47,5 @@ extend type ContractOperationWithDetails {
 type Chain {
   blockProductionStats: BlockProductionStats!
   tokenStats: TokenStats!
+  koinStats: KoinStats!
 }
