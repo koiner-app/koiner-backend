@@ -10,6 +10,9 @@ export class ContractsFilter implements FilterType {
   @Field(() => StringFilterInput, { nullable: true })
   id?: StringFilterInput;
 
+  @Field(() => StringFilterInput, { nullable: true })
+  contractStandardType?: StringFilterInput;
+
   @Field(() => NumericFilterInput, { nullable: true })
   timestamp?: NumericFilterInput;
 

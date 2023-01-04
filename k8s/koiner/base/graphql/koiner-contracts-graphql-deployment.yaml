@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: koiner-contracts-graphql
-          image: elimbatido/koiner-contracts-graphql:v0.2.13
+          image: elimbatido/koiner-contracts-graphql:v0.2.14
           envFrom:
             - configMapRef:
                 name: graphql-config
