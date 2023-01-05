@@ -53,13 +53,18 @@ export class EmitEventsTokenOperationQueue {
               event.operationId
             )
             .then((eventLog) => {
-              // Reject with small delay based on occurrences of error
-              setTimeout(
-                () => {
-                  reject();
-                },
-                eventLog.count < 10 ? 2000 : 120000
-              );
+              // Don't retry when operation is invalid
+              if (error.message.includes('Unknown method id')) {
+                resolve();
+              } else {
+                // Reject with small delay based on occurrences of error
+                setTimeout(
+                  () => {
+                    reject();
+                  },
+                  eventLog.count < 10 ? 2000 : 120000
+                );
+              }
             });
         });
     });
