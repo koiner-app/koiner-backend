@@ -1,7 +1,7 @@
-sourceName: Contracts
-sourceTypeName: Query
 targetTypeName: SystemCallOperation
 targetFieldName: contract
+sourceName: Contracts
+sourceTypeName: Query
 sourceFieldName: contractsBulk
 keyField: contractId
 keysArg: ids

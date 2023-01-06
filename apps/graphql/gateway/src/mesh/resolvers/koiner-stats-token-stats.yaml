@@ -1,5 +1,5 @@
-sourceName: Tokenize
-sourceTypeName: Query
 targetTypeName: Chain
 targetFieldName: tokenStats
+sourceName: Tokenize
+sourceTypeName: Query
 sourceFieldName: tokenStats

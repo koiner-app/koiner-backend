@@ -2,6 +2,7 @@ import { TransactionsLoader } from './dataloader';
 import {
   TransactionEventsResolver,
   TransactionResolver,
+  TransactionsBulkResolver,
   TransactionsResolver,
 } from './query';
 
@@ -12,6 +13,7 @@ export const TransactionGraphQLServices = [
   // Queries
   TransactionResolver,
   TransactionsResolver,
+  TransactionsBulkResolver,
   TransactionEventsResolver,
 ];
 

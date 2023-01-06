@@ -1,4 +1,6 @@
+#
 # Chain
+#
 extend type Address {
   blockRewards(first: Int = 30, before: String, after: String, filter: BlockRewardsFilter, sort: [BlockRewardsSortInput!] = [{direction: desc, field: blockHeight}]): BlockRewardsConnection!
   blockProducers(first: Int = 30, before: String, after: String, filter: BlockProducersFilter, sort: [BlockProducersSortInput!] = [{direction: desc, field: balance}]): BlockProducersConnection!
@@ -10,12 +12,14 @@ extend type Block {
   reward: BlockReward
 }
 
-extend type Operation {
-  contractOperation: ContractOperationWithDetails
+type Chain {
+  blockProductionStats: BlockProductionStats!
+  tokenStats: TokenStats!
+  koinStats: KoinStats!
 }
 
-extend type ContractOperation {
-  fields: ContractOperationWithDetails
+extend type Operation {
+  contractOperation: ContractOperationWithDetails
 }
 
 extend type SystemCallOperation {
@@ -30,7 +34,19 @@ extend type UploadContractOperation {
   contract: Contract!
 }
 
+#
 # Contracts
+#
+extend type ContractOperationWithDetails {
+  contract: Contract!
+  transaction: Transaction
+}
+
+extend type ContractOperation {
+  fields: ContractOperationWithDetails
+}
+
+# Network
 extend type BlockReward {
   burner: Address
   producerAddress: Address
@@ -40,12 +56,7 @@ extend type BlockProducer {
   address: Address!
 }
 
-extend type ContractOperationWithDetails {
-  contract: Contract!
-}
-
-type Chain {
-  blockProductionStats: BlockProductionStats!
-  tokenStats: TokenStats!
-  koinStats: KoinStats!
+# Tokenize
+extend type TokenOperation {
+  transaction: Transaction
 }

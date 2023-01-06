@@ -1,7 +1,7 @@
-sourceName: Network
-sourceTypeName: Query
 targetTypeName: Block
 targetFieldName: reward
+sourceName: Network
+sourceTypeName: Query
 sourceFieldName: blockRewardsBulk
 keyField: height
 keysArg: heights

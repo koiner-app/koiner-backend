@@ -11,4 +11,5 @@ export class TransactionResolver extends NodeQuery(
 ) {}
 
 export * from './transactions.resolver';
+export * from './transactions-bulk.resolver';
 export * from './transaction-events.resolver';

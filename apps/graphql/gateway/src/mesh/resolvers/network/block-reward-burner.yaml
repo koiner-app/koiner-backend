@@ -1,7 +1,7 @@
-sourceName: Chain
-sourceTypeName: Query
 targetTypeName: BlockReward
 targetFieldName: burner
+sourceName: Chain
+sourceTypeName: Query
 sourceFieldName: addressesBulk
 keyField: burnerId
 keysArg: ids

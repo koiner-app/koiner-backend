@@ -1,5 +1,5 @@
-sourceName: Network
-sourceTypeName: Query
 targetTypeName: Chain
 targetFieldName: blockProductionStats
+sourceName: Network
+sourceTypeName: Query
 sourceFieldName: blockProductionStats

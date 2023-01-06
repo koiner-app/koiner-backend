@@ -1,0 +1,7 @@
+targetTypeName: TokenOperation
+targetFieldName: transaction
+sourceName: Chain
+sourceTypeName: Query
+sourceFieldName: transactionsBulk
+keyField: transactionId
+keysArg: ids

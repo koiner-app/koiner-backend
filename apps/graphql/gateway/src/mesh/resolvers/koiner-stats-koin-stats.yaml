@@ -1,5 +1,5 @@
-sourceName: Tokenize
-sourceTypeName: Query
 targetTypeName: Chain
 targetFieldName: koinStats
+sourceName: Tokenize
+sourceTypeName: Query
 sourceFieldName: koinStats
