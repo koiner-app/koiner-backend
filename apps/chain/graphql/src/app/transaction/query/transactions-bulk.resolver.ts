@@ -37,7 +37,6 @@ export class TransactionsBulkResolver {
 
     const results: TransactionNode[] = [];
 
-    console.log(searchResponse);
     searchResponse.results.forEach((result) =>
       results.push(new TransactionNode(result.item))
     );
