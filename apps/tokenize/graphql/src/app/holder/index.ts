@@ -1,9 +1,12 @@
 export * from './dto';
 
 import {
+  KoinHoldersBulkResolver,
   TokenHolderContractResolver,
   TokenHolderResolver,
+  TokenHoldersBulkResolver,
   TokenHoldersResolver,
+  VhpHoldersBulkResolver,
 } from './query';
 
 export const TokenHolderGraphQLServices = [
@@ -12,5 +15,8 @@ export const TokenHolderGraphQLServices = [
   TokenHoldersResolver,
 
   // FieldResolvers
+  KoinHoldersBulkResolver,
   TokenHolderContractResolver,
+  TokenHoldersBulkResolver,
+  VhpHoldersBulkResolver,
 ];

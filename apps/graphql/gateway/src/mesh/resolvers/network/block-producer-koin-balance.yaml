@@ -1,0 +1,7 @@
+targetTypeName: BlockProducer
+targetFieldName: koinBalance
+sourceName: Tokenize
+sourceTypeName: Query
+sourceFieldName: koinHoldersBulk
+keyField: addressId
+keysArg: ids

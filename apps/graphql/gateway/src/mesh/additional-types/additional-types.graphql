@@ -54,6 +54,8 @@ extend type BlockReward {
 
 extend type BlockProducer {
   address: Address!
+  koinBalance: TokenHolder!
+  vhpBalance: TokenHolder!
 }
 
 # Tokenize

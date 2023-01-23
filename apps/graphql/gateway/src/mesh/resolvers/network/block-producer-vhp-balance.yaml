@@ -1,0 +1,7 @@
+targetTypeName: BlockProducer
+targetFieldName: vhpBalance
+sourceName: Tokenize
+sourceTypeName: Query
+sourceFieldName: vhpHoldersBulk
+keyField: addressId
+keysArg: ids

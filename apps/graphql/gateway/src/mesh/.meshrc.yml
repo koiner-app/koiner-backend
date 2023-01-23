@@ -58,6 +58,8 @@ additionalResolvers:
   - !include ./resolvers/contracts/contract-operation-transaction.yaml
   # Network
   - !include ./resolvers/network/block-producer-address.yaml
+  - !include ./resolvers/network/block-producer-koin-balance.yaml
+  - !include ./resolvers/network/block-producer-vhp-balance.yaml
   - !include ./resolvers/network/block-reward-burner.yaml
   - !include ./resolvers/network/block-reward-producer-address.yaml
   # Tokenize
