@@ -1,4 +1,7 @@
-import { TypeormRepositoryProvider } from '@appvise/typeorm';
+import {
+  TypeormRepositoryProvider,
+  TypeormStampedRepositoryProvider,
+} from '@appvise/typeorm';
 import { Provider } from '@nestjs/common';
 import {
   BlockReward,
@@ -53,7 +56,7 @@ export const BlockProductionRepositories: Provider[] = [
   ),
 
   // BlockProducer
-  TypeormRepositoryProvider.provide(
+  TypeormStampedRepositoryProvider.provide(
     BlockProducerReadRepository,
     BlockProducerSchema,
     blockProducerSchemaFactory

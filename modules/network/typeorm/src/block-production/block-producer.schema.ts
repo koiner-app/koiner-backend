@@ -1,8 +1,8 @@
 import { Column, Entity, Index } from 'typeorm';
-import { EntityBaseSchema } from '@appvise/typeorm';
+import { EntityBaseStampedSchema } from '@appvise/typeorm';
 
 @Entity('network_block_producer')
-export class BlockProducerSchema extends EntityBaseSchema {
+export class BlockProducerSchema extends EntityBaseStampedSchema {
   @Index()
   @Column({ length: 35 })
   readonly contract_id!: string;

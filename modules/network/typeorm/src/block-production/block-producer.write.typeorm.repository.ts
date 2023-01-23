@@ -1,7 +1,10 @@
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { snakeToCamelCase, TypeormWriteRepository } from '@appvise/typeorm';
+import {
+  snakeToCamelCase,
+  TypeormStampedWriteRepository,
+} from '@appvise/typeorm';
 import { Logger, SelectionSet } from '@appvise/domain';
 import {
   BlockProducer,
@@ -11,7 +14,7 @@ import { BlockProducerSchema, BlockProducerSchemaFactory } from '.';
 
 @Injectable()
 export class BlockProducerWriteTypeormRepository
-  extends TypeormWriteRepository<BlockProducer, BlockProducerSchema>
+  extends TypeormStampedWriteRepository<BlockProducer, BlockProducerSchema>
   implements BlockProducerWriteRepository
 {
   constructor(

@@ -1,15 +1,15 @@
 import { UUID } from '@appvise/domain';
 import {
   EntityProps,
-  EntitySchemaFactory,
-  EntitySchemaProps,
+  EntityStampedSchemaFactory,
+  EntityStampedSchemaProps,
 } from '@appvise/typeorm';
 import { KoinosAddressId } from '@koiner/domain';
 import { BlockProducer, BlockProducerProps } from '@koiner/network/domain';
 import { BlockProducerSchema } from '.';
 import * as math from 'mathjs';
 
-export class BlockProducerSchemaFactory extends EntitySchemaFactory<
+export class BlockProducerSchemaFactory extends EntityStampedSchemaFactory<
   BlockProducer,
   BlockProducerSchema
 > {
@@ -33,7 +33,7 @@ export class BlockProducerSchemaFactory extends EntitySchemaFactory<
 
   protected toSchemaProps(
     entity: BlockProducer
-  ): EntitySchemaProps<BlockProducerSchema> {
+  ): EntityStampedSchemaProps<BlockProducerSchema> {
     const props = entity.getPropsCopy();
 
     return {
