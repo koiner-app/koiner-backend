@@ -40,12 +40,16 @@ export class TokenHoldersBulkResolver {
       SearchResponse<TokenHolder>
     >(new TokenHoldersQuery(request, selectionSet));
 
-    const results: TokenHolderNode[] = [];
+    // Results must be returned in exactly the same order
+    const holdersMap = new Map<string, TokenHolderNode>([]);
 
     searchResponse.results.forEach((result) =>
-      results.push(new TokenHolderNode(result.item))
+      holdersMap.set(
+        result.item.addressId.value,
+        new TokenHolderNode(result.item)
+      )
     );
 
-    return results;
+    return addressIds.map((addressId) => holdersMap.get(addressId));
   }
 }
