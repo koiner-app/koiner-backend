@@ -18,6 +18,7 @@ export class UpdateBlockProducerOnBlockRewardCreated {
         contractId: event.contractId,
         mintedValue: event.mintedValue,
         burnedValue: event.burnedValue,
+        lastProducedBlock: event.blockHeight,
       })
     );
   }

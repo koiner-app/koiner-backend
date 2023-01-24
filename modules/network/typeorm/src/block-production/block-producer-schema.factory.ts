@@ -26,6 +26,7 @@ export class BlockProducerSchemaFactory extends EntityStampedSchemaFactory<
       burnedTotal: parseInt(entitySchema.burned_total),
       roi: math.evaluate(entitySchema.roi),
       blocksProduced: parseInt(entitySchema.blocks_produced),
+      lastProducedBlock: parseInt(entitySchema.last_produced_block),
     };
 
     return { id, props };
@@ -44,6 +45,7 @@ export class BlockProducerSchemaFactory extends EntityStampedSchemaFactory<
       burned_total: String(props.burnedTotal).padStart(20, '0'),
       roi: props.roi.toString().padStart(8, '0'),
       blocks_produced: String(props.blocksProduced).padStart(20, '0'),
+      last_produced_block: String(props.lastProducedBlock).padStart(20, '0'),
     };
   }
 }

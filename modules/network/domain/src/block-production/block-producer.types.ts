@@ -6,6 +6,7 @@ export interface CreateBlockProducerProps {
   balance: number;
   mintedTotal: number;
   burnedTotal: number;
+  lastProducedBlock: number;
 }
 
 export interface BlockProducerProps extends CreateBlockProducerProps {

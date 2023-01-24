@@ -20,7 +20,11 @@ export class UpdateBlockProducerHandler
     );
 
     if (blockProducer) {
-      blockProducer.addRewards(command.mintedValue, command.burnedValue);
+      blockProducer.addRewards(
+        command.mintedValue,
+        command.burnedValue,
+        command.lastProducedBlock
+      );
 
       await this.writeRepository.save(blockProducer);
     } else {
@@ -31,6 +35,7 @@ export class UpdateBlockProducerHandler
           balance: command.mintedValue - command.burnedValue,
           mintedTotal: command.mintedValue,
           burnedTotal: command.burnedValue,
+          lastProducedBlock: command.lastProducedBlock,
         },
         UUID.generate()
       );

@@ -34,6 +34,7 @@ export class BlockProducer extends AggregateRoot<BlockProducerProps> {
         balance: props.balance,
         mintedTotal: props.mintedTotal,
         burnedTotal: props.burnedTotal,
+        lastProducedBlock: props.lastProducedBlock,
       })
     );
 
@@ -83,7 +84,15 @@ export class BlockProducer extends AggregateRoot<BlockProducerProps> {
     return this.props.blocksProduced;
   }
 
-  addRewards(mintedValue: number, burnedValue: number): void {
+  get lastProducedBlock(): number {
+    return this.props.lastProducedBlock;
+  }
+
+  addRewards(
+    mintedValue: number,
+    burnedValue: number,
+    blockHeight: number
+  ): void {
     const rewards = mintedValue - burnedValue;
     if (rewards < 0) {
       // TODO: Add custom exception
@@ -94,6 +103,7 @@ export class BlockProducer extends AggregateRoot<BlockProducerProps> {
     this.props.mintedTotal += mintedValue;
     this.props.burnedTotal += burnedValue;
     this.props.blocksProduced += 1;
+    this.props.lastProducedBlock = blockHeight;
     this.props.roi = math
       .chain<number>(this.mintedTotal)
       .divide(this.burnedTotal)

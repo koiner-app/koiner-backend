@@ -11,4 +11,5 @@ export class UpdateBlockProducerCommand extends Command {
   readonly contractId!: string;
   readonly mintedValue!: number;
   readonly burnedValue!: number;
+  readonly lastProducedBlock!: number;
 }

@@ -12,4 +12,5 @@ export class BlockProducerCreated extends DomainEvent {
   readonly balance!: number;
   readonly mintedTotal!: number;
   readonly burnedTotal!: number;
+  readonly lastProducedBlock!: number;
 }

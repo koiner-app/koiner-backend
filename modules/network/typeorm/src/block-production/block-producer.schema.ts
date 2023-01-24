@@ -20,6 +20,10 @@ export class BlockProducerSchema extends EntityBaseStampedSchema {
   readonly blocks_produced!: string;
 
   @Index()
+  @Column({ length: 20, default: '0' })
+  readonly last_produced_block!: string;
+
+  @Index()
   @Column({ length: 20 })
   readonly minted_total!: string;
 
