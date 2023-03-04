@@ -22,6 +22,7 @@ import { NetworkModuleGraphQLServices, BlockRewardsLoader } from './index';
 
 // Register our models with typeorm
 import { database } from '../config';
+import { StatsController } from './stats.controller';
 database.entities.push(...NetworkModels);
 
 @Module({
@@ -49,5 +50,6 @@ database.entities.push(...NetworkModels);
     ...NetworkModuleGraphQLServices,
   ],
   exports: [BlockRewardsLoader],
+  controllers: [StatsController],
 })
 export class NetworkModule {}
