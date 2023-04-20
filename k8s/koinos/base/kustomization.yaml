@@ -3,7 +3,7 @@ resources:
   - block-producer-deployment.yaml
   - block-store-deployment.yaml
   - chain-deployment.yaml
-  - config-deployment.yaml
+#  - config-deployment.yaml
   - contract-meta-store-deployment.yaml
   - jsonrpc-deployment.yaml
   - jsonrpc-service.yaml
