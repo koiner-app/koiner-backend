@@ -26,25 +26,31 @@ export class CreateTokenOperationOnOperationCreated {
       return;
     }
 
-    const decodedOperation = await this.contractStandardService.decodeOperation(
-      event.contractId,
-      event.entryPoint,
-      event.args,
-      ContractStandardType.token
-    );
+    try {
+      const decodedOperation =
+        await this.contractStandardService.decodeOperation(
+          event.contractId,
+          event.entryPoint,
+          event.args,
+          ContractStandardType.token
+        );
 
-    await this.commandBus.execute(
-      new CreateTokenOperationCommand({
-        id: event.operationId,
-        blockHeight: event.blockHeight,
-        contractId: event.contractId,
-        transactionId: event.transactionId,
-        name: decodedOperation.name,
-        from: <string>decodedOperation.data.from,
-        to: <string>decodedOperation.data.to,
-        value: parseInt(<string>decodedOperation.data.value),
-        timestamp: event.timestamp,
-      })
-    );
+      await this.commandBus.execute(
+        new CreateTokenOperationCommand({
+          id: event.operationId,
+          blockHeight: event.blockHeight,
+          contractId: event.contractId,
+          transactionId: event.transactionId,
+          name: decodedOperation.name,
+          from: <string>decodedOperation.data.from,
+          to: <string>decodedOperation.data.to,
+          value: parseInt(<string>decodedOperation.data.value),
+          timestamp: event.timestamp,
+        })
+      );
+    } catch (error) {
+      console.error('Could not decode TokenOperation args', error);
+      // Fail silently and ignore operation
+    }
   }
 }
