@@ -36,7 +36,7 @@ export class EmitEventsTokenSupplyQueue {
 
   /**
    * Split queues in groups based on last letter of to/from address.
-   * Use separate queues for koin + vhp.
+   * Use separate queues for koin + vhp + vhp1.
    * This way we can split the work among multiple queues and
    * still process them synchronously.
    */
@@ -48,6 +48,11 @@ export class EmitEventsTokenSupplyQueue {
   @RabbitSubscribe(rabbitSubscribeProps('vhp'))
   async handleVhp(message: any, amqpMsg: ConsumeMessage): Promise<void> {
     return this._handle(message, amqpMsg, 'vhp');
+  }
+
+  @RabbitSubscribe(rabbitSubscribeProps('vhp1'))
+  async handleVhp1(message: any, amqpMsg: ConsumeMessage): Promise<void> {
+    return this._handle(message, amqpMsg, 'vhp1');
   }
 
   @RabbitSubscribe(rabbitSubscribeProps(AmqpChannelPostfixes[0]))

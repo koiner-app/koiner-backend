@@ -18,10 +18,10 @@ export class TokenContract extends AggregateRoot<TokenContractProps> {
   ): TokenContract {
     const props: TokenContractProps = {
       ...create,
-      totalSupply: 0,
-      mintCount: 0,
-      burnCount: 0,
-      transferCount: 0,
+      totalSupply: create.totalSupply ?? 0,
+      mintCount: create.mintCount ?? 0,
+      burnCount: create.burnCount ?? 0,
+      transferCount: create.transferCount ?? 0,
     };
 
     const contract = new TokenContract({ id, props });

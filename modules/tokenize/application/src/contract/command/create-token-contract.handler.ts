@@ -5,6 +5,7 @@ import {
   TokenContractWriteRepository,
 } from '@koiner/tokenize/domain';
 import { CreateTokenContractCommand } from './dto/create-token-contract.command';
+import { koinosConfig } from '@koinos/jsonrpc';
 
 @CommandHandler(CreateTokenContractCommand)
 export class CreateTokenContractHandler
@@ -18,16 +19,55 @@ export class CreateTokenContractHandler
       return;
     }
 
-    const contract = TokenContract.create(
-      {
-        name: command.name,
-        symbol: command.symbol,
-        decimals: command.decimals,
-        timestamp: command.timestamp,
-      },
-      new KoinosAddressId(command.id)
-    );
+    /**
+     * Allow new contract VHP version to proceed with values of VHP 1
+     */
+    if (command.id === koinosConfig.contracts.vhp) {
+      const vhp1Contract = await this.writeRepository.findOneById(
+        koinosConfig.contracts.vhp1
+      );
 
-    await this.writeRepository.save(contract);
+      if (vhp1Contract) {
+        const contract = TokenContract.create(
+          {
+            name: command.name,
+            symbol: command.symbol,
+            decimals: command.decimals,
+            timestamp: command.timestamp,
+            totalSupply: vhp1Contract.totalSupply,
+            burnCount: vhp1Contract.burnCount,
+            mintCount: vhp1Contract.mintCount,
+            transferCount: vhp1Contract.transferCount,
+          },
+          new KoinosAddressId(command.id)
+        );
+
+        await this.writeRepository.save(contract);
+      } else {
+        const contract = TokenContract.create(
+          {
+            name: command.name,
+            symbol: command.symbol,
+            decimals: command.decimals,
+            timestamp: command.timestamp,
+          },
+          new KoinosAddressId(command.id)
+        );
+
+        await this.writeRepository.save(contract);
+      }
+    } else {
+      const contract = TokenContract.create(
+        {
+          name: command.name,
+          symbol: command.symbol,
+          decimals: command.decimals,
+          timestamp: command.timestamp,
+        },
+        new KoinosAddressId(command.id)
+      );
+
+      await this.writeRepository.save(contract);
+    }
   }
 }

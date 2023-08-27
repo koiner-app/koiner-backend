@@ -3,6 +3,10 @@ export interface CreateTokenContractProps {
   symbol: string;
   decimals: number;
   timestamp: number;
+  totalSupply?: number;
+  mintCount?: number;
+  burnCount?: number;
+  transferCount?: number;
 }
 
 export interface TokenContractProps extends CreateTokenContractProps {

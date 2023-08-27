@@ -48,7 +48,8 @@ export class SyncBlockRewardHandler
           (event) =>
             (event.name === 'vhp.burn' ||
               event.name === 'koinos.contracts.token.burn_event') &&
-            event.source === koinosConfig.contracts.vhp
+            (event.source === koinosConfig.contracts.vhp ||
+              event.source === koinosConfig.contracts.vhp1)
         );
 
         if (mintEvent && burnEvent) {

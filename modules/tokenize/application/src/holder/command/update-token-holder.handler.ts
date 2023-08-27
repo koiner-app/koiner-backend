@@ -6,6 +6,7 @@ import {
   TokenHolderWriteRepository,
 } from '@koiner/tokenize/domain';
 import { UpdateTokenHolderCommand } from './dto/update-token-holder.command';
+import { koinosConfig } from '@koinos/jsonrpc';
 
 @CommandHandler(UpdateTokenHolderCommand)
 export class UpdateTokenHolderHandler
@@ -30,18 +31,63 @@ export class UpdateTokenHolderHandler
 
       await this.writeRepository.save(tokenHolder);
     } else {
-      tokenHolder = TokenHolder.create(
-        {
-          addressId: new KoinosAddressId(command.addressId),
-          contractId: new KoinosAddressId(command.contractId),
-          balance: command.amountChanged,
-          burnCount: command.burnCount,
-          mintCount: command.mintCount,
-          transferInCount: command.transferInCount,
-          transferOutCount: command.transferOutCount,
-        },
-        UUID.generate()
-      );
+      /**
+       * Allow holder for new contract VHP version to proceed with balances of VHP 1
+       */
+      if (command.contractId === koinosConfig.contracts.vhp) {
+        const oldVhpTokenHolder = await this.writeRepository.findOne(
+          command.addressId,
+          koinosConfig.contracts.vhp1
+        );
+
+        if (oldVhpTokenHolder) {
+          // Use old holder values
+          tokenHolder = TokenHolder.create(
+            {
+              addressId: new KoinosAddressId(command.addressId),
+              contractId: new KoinosAddressId(command.contractId),
+              balance: oldVhpTokenHolder.balance + command.amountChanged,
+              burnCount: oldVhpTokenHolder.burnCount + (command.burnCount ?? 0),
+              mintCount: oldVhpTokenHolder.mintCount + (command.mintCount ?? 0),
+              transferInCount:
+                oldVhpTokenHolder.transferInCount +
+                (command.transferInCount ?? 0),
+              transferOutCount:
+                oldVhpTokenHolder.transferOutCount +
+                (command.transferOutCount ?? 0),
+            },
+            UUID.generate()
+          );
+        } else {
+          // Create new holder
+          tokenHolder = TokenHolder.create(
+            {
+              addressId: new KoinosAddressId(command.addressId),
+              contractId: new KoinosAddressId(command.contractId),
+              balance: command.amountChanged,
+              burnCount: command.burnCount,
+              mintCount: command.mintCount,
+              transferInCount: command.transferInCount,
+              transferOutCount: command.transferOutCount,
+            },
+            UUID.generate()
+          );
+        }
+      } else {
+        // Not VHP: create new holder
+        tokenHolder = TokenHolder.create(
+          {
+            addressId: new KoinosAddressId(command.addressId),
+            contractId: new KoinosAddressId(command.contractId),
+            balance: command.amountChanged,
+            burnCount: command.burnCount,
+            mintCount: command.mintCount,
+            transferInCount: command.transferInCount,
+            transferOutCount: command.transferOutCount,
+          },
+          UUID.generate()
+        );
+      }
 
       await this.writeRepository.save(tokenHolder);
     }

@@ -24,4 +24,8 @@ export const AmqpTokenChannels = [
     suffix: 'vhp',
     contractId: koinosConfig.contracts.vhp,
   },
+  {
+    suffix: 'vhp1',
+    contractId: koinosConfig.contracts.vhp1,
+  },
 ];
