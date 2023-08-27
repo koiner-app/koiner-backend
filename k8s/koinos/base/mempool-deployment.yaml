@@ -23,10 +23,10 @@ spec:
           image: koinos/koinos-mempool:v1.1.0
           name: mempool
           volumeMounts:
-            - name: koinos-data10
+            - name: koinos-data2
               mountPath: /koinos
       restartPolicy: Always
       volumes:
-        - name: koinos-data10
+        - name: koinos-data2
           persistentVolumeClaim:
-            claimName: koinos-data10
+            claimName: koinos-data2

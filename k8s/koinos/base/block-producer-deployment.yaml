@@ -20,13 +20,13 @@ spec:
       containers:
         - args:
             - --basedir=/koinos
-          image: koinos/koinos-block-producer:v1.0.2
+          image: koinos/koinos-block-producer:v1.1.0
           name: block-producer
           volumeMounts:
-            - name: koinos-data10
+            - name: koinos-data2
               mountPath: /koinos
       restartPolicy: Always
       volumes:
-        - name: koinos-data10
+        - name: koinos-data2
           persistentVolumeClaim:
-            claimName: koinos-data10
+            claimName: koinos-data2

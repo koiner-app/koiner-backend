@@ -23,10 +23,10 @@ spec:
           image: koinos/koinos-transaction-store:v1.0.0
           name: transaction-store
           volumeMounts:
-            - name: koinos-data10
+            - name: koinos-data2
               mountPath: /koinos
       restartPolicy: Always
       volumes:
-        - name: koinos-data10
+        - name: koinos-data2
           persistentVolumeClaim:
-            claimName: koinos-data10
+            claimName: koinos-data2
