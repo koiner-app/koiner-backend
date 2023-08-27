@@ -2,5 +2,5 @@
 export const koinos = {
   signerSeed: 'seed',
   batchSize: 1000,
-  syncSecret: 'AHOY!',
+  syncSecret: process.env.SYNC_SECRET ?? 'AHOY!',
 };
