@@ -38,6 +38,7 @@ export class TokenHoldersResolver {
     );
 
     if (connection?.edges) {
+      // Load on-chain balances
       await Promise.all(
         connection?.edges?.map(async (edge) => {
           const onChainBalance = await this.addressBalanceService.getBalance(
