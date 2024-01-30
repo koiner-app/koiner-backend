@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: koiner-tokenize-graphql
-          image: elimbatido/koiner-tokenize-graphql:v0.2.18
+          image: elimbatido/koiner-tokenize-graphql:v0.3.0
           envFrom:
             - configMapRef:
                 name: graphql-config
