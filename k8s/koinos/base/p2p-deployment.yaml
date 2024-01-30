@@ -20,16 +20,16 @@ spec:
       containers:
         - args:
             - --basedir=/koinos
-          image: koinos/koinos-p2p:v1.0.0
+          image: koinos/koinos-p2p:v1.0.1
           name: p2p
           ports:
             - containerPort: 8888
           volumeMounts:
-            - name: koinos-data2
+            - name: koinos-data5
               mountPath: /koinos
       restartPolicy: Always
       volumes:
-        - name: koinos-data2
+        - name: koinos-data5
           persistentVolumeClaim:
-            claimName: koinos-data2
+            claimName: koinos-data5
 

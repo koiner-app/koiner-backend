@@ -24,10 +24,10 @@ spec:
           image: elimbatido/koinos-config:v1.0.0
           name: config
           volumeMounts:
-            - name: koinos-data2
+            - name: koinos-data5
               mountPath: /koinos
       restartPolicy: Always
       volumes:
-        - name: koinos-data2
+        - name: koinos-data5
           persistentVolumeClaim:
-            claimName: koinos-data2
+            claimName: koinos-data5

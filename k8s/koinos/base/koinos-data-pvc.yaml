@@ -2,8 +2,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:
-    service: koinos-data2
-  name: koinos-data2
+    service: koinos-data5
+  name: koinos-data5
   namespace: koinos
 spec:
   accessModes:
