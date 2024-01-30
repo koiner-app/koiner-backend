@@ -31,11 +31,6 @@ export class TokenHolderResolver {
     );
 
     if (onChainBalance > -1) {
-      console.log({
-        onChainBalance,
-        old: entity.balance,
-      });
-
       entity = new TokenHolder({
         id: entity.id,
         props: {
