@@ -9,10 +9,14 @@ import {
   TokenHoldersConnection,
   TokenHoldersRequest,
 } from '../dto';
+import { AddressBalanceService } from '@koinos/jsonrpc';
 
 @Resolver(() => TokenHolderNode)
 export class TokenHoldersResolver {
-  constructor(private readonly queryBus: QueryBus) {}
+  constructor(
+    private readonly queryBus: QueryBus,
+    private readonly addressBalanceService: AddressBalanceService
+  ) {}
 
   @Query(() => TokenHoldersConnection, { name: 'tokenHolders' })
   async execute(
@@ -26,11 +30,32 @@ export class TokenHoldersResolver {
       new TokenHoldersQuery(request, selectionSet, ['addressId', 'contractId'])
     );
 
-    return ConnectionFactory.fromSearchResponse(
+    const connection = ConnectionFactory.fromSearchResponse(
       TokenHoldersConnection,
       TokenHolderNode,
       searchResponse,
       selectionSet
     );
+
+    if (connection?.edges) {
+      await Promise.all(
+        connection?.edges?.map(async (edge) => {
+          const onChainBalance = await this.addressBalanceService.getBalance(
+            edge.node.contractId,
+            edge.node.addressId,
+            undefined,
+            false
+          );
+
+          if (onChainBalance > -1) {
+            edge.node.balance = onChainBalance.toString();
+          }
+
+          return edge;
+        })
+      );
+    }
+
+    return connection;
   }
 }
