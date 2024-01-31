@@ -7,10 +7,10 @@ spec:
   replicas: 1
   resources:
     requests:
-      cpu: 2750m
+      cpu: 3250m
       memory: 4Gi
     limits:
-      cpu: 2750m
+      cpu: 3250m
       memory: 4Gi
 # Production-ready
 #    requests:
