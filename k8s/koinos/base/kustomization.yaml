@@ -8,6 +8,8 @@ resources:
   - jsonrpc-deployment.yaml
   - jsonrpc-service.yaml
   - mempool-deployment.yaml
+  - monitor-deployment.yaml
+  - monitor-service.yaml
   - p2p-deployment.yaml
   - p2p-service.yaml
   - transaction-store-deployment.yaml

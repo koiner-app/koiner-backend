@@ -4,6 +4,12 @@ resources:
   - namespace.yaml
   - ../../base
 
+secretGenerator:
+  - name: monitor-credentials
+    envs:
+      - env/.env.monitor
+    namespace: koinos
+
 configMapGenerator:
   - name: koinos-config
     files:

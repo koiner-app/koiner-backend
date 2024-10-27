@@ -20,7 +20,7 @@ spec:
       containers:
         - args:
             - --basedir=/koinos
-          image: koinos/koinos-jsonrpc:v1.0.0
+          image: koinos/koinos-jsonrpc:v1.1.0
           name: jsonrpc
           ports:
             - containerPort: 8080

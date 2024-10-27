@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: koinos-monitor
+  name: koinos-monitor
+  namespace: koinos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: koinos-monitor
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        service: koinos-monitor
+    spec:
+      containers:
+        - image: frenkzcom/koinos-monitor:v0.1.0
+          name: koinos-monitor
+          envFrom:
+            - secretRef:
+                name: monitor-credentials
+          ports:
+            - containerPort: 8888
+      restartPolicy: Always

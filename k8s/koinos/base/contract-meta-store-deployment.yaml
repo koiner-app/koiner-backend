@@ -20,7 +20,7 @@ spec:
       containers:
         - args:
             - --basedir=/koinos
-          image: koinos/koinos-contract-meta-store:v1.0.0
+          image: koinos/koinos-contract-meta-store:v1.1.0
           name: contract-meta-store
           volumeMounts:
             - name: koinos-data5
