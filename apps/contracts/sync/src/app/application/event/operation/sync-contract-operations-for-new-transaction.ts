@@ -15,7 +15,10 @@ import {
   ContractStandardService,
   ContractStandardType,
 } from '@koiner/contracts/standards';
-import { ContractOperationWithTokenTypeCreatedMessage } from '@koiner/contracts/events';
+import {
+  ContractOperationWithTokenTypeCreatedMessage,
+  ContractWithTokenTypeCreatedMessage,
+} from '@koiner/contracts/events';
 
 @Injectable()
 export class SyncContractOperationsForNewTransaction {
@@ -97,6 +100,18 @@ export class SyncContractOperationsForNewTransaction {
                   data: decodedOperation.data,
                 })
               );
+
+              if (
+                // KoinCity Launchpad token workaround
+                contractId === '1FZnS98QunDkzVjMz4G8BRSTAZyYCaPHhm' &&
+                operationJson.entry_point === 147396748
+              ) {
+                await this.publishTokenContractEventForLaunchpad(
+                  event.id,
+                  event.blockHeight,
+                  event.timestamp
+                );
+              }
             } catch (error) {
               console.log('decoded error', error);
             }
@@ -104,5 +119,47 @@ export class SyncContractOperationsForNewTransaction {
         }
       }
     }
+  }
+
+  private async publishTokenContractEventForLaunchpad(
+    transactionId: string,
+    blockHeight: number,
+    timestamp: number
+  ): Promise<void> {
+    const txReceipt = await this.rawBlocksService.getTransactionReceipt(
+      blockHeight,
+      transactionId
+    );
+
+    if (!Array.isArray(txReceipt.events)) {
+      console.log('Could not find events for Launchpad operation');
+      return;
+    }
+
+    const tokenMintEvent = txReceipt.events.find(
+      (result) => result.name === 'token.mint_event'
+    );
+
+    if (!tokenMintEvent || !tokenMintEvent.source) {
+      console.error('Could not find tokenMintEvent');
+      return;
+    }
+
+    const contractId = tokenMintEvent.source;
+
+    const message = new ContractWithTokenTypeCreatedMessage({
+      contractId,
+      contractStandardType: 'kcs-1',
+      timestamp: timestamp,
+      publishedAt: Date.now(),
+    });
+
+    console.log('publishTokenContractEventForLaunchpad', message.toString());
+
+    this.amqpConnection.publish(
+      'koiner.contracts.event',
+      ContractWithTokenTypeCreatedMessage.eventName,
+      message.toString()
+    );
   }
 }
