@@ -12,14 +12,13 @@ import {
   UndoBlocksCommand,
   UndoBlocksFromCheckpointCommand,
 } from '@koiner/chain/application';
-import { ContractWithTokenTypeCreatedMessage } from '@koiner/contracts/events';
-import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
+import { KoincityLaunchpadTokenHelper } from '@koinos/jsonrpc';
 
 @Controller()
 export class ManualSyncController {
   constructor(
     private readonly commandBus: CommandBus,
-    private readonly amqpConnection: AmqpConnection
+    private readonly koincityLaunchpadTokenHelper: KoincityLaunchpadTokenHelper
   ) {}
 
   @Post('/sync-set')
@@ -73,22 +72,18 @@ export class ManualSyncController {
   @Post('/trigger-token-contract')
   async triggerTokenContract(
     @Query('secret') secret: string,
-    @Body() input: { contractId: string; timestamp: number }
+    @Body()
+    input: {
+      transactionId: string;
+      height: number;
+      timestamp: number;
+    }
   ): Promise<void> {
     if (secret && koinos.syncSecret && secret === koinos.syncSecret) {
-      const message = new ContractWithTokenTypeCreatedMessage({
-        contractId: input.contractId,
-        contractStandardType: 'kcs-1',
-        timestamp: input.timestamp,
-        publishedAt: Date.now(),
-      });
-
-      console.log('publishTokenContractEventForLaunchpad', message.toString());
-
-      this.amqpConnection.publish(
-        'koiner.contracts.event',
-        ContractWithTokenTypeCreatedMessage.eventName,
-        message.toString()
+      await this.koincityLaunchpadTokenHelper.publishEvents(
+        input.transactionId,
+        input.height,
+        input.timestamp
       );
     } else {
       throw new ForbiddenException();

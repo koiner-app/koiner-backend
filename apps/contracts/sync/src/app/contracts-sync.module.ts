@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { BlocksServiceModule } from '@koinos/jsonrpc';
+import {
+  BlocksServiceModule,
+  KoincityLaunchpadTokenHelper,
+} from '@koinos/jsonrpc';
 import { AmqpModule } from './amqp.module';
 import { KoinerLoggerModule } from '@koiner/logger/nestjs';
 import { LoggerModule } from './logger.module';
@@ -17,6 +20,10 @@ import { ContractsAmqpHandlers } from './amqp';
     LoggerModule,
     ContractsModule,
   ],
-  providers: [...ContractSyncEventHandlers, ...ContractsAmqpHandlers],
+  providers: [
+    ...ContractSyncEventHandlers,
+    ...ContractsAmqpHandlers,
+    KoincityLaunchpadTokenHelper,
+  ],
 })
 export class ContractsSyncModule {}

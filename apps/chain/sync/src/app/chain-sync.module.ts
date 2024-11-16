@@ -3,7 +3,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AmqpModule } from './amqp.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { CqrsModule } from '@nestjs/cqrs';
-import { BlocksServiceModule, KoinosModule } from '@koinos/jsonrpc';
+import {
+  BlocksServiceModule,
+  KoincityLaunchpadTokenHelper,
+  KoinosModule,
+} from '@koinos/jsonrpc';
 import { SynchronizationModuleApplicationHandlers } from '@koiner/sync/application';
 import {
   SynchronizationModuleModels,
@@ -50,6 +54,7 @@ if (process.env.SYNC_CRON === 'active') {
 
     ...ChainSyncApplicationHandlers,
     ...ChainAmqpHandlers,
+    KoincityLaunchpadTokenHelper,
   ],
   controllers: [...CronSyncControllerWrapper, ManualSyncController],
 })
