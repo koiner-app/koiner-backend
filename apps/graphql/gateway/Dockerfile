@@ -1,5 +1,5 @@
 #! Local development image
-FROM node:lts-alpine as local
+FROM node:lts-alpine AS local
 
 RUN apk --no-cache add git
 
@@ -15,7 +15,7 @@ COPY ./tsconfig.base.json .
 COPY ./workspace.json .
 
 #! Development image
-FROM node:lts-alpine as development
+FROM node:lts-alpine AS development
 
 WORKDIR /app
 
@@ -41,7 +41,7 @@ COPY --from=local /app .
 RUN npm run build:graphql-gateway
 
 #! Production image
-FROM node:lts-alpine as production
+FROM node:lts-alpine AS production
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
