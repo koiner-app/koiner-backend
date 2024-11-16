@@ -12,10 +12,15 @@ import {
   UndoBlocksCommand,
   UndoBlocksFromCheckpointCommand,
 } from '@koiner/chain/application';
+import { ContractWithTokenTypeCreatedMessage } from '@koiner/contracts/events';
+import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 
 @Controller()
 export class ManualSyncController {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(
+    private readonly commandBus: CommandBus,
+    private readonly amqpConnection: AmqpConnection
+  ) {}
 
   @Post('/sync-set')
   async syncSet(
@@ -59,6 +64,31 @@ export class ManualSyncController {
         new UndoBlocksFromCheckpointCommand({
           checkPoint: input.checkPoint,
         })
+      );
+    } else {
+      throw new ForbiddenException();
+    }
+  }
+
+  @Post('/trigger-token-contract')
+  async triggerTokenContract(
+    @Query('secret') secret: string,
+    @Body() input: { contractId: string; timestamp: number }
+  ): Promise<void> {
+    if (secret && koinos.syncSecret && secret === koinos.syncSecret) {
+      const message = new ContractWithTokenTypeCreatedMessage({
+        contractId: input.contractId,
+        contractStandardType: 'kcs-1',
+        timestamp: input.timestamp,
+        publishedAt: Date.now(),
+      });
+
+      console.log('publishTokenContractEventForLaunchpad', message.toString());
+
+      this.amqpConnection.publish(
+        'koiner.contracts.event',
+        ContractWithTokenTypeCreatedMessage.eventName,
+        message.toString()
       );
     } else {
       throw new ForbiddenException();
