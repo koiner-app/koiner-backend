@@ -12,14 +12,10 @@ import {
   UndoBlocksCommand,
   UndoBlocksFromCheckpointCommand,
 } from '@koiner/chain/application';
-import { KoincityLaunchpadTokenHelper } from '@koinos/jsonrpc';
 
 @Controller()
 export class ManualSyncController {
-  constructor(
-    private readonly commandBus: CommandBus,
-    private readonly koincityLaunchpadTokenHelper: KoincityLaunchpadTokenHelper
-  ) {}
+  constructor(private readonly commandBus: CommandBus) {}
 
   @Post('/sync-set')
   async syncSet(
@@ -63,27 +59,6 @@ export class ManualSyncController {
         new UndoBlocksFromCheckpointCommand({
           checkPoint: input.checkPoint,
         })
-      );
-    } else {
-      throw new ForbiddenException();
-    }
-  }
-
-  @Post('/trigger-token-contract')
-  async triggerTokenContract(
-    @Query('secret') secret: string,
-    @Body()
-    input: {
-      transactionId: string;
-      height: number;
-      timestamp: number;
-    }
-  ): Promise<void> {
-    if (secret && koinos.syncSecret && secret === koinos.syncSecret) {
-      await this.koincityLaunchpadTokenHelper.publishEvents(
-        input.transactionId,
-        input.height,
-        input.timestamp
       );
     } else {
       throw new ForbiddenException();

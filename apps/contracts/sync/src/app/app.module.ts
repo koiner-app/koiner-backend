@@ -8,6 +8,7 @@ import { ContractsModule } from './contracts.module';
 import { ContractsSyncModule } from './contracts-sync.module';
 
 import * as config from '../config';
+import { ManualSyncController } from './manual-sync.controller';
 
 @Module({
   imports: [
@@ -18,5 +19,6 @@ import * as config from '../config';
     ContractsModule,
     ContractsSyncModule,
   ],
+  controllers: [ManualSyncController],
 })
 export class AppModule {}

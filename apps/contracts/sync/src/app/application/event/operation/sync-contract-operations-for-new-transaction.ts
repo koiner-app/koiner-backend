@@ -110,7 +110,8 @@ export class SyncContractOperationsForNewTransaction {
                 await this.koincityLaunchpadTokenHelper.publishEvents(
                   event.id,
                   event.blockHeight,
-                  event.timestamp
+                  event.timestamp,
+                  false
                 );
               }
             } catch (error) {

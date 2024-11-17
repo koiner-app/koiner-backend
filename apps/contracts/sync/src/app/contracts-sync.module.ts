@@ -25,5 +25,6 @@ import { ContractsAmqpHandlers } from './amqp';
     ...ContractsAmqpHandlers,
     KoincityLaunchpadTokenHelper,
   ],
+  exports: [KoincityLaunchpadTokenHelper],
 })
 export class ContractsSyncModule {}

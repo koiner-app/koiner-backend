@@ -36,6 +36,10 @@ export class Contract extends AggregateRoot<ContractProps> {
     return this.props.contractStandardType;
   }
 
+  updateContractStandardType(contractStandardType: ContractStandardType): void {
+    this.props.contractStandardType = contractStandardType;
+  }
+
   get timestamp(): number {
     return this.props.timestamp;
   }
