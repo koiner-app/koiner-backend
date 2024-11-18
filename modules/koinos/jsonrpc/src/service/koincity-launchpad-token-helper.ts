@@ -5,7 +5,6 @@ import {
 import { Injectable } from '@nestjs/common';
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 import { RawBlocksService } from '@koinos/jsonrpc';
-import { ContractEventsRequest } from '@koiner/contracts/graphql';
 import {
   ContractEventsQuery,
   UpdateContractStandardCommand,
@@ -117,17 +116,17 @@ export class KoincityLaunchpadTokenHelper {
      */
     if (insertEvents) {
       setTimeout(async () => {
-        const request = new ContractEventsRequest();
-        request.first = 1000;
-        request.filter = {
-          contractId: { equals: contractId },
-        };
-        const selectionSet = undefined;
-
         const searchResponse = await this.queryBus.execute<
           ContractEventsQuery,
           SearchResponse<ContractEvent>
-        >(new ContractEventsQuery(request, selectionSet));
+        >(
+          new ContractEventsQuery({
+            first: 1000,
+            filter: {
+              contractId: { equals: contractId },
+            },
+          })
+        );
 
         for (const result of searchResponse.results) {
           // Publish tokenMinted event so tokenize service can process it
