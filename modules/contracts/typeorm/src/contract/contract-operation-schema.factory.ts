@@ -29,7 +29,10 @@ export class ContractOperationSchemaFactory extends EntitySchemaFactory<
       args: entitySchema.args
         ? (entitySchema.args as unknown as Uint8Array).toString()
         : undefined,
-      data: entitySchema.data,
+      data:
+        typeof entitySchema.data === 'object'
+          ? (JSON.stringify(entitySchema.data) as any)
+          : entitySchema.data,
       name: entitySchema.name,
       contractStandardType: entitySchema.contract_standard_type,
       timestamp: entitySchema.timestamp,
