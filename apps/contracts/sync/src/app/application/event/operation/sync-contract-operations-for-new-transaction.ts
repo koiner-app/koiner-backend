@@ -7,7 +7,10 @@ import {
   KoincityLaunchpadTokenHelper,
   RawBlocksService,
 } from '@koinos/jsonrpc';
-import { TransactionCreatedMessage } from '@koiner/chain/events';
+import {
+  AddressUsedMessage,
+  TransactionCreatedMessage,
+} from '@koiner/chain/events';
 import { CallContractOperationJson } from 'koilib/lib/interface';
 import {
   ContractQuery,
@@ -79,7 +82,7 @@ export class SyncContractOperationsForNewTransaction {
               publishedAt: Date.now(),
             });
 
-            await this.amqpConnection.publish(
+            this.amqpConnection.publish(
               'koiner.contracts.event',
               ContractOperationWithTokenTypeCreatedMessage.eventName,
               message.toString()
@@ -113,6 +116,29 @@ export class SyncContractOperationsForNewTransaction {
                   event.timestamp,
                   false
                 );
+              }
+
+              // Koinos.fun workaround for adding addresses
+              if (
+                contractId === '1EnaBDVTA5hqXokC2dDzt2JT5eHv1y7ff1' &&
+                (decodedOperation.name === 'mint' ||
+                  decodedOperation.name === 'transfer') &&
+                decodedOperation.data
+              ) {
+                const data = JSON.parse(decodedOperation.data);
+
+                if (data['to']) {
+                  const message = new AddressUsedMessage({
+                    id: data['to'],
+                    publishedAt: Date.now(),
+                  });
+
+                  this.amqpConnection.publish(
+                    'koiner.contracts.event',
+                    AddressUsedMessage.eventName,
+                    message.toString()
+                  );
+                }
               }
             } catch (error) {
               console.log('decoded error', error);
