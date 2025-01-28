@@ -50,7 +50,10 @@ export class ContractOperationSchemaFactory extends EntitySchemaFactory<
       entry_point: props.entryPoint,
       args: props.args,
       name: props.name,
-      data: props.data,
+      data:
+        typeof props.data === 'string'
+          ? JSON.parse(props.data as unknown as string)
+          : props.data,
       contract_standard_type:
         props.contractStandardType as ContractStandardType,
       timestamp: props.timestamp,

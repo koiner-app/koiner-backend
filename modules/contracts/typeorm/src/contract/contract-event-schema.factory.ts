@@ -52,7 +52,10 @@ export class ContractEventSchemaFactory extends EntitySchemaFactory<
       contract_standard_type: props.contractStandardType,
       name: props.name,
       data: props.data,
-      decoded_data: props.decodedData,
+      decoded_data:
+        typeof props.decodedData === 'string'
+          ? JSON.parse(props.decodedData as unknown as string)
+          : props.decodedData,
       impacted: props.impacted
         ? props.impacted.map((impacted) => impacted.value)
         : undefined,
