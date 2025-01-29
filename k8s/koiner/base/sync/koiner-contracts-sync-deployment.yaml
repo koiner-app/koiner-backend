@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: koiner-contracts-sync
-          image: elimbatido/koiner-contracts-sync:v0.3.1
+          image: elimbatido/koiner-contracts-sync:v0.4.3
           envFrom:
             - configMapRef:
                 name: sync-config
@@ -34,6 +34,8 @@ spec:
                 name: amqp-credentials
             - secretRef:
                 name: redis-credentials
+            - secretRef:
+                name: sync-credentials
 #          resources:
 #            requests:
 #              memory: "64Mi"
