@@ -6,9 +6,11 @@ export const koinosConfig = {
     : ['https://api.koinos.io'],
   signerSeed: 'seed',
   contracts: {
-    koin: process.env.KOIN_CONTRACT_ID ?? '15DJN4a8SgrbGhhGksSBASiSYjGnMU8dGL',
-    vhp: process.env.VHP_CONTRACT_ID ?? '18tWNU7E4yuQzz7hMVpceb9ixmaWLVyQsr',
+    koin: process.env.KOIN_CONTRACT_ID ?? '19GYjDBVXU7keLbYvMLazsGQn3GTWHjHkK',
+    koin1: process.env.KOIN_CONTRACT_ID ?? '15DJN4a8SgrbGhhGksSBASiSYjGnMU8dGL',
+    vhp: process.env.VHP_CONTRACT_ID ?? '12Y5vW6gk8GceH53YfRkRre2Rrcsgw7Naq',
     vhp1: process.env.VHP1_CONTRACT_ID ?? '1AdzuXSpC6K9qtXdCBgD5NUpDNwHjMgrc9',
+    vhp2: process.env.VHP2_CONTRACT_ID ?? '18tWNU7E4yuQzz7hMVpceb9ixmaWLVyQsr',
     pob: process.env.POB_CONTRACT_ID ?? '159myq5YUhhoVWu3wsHKHiJYKPKGUrGiyv',
   },
   syncSecret: process.env.SYNC_SECRET ?? 'secret',
