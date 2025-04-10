@@ -40,7 +40,8 @@ export class SyncBlockRewardHandler
         const mintEvent = events.find(
           (event) =>
             (event.name === 'koin.mint' ||
-              event.name === 'koinos.contracts.token.mint_event') &&
+              event.name === 'koinos.contracts.token.mint_event' ||
+              event.name === 'token.mint_event') &&
             (event.source === koinosConfig.contracts.koin ||
               event.source === koinosConfig.contracts.koin1)
         );
@@ -48,7 +49,8 @@ export class SyncBlockRewardHandler
         const burnEvent = events.find(
           (event) =>
             (event.name === 'vhp.burn' ||
-              event.name === 'koinos.contracts.token.burn_event') &&
+              event.name === 'koinos.contracts.token.burn_event' ||
+              event.name === 'token.burn_event') &&
             (event.source === koinosConfig.contracts.vhp ||
               event.source === koinosConfig.contracts.vhp1 ||
               event.source === koinosConfig.contracts.vhp2)
